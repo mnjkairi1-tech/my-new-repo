@@ -1,0 +1,105 @@
+
+
+import {
+  LayoutGrid,
+  ImageDown,
+  Type,
+  Mic,
+  Voicemail,
+  UserSquare,
+  ImageIcon,
+  TrendingUp,
+  Sparkles,
+  Star,
+  Paintbrush,
+  MessageSquare,
+} from 'lucide-react';
+import { getImage, getHint } from './placeholder-images';
+import type { Tool } from './types';
+
+export const popularTools: Tool[] = [
+  {
+    name: 'Runway',
+    category: 'Text to Video',
+    url: 'https://runwayml.com/',
+    image: getImage('runway'),
+    dataAiHint: getHint('runway'),
+    description: 'Create videos from text prompts.',
+    icon: 'Video',
+  },
+  {
+    name: 'Pika',
+    category: 'Text to Video',
+    url: 'https://pika.art/',
+    image: getImage('pika'),
+    dataAiHint: getHint('pika'),
+    description: 'AI-powered video generation.',
+    icon: 'Clapperboard',
+  },
+  {
+    name: 'ElevenLabs',
+    category: 'Text to Speech',
+    url: 'https://elevenlabs.io/',
+    image: getImage('elevenlabs'),
+    dataAiHint: getHint('elevenlabs'),
+    description: 'Realistic text-to-speech and voice cloning.',
+    icon: 'Mic',
+  },
+  {
+    name: 'Lensa AI',
+    category: 'AI Avatar',
+    url: 'https://lensa.ai/',
+    image: getImage('lensa'),
+    dataAiHint: getHint('lensa'),
+    description: 'Create stylized AI avatars from your photos.',
+    icon: 'UserSquare',
+  },
+];
+
+export const libraries = [
+    { name: 'For content creation', icon: 'Feather', gradient: 'from-purple-400 to-pink-500' },
+    { name: 'For students', icon: 'GraduationCap', gradient: 'from-blue-400 to-cyan-500' },
+    { name: 'For productivity', icon: 'BrainCircuit', gradient: 'from-green-400 to-lime-500' },
+];
+
+export const quickToolCategories = [
+    { name: 'Image Editing', url: '/image-editing', image: getImage('quick-tool-image-editing'), dataAiHint: getHint('quick-tool-image-editing'), translationKey: 'imageEditing' },
+    { name: 'Video Editing', url: '/video-editing', image: getImage('quick-tool-1'), dataAiHint: getHint('quick-tool-1'), translationKey: 'videoEditing' },
+    { name: 'Content Creation', url: '/content-creation', image: getImage('quick-tool-content-creation'), dataAiHint: getHint('quick-tool-content-creation'), translationKey: 'contentCreation' },
+    { name: 'Productivity', url: '/productivity', image: getImage('quick-tool-productivity'), dataAiHint: getHint('quick-tool-productivity'), translationKey: 'productivity' },
+    { name: 'Writing', url: '/writing', image: getImage('quick-tool-writing'), dataAiHint: getHint('quick-tool-writing'), translationKey: 'writing' },
+    { name: 'For Students', url: '/student-tools', image: getImage('quick-tool-students'), dataAiHint: getHint('quick-tool-students'), translationKey: 'forStudents' },
+    { name: 'For Business', url: '/business-tools', image: getImage('quick-tool-business'), dataAiHint: getHint('quick-tool-business'), translationKey: 'forBusiness' },
+    { name: 'Chatbot & Assistants', url: '/chatbot-assistant-tools', image: getImage('quick-tool-chatbot'), dataAiHint: getHint('quick-tool-chatbot'), translationKey: 'chatbotAssistants' },
+    { name: 'Coding Tools', url: '/coding-tools', image: getImage('quick-tool-coding'), dataAiHint: getHint('quick-tool-coding'), translationKey: 'codingTools' },
+    { name: 'AI Converters', url: '/converter-tools', image: getImage('quick-tool-converters'), dataAiHint: getHint('quick-tool-converters'), translationKey: 'aiConverters' },
+    { name: 'Data Analytics', url: '/data-analytics', image: getImage('quick-tool-data-analytics'), dataAiHint: getHint('quick-tool-data-analytics'), translationKey: 'dataAnalytics' },
+    { name: 'E-Commerce', url: '/ecommerce-tools', image: getImage('quick-tool-ecommerce'), dataAiHint: getHint('quick-tool-ecommerce'), translationKey: 'eCommerce' },
+    { name: 'For Education', url: '/education-learning', image: getImage('quick-tool-education'), dataAiHint: getHint('quick-tool-education'), translationKey: 'forEducation' },
+    { name: 'Finance & Accounting', url: '/finance-accounting', image: getImage('quick-tool-finance-accounting'), dataAiHint: getHint('quick-tool-finance-accounting'), translationKey: 'financeAccounting' },
+    { name: 'For Freelancers', url: '/freelancer-tools', image: getImage('quick-tool-freelancer'), dataAiHint: getHint('quick-tool-freelancer'), translationKey: 'forFreelancers' },
+    { name: 'Graphic Design', url: '/graphic-design', image: getImage('quick-tool-graphic-design'), dataAiHint: getHint('quick-tool-graphic-design'), translationKey: 'graphicDesign' },
+    { name: 'Invoice & Billing', url: '/invoice-billing', image: getImage('quick-tool-invoice-billing'), dataAiHint: getHint('quick-tool-invoice-billing'), translationKey: 'invoiceBilling' },
+    { name: 'Marketing & SEO', url: '/marketing-seo', image: getImage('quick-tool-marketing-seo'), dataAiHint: getHint('quick-tool-marketing-seo'), translationKey: 'marketingSeo' },
+    { name: 'Research & Knowledge', url: '/research-knowledge', image: getImage('quick-tool-research-knowledge'), dataAiHint: getHint('quick-tool-research-knowledge'), translationKey: 'researchKnowledge' },
+    { name: 'Security & Privacy', url: '/security-privacy', image: getImage('quick-tool-security-privacy'), dataAiHint: getHint('quick-tool-security-privacy'), translationKey: 'securityPrivacy' },
+    { name: 'SEO & Analytics', url: '/seo-analytics', image: getImage('quick-tool-seo-analytics'), dataAiHint: getHint('quick-tool-seo-analytics'), translationKey: 'seoAnalytics' },
+    { name: 'Social Media', url: '/social-media', image: getImage('quick-tool-social-media'), dataAiHint: getHint('quick-tool-social-media'), translationKey: 'socialMedia' },
+    { name: 'For Startups', url: '/startup-tools', image: getImage('quick-tool-startup'), dataAiHint: getHint('quick-tool-startup'), translationKey: 'forStartups' },
+    { name: 'PDF & File Tools', url: '/pdf-tools', image: getImage('quick-tool-pdf-files'), dataAiHint: getHint('quick-tool-pdf-files'), translationKey: 'pdfFileTools' },
+    { name: 'Website Builder Tools', url: '/website-builder-tools', image: getImage('quick-tool-website-builder'), dataAiHint: getHint('quick-tool-website-builder'), translationKey: 'websiteBuilderTools' },
+    { name: 'Advertising Tools', url: '/advertising-tools', image: getImage('quick-tool-advertising'), dataAiHint: getHint('quick-tool-advertising'), translationKey: 'advertisingTools' },
+    { name: 'Time Tracking Tools', url: '/time-tracking-tools', image: getImage('quick-tool-time-tracking'), dataAiHint: getHint('quick-tool-time-tracking'), translationKey: 'timeTrackingTools' },
+    { name: 'Project Management Tools', url: '/project-management-tools', image: getImage('quick-tool-project-management'), dataAiHint: getHint('quick-tool-project-management'), translationKey: 'projectManagementTools' },
+    { name: 'HR & Recruitment Tools', url: '/hr-recruitment-tools', image: getImage('quick-tool-hr-recruitment'), dataAiHint: getHint('quick-tool-hr-recruitment'), translationKey: 'hrRecruitmentTools' },
+    { name: 'Customer Support Tools', url: '/customer-support-tools', image: getImage('quick-tool-customer-support'), dataAiHint: getHint('quick-tool-customer-support'), translationKey: 'customerSupportTools' },
+    { name: 'Database & Backend Tools', url: '/database-backend-tools', image: getImage('quick-tool-database-backend'), dataAiHint: getHint('quick-tool-database-backend'), translationKey: 'databaseBackendTools' },
+    { name: 'Automation & Workflow Tools', url: '/automation-workflow-tools', image: getImage('quick-tool-automation-workflow'), dataAiHint: getHint('quick-tool-automation-workflow'), translationKey: 'automationWorkflowTools' },
+    { name: 'AI Agents', url: '/ai-agents', image: getImage('quick-tool-ai-agents'), dataAiHint: getHint('quick-tool-ai-agents'), translationKey: 'aiAgents' },
+    { name: 'Voice & Audio AI', url: '/voice-audio-ai', image: getImage('quick-tool-voice-audio-ai'), dataAiHint: getHint('quick-tool-voice-audio-ai'), translationKey: 'voiceAudioAi' },
+    { name: 'Healthcare AI', url: '/healthcare-ai', image: getImage('quick-tool-healthcare-ai'), dataAiHint: getHint('quick-tool-healthcare-ai'), translationKey: 'healthcareAi' },
+    { name: 'Automation (RPA)', url: '/automation-rpa', image: getImage('quick-tool-automation-rpa'), dataAiHint: getHint('quick-tool-automation-rpa'), translationKey: 'automationRpa' },
+    { name: 'AI Safety & Testing', url: '/ai-safety-testing', image: getImage('quick-tool-ai-safety-testing'), dataAiHint: getHint('quick-tool-ai-safety-testing'), translationKey: 'aiSafetyTesting' },
+    { name: 'Smart Integrations', url: '/smart-integrations', image: getImage('quick-tool-smart-integrations'), dataAiHint: getHint('quick-tool-smart-integrations'), translationKey: 'smartIntegrations' },
+];
+      

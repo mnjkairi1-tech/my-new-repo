@@ -1,0 +1,181 @@
+{
+  "entities": {
+    "Group": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Group",
+      "type": "object",
+      "description": "Represents a user-created group or community.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the group."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the group."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the group."
+        },
+        "avatar": {
+          "type": "string",
+          "description": "URL of the group's avatar image.",
+          "format": "uri"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "description": "Indicates if the group is public or private."
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "The user ID of the group's owner."
+        },
+        "memberCount": {
+          "type": "number",
+          "description": "The total number of members in the group."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the group was created."
+        }
+      },
+      "required": ["id", "name", "description", "avatar", "isPublic", "ownerId", "memberCount", "createdAt"]
+    },
+    "GroupMember": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "GroupMember",
+      "type": "object",
+      "description": "Represents a member of a group.",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The user ID of the member."
+        },
+        "joinedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the member joined."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["member", "admin", "owner"],
+          "description": "The role of the member within the group."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name of the user."
+        },
+        "photoURL": {
+            "type": "string",
+            "description": "The photo URL of the user's avatar."
+        }
+      },
+      "required": ["userId", "joinedAt", "role"]
+    },
+    "GroupTool": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "GroupTool",
+      "type": "object",
+      "description": "Represents an AI tool shared within a group.",
+      "properties": {
+        "toolName": {
+          "type": "string"
+        },
+        "toolUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "toolDescription": {
+          "type": "string"
+        },
+        "addedBy": {
+          "type": "string"
+        },
+        "addedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "upvotes": {
+          "type": "number"
+        }
+      },
+      "required": ["toolName", "toolUrl", "addedBy", "addedAt", "upvotes"]
+    },
+    "Message": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Message",
+      "type": "object",
+      "description": "Represents a chat message within a group.",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of an image sent in the chat."
+        },
+        "userId": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "userName", "createdAt"]
+    }
+  },
+  "auth": {
+    "providers": ["password", "anonymous", "google.com"]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/groups/{groupId}",
+        "definition": {
+          "entityName": "Group",
+          "schema": {
+            "$ref": "#/entities/Group"
+          },
+          "description": "Stores information about each community group."
+        }
+      },
+      {
+        "path": "/groups/{groupId}/members/{memberId}",
+        "definition": {
+          "entityName": "GroupMember",
+          "schema": {
+            "$ref": "#/entities/GroupMember"
+          },
+          "description": "Stores information about the members of a group."
+        }
+      },
+      {
+        "path": "/groups/{groupId}/tools/{toolId}",
+        "definition": {
+          "entityName": "GroupTool",
+          "schema": {
+            "$ref": "#/entities/GroupTool"
+          },
+          "description": "Stores the AI tools shared within a group."
+        }
+      },
+      {
+        "path": "/groups/{groupId}/messages/{messageId}",
+        "definition": {
+          "entityName": "Message",
+          "schema": {
+            "$ref": "#/entities/Message"
+          },
+          "description": "Stores chat messages for each group."
+        }
+      }
+    ]
+  }
+}

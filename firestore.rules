@@ -1,0 +1,58 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isGroupMember(groupId) {
+      return exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid));
+    }
+
+    function isGroupOwner(groupId) {
+      return request.auth.uid == get(/databases/$(database)/documents/groups/$(groupId)).data.ownerId;
+    }
+
+    match /groups/{groupId} {
+      // Group document rules
+      allow read: if true;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (
+        isGroupOwner(groupId) ||
+        (
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['memberCount']) &&
+          (request.resource.data.memberCount == resource.data.memberCount + 1 ||
+           request.resource.data.memberCount == resource.data.memberCount - 1)
+        )
+      );
+      allow delete: if isSignedIn() && isGroupOwner(groupId);
+
+      // Rules for subcollections of a group
+      match /members/{memberId} {
+        allow list, read: if isSignedIn();
+        allow create: if isSignedIn() && request.auth.uid == memberId; // User can only create their own membership doc
+        allow update: if isSignedIn() && request.auth.uid == memberId;
+        allow delete: if isSignedIn() && (request.auth.uid == memberId || isGroupOwner(groupId));
+      }
+      
+      match /tools/{toolId} {
+        allow read, list: if isSignedIn();
+        allow create: if isGroupMember(groupId);
+        allow update, delete: if isGroupMember(groupId) && (request.auth.uid == resource.data.addedBy || get(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid)).data.role == 'admin');
+      }
+
+      match /messages/{messageId} {
+        // Allow any signed-in user to read/list messages
+        allow read, list: if isSignedIn();
+        // Only group members can create messages
+        allow create: if isGroupMember(groupId) && request.auth.uid == request.resource.data.userId;
+        // Messages are immutable
+        allow update, delete: if false;
+      }
+    }
+  }
+}
