@@ -10,7 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
-import { Loader2, User, Bot, Menu, UserPlus, Edit, Plus, Mic, ArrowUp, Shuffle, AudioLines, MessageSquare, Archive, MoreHorizontal, LogOut } from 'lucide-react';
+import { Loader2, User, Bot, Menu, UserPlus, Edit, Plus, Mic, ArrowUp, Shuffle, AudioLines, MessageSquare, Archive, MoreHorizontal, LogOut, Square } from 'lucide-react';
 import { conversationalAgent, type ChatMessage } from '@/ai/flows/conversational-agent';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { cn } from '@/lib/utils';
@@ -59,10 +59,6 @@ const Sidebar = ({
             <span className="truncate">{title}</span>
         </button>
     );
-
-    // Simple grouping for display
-    const todayChats = chatHistory.slice(0, 2);
-    const yesterdayChats = chatHistory.slice(2, 4);
 
     return (
         <Sheet open={isOpen} onOpenChange={onOpenChange}>
@@ -134,13 +130,13 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
     const [suggestions, setSuggestions] = useState<{icon: string, text: string}[]>([]);
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);
+    const requestCancelledRef = useRef(false);
     const activeConversationMessages = activeChatId ? conversations[activeChatId]?.messages || [] : [];
     
     const getNewSuggestions = useCallback(() => {
         setSuggestions(shuffleAndPick(allSuggestions, 4));
     }, []);
 
-    // Function to create a new chat
     const handleNewChat = useCallback(() => {
         const newChatId = uuidv4();
         setConversations(prev => ({
@@ -151,7 +147,6 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
         setIsSidebarOpen(false);
     }, []);
 
-    // Effect to initialize the first chat
     useEffect(() => {
         if (isOpen && Object.keys(conversations).length === 0) {
             handleNewChat();
@@ -173,14 +168,13 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
     const handleSendMessage = useCallback(async (message: string) => {
         if (!message.trim() || !activeChatId) return;
 
+        requestCancelledRef.current = false;
         const newUserMessage: ChatMessage = { role: 'user', content: message };
         
-        // Update state
         setConversations(prev => {
             const currentChat = prev[activeChatId];
             const updatedMessages = [...currentChat.messages, newUserMessage];
             
-            // Update title if it's the first message
             const newTitle = currentChat.messages.length === 0 
                 ? message.substring(0, 40) 
                 : currentChat.title;
@@ -200,33 +194,38 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                 history: currentHistory,
             });
 
-            const newAiMessage: ChatMessage = { role: 'model', content: result.response };
-            setConversations(prev => {
-                const currentChat = prev[activeChatId];
-                const updatedMessages = [...currentChat.messages, newAiMessage];
-                return {
-                    ...prev,
-                    [activeChatId]: { ...currentChat, messages: updatedMessages }
-                };
-            });
+            if (!requestCancelledRef.current) {
+                const newAiMessage: ChatMessage = { role: 'model', content: result.response };
+                setConversations(prev => {
+                    const currentChat = prev[activeChatId];
+                    const updatedMessages = [...currentChat.messages, newAiMessage];
+                    return {
+                        ...prev,
+                        [activeChatId]: { ...currentChat, messages: updatedMessages }
+                    };
+                });
+            }
         } catch (error: any) {
-            console.error("Error fetching chat response:", error);
-            toast({
-                variant: 'destructive',
-                title: 'Error',
-                description: `Could not fetch response: ${error.message}. Please try again.`,
-            });
-             // Revert optimistic UI update
-             setConversations(prev => {
-                const currentChat = prev[activeChatId];
-                const revertedMessages = currentChat.messages.slice(0, -1);
-                return {
-                    ...prev,
-                    [activeChatId]: { ...currentChat, messages: revertedMessages }
-                };
-            });
+            if (!requestCancelledRef.current) {
+                console.error("Error fetching chat response:", error);
+                toast({
+                    variant: 'destructive',
+                    title: 'Error',
+                    description: `Could not fetch response: ${error.message}. Please try again.`,
+                });
+                 setConversations(prev => {
+                    const currentChat = prev[activeChatId];
+                    const revertedMessages = currentChat.messages.slice(0, -1);
+                    return {
+                        ...prev,
+                        [activeChatId]: { ...currentChat, messages: revertedMessages }
+                    };
+                });
+            }
         } finally {
-            setIsLoading(false);
+            if (!requestCancelledRef.current) {
+                setIsLoading(false);
+            }
         }
     }, [activeChatId, conversations, toast]);
 
@@ -236,6 +235,11 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
             handleSendMessage(input);
             setInput('');
         }
+    };
+
+    const handleStop = () => {
+        requestCancelledRef.current = true;
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -251,11 +255,9 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
         }
     }, [activeConversationMessages, isOpen]);
     
-    // Sort chat history from newest to oldest for display
     const sortedChatHistory = Object.values(conversations).sort((a, b) => {
         if (a.messages.length === 0) return 1;
         if (b.messages.length === 0) return -1;
-        // A more robust solution would use timestamps
         return (b.messages.length) - (a.messages.length);
     });
 
@@ -353,12 +355,16 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                            disabled={isLoading}
+                            disabled={isLoading && !requestCancelledRef.current}
                         />
                         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                            {input ? (
-                                <Button type="button" size="icon" className="w-9 h-9 rounded-full bg-primary" onClick={handleSend} disabled={isLoading}>
-                                    {isLoading ? <Loader2 className="animate-spin" /> : <ArrowUp className="w-5 h-5"/>}
+                            {isLoading ? (
+                                <Button type="button" size="icon" className="w-9 h-9 rounded-full bg-gray-700 hover:bg-gray-600" onClick={handleStop}>
+                                    <Square className="w-5 h-5"/>
+                                </Button>
+                            ) : input ? (
+                                <Button type="button" size="icon" className="w-9 h-9 rounded-full bg-primary" onClick={handleSend}>
+                                    <ArrowUp className="w-5 h-5"/>
                                 </Button>
                             ) : (
                                 <>
