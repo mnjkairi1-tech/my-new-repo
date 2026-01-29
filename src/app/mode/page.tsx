@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Users, Palette, X, PlusCircle, Scale, Gift, HelpCircle } from 'lucide-react';
+import { Users, Palette, X, PlusCircle, Scale, Gift } from 'lucide-react';
 import { useUserPreferences } from '@/context/user-preferences-context';
 
 export default function ModePage() {
@@ -12,7 +12,6 @@ export default function ModePage() {
     { href: '/ui-themes', icon: <Palette className="h-10 w-10 text-primary" />, label: 'UI Themes' },
     { href: '/?tab=tools', icon: <Scale className="h-10 w-10 text-primary" />, label: 'Compare', onClick: clearComparison },
     { href: 'https://modyolo.com/apps/productivity', icon: <Gift className="h-10 w-10 text-primary" />, label: 'Mod Apps', isExternal: true },
-    { href: '/?tab=settings', icon: <HelpCircle className="h-10 w-10 text-primary" />, label: 'Support' },
   ];
 
   return (
