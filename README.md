@@ -1,5 +1,7 @@
-# Firebase Studio
+# AI Atlas
 
 This is a NextJS starter in Firebase Studio.
 
-To get start# studio
+To get started, edit the files and see your changes live!
+
+<!-- Triggering new deploy -->
