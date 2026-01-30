@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { allTools, Tool } from '@/lib/tools-data';
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
+// import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 
 interface Group {
     id: string;
@@ -123,25 +123,14 @@ export default function GroupInfoPage({ params }: { params: { clubId: string } }
         setIsSubmittingUrl(true);
         try {
             const url = new URL(customToolUrl); // Basic URL validation
-            
-            const validationResult = await validateAndGetToolInfo({ url: url.href });
-
-            if (validationResult.isAiTool && validationResult.isSafe) {
-                await handleAddTool({
-                    name: validationResult.toolName || url.hostname,
-                    url: url.href,
-                    description: validationResult.toolDescription || 'User-added AI tool.',
-                });
-                setCustomToolUrl('');
-            } else {
-                toast({
-                    variant: 'destructive',
-                    title: 'Validation Failed',
-                    description: validationResult.reason || 'This URL does not seem to be a valid or safe AI tool.',
-                });
-            }
+            await handleAddTool({
+                name: url.hostname,
+                url: url.href,
+                description: 'User-added AI tool.',
+            });
+            setCustomToolUrl('');
         } catch (error) {
-            toast({
+             toast({
                 variant: 'destructive',
                 title: 'Invalid URL',
                 description: 'Please enter a valid URL format (e.g., https://example.com).',
