@@ -1,4 +1,4 @@
-
+export const runtime = 'edge';
 import { NextResponse } from 'next/server';
 import { allToolsServer } from '@/lib/all-tools-server';
 import type { Tool } from '@/lib/types';
