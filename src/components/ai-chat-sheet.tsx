@@ -11,7 +11,9 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
 import { Loader2, User, Bot, Menu, UserPlus, Edit, Plus, Mic, ArrowUp, Shuffle, AudioLines, MessageSquare, Archive, MoreHorizontal, LogOut, Square } from 'lucide-react';
-import { conversationalAgent, type ChatMessage } from '@/ai/flows/conversational-agent';
+// import { conversationalAgent, type ChatMessage } from '@/ai/flows/conversational-agent';
+import { type ChatMessage } from '@/ai/flows/conversational-agent';
+
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
@@ -188,11 +190,16 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
         setIsLoading(true);
 
         try {
-            const currentHistory = conversations[activeChatId]?.messages || [];
-            const result = await conversationalAgent({ 
-                message,
-                history: currentHistory,
-            });
+            // const currentHistory = conversations[activeChatId]?.messages || [];
+            // const result = await conversationalAgent({ 
+            //     message,
+            //     history: currentHistory,
+            // });
+
+            // Temporarily disabled for deployment
+            const result = { response: "Sorry, the AI chat is temporarily disabled. We are working on a fix." };
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
 
             if (!requestCancelledRef.current) {
                 const newAiMessage: ChatMessage = { role: 'model', content: result.response };
