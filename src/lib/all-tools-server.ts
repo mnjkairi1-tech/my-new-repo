@@ -1,4 +1,6 @@
 
+'use server';
+
 // This is a server-only file to prevent client-side components (like icons)
 // from being bundled in server-side code.
 
@@ -34,16 +36,11 @@ import { aiSearchToolData } from './ai-search-data';
 import { healthcareAiToolData } from './healthcare-ai-data';
 import { smartIntegrationsToolData } from './smart-integrations-data';
 import { aiSafetyTestingToolData } from './ai-safety-testing-data';
+import type { Tool } from './types';
 
-// Define a server-safe tool type without React components
-type ServerTool = {
-    name: string;
-    description: string;
-    url: string;
-    category?: string;
-};
+// ServerTool will have all properties of Tool except 'icon' which can be JSX.
+type ServerTool = Omit<Tool, 'icon'>;
 
-// Map the imported data to the server-safe type
 const allData = [
   automationWorkflowToolData,
   businessToolData,
@@ -80,17 +77,21 @@ const allData = [
 ].flat();
 
 
-const combinedTools = (allData ?? []).flatMap(category => 
-  Array.isArray(category?.tools) ? category.tools.map(tool => ({ 
-      name: tool.name,
-      description: tool.description,
-      url: tool.url,
-      category: category.title 
-    })) : []
+const combinedTools: (ServerTool & { category?: string })[] = (allData ?? []).flatMap(category =>
+  Array.isArray(category?.tools)
+    ? category.tools.map(tool => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { icon, ...rest } = tool; // Omit the icon property
+        return {
+          ...rest,
+          category: category.title
+        };
+      })
+    : []
 );
 
 // Create a unique list of tools
-const uniqueTools: ServerTool[] = [];
+const uniqueTools: (ServerTool & { category?: string })[] = [];
 const toolNames = new Set<string>();
 
 for (const tool of combinedTools) {

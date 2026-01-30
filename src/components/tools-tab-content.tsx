@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useMemo, useCallback, useState } from 'react';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -9,7 +9,6 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/language';
-import { allTools as allToolsData } from '@/lib/tools-data';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
@@ -85,25 +84,40 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     
     const [searchTerm, setSearchTerm] = useState('');
     const [priceFilter, setPriceFilter] = useState('All');
+    
+    const [tools, setTools] = useState<Tool[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const filteredTools = useMemo(() => {
-        let tools = allToolsData;
+    useEffect(() => {
+        const fetchTools = async () => {
+            setIsLoading(true);
+            try {
+                const params = new URLSearchParams();
+                if (searchTerm) {
+                    params.append('q', searchTerm);
+                }
+                if (priceFilter) {
+                    params.append('price', priceFilter);
+                }
+                const response = await fetch(`/api/tools?${params.toString()}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch tools');
+                }
+                const data = await response.json();
+                setTools(data);
+            } catch (error) {
+                console.error(error);
+                // Optionally set an error state to show in the UI
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-        // Search filter
-        if (searchTerm) {
-            tools = tools.filter(tool => 
-                tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                tool.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                tool.category?.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        }
+        const debounceTimer = setTimeout(() => {
+            fetchTools();
+        }, 300); // Debounce search input
 
-        // Price filter
-        if (priceFilter === 'Free') {
-            tools = tools.filter(tool => tool.pricing === 'Free' || tool.pricing === 'Freemium');
-        }
-
-        return tools;
+        return () => clearTimeout(debounceTimer);
     }, [searchTerm, priceFilter]);
 
     return (
@@ -136,21 +150,27 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     </DropdownMenu>
                 </div>
                 <div className="text-center mt-2 text-sm font-semibold text-muted-foreground">
-                    {filteredTools.length} Tools
+                    {isLoading ? 'Loading...' : `${tools.length} Tools`}
                 </div>
             </div>
             <div className="flex-grow overflow-y-auto px-4 no-scrollbar pt-2 pb-4">
-                 <div className="grid grid-cols-2 gap-4">
-                    {filteredTools.map(tool => (
-                        <ToolCard
-                            key={tool.name}
-                            tool={tool}
-                            onShare={onShare}
-                            onClick={onClick}
-                            t={t}
-                        />
-                    ))}
-                </div>
+                 {isLoading ? (
+                    <div className="grid grid-cols-2 gap-4">
+                        {[...Array(8)].map((_, i) => <Skeleton key={i} className="h-48 rounded-3xl" />)}
+                    </div>
+                 ) : (
+                    <div className="grid grid-cols-2 gap-4">
+                        {tools.map(tool => (
+                            <ToolCard
+                                key={tool.name}
+                                tool={tool}
+                                onShare={onShare}
+                                onClick={onClick}
+                                t={t}
+                            />
+                        ))}
+                    </div>
+                 )}
             </div>
         </>
     );
