@@ -1,10 +1,11 @@
+
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Briefcase, Filter
+    ArrowLeft, ExternalLink, Star, Share2, Briefcase, Filter, Megaphone, Handshake, UserPlus, Zap, Wallet, ListChecks, MessageSquare, BarChart3, ShoppingCart, Layout, Shield, Cpu, Truck, Building, Box, Users, Code, BrainCircuit, FileText, CheckSquare, Settings, Heart, BookOpen, Search, Recycle, Bot, LineChart, ShieldCheck
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
@@ -12,7 +13,55 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useUserPreferences } from '@/context/user-preferences-context';
-import { type Tool, type ToolCategory, businessToolData } from '@/lib/business-tools-data.tsx';
+import { Skeleton } from '@/components/ui/skeleton';
+
+type Tool = {
+    name: string;
+    description: string;
+    url: string;
+    image: string;
+    dataAiHint: string;
+    pricing: 'Free' | 'Paid' | 'Freemium';
+};
+
+type ToolCategory = {
+    title: string;
+    icon: string;
+    tools: Tool[];
+};
+
+const iconMap: { [key: string]: React.ReactNode } = {
+    Megaphone: <Megaphone className="w-5 h-5 text-primary"/>,
+    Handshake: <Handshake className="w-5 h-5 text-primary"/>,
+    UserPlus: <UserPlus className="w-5 h-5 text-primary"/>,
+    Zap: <Zap className="w-5 h-5 text-primary"/>,
+    Wallet: <Wallet className="w-5 h-5 text-primary"/>,
+    ListChecks: <ListChecks className="w-5 h-5 text-primary"/>,
+    MessageSquare: <MessageSquare className="w-5 h-5 text-primary"/>,
+    BarChart3: <BarChart3 className="w-5 h-5 text-primary"/>,
+    ShoppingCart: <ShoppingCart className="w-5 h-5 text-primary"/>,
+    Layout: <Layout className="w-5 h-5 text-primary"/>,
+    Shield: <Shield className="w-5 h-5 text-primary"/>,
+    Cpu: <Cpu className="w-5 h-5 text-primary"/>,
+    Truck: <Truck className="w-5 h-5 text-primary"/>,
+    Building: <Building className="w-5 h-5 text-primary"/>,
+    Box: <Box className="w-5 h-5 text-primary"/>,
+    Users: <Users className="w-5 h-5 text-primary"/>,
+    Code: <Code className="w-5 h-5 text-primary"/>,
+    BrainCircuit: <BrainCircuit className="w-5 h-5 text-primary"/>,
+    FileText: <FileText className="w-5 h-5 text-primary"/>,
+    CheckSquare: <CheckSquare className="w-5 h-5 text-primary"/>,
+    Settings: <Settings className="w-5 h-5 text-primary"/>,
+    Heart: <Heart className="w-5 h-5 text-primary"/>,
+    Star: <Star className="w-5 h-5 text-primary"/>,
+    BookOpen: <BookOpen className="w-5 h-5 text-primary"/>,
+    Search: <Search className="w-5 h-5 text-primary"/>,
+    Recycle: <Recycle className="w-5 h-5 text-primary"/>,
+    Briefcase: <Briefcase className="w-5 h-5 text-primary"/>,
+    Bot: <Bot className="w-5 h-5 text-primary"/>,
+    LineChart: <LineChart className="w-5 h-5 text-primary"/>,
+    ShieldCheck: <ShieldCheck className="w-5 h-5 text-primary"/>,
+};
 
 
 export default function BusinessToolsPage() {
@@ -20,9 +69,21 @@ export default function BusinessToolsPage() {
     const [priceFilter, setPriceFilter] = useState('All');
     const [open, setOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
+    const [toolData, setToolData] = useState<ToolCategory[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         setIsClient(true);
+        fetch('/api/business-tools')
+            .then(res => res.json())
+            .then(data => {
+                setToolData(data);
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.error("Failed to fetch tool data:", err);
+                setIsLoading(false);
+            });
     }, []);
 
     const handleShareTool = useCallback(async (e: React.MouseEvent, tool: Tool) => {
@@ -96,15 +157,31 @@ export default function BusinessToolsPage() {
     }
     
     const filteredToolData = useMemo(() => {
+        if (!toolData) return [];
         if (priceFilter === 'All') {
-            return businessToolData;
+            return toolData;
         }
-        return businessToolData.map(category => ({
+        return toolData.map(category => ({
             ...category,
             tools: category.tools.filter(tool => tool.pricing === 'Free' || tool.pricing === 'Freemium')
         })).filter(category => category.tools.length > 0);
-    }, [priceFilter]);
+    }, [priceFilter, toolData]);
 
+
+    const PageSkeleton = () => (
+        <div className="p-4 space-y-8">
+            {[...Array(3)].map((_, i) => (
+                <div key={i}>
+                    <Skeleton className="h-8 w-1/2 mb-3" />
+                    <div className="flex gap-4">
+                        {[...Array(4)].map((_, j) => (
+                            <Skeleton key={j} className="h-32 w-24 rounded-3xl" />
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
 
   return (
     <div className="bg-background min-h-screen flex flex-col items-center justify-start font-body relative">
@@ -131,14 +208,14 @@ export default function BusinessToolsPage() {
 
       <main className="relative z-10 w-full max-w-sm flex-1 flex flex-col min-h-0 mt-6">
         <div className="flex-grow overflow-y-auto no-scrollbar p-4 space-y-8">
-            {filteredToolData.map((category, index) => {
+            {isLoading ? <PageSkeleton /> : filteredToolData.map((category, index) => {
               if (category.tools.length === 0) return null;
 
               return (
               <section key={index}>
                   <div className="flex justify-between items-center mb-3 px-2">
                       <h2 className="font-semibold text-xl flex items-center gap-2">
-                          {category.icon}
+                          {iconMap[category.icon] || <Briefcase className="w-5 h-5 text-primary"/>}
                           {category.title}
                       </h2>
                       {index === 0 && isClient && (

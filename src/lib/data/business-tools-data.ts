@@ -1,14 +1,5 @@
 
-
 'use client';
-
-import React from 'react';
-import { getImage, getHint } from '@/lib/placeholder-images';
-import { 
-    Megaphone, Handshake, UserPlus, Zap, Wallet, ListChecks, MessageSquare, BarChart3, ShoppingCart, Layout,
-    Shield, Cpu, Truck, Building, Box, Users, Code, BrainCircuit, FileText, CheckSquare, Settings,
-    Heart, Star, BookOpen, Search, Recycle, Briefcase, Bot, LineChart, ShieldCheck
-} from 'lucide-react';
 
 export type Tool = {
     name: string;
@@ -21,19 +12,19 @@ export type Tool = {
 
 export type ToolCategory = {
     title: string;
-    icon: React.ReactNode;
+    icon: string;
     tools: Tool[];
 };
 
 export const businessToolData: ToolCategory[] = [
     {
         title: "Marketing & Sales",
-        icon: <Megaphone className="w-5 h-5 text-primary"/>,
+        icon: "Megaphone",
         tools: [
-            { name: 'HubSpot', description: 'All-in-one marketing, sales, and service software.', url: 'https://www.hubspot.com/', image: getImage('biz-hubspot'), dataAiHint: getHint('biz-hubspot'), pricing: 'Freemium' },
-            { name: 'Salesforce', description: 'The world\'s #1 customer relationship management (CRM) platform.', url: 'https://www.salesforce.com/', image: getImage('biz-salesforce'), dataAiHint: getHint('biz-salesforce'), pricing: 'Paid' },
-            { name: 'Jasper', description: 'AI Content Platform for teams to create marketing copy.', url: 'https://www.jasper.ai/', image: getImage('biz-jasper'), dataAiHint: getHint('biz-jasper'), pricing: 'Paid' },
-            { name: 'Copy.ai', description: 'AI-powered copywriter for generating marketing content.', url: 'https://www.copy.ai/', image: getImage('biz-copyai'), dataAiHint: getHint('biz-copyai'), pricing: 'Freemium' },
+            { name: 'HubSpot', description: 'All-in-one marketing, sales, and service software.', url: 'https://www.hubspot.com/', image: 'https://picsum.photos/seed/biz-hubspot/600/400', dataAiHint: 'crm platform', pricing: 'Freemium' },
+            { name: 'Salesforce', description: 'The world\'s #1 customer relationship management (CRM) platform.', url: 'https://www.salesforce.com/', image: 'https://picsum.photos/seed/biz-salesforce/600/400', dataAiHint: 'crm dashboard', pricing: 'Paid' },
+            { name: 'Jasper', description: 'AI Content Platform for teams to create marketing copy.', url: 'https://www.jasper.ai/', image: 'https://picsum.photos/seed/biz-jasper/600/400', dataAiHint: 'ai writer', pricing: 'Paid' },
+            { name: 'Copy.ai', description: 'AI-powered copywriter for generating marketing content.', url: 'https://www.copy.ai/', image: 'https://picsum.photos/seed/biz-copyai/600/400', dataAiHint: 'marketing copy', pricing: 'Freemium' },
             { name: 'Semrush', description: 'Online visibility management and content marketing platform.', url: 'https://www.semrush.com/', image: 'https://picsum.photos/seed/semrush-biz/600/400', dataAiHint: 'seo platform', pricing: 'Paid' },
             { name: 'Ahrefs', description: 'SEO tools & resources to grow your search traffic.', url: 'https://ahrefs.com/', image: 'https://picsum.photos/seed/ahrefs-mktg/600/400', dataAiHint: 'seo tools', pricing: 'Paid' },
             { name: 'Mailchimp', description: 'Email marketing and automation platform.', url: 'https://mailchimp.com/', image: 'https://picsum.photos/seed/mailchimp-mktg/600/400', dataAiHint: 'email marketing', pricing: 'Freemium' },
@@ -47,17 +38,17 @@ export const businessToolData: ToolCategory[] = [
             { name: 'Zoho CRM', description: 'Online Customer Relationship Management software.', url: 'https://www.zoho.com/crm/', image: 'https://picsum.photos/seed/zoho-crm-mktg/600/400', dataAiHint: 'online crm', pricing: 'Freemium' },
             { name: 'Gong', description: 'Revenue intelligence platform for sales teams.', url: 'https://www.gong.io/', image: 'https://picsum.photos/seed/gong-mktg/600/400', dataAiHint: 'revenue intelligence', pricing: 'Paid' },
             { name: 'Outreach', description: 'Sales execution platform to build pipeline and close deals.', url: 'https://www.outreach.io/', image: 'https://picsum.photos/seed/outreach-mktg/600/400', dataAiHint: 'sales execution', pricing: 'Paid' },
-            { name: 'Drift', description: 'Conversational marketing and sales platform.', url: 'https://www.drift.com/', image: getImage('biz-drift'), dataAiHint: getHint('biz-drift'), pricing: 'Paid' },
+            { name: 'Drift', description: 'Conversational marketing and sales platform.', url: 'https://www.drift.com/', image: 'https://picsum.photos/seed/biz-drift/600/400', dataAiHint: 'conversational ai', pricing: 'Paid' },
             { name: 'Marketo', description: 'Marketing automation software.', url: 'https://business.adobe.com/products/marketo/adobe-marketo.html', image: 'https://picsum.photos/seed/marketo-mktg/600/400', dataAiHint: 'b2b marketing', pricing: 'Paid' },
             { name: 'Fathom Analytics', description: 'Simple, privacy-focused website analytics.', url: 'https://usefathom.com/', image: 'https://picsum.photos/seed/fathom-mktg/600/400', dataAiHint: 'website analytics', pricing: 'Paid' }
         ]
     },
     {
         title: "Customer Support",
-        icon: <Handshake className="w-5 h-5 text-primary"/>,
+        icon: "Handshake",
         tools: [
-            { name: 'Intercom', description: 'AI-powered customer service platform.', url: 'https://www.intercom.com/', image: getImage('biz-intercom'), dataAiHint: getHint('biz-intercom'), pricing: 'Paid' },
-            { name: 'Zendesk', description: 'Customer service software and sales CRM.', url: 'https://www.zendesk.com/', image: getImage('biz-zendesk'), dataAiHint: getHint('biz-zendesk'), pricing: 'Paid' },
+            { name: 'Intercom', description: 'AI-powered customer service platform.', url: 'https://www.intercom.com/', image: 'https://picsum.photos/seed/biz-intercom/600/400', dataAiHint: 'customer service', pricing: 'Paid' },
+            { name: 'Zendesk', description: 'Customer service software and sales CRM.', url: 'https://www.zendesk.com/', image: 'https://picsum.photos/seed/biz-zendesk/600/400', dataAiHint: 'support crm', pricing: 'Paid' },
             { name: 'Freshdesk', description: 'Cloud-based customer support software.', url: 'https://freshdesk.com/', image: 'https://picsum.photos/seed/freshdesk-support/600/400', dataAiHint: 'helpdesk software', pricing: 'Freemium' },
             { name: 'Help Scout', description: 'A delightful, human-centered customer service platform.', url: 'https://www.helpscout.com/', image: 'https://picsum.photos/seed/helpscout-support/600/400', dataAiHint: 'shared inbox', pricing: 'Paid' },
             { name: 'Gorgias', description: 'Customer service platform for e-commerce.', url: 'https://www.gorgias.com/', image: 'https://picsum.photos/seed/gorgias-biz/600/400', dataAiHint: 'ecommerce helpdesk', pricing: 'Paid' },
@@ -80,13 +71,13 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "HR & Recruitment",
-        icon: <UserPlus className="w-5 h-5 text-primary"/>,
+        icon: "UserPlus",
         tools: [
             { name: 'Greenhouse', description: 'Hiring software for growing companies.', url: 'https://www.greenhouse.io/', image: 'https://picsum.photos/seed/greenhouse-biz/600/400', dataAiHint: 'hiring software', pricing: 'Paid' },
             { name: 'Lever', description: 'Talent acquisition suite for the entire talent lifecycle.', url: 'https://www.lever.co/', image: 'https://picsum.photos/seed/lever-biz/600/400', dataAiHint: 'recruiting ats', pricing: 'Paid' },
             { name: 'BambooHR', description: 'HR software for small and medium businesses.', url: 'https://www.bamboohr.com/', image: 'https://picsum.photos/seed/bamboohr-biz/600/400', dataAiHint: 'hr software', pricing: 'Paid' },
-            { name: 'HireVue', description: 'AI-driven hiring platform with video interviews.', url: 'https://www.hirevue.com/', image: getImage('biz-hirevue'), dataAiHint: getHint('biz-hirevue'), pricing: 'Paid' },
-            { name: 'Eightfold AI', description: 'Deep Learning Talent Intelligence Platform.', url: 'https://eightfold.ai/', image: getImage('biz-eightfold'), dataAiHint: getHint('biz-eightfold'), pricing: 'Paid' },
+            { name: 'HireVue', description: 'AI-driven hiring platform with video interviews.', url: 'https://www.hirevue.com/', image: 'https://picsum.photos/seed/biz-hirevue/600/400', dataAiHint: 'video interviews', pricing: 'Paid' },
+            { name: 'Eightfold AI', description: 'Deep Learning Talent Intelligence Platform.', url: 'https://eightfold.ai/', image: 'https://picsum.photos/seed/biz-eightfold/600/400', dataAiHint: 'talent intelligence', pricing: 'Paid' },
             { name: 'Workday', description: 'Enterprise management cloud for finance, HR, and planning.', url: 'https://www.workday.com/', image: 'https://picsum.photos/seed/workday-hr/600/400', dataAiHint: 'hris', pricing: 'Paid' },
             { name: 'Gusto', description: 'Payroll, benefits, and HR for small businesses.', url: 'https://gusto.com/', image: 'https://picsum.photos/seed/gusto-hr/600/400', dataAiHint: 'payroll hr', pricing: 'Paid' },
             { name: 'Rippling', description: 'Employee management platform for HR and IT.', url: 'https://www.rippling.com/', image: 'https://picsum.photos/seed/rippling-hr/600/400', dataAiHint: 'employee management', pricing: 'Paid' },
@@ -106,14 +97,14 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Operations & Productivity",
-        icon: <Zap className="w-5 h-5 text-primary"/>,
+        icon: "Zap",
         tools: [
             { name: 'Notion', description: 'The all-in-one workspace for your team.', url: 'https://www.notion.so/', image: 'https://picsum.photos/seed/notion-biz/600/400', dataAiHint: 'workspace app', pricing: 'Freemium' },
             { name: 'Slack', description: 'Team communication and collaboration platform.', url: 'https://slack.com/', image: 'https://picsum.photos/seed/slack-biz/600/400', dataAiHint: 'team chat', pricing: 'Freemium' },
             { name: 'Airtable', description: 'Low-code platform for building collaborative apps.', url: 'https://www.airtable.com/', image: 'https://picsum.photos/seed/airtable-ops/600/400', dataAiHint: 'database spreadsheet', pricing: 'Freemium' },
             { name: 'Zapier', description: 'Automation for busy people, connecting your apps.', url: 'https://zapier.com/', image: 'https://picsum.photos/seed/zapier-ops/600/400', dataAiHint: 'app automation', pricing: 'Freemium' },
-            { name: 'Fireflies.ai', description: 'AI meeting assistant to record and transcribe.', url: 'https://fireflies.ai/', image: getImage('biz-fireflies'), dataAiHint: getHint('biz-fireflies'), pricing: 'Freemium' },
-            { name: 'Motion', description: 'AI-powered calendar and time management.', url: 'https://www.usemotion.com/', image: getImage('biz-motion'), dataAiHint: getHint('biz-motion'), pricing: 'Paid' },
+            { name: 'Fireflies.ai', description: 'AI meeting assistant to record and transcribe.', url: 'https://fireflies.ai/', image: 'https://picsum.photos/seed/biz-fireflies/600/400', dataAiHint: 'meeting recorder', pricing: 'Freemium' },
+            { name: 'Motion', description: 'AI-powered calendar and time management.', url: 'https://www.usemotion.com/', image: 'https://picsum.photos/seed/biz-motion/600/400', dataAiHint: 'ai calendar', pricing: 'Paid' },
             { name: 'Asana', description: 'Work management platform for teams.', url: 'https://asana.com/', image: 'https://picsum.photos/seed/asana-ops/600/400', dataAiHint: 'project management', pricing: 'Freemium' },
             { name: 'Trello', description: 'A visual collaboration tool for your team.', url: 'https://trello.com/', image: 'https://picsum.photos/seed/trello-ops/600/400', dataAiHint: 'kanban boards', pricing: 'Freemium' },
             { name: 'Miro', description: 'Online collaborative whiteboard platform.', url: 'https://miro.com/', image: 'https://picsum.photos/seed/miro-ops/600/400', dataAiHint: 'visual collaboration', pricing: 'Freemium' },
@@ -124,7 +115,7 @@ export const businessToolData: ToolCategory[] = [
             { name: 'LastPass', description: 'Password manager and vault app.', url: 'https://www.lastpass.com/', image: 'https://picsum.photos/seed/lastpass-ops/600/400', dataAiHint: 'password manager', pricing: 'Freemium' },
             { name: '1Password', description: 'Password manager for families, businesses, and teams.', url: 'https://1password.com/', image: 'https://picsum.photos/seed/1password-ops/600/400', dataAiHint: 'secure passwords', pricing: 'Paid' },
             { name: 'Todoist', description: 'To-do list and task manager.', url: 'https://todoist.com/', image: 'https://picsum.photos/seed/todoist-ops/600/400', dataAiHint: 'task manager', pricing: 'Freemium' },
-            { name: 'ClickUp', description: 'One app to replace them all. For tasks, docs, chat, goals.', url: 'https://clickup.com/', image: getImage('biz-clickup'), dataAiHint: getHint('biz-clickup'), pricing: 'Freemium' },
+            { name: 'ClickUp', description: 'One app to replace them all. For tasks, docs, chat, goals.', url: 'https://clickup.com/', image: 'https://picsum.photos/seed/biz-clickup/600/400', dataAiHint: 'productivity platform', pricing: 'Freemium' },
             { name: 'Process Street', description: 'Workflow software for teams.', url: 'https://www.process.st/', image: 'https://picsum.photos/seed/processst-ops/600/400', dataAiHint: 'checklist software', pricing: 'Paid' },
             { name: 'Coda', description: 'The all-in-one doc that brings words, data, and teams together.', url: 'https://coda.io/', image: 'https://picsum.photos/seed/coda-ops/600/400', dataAiHint: 'all-in-one doc', pricing: 'Freemium' },
             { name: 'SaneBox', description: 'AI for your inbox to filter out unimportant emails.', url: 'https://www.sanebox.com/', image: 'https://picsum.photos/seed/sanebox-ops/600/400', dataAiHint: 'email management', pricing: 'Paid' }
@@ -132,7 +123,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Finance & Accounting",
-        icon: <Wallet className="w-5 h-5 text-primary"/>,
+        icon: "Wallet",
         tools: [
             { name: 'QuickBooks', description: 'Smart, simple online accounting software.', url: 'https://quickbooks.intuit.com/', image: 'https://picsum.photos/seed/quickbooks-biz/600/400', dataAiHint: 'accounting', pricing: 'Paid' },
             { name: 'Xero', description: 'Online accounting software for your business.', url: 'https://www.xero.com/', image: 'https://picsum.photos/seed/xero-biz/600/400', dataAiHint: 'business accounting', pricing: 'Paid' },
@@ -152,9 +143,9 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Project Management",
-        icon: <ListChecks className="w-5 h-5 text-primary"/>,
+        icon: "ListChecks",
         tools: [
-            { name: 'ClickUp', description: 'One app to replace them all.', url: 'https://clickup.com/ai', image: getImage('biz-clickup'), dataAiHint: getHint('biz-clickup'), pricing: 'Freemium' },
+            { name: 'ClickUp', description: 'One app to replace them all.', url: 'https://clickup.com/ai', image: 'https://picsum.photos/seed/biz-clickup/600/400', dataAiHint: 'productivity platform', pricing: 'Freemium' },
             { name: 'Asana', description: 'Work management for teams.', url: 'https://asana.com/', image: 'https://picsum.photos/seed/asana-biz/600/400', dataAiHint: 'team tasks', pricing: 'Freemium' },
             { name: 'Trello', description: 'A visual collaboration tool for your team.', url: 'https://trello.com/', image: 'https://picsum.photos/seed/trello-biz/600/400', dataAiHint: 'kanban boards', pricing: 'Freemium' },
             { name: 'Monday.com', description: 'Work OS that powers teams to run projects.', url: 'https://monday.com/', image: 'https://picsum.photos/seed/monday-biz/600/400', dataAiHint: 'work os', pricing: 'Paid' },
@@ -173,7 +164,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Communication & Collaboration",
-        icon: <MessageSquare className="w-5 h-5 text-primary"/>,
+        icon: "MessageSquare",
         tools: [
             { name: 'Slack', description: 'Team communication platform.', url: 'https://slack.com/', image: 'https://picsum.photos/seed/slack-comm/600/400', dataAiHint: 'team chat', pricing: 'Freemium' },
             { name: 'Microsoft Teams', description: 'Chat, meet, call, and collaborate.', url: 'https://www.microsoft.com/en-us/microsoft-teams/group-chat-software', image: 'https://picsum.photos/seed/teams-comm/600/400', dataAiHint: 'video conference', pricing: 'Freemium' },
@@ -189,7 +180,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Business Intelligence & Analytics",
-        icon: <BarChart3 className="w-5 h-5 text-primary"/>,
+        icon: "BarChart3",
         tools: [
             { name: 'Tableau', description: 'Leading data visualization and BI software.', url: 'https://www.tableau.com/', image: 'https://picsum.photos/seed/tableau-bi-biz/600/400', dataAiHint: 'data visualization', pricing: 'Paid' },
             { name: 'Power BI', description: 'Microsoft\'s BI tools with integrated AI capabilities.', url: 'https://powerbi.microsoft.com/', image: 'https://picsum.photos/seed/powerbi-biz/600/400', dataAiHint: 'business analytics', pricing: 'Freemium' },
@@ -204,7 +195,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "E-commerce Platforms",
-        icon: <ShoppingCart className="w-5 h-5 text-primary"/>,
+        icon: "ShoppingCart",
         tools: [
             { name: 'Shopify', description: 'E-commerce platform for businesses of all sizes.', url: 'https://www.shopify.com/', image: 'https://picsum.photos/seed/shopify-ecom/600/400', dataAiHint: 'online store', pricing: 'Paid' },
             { name: 'BigCommerce', description: 'Leading e-commerce platform for growing brands.', url: 'https://www.bigcommerce.com/', image: 'https://picsum.photos/seed/bigcommerce-ecom/600/400', dataAiHint: 'ecommerce builder', pricing: 'Paid' },
@@ -216,7 +207,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Website Builders",
-        icon: <Layout className="w-5 h-5 text-primary"/>,
+        icon: "Layout",
         tools: [
             { name: 'Webflow', description: 'Build responsive websites visually.', url: 'https://webflow.com/', image: 'https://picsum.photos/seed/webflow-biz/600/400', dataAiHint: 'visual development', pricing: 'Freemium' },
             { name: 'Wix', description: 'Free website builder for creating stunning websites.', url: 'https://www.wix.com/', image: 'https://picsum.photos/seed/wix-biz/600/400', dataAiHint: 'drag and drop', pricing: 'Freemium' },
@@ -227,19 +218,8 @@ export const businessToolData: ToolCategory[] = [
         ]
     },
     {
-        title: "Legal & Compliance",
-        icon: <Shield className="w-5 h-5 text-primary"/>,
-        tools: [
-            { name: 'Clerky', description: 'The easiest way for startups to get legal paperwork done.', url: 'https://www.clerky.com/', image: 'https://picsum.photos/seed/clerky-legal/600/400', dataAiHint: 'startup legal', pricing: 'Paid' },
-            { name: 'LegalZoom', description: 'Online legal services for businesses and families.', url: 'https://www.legalzoom.com/', image: 'https://picsum.photos/seed/legalzoom-biz/600/400', dataAiHint: 'online legal', pricing: 'Paid' },
-            { name: 'Rocket Lawyer', description: 'Affordable and simple legal services.', url: 'https://www.rocketlawyer.com/', image: 'https://picsum.photos/seed/rocketlawyer-legal/600/400', dataAiHint: 'legal documents', pricing: 'Paid' },
-            { name: 'Termly', description: 'Compliance solutions for your business.', url: 'https://termly.io/', image: 'https://picsum.photos/seed/termly-legal/600/400', dataAiHint: 'privacy policy', pricing: 'Freemium' },
-            { name: 'Iubenda', description: 'Attorney-level solutions to make your websites and apps compliant.', url: 'https://www.iubenda.com/', image: 'https://picsum.photos/seed/iubenda-legal/600/400', dataAiHint: 'gdpr compliance', pricing: 'Paid' },
-        ]
-    },
-    {
         title: "Cybersecurity",
-        icon: <ShieldCheck className="w-5 h-5 text-primary"/>,
+        icon: "ShieldCheck",
         tools: [
             { name: 'CrowdStrike', description: 'Cloud-native endpoint security.', url: 'https://www.crowdstrike.com/', image: 'https://picsum.photos/seed/crowdstrike-sec-biz/600/400', dataAiHint: 'endpoint security', pricing: 'Paid' },
             { name: 'Darktrace', description: 'Cyber AI for the real world.', url: 'https://www.darktrace.com/', image: 'https://picsum.photos/seed/darktrace-biz/600/400', dataAiHint: 'cyber ai', pricing: 'Paid' },
@@ -250,7 +230,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "IT Management",
-        icon: <Cpu className="w-5 h-5 text-primary"/>,
+        icon: "Cpu",
         tools: [
             { name: 'Jamf', description: 'Apple enterprise management.', url: 'https://www.jamf.com/', image: 'https://picsum.photos/seed/jamf-it/600/400', dataAiHint: 'apple management', pricing: 'Paid' },
             { name: 'Kandji', description: 'Apple device management for modern businesses.', url: 'https://www.kandji.io/', image: 'https://picsum.photos/seed/kandji-it/600/400', dataAiHint: 'mdm solution', pricing: 'Paid' },
@@ -261,7 +241,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Supply Chain & Logistics",
-        icon: <Truck className="w-5 h-5 text-primary"/>,
+        icon: "Truck",
         tools: [
             { name: 'Flexport', description: 'The modern freight forwarder.', url: 'https://www.flexport.com/', image: 'https://picsum.photos/seed/flexport-biz/600/400', dataAiHint: 'freight forwarding', pricing: 'Paid' },
             { name: 'SAP SCM', description: 'Supply chain management software.', url: 'https://www.sap.com/products/supply-chain-management.html', image: 'https://picsum.photos/seed/sap-scm/600/400', dataAiHint: 'supply chain', pricing: 'Paid' },
@@ -270,7 +250,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Real Estate & Property",
-        icon: <Building className="w-5 h-5 text-primary"/>,
+        icon: "Building",
         tools: [
             { name: 'Zillow', description: 'The leading real estate and rental marketplace.', url: 'https://www.zillow.com/', image: 'https://picsum.photos/seed/zillow-biz/600/400', dataAiHint: 'real estate', pricing: 'Freemium' },
             { name: 'Redfin', description: 'Real estate brokerage with modern technology.', url: 'https://www.redfin.com/', image: 'https://picsum.photos/seed/redfin-re/600/400', dataAiHint: 'real estate', pricing: 'Freemium' },
@@ -279,7 +259,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Inventory Management",
-        icon: <Box className="w-5 h-5 text-primary"/>,
+        icon: "Box",
         tools: [
             { name: 'Cin7', description: 'Automated inventory management.', url: 'https://www.cin7.com/', image: 'https://picsum.photos/seed/cin7-biz/600/400', dataAiHint: 'inventory software', pricing: 'Paid' },
             { name: 'Zoho Inventory', description: 'Online inventory management software.', url: 'https://www.zoho.com/inventory/', image: 'https://picsum.photos/seed/zoho-inventory/600/400', dataAiHint: 'inventory control', pricing: 'Freemium' },
@@ -288,7 +268,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Team & People Management",
-        icon: <Users className="w-5 h-5 text-primary"/>,
+        icon: "Users",
         tools: [
             { name: '15Five', description: 'Continuous performance management.', url: 'https://www.15five.com/', image: 'https://picsum.photos/seed/15five-biz/600/400', dataAiHint: 'performance review', pricing: 'Paid' },
             { name: 'Culture Amp', description: 'Employee engagement and performance platform.', url: 'https://www.cultureamp.com/', image: 'https://picsum.photos/seed/cultureamp-biz/600/400', dataAiHint: 'employee engagement', pricing: 'Paid' },
@@ -297,7 +277,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Developer Tools",
-        icon: <Code className="w-5 h-5 text-primary"/>,
+        icon: "Code",
         tools: [
             { name: 'GitHub', description: 'The complete developer platform.', url: 'https://github.com/', image: 'https://picsum.photos/seed/github-biz/600/400', dataAiHint: 'code hosting', pricing: 'Freemium' },
             { name: 'GitLab', description: 'The One DevOps Platform.', url: 'https://about.gitlab.com/', image: 'https://picsum.photos/seed/gitlab-biz/600/400', dataAiHint: 'devops platform', pricing: 'Freemium' },
@@ -306,7 +286,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Knowledge Management",
-        icon: <BrainCircuit className="w-5 h-5 text-primary"/>,
+        icon: "BrainCircuit",
         tools: [
             { name: 'Confluence', description: 'Team workspace for knowledge and collaboration.', url: 'https://www.atlassian.com/software/confluence', image: 'https://picsum.photos/seed/confluence-biz/600/400', dataAiHint: 'knowledge base', pricing: 'Freemium' },
             { name: 'Guru', description: 'A knowledge management solution that works in your workflow.', url: 'https://www.getguru.com/', image: 'https://picsum.photos/seed/guru-biz/600/400', dataAiHint: 'company wiki', pricing: 'Freemium' },
@@ -315,7 +295,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Document Management",
-        icon: <FileText className="w-5 h-5 text-primary"/>,
+        icon: "FileText",
         tools: [
             { name: 'Google Workspace', description: 'Productivity and collaboration tools.', url: 'https://workspace.google.com/', image: 'https://picsum.photos/seed/gworkspace-biz/600/400', dataAiHint: 'collaboration tools', pricing: 'Paid' },
             { name: 'Microsoft 365', description: 'Productivity cloud for work and life.', url: 'https://www.microsoft.com/en-us/microsoft-365', image: 'https://picsum.photos/seed/m365-biz/600/400', dataAiHint: 'office apps', pricing: 'Paid' },
@@ -324,7 +304,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Surveys & Feedback",
-        icon: <CheckSquare className="w-5 h-5 text-primary"/>,
+        icon: "CheckSquare",
         tools: [
             { name: 'SurveyMonkey', description: 'Online survey software and questionnaire tool.', url: 'https://www.surveymonkey.com/', image: 'https://picsum.photos/seed/surveymonkey-biz/600/400', dataAiHint: 'online surveys', pricing: 'Freemium' },
             { name: 'Typeform', description: 'Create forms, surveys, and quizzes that people enjoy answering.', url: 'https://www.typeform.com/', image: 'https://picsum.photos/seed/typeform-biz/600/400', dataAiHint: 'conversational forms', pricing: 'Freemium' },
@@ -333,7 +313,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Automation",
-        icon: <Settings className="w-5 h-5 text-primary"/>,
+        icon: "Settings",
         tools: [
             { name: 'Zapier', description: 'Automation for busy people.', url: 'https://zapier.com/', image: 'https://picsum.photos/seed/zapier-biz/600/400', dataAiHint: 'app integration', pricing: 'Freemium' },
             { name: 'Make (formerly Integromat)', description: 'Visually create, build, and automate.', url: 'https://www.make.com/', image: 'https://picsum.photos/seed/make-biz/600/400', dataAiHint: 'workflow automation', pricing: 'Freemium' },
@@ -342,7 +322,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Customer Loyalty",
-        icon: <Heart className="w-5 h-5 text-primary"/>,
+        icon: "Heart",
         tools: [
             { name: 'Smile.io', description: 'Loyalty programs for small businesses.', url: 'https://smile.io/', image: 'https://picsum.photos/seed/smileio-biz/600/400', dataAiHint: 'rewards program', pricing: 'Paid' },
             { name: 'Yotpo', description: 'eCommerce marketing platform with loyalty & referrals.', url: 'https://www.yotpo.com/platform/loyalty-referrals/', image: 'https://picsum.photos/seed/yotpo-loyalty/600/400', dataAiHint: 'loyalty referrals', pricing: 'Paid' },
@@ -350,7 +330,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Reviews & Reputation",
-        icon: <Star className="w-5 h-5 text-primary"/>,
+        icon: "Star",
         tools: [
             { name: 'Podium', description: 'Interaction Management platform.', url: 'https://www.podium.com/', image: 'https://picsum.photos/seed/podium-biz/600/400', dataAiHint: 'online reviews', pricing: 'Paid' },
             { name: 'Birdeye', description: 'All-in-one experience marketing platform.', url: 'https://birdeye.com/', image: 'https://picsum.photos/seed/birdeye-reviews/600/400', dataAiHint: 'experience marketing', pricing: 'Paid' },
@@ -358,7 +338,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Learning & Development",
-        icon: <BookOpen className="w-5 h-5 text-primary"/>,
+        icon: "BookOpen",
         tools: [
             { name: 'Coursera for Business', description: 'Workforce development and training.', url: 'https://www.coursera.org/business', image: 'https://picsum.photos/seed/coursera-biz/600/400', dataAiHint: 'employee training', pricing: 'Paid' },
             { name: 'Udemy Business', description: 'Online learning platform for professional development.', url: 'https://business.udemy.com/', image: 'https://picsum.photos/seed/udemy-biz/600/400', dataAiHint: 'corporate training', pricing: 'Paid' },
@@ -366,7 +346,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Market Intelligence",
-        icon: <Search className="w-5 h-5 text-primary"/>,
+        icon: "Search",
         tools: [
             { name: 'Crayon', description: 'Market and competitive intelligence software.', url: 'https://www.crayon.co/', image: 'https://picsum.photos/seed/crayon-mi/600/400', dataAiHint: 'competitive intelligence', pricing: 'Paid' },
             { name: 'Similarweb', description: 'Digital intelligence for your business.', url: 'https://www.similarweb.com/', image: 'https://picsum.photos/seed/similarweb-mi/600/400', dataAiHint: 'website traffic', pricing: 'Freemium' },
@@ -374,7 +354,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Content Repurposing",
-        icon: <Recycle className="w-5 h-5 text-primary"/>,
+        icon: "Recycle",
         tools: [
             { name: 'Opus Clip', description: 'Turn long videos into viral shorts with AI.', url: 'https://www.opus.pro/', image: 'https://picsum.photos/seed/opusclip-biz/600/400', dataAiHint: 'video clips', pricing: 'Freemium' },
             { name: 'Vidyo.ai', description: 'Make short videos from long ones instantly.', url: 'https://vidyo.ai/', image: 'https://picsum.photos/seed/vidyo-ai/600/400', dataAiHint: 'repurpose video', pricing: 'Freemium' },
@@ -382,7 +362,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Business Process Management",
-        icon: <Briefcase className="w-5 h-5 text-primary"/>,
+        icon: "Briefcase",
         tools: [
             { name: 'Kissflow', description: 'Work platform to manage all of your work.', url: 'https://kissflow.com/', image: 'https://picsum.photos/seed/kissflow-bpm/600/400', dataAiHint: 'bpm software', pricing: 'Paid' },
             { name: 'ProcessMaker', description: 'Low-code business process management.', url: 'https://www.processmaker.com/', image: 'https://picsum.photos/seed/processmaker/600/400', dataAiHint: 'low-code bpm', pricing: 'Paid' },
@@ -390,7 +370,7 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Chatbots & Conversational AI",
-        icon: <Bot className="w-5 h-5 text-primary"/>,
+        icon: "Bot",
         tools: [
             { name: 'Drift', description: 'Conversational AI for sales and marketing.', url: 'https://www.drift.com/', image: 'https://picsum.photos/seed/drift-bot/600/400', dataAiHint: 'sales chatbot', pricing: 'Paid' },
             { name: 'ManyChat', description: 'Automate interactive conversations in Instagram DMs, Facebook Messenger.', url: 'https://manychat.com/', image: 'https://picsum.photos/seed/manychat-bot/600/400', dataAiHint: 'messenger marketing', pricing: 'Freemium' },
@@ -398,11 +378,10 @@ export const businessToolData: ToolCategory[] = [
     },
     {
         title: "Forecasting",
-        icon: <LineChart className="w-5 h-5 text-primary"/>,
+        icon: "LineChart",
         tools: [
             { name: 'Jira', description: 'Project management with forecasting abilities.', url: 'https://www.atlassian.com/software/jira', image: 'https://picsum.photos/seed/jira-forecast/600/400', dataAiHint: 'agile forecasting', pricing: 'Freemium' },
             { name: 'Anaplan', description: 'Platform for connected planning.', url: 'https://www.anaplan.com/', image: 'https://picsum.photos/seed/anaplan-forecast/600/400', dataAiHint: 'connected planning', pricing: 'Paid' },
         ]
     }
 ];
-

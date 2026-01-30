@@ -5,7 +5,7 @@
 // from being bundled in server-side code.
 
 import { automationWorkflowToolData } from './automation-workflow-tools-data';
-import { businessToolData } from './business-tools-data';
+// import { businessToolData } from './business-tools-data';
 import { chatbotAssistantToolData } from './chatbot-assistant-tools-data';
 import { codingToolData } from './coding-tools-data';
 import { contentCreationToolData } from './content-creation-tool-data';
@@ -37,6 +37,7 @@ import { healthcareAiToolData } from './healthcare-ai-data';
 import { smartIntegrationsToolData } from './smart-integrations-data';
 import { aiSafetyTestingToolData } from './ai-safety-testing-data';
 import type { Tool } from './types';
+import { businessToolData } from './data/business-tools-data';
 
 // ServerTool will have all properties of Tool except 'icon' which can be JSX.
 type ServerTool = Omit<Tool, 'icon'>;
