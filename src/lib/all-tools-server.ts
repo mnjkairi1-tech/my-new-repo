@@ -1,6 +1,4 @@
 
-'use server';
-
 // This is a server-only file to prevent client-side components (like icons)
 // from being bundled in server-side code.
 
