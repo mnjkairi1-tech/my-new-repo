@@ -18,7 +18,20 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true,
+    remotePatterns: [
+        {
+            protocol: 'https',
+            hostname: 'picsum.photos',
+        },
+        {
+            protocol: 'https',
+            hostname: 'images.unsplash.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'i.postimg.cc',
+        }
+    ]
   },
    webpack: (config, { isServer }) => {
     // See https://webpack.js.org/configuration/experiments/

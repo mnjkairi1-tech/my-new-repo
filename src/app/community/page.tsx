@@ -8,12 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Users, Star } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
 import { collection, query, orderBy } from 'firebase/firestore';
-import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 interface Group {
     id: string;
@@ -93,7 +93,7 @@ function CommunityPageContent() {
                   <Link href={`/community/${club.id}`} key={club.id} className="block group">
                   <Card className="p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors duration-200 soft-shadow bg-card/80 backdrop-blur-sm">
                       <Avatar className="h-14 w-14 border-2 border-background">
-                      <AvatarImage src={getCloudinaryUrl(club.avatar)} alt={club.name} />
+                      <AvatarImage src={club.avatar} alt={club.name} />
                       <AvatarFallback>{club.name.charAt(0)}</AvatarFallback>
                       </Avatar>
                       <div className="flex-grow overflow-hidden">

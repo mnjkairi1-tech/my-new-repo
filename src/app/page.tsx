@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useCallback, useMemo, useState, useRef, useEffect, Suspense, lazy } from 'react';
+import Image from 'next/image';
 import {
   Clapperboard,
   Heart,
@@ -76,7 +77,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { AIChatSheet } from '@/components/ai-chat-sheet';
-import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 const ToolsTabContent = lazy(() => import('@/components/tools-tab-content'));
 
@@ -113,7 +113,7 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
     return (
       <a href={tool.url} target="_blank" rel="noopener noreferrer" onClick={handleCardClick}>
         <Card className="relative overflow-hidden group cursor-pointer bg-card border-border rounded-3xl h-full soft-shadow transition-transform hover:scale-105 duration-300">
-          {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="300" height="200" className="w-full aspect-[4/3] object-cover" data-ai-hint={tool.dataAiHint} loading="lazy" />}
+          {tool.image && <Image src={tool.image} alt={tool.name} width={300} height={200} className="w-full aspect-[4/3] object-cover" data-ai-hint={tool.dataAiHint} />}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           {tool.isTrending && (
             <Badge className="absolute top-2 left-2 bg-purple-500/80 text-white backdrop-blur-sm text-xs rounded-full border-none shadow-lg">
@@ -283,7 +283,7 @@ function HomePageContent() {
              <CarouselItem key={index}>
               <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                 <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden soft-shadow">
-                  <img src={getCloudinaryUrl(slide.image)} alt={slide.title || 'Carousel image'} className="object-cover w-full h-full" data-ai-hint={slide.dataAiHint} loading="lazy" />
+                  <Image src={slide.image} alt={slide.title || 'Carousel image'} fill style={{objectFit: "cover"}} data-ai-hint={slide.dataAiHint} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-4">
                     <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
@@ -337,14 +337,13 @@ function HomePageContent() {
                 >
                     <Pin className={cn("w-5 h-5", isPinned && "fill-current")} />
                 </Button>
-                <img
-                  src={getCloudinaryUrl(category.image)}
+                <Image
+                  src={category.image}
                   alt={category.name}
                   width="600"
                   height="200"
                   className="w-full h-auto aspect-[3/1] object-cover"
                   data-ai-hint={category.dataAiHint}
-                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-4">
@@ -379,7 +378,7 @@ function HomePageContent() {
                     {recentTools.map((tool, index) => (
                         <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
+                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
                                 <div className="flex-grow">
                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -408,7 +407,7 @@ function HomePageContent() {
                 {heartedTools.map((tool, index) => (
                      <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                         <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                            {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
+                            {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
                             <div className="flex-grow">
                                 <h5 className="font-semibold text-base">{tool.name}</h5>
                                 <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -437,7 +436,7 @@ function HomePageContent() {
                     {starredTools.map((tool, index) => (
                         <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
+                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
                                 <div className="flex-grow">
                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -522,14 +521,13 @@ function HomePageContent() {
                       <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" rel="noopener noreferrer" className="block group">
                           <Card className="bg-card border-none rounded-3xl soft-shadow overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
                               <div className="relative">
-                                  <img 
-                                      src={getCloudinaryUrl("https://picsum.photos/seed/trending-ai/600/300")}
+                                  <Image 
+                                      src={"https://picsum.photos/seed/trending-ai/600/300"}
                                       alt="Trending AI Tools"
                                       width="600"
                                       height="200"
                                       className="w-full h-auto aspect-[16/9] object-cover"
                                       data-ai-hint="data chart"
-                                      loading="lazy"
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                                   <div className="absolute top-4 right-4 bg-primary/80 text-primary-foreground rounded-full p-2 backdrop-blur-sm">
@@ -545,14 +543,13 @@ function HomePageContent() {
                       <Link href="https://www.producthunt.com/" target="_blank" rel="noopener noreferrer" className="block group">
                           <Card className="bg-card border-none rounded-3xl soft-shadow overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
                               <div className="relative">
-                                  <img 
-                                      src={getCloudinaryUrl("https://picsum.photos/seed/new-ai/600/300")}
+                                  <Image 
+                                      src={"https://picsum.photos/seed/new-ai/600/300"}
                                       alt="New AI Tools"
                                       width="600"
                                       height="200"
                                       className="w-full h-auto aspect-[16/9] object-cover"
                                       data-ai-hint="rocket launch"
-                                      loading="lazy"
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                                   <div className="absolute top-4 right-4 bg-primary/80 text-primary-foreground rounded-full p-2 backdrop-blur-sm">

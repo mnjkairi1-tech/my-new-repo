@@ -5,6 +5,7 @@ import React, { Suspense, useState } from 'react';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection, query, where, Timestamp } from 'firebase/firestore';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -19,7 +20,6 @@ import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
 import type { Tool } from '@/lib/types';
 import { useLanguage } from '@/lib/language';
-import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 interface Group {
     id: string;
@@ -157,7 +157,7 @@ function MyProfilePageContent() {
                     <main className="flex-grow overflow-y-auto no-scrollbar p-6 pb-24">
                         <div className="flex items-center gap-4 mb-8">
                             <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
-                                <AvatarImage src={getCloudinaryUrl(user.photoURL || '')} alt={user.displayName || 'User'} />
+                                <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
                                 <AvatarFallback>{(user.displayName || user.email || 'U').charAt(0).toUpperCase()}</AvatarFallback>
                             </Avatar>
                             <div>
@@ -194,7 +194,7 @@ function MyProfilePageContent() {
                                         {recentTools.map((tool, index) => (
                                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                                 <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                                    {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
+                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
                                                     <div className="flex-grow">
                                                         <h5 className="font-semibold text-base">{tool.name}</h5>
                                                         <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -223,7 +223,7 @@ function MyProfilePageContent() {
                                     {heartedTools.map((tool, index) => (
                                          <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                                {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
+                                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
                                                 <div className="flex-grow">
                                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -252,7 +252,7 @@ function MyProfilePageContent() {
                                         {starredTools.map((tool, index) => (
                                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                                 <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                                    {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
+                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
                                                     <div className="flex-grow">
                                                         <h5 className="font-semibold text-base">{tool.name}</h5>
                                                         <p className="text-sm text-muted-foreground">{tool.category}</p>

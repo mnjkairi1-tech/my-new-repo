@@ -3,6 +3,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useFirestore, useDoc, useCollection, useUser, useMemoFirebase } from '@/firebase';
 import { doc, collection, query, orderBy, Timestamp, addDoc, serverTimestamp } from 'firebase/firestore';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -17,7 +18,6 @@ import { Input } from '@/components/ui/input';
 import { allTools, Tool } from '@/lib/tools-data';
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { getCloudinaryUrl } from '@/lib/cloudinary';
 // Temporarily disabled due to build issues
 // import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 
@@ -176,11 +176,11 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
         <div className="bg-background min-h-screen font-body">
             <div className="relative">
                 <div className="relative h-72">
-                    <img
-                        src={getCloudinaryUrl(clubData?.avatar || "https://picsum.photos/seed/default-group/800/600")}
+                    <Image
+                        src={clubData?.avatar || "https://picsum.photos/seed/default-group/800/600"}
                         alt={clubData?.name || "Group"}
-                        className="object-cover w-full h-full bg-muted"
-                        loading="lazy"
+                        fill
+                        className="object-cover bg-muted"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                     <Button variant="ghost" size="icon" className="absolute top-4 left-4 w-12 h-12 rounded-full bg-black/20 text-white backdrop-blur-sm" onClick={handleBack}>
@@ -266,7 +266,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                     <div className='space-y-2 py-4'>
                                         {filteredTools.map(tool => (
                                             <div key={tool.name} className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent">
-                                                <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="40" height="40" className="rounded-md" loading="lazy" />
+                                                <Image src={tool.image} alt={tool.name} width="40" height="40" className="rounded-md" />
                                                 <div className="flex-grow">
                                                     <p className="font-semibold">{tool.name}</p>
                                                 </div>
@@ -316,7 +316,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                     <div key={member.userId} className="flex items-center justify-between">
                                         <div className="flex items-center gap-4">
                                             <Avatar className='h-12 w-12'>
-                                                <AvatarImage src={getCloudinaryUrl(member.photoURL ?? undefined)} />
+                                                <AvatarImage src={member.photoURL ?? undefined} />
                                                 <AvatarFallback>{member.displayName?.charAt(0) || 'U'}</AvatarFallback>
                                             </Avatar>
                                             <div>
