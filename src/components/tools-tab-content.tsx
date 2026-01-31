@@ -1,13 +1,11 @@
 
 'use client';
 
-import React, { useMemo, useCallback, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/language';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
@@ -22,17 +20,17 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
+} from "@/components/ui/dropdown-menu";
+import { allToolsServer } from '@/lib/all-tools-server';
 
 const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void, t: (key: string) => string }) => {
     const { heartedTools, handleHeartToggle, comparisonList, selectForCompare } = useUserPreferences();
     const isHearted = heartedTools.some(t => t.name === tool.name);
     const isSelectedForCompare = comparisonList.some(t => t.name === tool.name);
 
-    const handleCardClick = useCallback((e: React.MouseEvent) => {
+    const handleCardClick = (e: React.MouseEvent) => {
         onClick(tool);
-    }, [tool, onClick]);
+    };
 
     const handleHeartClick = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -85,39 +83,23 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     const [searchTerm, setSearchTerm] = useState('');
     const [priceFilter, setPriceFilter] = useState('All');
     
-    const [tools, setTools] = useState<Tool[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const tools = useMemo(() => {
+        let filteredTools: Tool[] = allToolsServer;
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
 
-    useEffect(() => {
-        const fetchTools = async () => {
-            setIsLoading(true);
-            try {
-                const params = new URLSearchParams();
-                if (searchTerm) {
-                    params.append('q', searchTerm);
-                }
-                if (priceFilter) {
-                    params.append('price', priceFilter);
-                }
-                const response = await fetch(`/api/tools?${params.toString()}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch tools');
-                }
-                const data = await response.json();
-                setTools(data);
-            } catch (error) {
-                console.error(error);
-                // Optionally set an error state to show in the UI
-            } finally {
-                setIsLoading(false);
-            }
-        };
+        if (lowerCaseSearchTerm) {
+            filteredTools = filteredTools.filter(tool =>
+                tool.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+                tool.description.toLowerCase().includes(lowerCaseSearchTerm) ||
+                (tool.category && tool.category.toLowerCase().includes(lowerCaseSearchTerm))
+            );
+        }
 
-        const debounceTimer = setTimeout(() => {
-            fetchTools();
-        }, 300); // Debounce search input
-
-        return () => clearTimeout(debounceTimer);
+        if (priceFilter === 'Free') {
+            filteredTools = filteredTools.filter(tool => tool.pricing === 'Free' || tool.pricing === 'Freemium');
+        }
+        
+        return filteredTools;
     }, [searchTerm, priceFilter]);
 
     return (
@@ -150,27 +132,21 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     </DropdownMenu>
                 </div>
                 <div className="text-center mt-2 text-sm font-semibold text-muted-foreground">
-                    {isLoading ? 'Loading...' : `${tools.length} Tools`}
+                    {`${tools.length} Tools`}
                 </div>
             </div>
             <div className="flex-grow overflow-y-auto px-4 no-scrollbar pt-2 pb-4">
-                 {isLoading ? (
-                    <div className="grid grid-cols-2 gap-4">
-                        {[...Array(8)].map((_, i) => <Skeleton key={i} className="h-48 rounded-3xl" />)}
-                    </div>
-                 ) : (
-                    <div className="grid grid-cols-2 gap-4">
-                        {tools.map(tool => (
-                            <ToolCard
-                                key={tool.name}
-                                tool={tool}
-                                onShare={onShare}
-                                onClick={onClick}
-                                t={t}
-                            />
-                        ))}
-                    </div>
-                 )}
+                 <div className="grid grid-cols-2 gap-4">
+                    {tools.map(tool => (
+                        <ToolCard
+                            key={tool.name}
+                            tool={tool}
+                            onShare={onShare}
+                            onClick={onClick}
+                            t={t}
+                        />
+                    ))}
+                </div>
             </div>
         </>
     );
