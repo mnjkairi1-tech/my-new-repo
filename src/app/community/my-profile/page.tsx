@@ -157,7 +157,7 @@ function MyProfilePageContent() {
                     <main className="flex-grow overflow-y-auto no-scrollbar p-6 pb-24">
                         <div className="flex items-center gap-4 mb-8">
                             <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
-                                <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'} />
+                                <AvatarImage src={getCloudinaryUrl(user.photoURL || '')} alt={user.displayName || 'User'} />
                                 <AvatarFallback>{(user.displayName || user.email || 'U').charAt(0).toUpperCase()}</AvatarFallback>
                             </Avatar>
                             <div>

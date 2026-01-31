@@ -1,8 +1,8 @@
+
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { 
     ArrowLeft, ExternalLink, Star, Share2, Filter, Bot
 } from 'lucide-react';
@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, type ToolCategory, aiAgentsToolData } from '@/lib/ai-agents-data';
+import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 
 export default function AIAgentsPage() {
@@ -66,13 +67,14 @@ export default function AIAgentsPage() {
                 className="bg-white/80 border-none rounded-3xl soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
             >
                 <div className="relative">
-                    <Image
-                    src={tool.image}
+                    <img
+                    src={getCloudinaryUrl(tool.image)}
                     alt={tool.name || 'Tool Image'}
                     width={120}
                     height={90}
                     className="w-full h-auto aspect-[4/3] object-cover"
                     data-ai-hint={tool.dataAiHint}
+                    loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">

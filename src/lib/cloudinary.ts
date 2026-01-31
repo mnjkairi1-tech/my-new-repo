@@ -1,3 +1,4 @@
+
 export function getCloudinaryUrl(imageUrl: string) {
   // Using Cloudinary's public 'demo' account for fetching and optimization.
   // For production, replace 'demo' with your own Cloudinary cloud name.

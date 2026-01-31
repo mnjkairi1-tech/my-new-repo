@@ -1,7 +1,7 @@
 
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { getCloudinaryUrl } from "@/lib/cloudinary";
 
 export function FeaturedCard() {
   const featuredImage = PlaceHolderImages.find(img => img.id === 'featured-movie-app');
@@ -10,12 +10,12 @@ export function FeaturedCard() {
     <div className="px-4 sm:px-6 lg:px-8">
       <Card className="relative w-full aspect-[9/16] sm:aspect-[16/9] overflow-hidden rounded-2xl border-4 border-accent/80 shadow-xl shadow-accent/20">
         {featuredImage && (
-            <Image
-                src={featuredImage.imageUrl}
+            <img
+                src={getCloudinaryUrl(featuredImage.imageUrl)}
                 alt={featuredImage.description}
-                fill
-                className="object-cover"
+                className="object-cover w-full h-full"
                 data-ai-hint={featuredImage.imageHint}
+                loading="lazy"
             />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -27,5 +27,3 @@ export function FeaturedCard() {
     </div>
   );
 }
-
-    

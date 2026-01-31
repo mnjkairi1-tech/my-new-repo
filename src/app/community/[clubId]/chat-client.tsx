@@ -350,7 +350,7 @@ export default function ClubDetailsPageClient() {
                     </Button>
                     <Link href={`/community/${clubId}/info`} className="flex items-center gap-3">
                         <Avatar className='h-10 w-10'>
-                            <AvatarImage src={getCloudinaryUrl(clubData?.avatar)} alt={clubData?.name} />
+                            <AvatarImage src={getCloudinaryUrl(clubData?.avatar || '')} alt={clubData?.name} />
                             <AvatarFallback>{clubData?.name?.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>

@@ -2,7 +2,6 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { allToolsServer } from '@/lib/all-tools-server';
+import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void, t: (key: string) => string }) => {
     const { heartedTools, handleHeartToggle, comparisonList, selectForCompare } = useUserPreferences();
@@ -47,7 +47,7 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
     return (
       <a href={tool.url} target="_blank" rel="noopener noreferrer" onClick={handleCardClick}>
         <Card className="relative overflow-hidden group cursor-pointer bg-card border-border rounded-3xl h-full soft-shadow transition-transform hover:scale-105 duration-300">
-          {tool.image && <Image src={tool.image} alt={tool.name} width={300} height={200} className="w-full aspect-[4/3] object-cover" data-ai-hint={tool.dataAiHint} />}
+          {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="300" height="200" className="w-full aspect-[4/3] object-cover" data-ai-hint={tool.dataAiHint} loading="lazy" />}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           {tool.isTrending && (
             <Badge className="absolute top-2 left-2 bg-purple-500/80 text-white backdrop-blur-sm text-xs rounded-full border-none shadow-lg">
