@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { Skeleton } from '@/components/ui/skeleton';
+import { businessToolData } from '@/lib/data/business-tools-data';
 
 type Tool = {
     name: string;
@@ -69,21 +70,11 @@ export default function BusinessToolsPage() {
     const [priceFilter, setPriceFilter] = useState('All');
     const [open, setOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
-    const [toolData, setToolData] = useState<ToolCategory[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const toolData: ToolCategory[] = businessToolData;
+    const isLoading = false; // Data is now imported statically
 
     useEffect(() => {
         setIsClient(true);
-        fetch('/api/business-tools')
-            .then(res => res.json())
-            .then(data => {
-                setToolData(data);
-                setIsLoading(false);
-            })
-            .catch(err => {
-                console.error("Failed to fetch tool data:", err);
-                setIsLoading(false);
-            });
     }, []);
 
     const handleShareTool = useCallback(async (e: React.MouseEvent, tool: Tool) => {
