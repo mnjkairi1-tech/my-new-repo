@@ -79,9 +79,9 @@ export default function ClubDetailsPageClient() {
   const params = useParams();
   const clubId = params.clubId as string;
   const router = useRouter();
-  const { user, isUserLoading } } = useUser();
+  const { user, isUserLoading } = useUser();
   const firestore = useFirestore();
-  const { toast } } = useToast();
+  const { toast } = useToast();
   const firebaseApp = useFirebaseApp();
 
 
@@ -97,8 +97,8 @@ export default function ClubDetailsPageClient() {
   const memberRef = useMemoFirebase(() => firestore && user && clubId ? doc(firestore, 'groups', clubId, 'members', user.uid) : null, [firestore, clubId, user]);
   
   // Data fetching hooks
-  const { data: clubData, isLoading: groupLoading } } = useDoc<Group>(groupRef);
-  const { data: memberData, isLoading: memberLoading } } = useDoc<GroupMember>(memberRef);
+  const { data: clubData, isLoading: groupLoading } = useDoc<Group>(groupRef);
+  const { data: memberData, isLoading: memberLoading } = useDoc<GroupMember>(memberRef);
   
   const isMember = !!memberData;
 
@@ -112,8 +112,8 @@ export default function ClubDetailsPageClient() {
       return query(collection(firestore, 'groups', clubId, 'tools'), orderBy('addedAt', 'desc'), limit(10));
   }, [firestore, clubId, user]);
 
-  const { data: messages, isLoading: messagesLoading } } = useCollection<Message>(messagesQuery);
-  const { data: groupTools, isLoading: toolsLoading } } = useCollection<GroupTool>(toolsQuery);
+  const { data: messages, isLoading: messagesLoading } = useCollection<Message>(messagesQuery);
+  const { data: groupTools, isLoading: toolsLoading } = useCollection<GroupTool>(toolsQuery);
   
 
   const handleSendMessage = (e: React.FormEvent) => {
