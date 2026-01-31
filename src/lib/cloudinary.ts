@@ -1,6 +1,7 @@
 export function getCloudinaryUrl(imageUrl: string) {
-  // IMPORTANT: This is a placeholder cloud name.
-  const CLOUD_NAME = 'dprpncwrc';
+  // Using Cloudinary's public 'demo' account for fetching and optimization.
+  // For production, replace 'demo' with your own Cloudinary cloud name.
+  const CLOUD_NAME = 'demo';
 
   if (!imageUrl || typeof imageUrl !== 'string') {
     return '';
