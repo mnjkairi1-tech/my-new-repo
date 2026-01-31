@@ -26,7 +26,7 @@ export type SuggestAiToolOutput = z.infer<typeof SuggestAiToolOutputSchema>;
 export async function suggestAiTool(
   input: SuggestAiToolInput
 ): Promise<SuggestAiToolOutput> {
-  console.log("AI Tool Suggestion is temporarily disabled due to build environment constraints.");
+  console.log("AI Tool Suggestion is temporarily disabled due to deployment constraints.");
   return {
     suggestions: [],
   };

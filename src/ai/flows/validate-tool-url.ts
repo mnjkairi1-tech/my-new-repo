@@ -21,7 +21,7 @@ export type ValidateToolUrlOutput = z.infer<typeof ValidateToolUrlOutputSchema>;
 export async function validateAndGetToolInfo(
   input: ValidateToolUrlInput
 ): Promise<ValidateToolUrlOutput> {
-  console.log("Tool validation is temporarily disabled due to build environment constraints.");
+  console.log("Tool validation is temporarily disabled due to deployment constraints.");
   // Return a default "valid" response to not block the UX
   try {
     const url = new URL(input.url);
