@@ -142,7 +142,7 @@ ToolCard.displayName = 'ToolCard';
 
 
 function HomePageContent() {
-  const { t } } from useLanguage();
+  const { t } = useLanguage();
   const searchParams = useSearchParams();
   const router = useRouter();
   useCustomBack();
@@ -150,9 +150,9 @@ function HomePageContent() {
   const [activeTab, setActiveTab] = React.useState('home');
 
   const [toolClicks, setToolClicks] = React.useState<Record<string, number>>({});
-  const { toast } } = useToast();
-  const { user } } = useUser();
-  const { heartedTools, starredTools, handleHeartToggle, handleStarToggle, pinnedTools, handlePinToggle, recentTools, addRecentTool, comparisonList, clearComparison } } = useUserPreferences();
+  const { toast } = useToast();
+  const { user } = useUser();
+  const { heartedTools, starredTools, handleHeartToggle, handleStarToggle, pinnedTools, handlePinToggle, recentTools, addRecentTool, comparisonList, clearComparison } = useUserPreferences();
   const [activeSavedTab, setActiveSavedTab] = useState('recent');
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   
@@ -614,5 +614,4 @@ export default function GalaxyApp() {
     </AuthGate>
   );
 }
-
     
