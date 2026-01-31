@@ -376,8 +376,8 @@ function HomePageContent() {
              <div className="mt-4">
                 {recentTools.length > 0 ? (
                     <div className="space-y-3">
-                    {recentTools.map(tool => (
-                        <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name}>
+                    {recentTools.map((tool, index) => (
+                        <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
                                 {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
                                 <div className="flex-grow">
@@ -405,15 +405,15 @@ function HomePageContent() {
             <div className="mt-4">
             {heartedTools.length > 0 ? (
                 <div className="space-y-3">
-                {heartedTools.map(tool => (
-                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name}>
+                {heartedTools.map((tool, index) => (
+                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                         <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
                             {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
                             <div className="flex-grow">
                                 <h5 className="font-semibold text-base">{tool.name}</h5>
                                 <p className="text-sm text-muted-foreground">{tool.category}</p>
                             </div>
-                            <Button variant="ghost" size="icon" className="text-red-500 rounded-full w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleHeartToggle(tool); }}>
+                            <Button variant="ghost" size="icon" className="text-red-500 rounded-full w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleHeartToggle(tool as Tool); }}>
                                 <Heart className="fill-current"/>
                             </Button>
                         </Card>
@@ -434,15 +434,15 @@ function HomePageContent() {
              <div className="mt-4">
                 {starredTools.length > 0 ? (
                     <div className="space-y-3">
-                    {starredTools.map(tool => (
-                        <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name}>
+                    {starredTools.map((tool, index) => (
+                        <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
                                 {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
                                 <div className="flex-grow">
                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
                                 </div>
-                                <Button variant="ghost" size="icon" className="text-yellow-400 rounded-full w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleStarToggle(tool); }}>
+                                <Button variant="ghost" size="icon" className="text-yellow-400 rounded-full w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleStarToggle(tool as Tool); }}>
                                     <Star className="fill-current"/>
                                 </Button>
                             </Card>
@@ -614,3 +614,5 @@ export default function GalaxyApp() {
     </AuthGate>
   );
 }
+
+    
