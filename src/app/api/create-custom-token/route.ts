@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 // import { auth as adminAuth } from '@/lib/firebase-admin';
 
-export const runtime = 'edge';
-
 // This route is temporarily disabled because its dependency 'firebase-admin'
 // is not compatible with the Cloudflare Pages Edge Runtime.
 export async function POST(request: Request) {
