@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useMemo } from 'react';
@@ -9,7 +10,6 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, BadgeCheck, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
-import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input';
 import { allTools, Tool } from '@/lib/tools-data';
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { getCloudinaryUrl } from '@/lib/cloudinary';
 // Temporarily disabled due to build issues
 // import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 
@@ -52,8 +53,8 @@ interface GroupTool {
 export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
     const router = useRouter();
     const firestore = useFirestore();
-    const { user } = useUser();
-    const { toast } = useToast();
+    const { user } } = useUser();
+    const { toast } } = useToast();
     const [searchTerm, setSearchTerm] = useState('');
     const [customToolUrl, setCustomToolUrl] = useState('');
     const [isAddToolOpen, setIsAddToolOpen] = useState(false);
@@ -65,14 +66,14 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
         if (!firestore) return null;
         return doc(firestore, 'groups', clubId);
     }, [firestore, clubId]);
-    const { data: clubData, isLoading: groupLoading } = useDoc<Group>(groupRef);
+    const { data: clubData, isLoading: groupLoading } } = useDoc<Group>(groupRef);
 
     // Fetch Members
     const membersQuery = useMemoFirebase(() => {
         if (!firestore) return null;
         return query(collection(firestore, 'groups', clubId, 'members'), orderBy('role'));
     }, [firestore, clubId]);
-    const { data: members, isLoading: membersLoading } = useCollection<GroupMember>(membersQuery);
+    const { data: members, isLoading: membersLoading } } = useCollection<GroupMember>(membersQuery);
 
     // Fetch Tools
     const toolsRef = useMemoFirebase(() => {
@@ -83,7 +84,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
         if (!toolsRef) return null;
         return query(toolsRef, orderBy('addedAt', 'desc'));
     }, [toolsRef]);
-    const { data: groupTools, isLoading: toolsLoading } = useCollection<GroupTool>(toolsQuery);
+    const { data: groupTools, isLoading: toolsLoading } } = useCollection<GroupTool>(toolsQuery);
 
 
     const handleBack = () => {
@@ -175,11 +176,11 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
         <div className="bg-background min-h-screen font-body">
             <div className="relative">
                 <div className="relative h-72">
-                    <Image
-                        src={clubData?.avatar || "https://picsum.photos/seed/default-group/800/600"}
+                    <img
+                        src={getCloudinaryUrl(clubData?.avatar || "https://picsum.photos/seed/default-group/800/600")}
                         alt={clubData?.name || "Group"}
-                        fill
-                        className="object-cover bg-muted"
+                        className="object-cover w-full h-full bg-muted"
+                        loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                     <Button variant="ghost" size="icon" className="absolute top-4 left-4 w-12 h-12 rounded-full bg-black/20 text-white backdrop-blur-sm" onClick={handleBack}>
@@ -265,7 +266,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                     <div className='space-y-2 py-4'>
                                         {filteredTools.map(tool => (
                                             <div key={tool.name} className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent">
-                                                <Image src={tool.image} alt={tool.name} width={40} height={40} className="rounded-md" />
+                                                <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="40" height="40" className="rounded-md" loading="lazy" />
                                                 <div className="flex-grow">
                                                     <p className="font-semibold">{tool.name}</p>
                                                 </div>
@@ -315,7 +316,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                     <div key={member.userId} className="flex items-center justify-between">
                                         <div className="flex items-center gap-4">
                                             <Avatar className='h-12 w-12'>
-                                                <AvatarImage src={member.photoURL ?? undefined} />
+                                                <AvatarImage src={getCloudinaryUrl(member.photoURL ?? undefined)} />
                                                 <AvatarFallback>{member.displayName?.charAt(0) || 'U'}</AvatarFallback>
                                             </Avatar>
                                             <div>

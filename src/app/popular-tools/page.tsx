@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowLeft, Share2, TrendingUp, Video, ImageIcon, Film, Mic, Voicemail, Star, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
@@ -13,6 +12,7 @@ import { useLanguage } from '@/lib/language';
 import { type Tool as BaseTool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
+import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 type Tool = Omit<BaseTool, 'description' | 'isNew'>;
 
@@ -52,8 +52,8 @@ const textToSpeechTools: Tool[] = [
 const voiceCloningTools: Tool[] = [
     { name: 'ElevenLabs', url: 'https://elevenlabs.io/', image: 'https://picsum.photos/seed/elevenlabs-vc/300/200', category: 'Audio', dataAiHint: 'voice cloning', isTrending: true },
     { name: 'Voicemod', url: 'https://www.voicemod.net/', image: 'https://picsum.photos/seed/voicemod-vc/300/200', category: 'Audio', dataAiHint: 'ai voice', isTrending: true },
-    { name: 'Resemble AI', url: 'https://www.resemble.ai/', image: 'https://picsum.photos/seed/resemble-vc/300/200', category: 'Audio', dataAiHint: 'custom voice', isTrending: false },
-    { name: 'Uberduck', url: 'https://uberduck.ai/', image: 'https://picsum.photos/seed/uberduck-vc/300/200', category: 'Audio', dataAiHint: 'text to rap', isTrending: false },
+    { name: 'Resemble AI', description: 'Your complete generative voice AI toolkit.', url: 'https://www.resemble.ai/', image: 'https://picsum.photos/seed/resemble-vc/300/200', dataAiHint: 'custom voice', pricing: 'Paid' },
+    { name: 'Uberduck', description: 'Text-to-speech and voice cloning.', url: 'https://uberduck.ai/', image: 'https://picsum.photos/seed/uberduck-vc/300/200', dataAiHint: 'text to rap', pricing: 'Freemium' },
 ];
 
 const ToolCard = React.memo(({ tool, onShare, t, isClient }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, t: (key: string) => string, isClient: boolean }) => {
@@ -72,13 +72,14 @@ const ToolCard = React.memo(({ tool, onShare, t, isClient }: { tool: Tool, onSha
         className="bg-white/80 border-none rounded-3xl soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
       >
         <div className="relative">
-            <Image
-              src={tool.image}
+            <img
+              src={getCloudinaryUrl(tool.image)}
               alt={tool.name}
-              width={120}
-              height={90}
+              width="120"
+              height="90"
               className="w-full h-auto aspect-[4/3] object-cover"
               data-ai-hint={tool.dataAiHint}
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
@@ -104,8 +105,8 @@ ToolCard.displayName = 'ToolCard';
 
 
 export default function PopularToolsPage() {
-    const { t } = useLanguage();
-    const { toast } = useToast();
+    const { t } } = useLanguage();
+    const { toast } } = useToast();
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {

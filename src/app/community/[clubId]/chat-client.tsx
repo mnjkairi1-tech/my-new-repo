@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
@@ -19,7 +20,7 @@ import { useCollection, useDoc } from '@/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking, setDocumentNonBlocking, updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import Image from 'next/image';
+import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 interface Message {
   id: string;
@@ -78,9 +79,9 @@ export default function ClubDetailsPageClient() {
   const params = useParams();
   const clubId = params.clubId as string;
   const router = useRouter();
-  const { user, isUserLoading } = useUser();
+  const { user, isUserLoading } } = useUser();
   const firestore = useFirestore();
-  const { toast } = useToast();
+  const { toast } } = useToast();
   const firebaseApp = useFirebaseApp();
 
 
@@ -96,8 +97,8 @@ export default function ClubDetailsPageClient() {
   const memberRef = useMemoFirebase(() => firestore && user && clubId ? doc(firestore, 'groups', clubId, 'members', user.uid) : null, [firestore, clubId, user]);
   
   // Data fetching hooks
-  const { data: clubData, isLoading: groupLoading } = useDoc<Group>(groupRef);
-  const { data: memberData, isLoading: memberLoading } = useDoc<GroupMember>(memberRef);
+  const { data: clubData, isLoading: groupLoading } } = useDoc<Group>(groupRef);
+  const { data: memberData, isLoading: memberLoading } } = useDoc<GroupMember>(memberRef);
   
   const isMember = !!memberData;
 
@@ -111,8 +112,8 @@ export default function ClubDetailsPageClient() {
       return query(collection(firestore, 'groups', clubId, 'tools'), orderBy('addedAt', 'desc'), limit(10));
   }, [firestore, clubId, user]);
 
-  const { data: messages, isLoading: messagesLoading } = useCollection<Message>(messagesQuery);
-  const { data: groupTools, isLoading: toolsLoading } = useCollection<GroupTool>(toolsQuery);
+  const { data: messages, isLoading: messagesLoading } } = useCollection<Message>(messagesQuery);
+  const { data: groupTools, isLoading: toolsLoading } } = useCollection<GroupTool>(toolsQuery);
   
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -307,7 +308,7 @@ export default function ClubDetailsPageClient() {
                         
                         {msg.imageUrl ? (
                             <a href={msg.imageUrl} target="_blank" rel="noopener noreferrer">
-                                 <Image src={msg.imageUrl} alt="Sent image" width={200} height={200} className="rounded-lg mt-2 max-w-full h-auto cursor-pointer" />
+                                 <img src={getCloudinaryUrl(msg.imageUrl)} alt="Sent image" width="200" height="200" className="rounded-lg mt-2 max-w-full h-auto cursor-pointer" loading="lazy" />
                             </a>
                         ) : (
                             <p className="break-words">{msg.text}</p>
@@ -349,7 +350,7 @@ export default function ClubDetailsPageClient() {
                     </Button>
                     <Link href={`/community/${clubId}/info`} className="flex items-center gap-3">
                         <Avatar className='h-10 w-10'>
-                            <AvatarImage src={clubData?.avatar} alt={clubData?.name} />
+                            <AvatarImage src={getCloudinaryUrl(clubData?.avatar)} alt={clubData?.name} />
                             <AvatarFallback>{clubData?.name?.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>

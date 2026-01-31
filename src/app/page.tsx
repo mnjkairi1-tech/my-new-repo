@@ -142,7 +142,7 @@ ToolCard.displayName = 'ToolCard';
 
 
 function HomePageContent() {
-  const { t } = useLanguage();
+  const { t } } from useLanguage();
   const searchParams = useSearchParams();
   const router = useRouter();
   useCustomBack();
@@ -150,9 +150,9 @@ function HomePageContent() {
   const [activeTab, setActiveTab] = React.useState('home');
 
   const [toolClicks, setToolClicks] = React.useState<Record<string, number>>({});
-  const { toast } = useToast();
-  const { user } = useUser();
-  const { heartedTools, starredTools, handleHeartToggle, handleStarToggle, pinnedTools, handlePinToggle, recentTools, addRecentTool, comparisonList, clearComparison } = useUserPreferences();
+  const { toast } } = useToast();
+  const { user } } = useUser();
+  const { heartedTools, starredTools, handleHeartToggle, handleStarToggle, pinnedTools, handlePinToggle, recentTools, addRecentTool, comparisonList, clearComparison } } = useUserPreferences();
   const [activeSavedTab, setActiveSavedTab] = useState('recent');
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   
@@ -283,7 +283,7 @@ function HomePageContent() {
              <CarouselItem key={index}>
               <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                 <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden soft-shadow">
-                  <img src={getCloudinaryUrl(slide.image)} alt={slide.title || 'Carousel image'} width="800" height="450" className="object-cover w-full h-full" data-ai-hint={slide.dataAiHint} loading="lazy" />
+                  <img src={getCloudinaryUrl(slide.image)} alt={slide.title || 'Carousel image'} className="object-cover w-full h-full" data-ai-hint={slide.dataAiHint} loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-4">
                     <h3 className="font-bold text-2xl text-white">{slide.title}</h3>

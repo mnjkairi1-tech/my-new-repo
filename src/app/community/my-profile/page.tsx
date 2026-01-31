@@ -16,10 +16,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ProfileDetails } from '@/components/settings/profile-details';
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { useUserPreferences } from '@/context/user-preferences-context';
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { Tool } from '@/lib/types';
 import { useLanguage } from '@/lib/language';
+import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 interface Group {
     id: string;
@@ -56,12 +56,12 @@ const MyProfileSkeleton = () => (
 );
 
 function MyProfilePageContent() {
-    const { user, isUserLoading } = useUser();
+    const { user, isUserLoading } } = useUser();
     const firestore = useFirestore();
     const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false);
-    const { heartedTools, starredTools, recentTools, handleHeartToggle, handleStarToggle } = useUserPreferences();
+    const { heartedTools, starredTools, recentTools, handleHeartToggle, handleStarToggle } } = useUserPreferences();
     const [activeSavedTab, setActiveSavedTab] = useState('recent');
-    const { t } = useLanguage();
+    const { t } } = useLanguage();
 
 
     const groupsRef = useMemoFirebase(() => {
@@ -74,7 +74,7 @@ function MyProfilePageContent() {
         return query(groupsRef, where('ownerId', '==', user.uid));
     }, [groupsRef, user]);
 
-    const { data: ownedClubs, isLoading: areClubsLoading } = useCollection<Group>(ownedGroupsQuery);
+    const { data: ownedClubs, isLoading: areClubsLoading } } = useCollection<Group>(ownedGroupsQuery);
 
     if (isUserLoading || areClubsLoading) {
         return (
@@ -194,7 +194,7 @@ function MyProfilePageContent() {
                                         {recentTools.map((tool, index) => (
                                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                                 <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                                    {tool.image && <Image src={tool.image} alt={tool.name} width={56} height={56} className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
+                                                    {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
                                                     <div className="flex-grow">
                                                         <h5 className="font-semibold text-base">{tool.name}</h5>
                                                         <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -223,7 +223,7 @@ function MyProfilePageContent() {
                                     {heartedTools.map((tool, index) => (
                                          <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                                {tool.image && <Image src={tool.image} alt={tool.name} width={56} height={56} className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
+                                                {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
                                                 <div className="flex-grow">
                                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -252,7 +252,7 @@ function MyProfilePageContent() {
                                         {starredTools.map((tool, index) => (
                                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                                 <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                                    {tool.image && <Image src={tool.image} alt={tool.name} width={56} height={56} className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
+                                                    {tool.image && <img src={getCloudinaryUrl(tool.image)} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} loading="lazy" />}
                                                     <div className="flex-grow">
                                                         <h5 className="font-semibold text-base">{tool.name}</h5>
                                                         <p className="text-sm text-muted-foreground">{tool.category}</p>
