@@ -38,7 +38,7 @@ const imageToVideoTools: Tool[] = [
     { name: 'Runway Gen-2', url: 'https://runwayml.com/', image: 'https://picsum.photos/seed/runway-gen2/300/200', category: 'Video', dataAiHint: 'ai magic tools', isTrending: true },
     { name: 'Kaiber AI', url: 'https://www.kaiber.ai/', image: 'https://picsum.photos/seed/kaiber-ai/300/200', category: 'Video', dataAiHint: 'visual storytelling', isTrending: true },
     { name: 'CapCut', url: 'https://www.capcut.com/', image: 'https://picsum.photos/seed/capcut-anim/300/200', category: 'Video', dataAiHint: 'image animation', isTrending: true },
-    { name: 'Animaker AI', url: 'https://www.animaker.com/', image: 'https://picsum.photos/seed/animaker-ai/300/200', category: 'Video', dataAiHint: 'animation maker', isTrending: false },
+    { name: 'Animaker AI', description: 'AI-powered tool for creating animated videos.', url: 'https://www.animaker.com/', image: 'https://picsum.photos/seed/animaker-ai/300/200', dataAiHint: 'animation maker', pricing: 'Freemium' },
 ];
 
 const textToSpeechTools: Tool[] = [
@@ -105,8 +105,8 @@ ToolCard.displayName = 'ToolCard';
 
 
 export default function PopularToolsPage() {
-    const { t } } = useLanguage();
-    const { toast } } = useToast();
+    const { t } = useLanguage();
+    const { toast } = useToast();
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {

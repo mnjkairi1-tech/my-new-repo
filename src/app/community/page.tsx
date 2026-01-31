@@ -32,7 +32,7 @@ function CommunityPageContent() {
         return query(collection(firestore, 'groups'), orderBy('memberCount', 'desc'));
     }, [firestore]);
 
-    const { data: clubs, isLoading } } = useCollection<Group>(groupsQuery);
+    const { data: clubs, isLoading } = useCollection<Group>(groupsQuery);
 
     const filteredClubs = React.useMemo(() => {
         if (!clubs) return [];

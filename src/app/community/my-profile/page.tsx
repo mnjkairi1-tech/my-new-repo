@@ -56,12 +56,12 @@ const MyProfileSkeleton = () => (
 );
 
 function MyProfilePageContent() {
-    const { user, isUserLoading } } = useUser();
+    const { user, isUserLoading } = useUser();
     const firestore = useFirestore();
     const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false);
-    const { heartedTools, starredTools, recentTools, handleHeartToggle, handleStarToggle } } = useUserPreferences();
+    const { heartedTools, starredTools, recentTools, handleHeartToggle, handleStarToggle } = useUserPreferences();
     const [activeSavedTab, setActiveSavedTab] = useState('recent');
-    const { t } } = useLanguage();
+    const { t } = useLanguage();
 
 
     const groupsRef = useMemoFirebase(() => {
@@ -74,7 +74,7 @@ function MyProfilePageContent() {
         return query(groupsRef, where('ownerId', '==', user.uid));
     }, [groupsRef, user]);
 
-    const { data: ownedClubs, isLoading: areClubsLoading } } = useCollection<Group>(ownedGroupsQuery);
+    const { data: ownedClubs, isLoading: areClubsLoading } = useCollection<Group>(ownedGroupsQuery);
 
     if (isUserLoading || areClubsLoading) {
         return (

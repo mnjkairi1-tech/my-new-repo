@@ -53,8 +53,8 @@ interface GroupTool {
 export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
     const router = useRouter();
     const firestore = useFirestore();
-    const { user } } = useUser();
-    const { toast } } = useToast();
+    const { user } = useUser();
+    const { toast } = useToast();
     const [searchTerm, setSearchTerm] = useState('');
     const [customToolUrl, setCustomToolUrl] = useState('');
     const [isAddToolOpen, setIsAddToolOpen] = useState(false);
@@ -66,14 +66,14 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
         if (!firestore) return null;
         return doc(firestore, 'groups', clubId);
     }, [firestore, clubId]);
-    const { data: clubData, isLoading: groupLoading } } = useDoc<Group>(groupRef);
+    const { data: clubData, isLoading: groupLoading } = useDoc<Group>(groupRef);
 
     // Fetch Members
     const membersQuery = useMemoFirebase(() => {
         if (!firestore) return null;
         return query(collection(firestore, 'groups', clubId, 'members'), orderBy('role'));
     }, [firestore, clubId]);
-    const { data: members, isLoading: membersLoading } } = useCollection<GroupMember>(membersQuery);
+    const { data: members, isLoading: membersLoading } = useCollection<GroupMember>(membersQuery);
 
     // Fetch Tools
     const toolsRef = useMemoFirebase(() => {
@@ -84,7 +84,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
         if (!toolsRef) return null;
         return query(toolsRef, orderBy('addedAt', 'desc'));
     }, [toolsRef]);
-    const { data: groupTools, isLoading: toolsLoading } } = useCollection<GroupTool>(toolsQuery);
+    const { data: groupTools, isLoading: toolsLoading } = useCollection<GroupTool>(toolsQuery);
 
 
     const handleBack = () => {
