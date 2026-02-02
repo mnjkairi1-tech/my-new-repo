@@ -3,6 +3,7 @@
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
     ArrowLeft, ExternalLink, Star, Share2, Briefcase, Filter, Megaphone, Handshake, UserPlus, Zap, Wallet, ListChecks, MessageSquare, BarChart3, ShoppingCart, Layout, Shield, Cpu, Truck, Building, Box, Users, Code, BrainCircuit, FileText, CheckSquare, Settings, Heart, BookOpen, Search, Recycle, Bot, LineChart, ShieldCheck
 } from 'lucide-react';
@@ -14,7 +15,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenu
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { Skeleton } from '@/components/ui/skeleton';
 import { businessToolData } from '@/lib/data/business-tools-data';
-import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 type Tool = {
     name: string;
@@ -118,14 +118,13 @@ export default function BusinessToolsPage() {
                 className="bg-white/80 border-none rounded-3xl soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
             >
                 <div className="relative">
-                    <img
-                    src={getCloudinaryUrl(tool.image)}
+                    <Image
+                    src={tool.image}
                     alt={tool.name || 'Tool Image'}
                     width={120}
                     height={90}
                     className="w-full h-auto aspect-[4/3] object-cover"
                     data-ai-hint={tool.dataAiHint}
-                    loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">

@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Share2, TrendingUp, Video, ImageIcon, Film, Mic, Voicemail, Star, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
@@ -12,7 +13,6 @@ import { useLanguage } from '@/lib/language';
 import { type Tool as BaseTool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
-import { getCloudinaryUrl } from '@/lib/cloudinary';
 
 type Tool = Omit<BaseTool, 'description' | 'isNew'>;
 
@@ -72,14 +72,13 @@ const ToolCard = React.memo(({ tool, onShare, t, isClient }: { tool: Tool, onSha
         className="bg-white/80 border-none rounded-3xl soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
       >
         <div className="relative">
-            <img
-              src={getCloudinaryUrl(tool.image)}
+            <Image
+              src={tool.image}
               alt={tool.name}
               width="120"
               height="90"
               className="w-full h-auto aspect-[4/3] object-cover"
               data-ai-hint={tool.dataAiHint}
-              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
