@@ -5,22 +5,23 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Filter, Gift
+    ArrowLeft, ExternalLink, Star, Share2, Gift
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useUserPreferences } from '@/context/user-preferences-context';
-import { type Tool, type ToolCategory, ultraFreeToolData } from '@/lib/ultra-free-tools-data';
+import { type Tool, ultraFreeToolData } from '@/lib/ultra-free-tools-data';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import Autoplay from "embla-carousel-autoplay";
 
 
 export default function UltraFreePage() {
     const { toast } = useToast();
-    const [priceFilter, setPriceFilter] = useState('All');
-    const [open, setOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
+    const autoplayPlugin = React.useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
+
 
     useEffect(() => {
         setIsClient(true);
@@ -96,15 +97,21 @@ export default function UltraFreePage() {
         );
     }
     
-    const filteredToolData = useMemo(() => {
-        if (priceFilter === 'All') {
-            return ultraFreeToolData;
-        }
-        return ultraFreeToolData.map(category => ({
-            ...category,
-            tools: category.tools.filter(tool => tool.pricing === 'Free' || tool.pricing === 'Freemium')
-        })).filter(category => category.tools.length > 0);
-    }, [priceFilter]);
+    const remainingToolData = useMemo(() => {
+        return ultraFreeToolData.slice(1);
+    }, []);
+
+    const carouselSlides = useMemo(() => {
+        const topToolsCategory = ultraFreeToolData.find(cat => cat.title === "Top Free AI Tools");
+        if (!topToolsCategory) return [];
+
+        return topToolsCategory.tools.map(tool => ({
+            title: tool.name,
+            image: tool.image,
+            dataAiHint: tool.dataAiHint,
+            link: tool.url
+        }));
+    }, []);
 
 
   return (
@@ -132,7 +139,30 @@ export default function UltraFreePage() {
 
       <main className="relative z-10 w-full max-w-sm flex-1 flex flex-col min-h-0 mt-6">
         <div className="flex-grow overflow-y-auto no-scrollbar p-4 space-y-8">
-            {filteredToolData.map((category, index) => {
+             <Carousel
+                opts={{ loop: true }}
+                plugins={[autoplayPlugin.current]}
+                className="w-full"
+                onMouseEnter={autoplayPlugin.current.stop}
+                onMouseLeave={autoplayPlugin.current.reset}
+            >
+                <CarouselContent className="-ml-2">
+                    {carouselSlides.map((slide, index) => (
+                         <CarouselItem key={index} className="pl-2">
+                            <Link href={slide.link} target="_blank" rel="noopener noreferrer">
+                                <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden soft-shadow">
+                                <Image src={slide.image} alt={slide.title} fill style={{objectFit: "cover"}} data-ai-hint={slide.dataAiHint} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <div className="absolute bottom-0 left-0 p-4">
+                                    <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
+                                </div>
+                                </div>
+                            </Link>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+            </Carousel>
+            {remainingToolData.map((category, index) => {
               if (category.tools.length === 0) return null;
 
               return (
@@ -142,24 +172,6 @@ export default function UltraFreePage() {
                           {category.icon}
                           {category.title}
                       </h2>
-                      {index === 0 && isClient && (
-                          <DropdownMenu open={open} onOpenChange={setOpen}>
-                              <DropdownMenuTrigger asChild>
-                                  <Button variant="outline" size="sm" className="bg-white/50">
-                                      <Filter className="w-4 h-4 mr-2" />
-                                      Filter
-                                  </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent className="w-56">
-                                  <DropdownMenuLabel>Filter by Price</DropdownMenuLabel>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuRadioGroup value={priceFilter} onValueChange={setPriceFilter}>
-                                      <DropdownMenuRadioItem value="All">All (Free & Paid)</DropdownMenuRadioItem>
-                                      <DropdownMenuRadioItem value="Free">Free Only</DropdownMenuRadioItem>
-                                  </DropdownMenuRadioGroup>
-                              </DropdownMenuContent>
-                          </DropdownMenu>
-                      )}
                   </div>
                   <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 horizontal-scroll-container">
                       {category.tools.map((tool) => (
