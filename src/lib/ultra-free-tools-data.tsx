@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -28,22 +27,20 @@ export const ultraFreeToolData: ToolCategory[] = [
         title: "Free Design Resources",
         icon: <Palette className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Canva', description: 'Graphic design platform for everyone.', url: 'https://www.canva.com/', image: 'https://picsum.photos/seed/canva-design/600/400', dataAiHint: 'design tool', pricing: 'Freemium' },
-            { name: 'Figma', description: 'Collaborative interface design tool.', url: 'https://www.figma.com/', image: 'https://picsum.photos/seed/figma-design/600/400', dataAiHint: 'ui design', pricing: 'Freemium' },
-            { name: 'PFPmaker', description: 'Create an awesome profile pic from any photo.', url: 'https://pfpmaker.com/', image: 'https://picsum.photos/seed/pfpmaker/600/400', dataAiHint: 'profile picture', pricing: 'Free' },
-            { name: 'Unsplash', description: 'The internet’s source of freely-usable images.', url: 'https://unsplash.com/', image: 'https://picsum.photos/seed/unsplash-free/600/400', dataAiHint: 'free images', pricing: 'Free' },
-            { name: 'Pexels', description: 'Free stock photos and videos.', url: 'https://www.pexels.com/', image: 'https://picsum.photos/seed/pexels-free/600/400', dataAiHint: 'free stock', pricing: 'Free' },
+            { name: 'Canva', description: 'Graphic design platform for everyone.', url: 'https://www.canva.com/', image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYW52YXxlbnwwfHx8fDE2OTI0NTMwMTN8MA&ixlib=rb-4.1.0&q=80&w=1080', dataAiHint: 'design tool', pricing: 'Freemium' },
+            { name: 'Figma', description: 'Collaborative interface design tool.', url: 'https://www.figma.com/', image: 'https://images.unsplash.com/photo-1611162616475-46b6352b1269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmaWdtYXxlbnwwfHx8fDE2OTI0NTMwMTN8MA&ixlib=rb-4.1.0&q=80&w=1080', dataAiHint: 'ui design', pricing: 'Freemium' },
+            { name: 'PFPmaker', description: 'Create an awesome profile pic from any photo.', url: 'https://pfpmaker.com/', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwcm9maWxlJTIwcGljdHVyZXxlbnwwfHx8fDE2OTI0NTMyMDF8MA&ixlib.rb-4.1.0&q=80&w=1080', dataAiHint: 'profile picture', pricing: 'Free' },
+            { name: 'Unsplash', description: 'The internet’s source of freely-usable images.', url: 'https://unsplash.com/', image: 'https://images.unsplash.com/photo-1682686580036-b5e259b2ce9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmbG93ZXJzfGVufDB8fHx8MTY5MjQ1MzI1Nnww&ixlib.rb-4.1.0&q=80&w=1080', dataAiHint: 'free images', pricing: 'Free' },
         ]
     },
     {
         title: "Open Source AI",
         icon: <Code className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Stable Diffusion', description: 'Open-source text-to-image model.', url: 'https://stablediffusionweb.com/', image: 'https://picsum.photos/seed/sd-free/600/400', dataAiHint: 'open source', pricing: 'Free' },
-            { name: 'Hugging Face Chat', description: 'An open-source alternative to ChatGPT.', url: 'https://huggingface.co/chat/', image: 'https://picsum.photos/seed/hf-chat-free/600/400', dataAiHint: 'open source chat', pricing: 'Free' },
-            { name: 'Rasa', description: 'Open source conversational AI.', url: 'https://rasa.com/', image: 'https://picsum.photos/seed/rasa-free/600/400', dataAiHint: 'conversational ai', pricing: 'Freemium' },
-            { name: 'Tesseract OCR', description: 'An open source OCR engine.', url: 'https://github.com/tesseract-ocr/tesseract', image: 'https://picsum.photos/seed/tesseract-free/600/400', dataAiHint: 'ocr engine', pricing: 'Free' },
-            { name: 'OpenAI Whisper', description: 'A general-purpose speech recognition model.', url: 'https://openai.com/research/whisper', image: 'https://picsum.photos/seed/whisper-free/600/400', dataAiHint: 'speech recognition', pricing: 'Free' },
+            { name: 'Stable Diffusion', description: 'Open-source text-to-image model.', url: 'https://stablediffusionweb.com/', image: 'https://images.unsplash.com/photo-1678566478904-e273eb238b69?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhdCUyMGFydCUyMHN0YWJsZSUyMGRpZmZ1c2lvbnxlbnwwfHx8fDE2OTI0NTMzMTZ8MA&ixlib.rb-4.1.0&q=80&w=1080', dataAiHint: 'open source', pricing: 'Free' },
+            { name: 'Hugging Face Chat', description: 'An open-source alternative to ChatGPT.', url: 'https://huggingface.co/chat/', image: 'https://images.unsplash.com/photo-1633915883395-827293427488?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaGF0Ym90fGVufDB8fHx8fDE2OTI0NTM0MjN8MA&ixlib.rb-4.1.0&q=80&w=1080', dataAiHint: 'open source chat', pricing: 'Free' },
+            { name: 'Rasa', description: 'Open source conversational AI.', url: 'https://rasa.com/', image: 'https://images.unsplash.com/photo-1534723452862-4c874018d66d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaGF0Ym90JTIwYm90fGVufDB8fHx8fDE2OTI0NTM1MDd8MA&ixlib.rb-4.1.0&q=80&w=1080', dataAiHint: 'conversational ai', pricing: 'Freemium' },
+            { name: 'Tesseract OCR', description: 'An open source OCR engine.', url: 'https://github.com/tesseract-ocr/tesseract', image: 'https://images.unsplash.com/photo-1581452994473-b3a62886a0b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0ZXh0JTIwcmVjb2duaXRpb258ZW58MHx8fHwxNjkyNDUzNTYwfDA&ixlib.rb-4.1.0&q=80&w=1080', dataAiHint: 'ocr engine', pricing: 'Free' },
         ]
     }
 ];
