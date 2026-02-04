@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
         {
             protocol: 'https',
             hostname: 'i.postimg.cc',
+        },
+        {
+            protocol: 'https',
+            hostname: 'upload.wikimedia.org',
         }
     ]
   },
