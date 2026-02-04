@@ -18,13 +18,10 @@ export const ultraFreeToolData: ToolCategory[] = [
         title: "Top Free AI Tools",
         icon: <Star className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'ChatGPT', description: 'Conversational AI by OpenAI.', url: 'https://chat.openai.com/', image: 'https://picsum.photos/seed/chatgpt-free/800/450', dataAiHint: 'openai chat', pricing: 'Freemium' },
-            { name: 'Google Gemini', description: 'Google\'s creative and helpful AI collaborator.', url: 'https://gemini.google.com/', image: 'https://picsum.photos/seed/gemini-free/800/450', dataAiHint: 'google ai', pricing: 'Free' },
-            { name: 'DuckDuckGo', description: 'The search engine that doesn\'t track you.', url: 'https://duckduckgo.com/', image: 'https://picsum.photos/seed/duckduckgo-free/800/450', dataAiHint: 'search engine', pricing: 'Free' },
-            { name: 'Arena AI', description: 'A platform for AI models.', url: 'https://lmsys.org/', image: 'https://picsum.photos/seed/arena-ai/800/450', dataAiHint: 'ai arena', pricing: 'Free' },
-            { name: 'Socratic by Google', description: 'Learning app to help with homework.', url: 'https://socratic.org/', image: 'https://picsum.photos/seed/socratic-free/800/450', dataAiHint: 'homework help', pricing: 'Free' },
-            { name: 'Bing Image Creator', description: 'Create AI images with DALL·E 3.', url: 'https://www.bing.com/images/create', image: 'https://picsum.photos/seed/bing-free/800/450', dataAiHint: 'dalle3 free', pricing: 'Free' },
-            { name: 'Canva AI Image Generator', description: 'Create stunning visuals from text.', url: 'https://www.canva.com/ai-image-generator/', image: 'https://picsum.photos/seed/canva-free/800/450', dataAiHint: 'design ai', pricing: 'Freemium' },
+            { name: 'ChatGPT', description: 'Conversational AI by OpenAI.', url: 'https://chat.openai.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg', dataAiHint: 'openai chat', pricing: 'Freemium' },
+            { name: 'Google Gemini', description: 'Google\'s creative and helpful AI collaborator.', url: 'https://gemini.google.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg', dataAiHint: 'google ai', pricing: 'Free' },
+            { name: 'DuckDuckGo', description: 'The search engine that doesn\'t track you.', url: 'https://duckduckgo.com/', image: 'https://upload.wikimedia.org/wikipedia/en/8/88/DuckDuckGo_logo.svg', dataAiHint: 'search engine', pricing: 'Free' },
+            { name: 'Arena AI', description: 'A platform for AI models.', url: 'https://lmsys.org/', image: 'https://upload.wikimedia.org/wikipedia/commons/d/d4/LMSYS_logo.svg', dataAiHint: 'ai arena', pricing: 'Free' },
         ]
     },
     {
