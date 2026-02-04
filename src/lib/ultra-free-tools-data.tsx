@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -20,6 +19,7 @@ export const ultraFreeToolData: ToolCategory[] = [
         tools: [
             { name: 'ChatGPT', description: 'Conversational AI by OpenAI.', url: 'https://chat.openai.com/', image: 'https://picsum.photos/seed/chatgpt-free/600/400', dataAiHint: 'openai chat', pricing: 'Freemium' },
             { name: 'Google Gemini', description: 'Google\'s creative and helpful AI collaborator.', url: 'https://gemini.google.com/', image: 'https://i.postimg.cc/DyfNCzpV/Screenshot-2025-12-16-12-47-43-00-965bbf4d18d205f782c6b8409c5773a4.jpg', dataAiHint: 'google ai', pricing: 'Free' },
+            { name: 'DuckDuckGo', description: 'The search engine that doesn\'t track you.', url: 'https://duckduckgo.com/', image: 'https://i.postimg.cc/mD4S4f6f/image.png', dataAiHint: 'search engine', pricing: 'Free' },
             { name: 'Socratic by Google', description: 'Learning app to help with homework.', url: 'https://socratic.org/', image: 'https://picsum.photos/seed/socratic-free/600/400', dataAiHint: 'homework help', pricing: 'Free' },
             { name: 'Bing Image Creator', description: 'Create AI images with DALL·E 3.', url: 'https://www.bing.com/images/create', image: 'https://picsum.photos/seed/bing-free/600/400', dataAiHint: 'dalle3 free', pricing: 'Free' },
             { name: 'Canva AI Image Generator', description: 'Create stunning visuals from text.', url: 'https://www.canva.com/ai-image-generator/', image: 'https://picsum.photos/seed/canva-free/600/400', dataAiHint: 'design ai', pricing: 'Freemium' },
