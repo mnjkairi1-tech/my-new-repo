@@ -34,6 +34,50 @@ const nextConfig: NextConfig = {
         {
             protocol: 'https',
             hostname: 'upload.wikimedia.org',
+        },
+        {
+            protocol: 'https',
+            hostname: 'www.quora.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'www.perplexity.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'huggingface.co',
+        },
+        {
+            protocol: 'https',
+            hostname: 'you.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'character.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'pi.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'www.jasper.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mycroft.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'www.soundhound.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'www.databotapp.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'www.google.com',
         }
     ]
   },
