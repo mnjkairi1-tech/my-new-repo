@@ -883,5 +883,8 @@ const nextConfig: NextConfig = {
             protocol: 'https',
             hostname: 'ecrettmusic.com',
         },
-        {
-            protocol: 'https:
+    ],
+  },
+};
+
+export default withPWA(pwaConfig)(nextConfig);
