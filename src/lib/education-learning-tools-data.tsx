@@ -1,7 +1,4 @@
 
-
-'use client';
-
 import React from 'react';
 import { 
     Cpu, BookOpen, UserCheck, Book, Bot, GraduationCap, CheckSquare, ListChecks, FileText,
@@ -9,14 +6,13 @@ import {
     BarChart, Users, Settings, Gamepad2, Zap, Heart
 } from 'lucide-react';
 import type { Tool } from '@/lib/types';
-
 import { aiLearningPlatformsTools } from './education-learning-tools-data/ai-learning-platforms';
 import { aiOnlineCourseBuildersTools } from './education-learning-tools-data/ai-online-course-builders';
 import { aiPersonalizedLearningTools } from './education-learning-tools-data/ai-personalized-learning-tools';
 import { aiAdaptiveLearningSystemsTools } from './education-learning-tools-data/ai-adaptive-learning-systems';
 import { aiTutoringTools } from './education-learning-tools-data/ai-tutoring-tools';
 import { aiVirtualTeachersTools } from './education-learning-tools-data/ai-virtual-teachers';
-import { aiHomeworkHelpTools } from './education-learning-tools-data/ai-homework-help-tools';
+import { aiHomeworkHelpTools } from './student-tools-data/ai-homework-help-tools';
 import { aiExamPreparationTools } from './education-learning-tools-data/ai-exam-preparation-tools';
 import { aiQuizAssessmentTools } from './education-learning-tools-data/ai-quiz-assessment-tools';
 import { aiPracticeTestGeneratorsTools } from './education-learning-tools-data/ai-practice-test-generators';
@@ -30,7 +26,7 @@ import { aiCodingProgrammingLearningTools } from './education-learning-tools-dat
 import { aiStemLearningTools } from './education-learning-tools-data/ai-stem-learning-tools';
 import { aiMathSolversTools } from './education-learning-tools-data/ai-math-solvers';
 import { aiScienceLearningTools } from './education-learning-tools-data/ai-science-learning-tools';
-import { aiSkillDevelopmentPlatformsTools } from './education-learning-tools-data/ai-skill-development-platforms';
+import { aiSkillDevelopmentPlatformsTools } from './student-tools-data/ai-skill-development-platforms';
 import { aiCareerGuidanceTools } from './education-learning-tools-data/ai-career-guidance-tools';
 import { aiCertificationTrainingTools } from './education-learning-tools-data/ai-certification-training-tools';
 import { aiLearningAnalyticsTools } from './education-learning-tools-data/ai-learning-analytics-tools';
@@ -199,4 +195,3 @@ export const educationLearningToolData: ToolCategory[] = [
         tools: aiLifelongLearningTools
     }
 ];
-
