@@ -153,7 +153,7 @@ const nextConfig: NextConfig = {
         },
         {
             protocol: 'https',
-            hostname: 'hellotars.com',
+            hostname: 'tars.com',
         },
         {
             protocol: 'https',
@@ -273,28 +273,256 @@ const nextConfig: NextConfig = {
         },
         {
             protocol: 'https',
-            hostname: 'tars.com'
+            hostname: 'askspoke.com',
         },
         {
             protocol: 'https',
-            hostname: 'solvvy.com',
+            hostname: 'moveworks.com',
         },
         {
             protocol: 'https',
-            hostname: 'mindsay.com',
+            hostname: 'leena.ai',
         },
         {
             protocol: 'https',
-            hostname: 'voiceflow.com',
+            hostname: 'clevy.io',
         },
         {
             protocol: 'https',
-            hostname: 'botpress.com',
+            hostname: 'samsonco.com',
         },
         {
             protocol: 'https',
-            hostname: 'dev.botframework.com',
-        }
+            hostname: 'talla.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'capacity.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'getguru.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'slab.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'stonly.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'helpjuice.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'document360.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bloomfire.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'tettra.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'calendly.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bizzabo.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'zoom.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'claralabs.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'sembly.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'vyte.in',
+        },
+        {
+            protocol: 'https',
+            hostname: 'acuityscheduling.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'zoho.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'dashbot.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'chatbase.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'botanalytics.co',
+        },
+        {
+            protocol: 'https',
+            hostname: 'janis.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'monkeylearn.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'brandwatch.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'talkwalker.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'repustate.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'clarabridge.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'lexalytics.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'zapier.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'make.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ifttt.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'n8n.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bardeen.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'powerautomate.microsoft.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'uipath.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'automationanywhere.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'blueprism.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'robocorp.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'trello.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'asana.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'monday.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'clickup.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'kissflow.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'processmaker.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'nintex.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'houndify.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mindbehind.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'chatwoot.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'rocket.chat',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mattermost.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'agentgpt.reworkd.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'adept.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'multion.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'cognosys.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'hyperwriteai.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ai-agent.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'godmode.space',
+        },
+        {
+            protocol: 'https',
+            hostname: 'fine.dev',
+        },
+        {
+            protocol: 'https',
+            hostname: 'abacus.ai',
+        },
     ]
   },
    webpack: (config, { isServer }) => {
@@ -312,3 +540,5 @@ const nextConfig: NextConfig = {
 const withPWAConfig = withPWA(pwaConfig);
 
 export default withPWAConfig(nextConfig);
+
+    
