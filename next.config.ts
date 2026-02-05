@@ -78,6 +78,122 @@ const nextConfig: NextConfig = {
         {
             protocol: 'https',
             hostname: 'www.google.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'intercom.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'zendesk.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'tidio.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'livechat.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'freshworks.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'drift.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'helpscout.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'liveperson.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bold360.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'genesys.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'salesforce.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'exceed.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'verse.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mobilemonkey.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'hubspot.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'botsify.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'verloop.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'qualified.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'hellotars.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'collect.chat',
+        },
+        {
+            protocol: 'https',
+            hostname: 'landbot.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'chatfuel.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'manychat.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'gobot.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'chatbot.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ada.cx',
+        },
+        {
+            protocol: 'https',
+            hostname: 'gorgias.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'octaneai.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'jumper.ai',
         }
     ]
   },
