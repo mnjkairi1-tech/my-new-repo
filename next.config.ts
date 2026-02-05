@@ -523,6 +523,530 @@ const nextConfig: NextConfig = {
             protocol: 'https',
             hostname: 'abacus.ai',
         },
+        {
+            protocol: 'https',
+            hostname: 'spline.design',
+        },
+        {
+            protocol: 'https',
+            hostname: 'masterpiecestudio.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'lumalabs.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'meshy.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'csm.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'sloyd.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'kaedim3d.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'alpha3d.io',
+        },
+        {
+            protocol: 'https',
+            hostname: '3dfy.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'adcreative.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'anyword.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'copysmith.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'lensa.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'synthesia.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'artbreeder.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'avatar.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'profilepicture.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'starryai.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'pfpmaker.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'readyplayer.me',
+        },
+        {
+            protocol: 'https',
+            hostname: 'articleforge.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'contentbot.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'scalenut.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'growthbarseo.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'crypko.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'thispersondoesnotexist.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'makehumancommunity.org',
+        },
+        {
+            protocol: 'https',
+            hostname: 'reallusion.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'heroforge.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'vroid.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'artflow.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'waifulabs.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'opus.pro',
+        },
+        {
+            protocol: 'https',
+            hostname: 'vidyo.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'designrr.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'repurpose.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'lumen5.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'klap.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'contentfries.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'missinglettr.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'scholarcy.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'quillbot.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'smmry.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'tldrthis.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'eightify.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'genei.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'resoomer.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'lavender.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'smartwriter.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'regie.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'instantly.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'quicklines.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'warmer.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'prometheanai.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'scenario.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'layer.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'hotpot.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'texturelab.xyz',
+        },
+        {
+            protocol: 'https',
+            hostname: 'nvidia.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ganbreeder.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'prowritingaid.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'gingersoftware.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'languagetool.org',
+        },
+        {
+            protocol: 'https',
+            hostname: 'scribens.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'writer.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'paperrater.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'answerthepublic.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'portent.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'storylab.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'letsenhance.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bigjpg.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'vanceai.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'remini.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'zyro.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'imglarger.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'deep-image.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'waifu2x.udp.jp',
+        },
+        {
+            protocol: 'https',
+            hostname: 'kapwing.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'supermeme.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'veed.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'clideo.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'makeameme.org',
+        },
+        {
+            protocol: 'https',
+            hostname: 'iloveimg.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'flexclip.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mematic.net',
+        },
+        {
+            protocol: 'https',
+            hostname: 'soundraw.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'aiva.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'boomy.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'soundful.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ecrettmusic.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'amadeuscode.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'splashmusic.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'suno.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'pika.art',
+        },
+        {
+            protocol: 'https',
+            hostname: 'd-id.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'leiapix.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'myheritage.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'vimageapp.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'lightricks.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'finaldraft.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'celtx.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'literatureandlatte.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'studiobinder.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'writerduet.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'squibler.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ideogram.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'nightcafe.studio',
+        },
+        {
+            protocol: 'https',
+            hostname: 'dreamstudio.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'playground.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'dream.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'craiyon.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'deepai.org',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mage.space',
+        },
+        {
+            protocol: 'https',
+            hostname: 'pixai.art',
+        },
+        {
+            protocol: 'https',
+            hostname: 'openai.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'elevenlabs.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'podcast.adobe.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'audo.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'lalal.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'voicemod.net',
+        },
+        {
+            protocol: 'https',
+            hostname: 'cleanvoice.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'auphonic.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'krisp.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'voice.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'voicery.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ttsmaker.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'reface.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'deepfakesweb.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'akool.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'pica-ai.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'miocreate.com',
+        }
     ]
   },
    webpack: (config, { isServer }) => {
