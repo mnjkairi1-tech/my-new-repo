@@ -3,7 +3,7 @@ import type { Tool } from '@/lib/types';
 
 export const aiConversationalAIPlatformsTools: Tool[] = [
     { name: 'Rasa', description: 'Open source conversational AI to build text- and voice-based assistants.', url: 'https://rasa.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=rasa.com', dataAiHint: 'open source ai', pricing: 'Freemium' },
-    { name: 'Google Dialogflow', description: 'A natural language understanding platform to design and integrate conversational user interfaces.', url: 'https://cloud.google.com/dialogflow', image: 'https://www.google.com/s2/favicons?sz=128&domain=dialogflow.cloud.google.com', dataAiHint: 'google nlu', pricing: 'Paid' },
+    { name: 'Google Dialogflow', description: 'A natural language understanding platform to design and integrate conversational user interfaces.', url: 'https://cloud.google.com/dialogflow', image: 'https://www.google.com/s2/favicons?sz=128&domain=cloud.google.com', dataAiHint: 'google nlu', pricing: 'Paid' },
     { name: 'Amazon Lex', description: 'Service for building conversational interfaces using voice and text.', url: 'https://aws.amazon.com/lex/', image: 'https://www.google.com/s2/favicons?sz=128&domain=aws.amazon.com', dataAiHint: 'aws chatbot', pricing: 'Paid' },
     { name: 'Kore.ai', description: 'Enterprise conversational AI platform.', url: 'https://kore.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=kore.ai', dataAiHint: 'enterprise ai', pricing: 'Paid' },
     { name: 'Amelia', description: 'The leading enterprise conversational AI.', url: 'https://amelia.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=amelia.ai', dataAiHint: 'conversational ai', pricing: 'Paid' },

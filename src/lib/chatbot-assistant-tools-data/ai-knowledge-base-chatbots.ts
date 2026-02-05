@@ -13,5 +13,3 @@ export const aiKnowledgeBaseChatbotsTools: Tool[] = [
     { name: 'Tettra', description: 'A simple, smart wiki for your team.', url: 'https://tettra.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=tettra.com', dataAiHint: 'internal wiki', pricing: 'Freemium' },
     { name: 'Slab', description: 'A knowledge hub for the modern workplace.', url: 'https://slab.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=slab.com', dataAiHint: 'knowledge hub', pricing: 'Freemium' },
 ];
-
-    

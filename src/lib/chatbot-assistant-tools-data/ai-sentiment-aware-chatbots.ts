@@ -13,5 +13,3 @@ export const aiSentimentAwareChatbotsTools: Tool[] = [
     { name: 'Clarabridge', description: 'Customer experience management.', url: 'https://www.clarabridge.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=clarabridge.com', dataAiHint: 'cx management', pricing: 'Paid' },
     { name: 'Lexalytics', description: 'Text analytics and natural language processing.', url: 'https://www.lexalytics.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=lexalytics.com', dataAiHint: 'text analytics', pricing: 'Paid' },
 ];
-
-    

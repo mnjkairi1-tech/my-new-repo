@@ -11,7 +11,5 @@ export const aiBookingSchedulingBotsTools: Tool[] = [
     { name: 'Clara', description: 'An AI employee that schedules meetings.', url: 'https://claralabs.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=claralabs.com', dataAiHint: 'ai employee', pricing: 'Paid' },
     { name: 'Sembly', description: 'AI meeting assistant with scheduling capabilities.', url: 'https://www.sembly.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=sembly.ai', dataAiHint: 'meeting assistant', pricing: 'Freemium' },
     { name: 'Vyte', description: 'All-in-one scheduling tool.', url: 'https://vyte.in/', image: 'https://www.google.com/s2/favicons?sz=128&domain=vyte.in', dataAiHint: 'scheduling tool', pricing: 'Freemium' },
-    { name: 'Acuity Scheduling', description: 'Online appointment scheduling software.', url: 'https://www.acuityscheduling.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=acuityscheduling.com', dataAiHint: 'online appointments', pricing: 'Paid' },
+    { name: 'Acuity Scheduling', description: 'Online appointment scheduling software.', url: 'https://www.acuityscheduling.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=squarespace.com', dataAiHint: 'online appointments', pricing: 'Paid' },
 ];
-
-    

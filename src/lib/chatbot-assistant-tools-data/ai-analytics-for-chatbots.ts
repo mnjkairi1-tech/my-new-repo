@@ -3,7 +3,7 @@ import type { Tool } from '@/lib/types';
 
 export const aiAnalyticsForChatbotsTools: Tool[] = [
     { name: 'Dashbot', description: 'Analytics for chatbots and voice assistants.', url: 'https://www.dashbot.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=dashbot.io', dataAiHint: 'chatbot analytics', pricing: 'Freemium' },
-    { name: 'Chatbase', description: 'Analytics for any bot.', url: 'https://chatbase.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=chatbase.com', dataAiHint: 'bot analytics', pricing: 'Paid' },
+    { name: 'Chatbase', description: 'Analytics for any bot.', url: 'https://www.chatbase.co/', image: 'https://www.google.com/s2/favicons?sz=128&domain=chatbase.co', dataAiHint: 'bot analytics', pricing: 'Paid' },
     { name: 'Botanalytics', description: 'Conversational analytics for bots.', url: 'https://botanalytics.co/', image: 'https://www.google.com/s2/favicons?sz=128&domain=botanalytics.co', dataAiHint: 'conversational analytics', pricing: 'Paid' },
     { name: 'Janis', description: 'AI assistant for managing chatbots with analytics.', url: 'https://www.janis.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=janis.ai', dataAiHint: 'ai assistant', pricing: 'Paid' },
     { name: 'Dialogflow Analytics', description: 'Built-in analytics for Google Dialogflow bots.', url: 'https://cloud.google.com/dialogflow/docs/analytics-overview', image: 'https://www.google.com/s2/favicons?sz=128&domain=cloud.google.com', dataAiHint: 'dialogflow', pricing: 'Paid' },
@@ -13,5 +13,3 @@ export const aiAnalyticsForChatbotsTools: Tool[] = [
     { name: 'Intercom Reports', description: 'Analytics for your Intercom bots and support.', url: 'https://www.intercom.com/reports', image: 'https://www.google.com/s2/favicons?sz=128&domain=intercom.com', dataAiHint: 'support reports', pricing: 'Paid' },
     { name: 'Zendesk Explore', description: 'Analytics for customer service, including chatbot interactions.', url: 'https://www.zendesk.com/explore/', image: 'https://www.google.com/s2/favicons?sz=128&domain=zendesk.com', dataAiHint: 'service analytics', pricing: 'Paid' },
 ];
-
-    

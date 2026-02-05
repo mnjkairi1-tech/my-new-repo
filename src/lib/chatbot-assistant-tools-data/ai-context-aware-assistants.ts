@@ -2,7 +2,7 @@
 import type { Tool } from '@/lib/types';
 
 export const aiContextAwareAssistantsTools: Tool[] = [
-    { name: 'Google Assistant', description: 'Understands context to provide relevant help.', url: 'https://assistant.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=assistant.google.com', dataAiHint: 'contextual assistant', pricing: 'Free' },
+    { name: 'Google Assistant', description: 'Understands context to provide relevant help.', url: 'https://assistant.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'contextual assistant', pricing: 'Free' },
     { name: 'Siri', description: 'Apple\'s intelligent assistant with contextual awareness.', url: 'https://www.apple.com/siri/', image: 'https://www.google.com/s2/favicons?sz=128&domain=apple.com', dataAiHint: 'apple ai', pricing: 'Free' },
     { name: 'Amazon Alexa', description: 'Voice service with skills that can maintain context.', url: 'https://www.amazon.com/alexa', image: 'https://www.google.com/s2/favicons?sz=128&domain=amazon.com', dataAiHint: 'smart speaker', pricing: 'Free' },
     { name: 'Rasa', description: 'Build context-aware AI assistants.', url: 'https://rasa.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=rasa.com', dataAiHint: 'conversational ai', pricing: 'Freemium' },
@@ -13,5 +13,3 @@ export const aiContextAwareAssistantsTools: Tool[] = [
     { name: 'Amelia', description: 'The leading enterprise conversational AI.', url: 'https://amelia.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=amelia.ai', dataAiHint: 'enterprise conversational', pricing: 'Paid' },
     { name: 'Haptik', description: 'Conversational AI for businesses with contextual understanding.', url: 'https://haptik.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=haptik.ai', dataAiHint: 'business ai', pricing: 'Paid' },
 ];
-
-    

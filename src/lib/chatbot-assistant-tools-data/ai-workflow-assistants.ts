@@ -13,5 +13,3 @@ export const aiWorkflowAssistantsTools: Tool[] = [
     { name: 'ProcessMaker', description: 'Low-code business process management.', url: 'https://www.processmaker.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=processmaker.com', dataAiHint: 'low-code bpm', pricing: 'Paid' },
     { name: 'Nintex', description: 'Process management and automation platform.', url: 'https://www.nintex.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=nintex.com', dataAiHint: 'process automation', pricing: 'Paid' },
 ];
-
-    

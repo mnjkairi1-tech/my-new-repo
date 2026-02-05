@@ -9,9 +9,7 @@ export const aiCrmChatbotsTools: Tool[] = [
     { name: 'Drift', description: 'Conversational marketing and sales platform.', url: 'https://www.drift.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=drift.com', dataAiHint: 'conversational marketing', pricing: 'Paid' },
     { name: 'Tidio', description: 'Live chat and chatbot solution with simple CRM.', url: 'https://www.tidio.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=tidio.com', dataAiHint: 'live chat', pricing: 'Freemium' },
     { name: 'Gorgias', description: 'Helpdesk for e-commerce stores with deep CRM integration.', url: 'https://www.gorgias.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=gorgias.com', dataAiHint: 'ecommerce helpdesk', pricing: 'Paid' },
-    { name: 'LiveChat', description: 'Live chat with built-in CRM.', url: 'https://www.livechat.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=livechat.com', dataAiHint: 'chat crm', pricing: 'Paid' },
+    { name: 'LiveChat', description: 'Live chat with built-in CRM.', url: 'https://www.livechat.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=livechatinc.com', dataAiHint: 'chat crm', pricing: 'Paid' },
     { name: 'Freshworks', description: 'Customer service suite with CRM and chatbots.', url: 'https://www.freshworks.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=freshworks.com', dataAiHint: 'customer suite', pricing: 'Paid' },
     { name: 'Zoho CRM', description: 'Online CRM with AI-powered assistant, Zia.', url: 'https://www.zoho.com/crm/', image: 'https://www.google.com/s2/favicons?sz=128&domain=zoho.com', dataAiHint: 'zia ai', pricing: 'Freemium' },
 ];
-
-    

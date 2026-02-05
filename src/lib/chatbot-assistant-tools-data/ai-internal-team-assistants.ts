@@ -2,7 +2,7 @@
 import type { Tool } from '@/lib/types';
 
 export const aiInternalTeamAssistantsTools: Tool[] = [
-    { name: 'Spoke', description: 'A modern ticketing system for internal teams.', url: 'https://www.askspoke.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=askspoke.com', dataAiHint: 'internal ticketing', pricing: 'Paid' },
+    { name: 'Spoke', description: 'A modern ticketing system for internal teams.', url: 'https://www.atlassian.com/software/jira-service-management/features/halp', image: 'https://www.google.com/s2/favicons?sz=128&domain=atlassian.com', dataAiHint: 'internal ticketing', pricing: 'Paid' },
     { name: 'Moveworks', description: 'AI platform for employee support.', url: 'https://www.moveworks.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=moveworks.com', dataAiHint: 'employee support', pricing: 'Paid' },
     { name: 'AnswerIQ', description: 'AI for internal support teams.', url: 'https://www.answeriq.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=answeriq.com', dataAiHint: 'internal support', pricing: 'Paid' },
     { name: 'Leena AI', description: 'AI-powered employee experience platform.', url: 'https://leena.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=leena.ai', dataAiHint: 'employee experience', pricing: 'Paid' },
@@ -13,5 +13,3 @@ export const aiInternalTeamAssistantsTools: Tool[] = [
     { name: 'Guru', description: 'A knowledge management solution that works in your workflow.', url: 'https://www.getguru.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=getguru.com', dataAiHint: 'company wiki', pricing: 'Freemium' },
     { name: 'Slab', description: 'A knowledge hub for the modern workplace.', url: 'https://slab.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=slab.com', dataAiHint: 'knowledge hub', pricing: 'Freemium' },
 ];
-
-    
