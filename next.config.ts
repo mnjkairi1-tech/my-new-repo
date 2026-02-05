@@ -1046,6 +1046,530 @@ const nextConfig: NextConfig = {
         {
             protocol: 'https',
             hostname: 'miocreate.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'todoist.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ticktick.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'any.do',
+        },
+        {
+            protocol: 'https',
+            hostname: 'culturedcode.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'omnigroup.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'toodledo.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'rememberthemilk.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'taskade.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'wrike.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'smartsheet.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'tray.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'pipedream.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'alfredapp.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'toggl.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'clockify.me',
+        },
+        {
+            protocol: 'https',
+            hostname: 'timelyapp.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'getharvest.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'timeular.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'desktime.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'focusme.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'hourstack.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'timecamp.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'doodle.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'savvycal.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'flexibits.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'woven.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'youcanbook.me',
+        },
+        {
+            protocol: 'https',
+            hostname: 'sanebox.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'boomeranggmail.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'shortwave.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mailbutler.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mixmax.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'clean.email',
+        },
+        {
+            protocol: 'https',
+            hostname: 'unroll.me',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mailstrom.co',
+        },
+        {
+            protocol: 'https',
+            hostname: 'spikenow.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'chuck.email',
+        },
+        {
+            protocol: 'https',
+            hostname: 'edison.tech',
+        },
+        {
+            protocol: 'https',
+            hostname: 'leavemealone.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'baydin.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'fathom.video',
+        },
+        {
+            protocol: 'https',
+            hostname: 'tldv.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'avoma.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'tactiq.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'trint.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'airgram.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'sonix.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'otranscribe.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'rev.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ulysses.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ia.net',
+        },
+        {
+            protocol: 'https',
+            hostname: 'humata.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'typeset.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'obsidian.md',
+        },
+        {
+            protocol: 'https',
+            hostname: 'roamresearch.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'logseq.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mem.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mymind.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bear.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'keep.google.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'simplenote.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'notability.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'standardnotes.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'researchrabbit.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'scite.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'consensus.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'scholar.google.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'semanticscholar.org',
+        },
+        {
+            protocol: 'https',
+            hostname: 'habitica.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'streaksapp.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'thefabulous.co',
+        },
+        {
+            protocol: 'https',
+            hostname: 'productive.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'habitify.me',
+        },
+        {
+            protocol: 'https',
+            hostname: 'doneapp.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'coach.me',
+        },
+        {
+            protocol: 'https',
+            hostname: 'everyday.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'momentum.cc',
+        },
+        {
+            protocol: 'https',
+            hostname: 'proginosko.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'stayfocusd.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'selfcontrolapp.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'focalfilter.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'hazeover.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'zoom.us',
+        },
+        {
+            protocol: 'https',
+            hostname: 'webex.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'pcloud.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'sync.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mega.nz',
+        },
+        {
+            protocol: 'https',
+            hostname: 'xmind.net',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mindmeister.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'coggle.it',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mindmanager.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'simplemind.eu',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bubbl.us',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mindnode.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'tome.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'beautiful.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'gamma.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'pitch.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'decktopus.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'deepl.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'translate.google.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'systransoft.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'itranslate.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'naver.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'online-translator.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'sourcegraph.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'linear.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'salesloft.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'lusha.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'freshdesk.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bamboohr.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'gusto.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'rippling.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'greenhouse.io',
+        },
+        {
+            protocol: 'https',
+            hostname: '15five.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'cultureamp.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'workable.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'intuit.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'expensify.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'brex.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'waveapps.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bill.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'clay.earth',
+        },
+        {
+            protocol: 'https',
+            hostname: 'getdex.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'monicahq.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'folk.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'covve.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'hippo.is',
+        },
+        {
+            protocol: 'https',
+            hostname: 'uphabit.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'nat.app',
+        },
+        {
+            protocol: 'https',
+            hostname: 'queue.so',
         }
     ]
   },
@@ -1064,7 +1588,3 @@ const nextConfig: NextConfig = {
 const withPWAConfig = withPWA(pwaConfig);
 
 export default withPWAConfig(nextConfig);
-
-    
-
-    
