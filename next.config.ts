@@ -274,6 +274,26 @@ const nextConfig: NextConfig = {
         {
             protocol: 'https',
             hostname: 'tars.com'
+        },
+        {
+            protocol: 'https',
+            hostname: 'solvvy.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'mindsay.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'voiceflow.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'botpress.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'dev.botframework.com',
         }
     ]
   },
