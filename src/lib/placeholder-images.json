@@ -3,7 +3,7 @@
     {
       "id": "featured-movie-app",
       "description": "Featured movie application background",
-      "imageUrl": "https://images.unsplash.com/photo-1563305096-9af2877f57f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGRhcmt8ZW58MHx8fHwxNzY5NTg2MjE4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1563305096-9af2877f57f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGRhcmt8ZW58MHx8fHwxNzY5NTg2MjE4fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "abstract dark"
     },
     {
@@ -176,7 +176,7 @@
     },
     {
       "id": "quick-tool-pdf-files",
-      "imageUrl": "https://images.unsplash.com/photo-1749424095233-f068cdb397eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkb2N1bWVudHMlMjBmaWxlc3xlbnwwfHx8fDE3Njk2NTU1ODh8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1749424095233-f068cdb397eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHhkb2N1bWVudHMlMjBmaWxlc3xlbnwwfHx8fDE3Njk2NTU1ODh8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "documents files",
       "description": "PDF & File Tools"
     },
@@ -218,7 +218,7 @@
     },
     {
       "id": "quick-tool-database-backend",
-      "imageUrl": "https://images.unsplash.com/photo-1763568258696-32147bb44379?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkYXRhYmFzZSUyMGJhY2tlbmR8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1763568258696-32147bb44379?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHhkYXRhYmFzZSUyMGJhY2tlbmR8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "database backend",
       "description": "Database & Backend Tools"
     },
@@ -320,7 +320,7 @@
     },
     {
       "id": "biz-drift",
-      "imageUrl": "https://images.unsplash.com/photo-1762340277380-04c2c30d0ef8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjb252ZXJzYXRpb25hbCUyMGFpfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1762340277380-04c2c30d0ef8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHhjb252ZXJzYXRpb25hbCUyMGFpfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "conversational ai",
       "description": "Drift for business"
     },
