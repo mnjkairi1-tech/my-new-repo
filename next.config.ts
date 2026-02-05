@@ -194,6 +194,86 @@ const nextConfig: NextConfig = {
         {
             protocol: 'https',
             hostname: 'jumper.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'wati.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'twilio.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'messagebird.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'gupshup.io',
+        },
+        {
+            protocol: 'https',
+            hostname: 'yellow.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'bots.business',
+        },
+        {
+            protocol: 'https',
+            hostname: 'xenioo.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'rebot.me',
+        },
+        {
+            protocol: 'https',
+            hostname: 'pandorabots.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'activechat.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'snatchbot.me',
+        },
+        {
+            protocol: 'https',
+            hostname: 'dialogflow.cloud.google.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'aws.amazon.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'kore.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'amelia.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'haptik.ai',
+        },
+        {
+            protocol: 'https',
+            hostname: 'cognigy.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'ibm.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'rasa.com',
+        },
+        {
+            protocol: 'https',
+            hostname: 'tars.com'
         }
     ]
   },
