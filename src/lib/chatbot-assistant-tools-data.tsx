@@ -5,15 +5,7 @@ import React from 'react';
 import { 
     Bot, MessageSquare, BrainCircuit, Users, Mic, Briefcase, ShoppingCart, Send, Phone, GitBranch, Languages, Puzzle, Key, HelpCircle, User, Star, Calendar, Zap, Workflow, Settings, BarChart, Shield, LayoutDashboard, Terminal, BookOpen, Globe
 } from 'lucide-react';
-
-export type Tool = {
-    name: string;
-    description: string;
-    url: string;
-    image: string;
-    dataAiHint: string;
-    pricing: 'Free' | 'Paid' | 'Freemium';
-};
+import type { Tool } from '@/lib/types';
 
 export type ToolCategory = {
     title: string;
@@ -26,32 +18,32 @@ export const chatbotAssistantToolData: ToolCategory[] = [
         title: "AI Chatbots",
         icon: <MessageSquare className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'ChatGPT', description: 'Conversational AI by OpenAI for a wide range of tasks.', url: 'https://chat.openai.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg', dataAiHint: 'openai chat', pricing: 'Freemium' },
-            { name: 'Google Gemini', description: 'Google\'s creative and helpful AI collaborator.', url: 'https://gemini.google.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/8/8f/Google_Gemini_logo.svg', dataAiHint: 'google ai', pricing: 'Free' },
-            { name: 'Claude', description: 'A next-generation AI assistant by Anthropic.', url: 'https://claude.ai/', image: 'https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg', dataAiHint: 'anthropic ai', pricing: 'Freemium' },
-            { name: 'Poe by Quora', description: 'Platform to ask questions and get instant answers from various AI bots.', url: 'https://poe.com/', image: 'https://www.quora.com/favicon.ico', dataAiHint: 'ai chat', pricing: 'Freemium' },
-            { name: 'Perplexity AI', description: 'An answer engine that provides sources for its answers.', url: 'https://www.perplexity.ai/', image: 'https://www.perplexity.ai/favicon.ico', dataAiHint: 'answer engine', pricing: 'Freemium' },
-            { name: 'Hugging Face Chat', description: 'An open-source alternative to ChatGPT.', url: 'https://huggingface.co/chat/', image: 'https://huggingface.co/favicon.ico', dataAiHint: 'open source chat', pricing: 'Free' },
-            { name: 'You.com', description: 'AI chatbot and search engine.', url: 'https://you.com/', image: 'https://you.com/favicon.ico', dataAiHint: 'search engine', pricing: 'Free' },
-            { name: 'Character.ai', description: 'Create and talk to AI characters.', url: 'https://character.ai/', image: 'https://character.ai/favicon.ico', dataAiHint: 'ai characters', pricing: 'Freemium' },
-            { name: 'Pi, your personal AI', description: 'A supportive and smart AI companion.', url: 'https://pi.ai/', image: 'https://pi.ai/favicon.ico', dataAiHint: 'personal ai', pricing: 'Free' },
-            { name: 'Jasper Chat', description: 'A conversational AI chatbot for business applications.', url: 'https://www.jasper.ai/chat', image: 'https://www.jasper.ai/favicon.ico', dataAiHint: 'business chat', pricing: 'Paid' },
+            { name: 'ChatGPT', description: 'Conversational AI by OpenAI for a wide range of tasks.', url: 'https://chat.openai.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=openai.com', dataAiHint: 'openai chat', pricing: 'Freemium' },
+            { name: 'Google Gemini', description: 'Google\'s creative and helpful AI collaborator.', url: 'https://gemini.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'google ai', pricing: 'Free' },
+            { name: 'Claude', description: 'A next-generation AI assistant by Anthropic.', url: 'https://claude.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=anthropic.com', dataAiHint: 'anthropic ai', pricing: 'Freemium' },
+            { name: 'Poe by Quora', description: 'Platform to ask questions and get instant answers from various AI bots.', url: 'https://poe.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=poe.com', dataAiHint: 'ai chat', pricing: 'Freemium' },
+            { name: 'Perplexity AI', description: 'An answer engine that provides sources for its answers.', url: 'https://www.perplexity.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=perplexity.ai', dataAiHint: 'answer engine', pricing: 'Freemium' },
+            { name: 'Hugging Face Chat', description: 'An open-source alternative to ChatGPT.', url: 'https://huggingface.co/chat/', image: 'https://www.google.com/s2/favicons?sz=128&domain=huggingface.co', dataAiHint: 'open source chat', pricing: 'Free' },
+            { name: 'You.com', description: 'AI chatbot and search engine.', url: 'https://you.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=you.com', dataAiHint: 'search engine', pricing: 'Free' },
+            { name: 'Character.ai', description: 'Create and talk to AI characters.', url: 'https://character.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=character.ai', dataAiHint: 'ai characters', pricing: 'Freemium' },
+            { name: 'Pi, your personal AI', description: 'A supportive and smart AI companion.', url: 'https://pi.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=pi.ai', dataAiHint: 'personal ai', pricing: 'Free' },
+            { name: 'Jasper Chat', description: 'A conversational AI chatbot for business applications.', url: 'https://www.jasper.ai/chat', image: 'https://www.google.com/s2/favicons?sz=128&domain=jasper.ai', dataAiHint: 'business chat', pricing: 'Paid' },
         ]
     },
     {
         title: "AI Virtual Assistants",
         icon: <User className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Microsoft Copilot', description: 'Your everyday AI companion integrated into Microsoft products.', url: 'https://copilot.microsoft.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Microsoft_Copilot_Logo.svg', dataAiHint: 'ai companion', pricing: 'Free' },
-            { name: 'Siri', description: 'Apple\'s intelligent assistant built into its devices.', url: 'https://www.apple.com/siri/', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Siri_Logo_2017.svg', dataAiHint: 'apple assistant', pricing: 'Free' },
-            { name: 'Amazon Alexa', description: 'The voice service that powers Echo devices and more.', url: 'https://www.amazon.com/alexa', image: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Amazon_Alexa_logo.svg', dataAiHint: 'smart speaker', pricing: 'Free' },
-            { name: 'Google Assistant', description: 'Your personal Google, always ready to help.', url: 'https://assistant.google.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Assistant_logo.svg', dataAiHint: 'voice assistant', pricing: 'Free' },
-            { name: 'Cortana', description: 'Microsoft\'s personal productivity assistant.', url: 'https://www.microsoft.com/en-us/cortana', image: 'https://upload.wikimedia.org/wikipedia/commons/2/2d/Microsoft_Cortana_transparent.svg', dataAiHint: 'productivity assistant', pricing: 'Free' },
-            { name: 'Bixby', description: 'Samsung\'s intelligent assistant.', url: 'https://www.samsung.com/global/galaxy/apps/bixby/', image: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/Samsung_Bixby_logo.svg', dataAiHint: 'samsung assistant', pricing: 'Free' },
-            { name: 'Mycroft', description: 'The open source voice assistant.', url: 'https://mycroft.ai/', image: 'https://mycroft.ai/favicon.ico', dataAiHint: 'open source voice', pricing: 'Free' },
-            { name: 'Hound', description: 'A faster and smarter voice assistant.', url: 'https://soundhound.com/hound/', image: 'https://www.soundhound.com/favicon.ico', dataAiHint: 'natural language', pricing: 'Free' },
-            { name: 'DataBot', description: 'Virtual talking robot assistant.', url: 'https://www.databotapp.com/', image: 'https://www.databotapp.com/favicon.ico', dataAiHint: 'virtual robot', pricing: 'Freemium' },
-            { name: 'Lyra', description: 'A personal AI assistant for your device.', url: 'https://lyra-assistant.com/', image: 'https://www.google.com/favicon.ico', dataAiHint: 'personal assistant', pricing: 'Free' },
+            { name: 'Microsoft Copilot', description: 'Your everyday AI companion integrated into Microsoft products.', url: 'https://copilot.microsoft.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=microsoft.com', dataAiHint: 'ai companion', pricing: 'Free' },
+            { name: 'Siri', description: 'Apple\'s intelligent assistant built into its devices.', url: 'https://www.apple.com/siri/', image: 'https://www.google.com/s2/favicons?sz=128&domain=apple.com', dataAiHint: 'apple assistant', pricing: 'Free' },
+            { name: 'Amazon Alexa', description: 'The voice service that powers Echo devices and more.', url: 'https://www.amazon.com/alexa', image: 'https://www.google.com/s2/favicons?sz=128&domain=amazon.com', dataAiHint: 'smart speaker', pricing: 'Free' },
+            { name: 'Google Assistant', description: 'Your personal Google, always ready to help.', url: 'https://assistant.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=assistant.google.com', dataAiHint: 'voice assistant', pricing: 'Free' },
+            { name: 'Cortana', description: 'Microsoft\'s personal productivity assistant.', url: 'https://www.microsoft.com/en-us/cortana', image: 'https://www.google.com/s2/favicons?sz=128&domain=microsoft.com', dataAiHint: 'productivity assistant', pricing: 'Free' },
+            { name: 'Bixby', description: 'Samsung\'s intelligent assistant.', url: 'https://www.samsung.com/global/galaxy/apps/bixby/', image: 'https://www.google.com/s2/favicons?sz=128&domain=samsung.com', dataAiHint: 'samsung assistant', pricing: 'Free' },
+            { name: 'Mycroft', description: 'The open source voice assistant.', url: 'https://mycroft.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=mycroft.ai', dataAiHint: 'open source voice', pricing: 'Free' },
+            { name: 'Hound', description: 'A faster and smarter voice assistant.', url: 'https://soundhound.com/hound/', image: 'https://www.google.com/s2/favicons?sz=128&domain=soundhound.com', dataAiHint: 'natural language', pricing: 'Free' },
+            { name: 'DataBot', description: 'Virtual talking robot assistant.', url: 'https://www.databotapp.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=databot.app', dataAiHint: 'virtual robot', pricing: 'Freemium' },
+            { name: 'Lyra', description: 'A personal AI assistant for your device.', url: 'https://lyra-assistant.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'personal assistant', pricing: 'Free' },
         ]
     },
     {
@@ -180,22 +172,6 @@ export const chatbotAssistantToolData: ToolCategory[] = [
             { name: 'Gupshup', description: 'Conversational messaging platform for Messenger.', url: 'https://www.gupshup.io/', image: 'https://picsum.photos/seed/gupshup-msg/600/400', dataAiHint: 'messaging platform', pricing: 'Paid' },
             { name: 'ActiveChat', description: 'Live chat and chatbot tool for websites and messengers.', url: 'https://activechat.ai/', image: 'https://picsum.photos/seed/activechat-msg/600/400', dataAiHint: 'live chat tool', pricing: 'Paid' },
             { name: 'SnatchBot', description: 'Create smart chatbots for any channel.', url: 'https://snatchbot.me/', image: 'https://picsum.photos/seed/snatchbot-msg/600/400', dataAiHint: 'smart chatbot', pricing: 'Freemium' },
-        ]
-    },
-    {
-        title: "AI Voice Assistants",
-        icon: <Mic className="w-5 h-5 text-primary"/>,
-        tools: [
-            { name: 'Google Assistant', description: 'Your personal Google, always ready to help.', url: 'https://assistant.google.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Assistant_logo.svg', dataAiHint: 'voice assistant', pricing: 'Free' },
-            { name: 'Amazon Alexa', description: 'The voice service that powers Echo devices.', url: 'https://www.amazon.com/alexa', image: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Amazon_Alexa_logo.svg', dataAiHint: 'smart speaker', pricing: 'Free' },
-            { name: 'Siri', description: 'Apple\'s intelligent assistant built into its devices.', url: 'https://www.apple.com/siri/', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Siri_Logo_2017.svg', dataAiHint: 'apple assistant', pricing: 'Free' },
-            { name: 'Microsoft Copilot', description: 'Your everyday AI companion with voice capabilities.', url: 'https://copilot.microsoft.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Microsoft_Copilot_Logo.svg', dataAiHint: 'ai companion', pricing: 'Freemium' },
-            { name: 'Hound', description: 'A faster and smarter voice assistant.', url: 'https://soundhound.com/hound/', image: 'https://www.soundhound.com/favicon.ico', dataAiHint: 'natural language', pricing: 'Free' },
-            { name: 'Bixby', description: 'Samsung\'s intelligent assistant.', url: 'https://www.samsung.com/global/galaxy/apps/bixby/', image: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/Samsung_Bixby_logo.svg', dataAiHint: 'samsung assistant', pricing: 'Free' },
-            { name: 'Mycroft', description: 'The open source voice assistant.', url: 'https://mycroft.ai/', image: 'https://mycroft.ai/favicon.ico', dataAiHint: 'open source voice', pricing: 'Free' },
-            { name: 'DataBot', description: 'Virtual talking robot assistant.', url: 'https://www.databotapp.com/', image: 'https://www.databotapp.com/favicon.ico', dataAiHint: 'virtual robot', pricing: 'Freemium' },
-            { name: 'Lyra', description: 'A personal AI assistant for your device.', url: 'https://lyra-assistant.com/', image: 'https://www.google.com/favicon.ico', dataAiHint: 'personal assistant', pricing: 'Free' },
-            { name: 'SoundHound', description: 'Music discovery and voice assistant.', url: 'https://www.soundhound.com/', image: 'https://www.soundhound.com/favicon.ico', dataAiHint: 'music discovery', pricing: 'Freemium' },
         ]
     },
     {
@@ -359,22 +335,6 @@ export const chatbotAssistantToolData: ToolCategory[] = [
         ]
     },
     {
-        title: "AI Personal Assistants",
-        icon: <User className="w-5 h-5 text-primary"/>,
-        tools: [
-            { name: 'Motion', description: 'Uses AI to intelligently plan your day.', url: 'https://www.usemotion.com/', image: 'https://picsum.photos/seed/motion-assist/600/400', dataAiHint: 'ai planner', pricing: 'Paid' },
-            { name: 'Google Assistant', description: 'Your personal Google, always ready to help.', url: 'https://assistant.google.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Assistant_logo.svg', dataAiHint: 'voice assistant', pricing: 'Free' },
-            { name: 'Siri', description: 'Apple\'s intelligent assistant.', url: 'https://www.apple.com/siri/', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Siri_Logo_2017.svg', dataAiHint: 'apple assistant', pricing: 'Free' },
-            { name: 'Amazon Alexa', description: 'The voice service that powers Echo.', url: 'https://developer.amazon.com/alexa', image: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Amazon_Alexa_logo.svg', dataAiHint: 'smart speaker', pricing: 'Free' },
-            { name: 'Microsoft Copilot', description: 'Your everyday AI companion.', url: 'https://copilot.microsoft.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Microsoft_Copilot_Logo.svg', dataAiHint: 'ai companion', pricing: 'Freemium' },
-            { name: 'Hound', description: 'A faster and smarter voice assistant.', url: 'https://soundhound.com/hound/', image: 'https://www.soundhound.com/favicon.ico', dataAiHint: 'natural language', pricing: 'Free' },
-            { name: 'Bixby', description: 'Samsung\'s intelligent assistant.', url: 'https://www.samsung.com/global/galaxy/apps/bixby/', image: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/Samsung_Bixby_logo.svg', dataAiHint: 'samsung assistant', pricing: 'Free' },
-            { name: 'Mycroft', description: 'The open source voice assistant.', url: 'https://mycroft.ai/', image: 'https://mycroft.ai/favicon.ico', dataAiHint: 'open source voice', pricing: 'Free' },
-            { name: 'DataBot', description: 'Virtual talking robot assistant.', url: 'https://www.databotapp.com/', image: 'https://www.databotapp.com/favicon.ico', dataAiHint: 'virtual robot', pricing: 'Freemium' },
-            { name: 'Lyra', description: 'A personal AI assistant for your device.', url: 'https://lyra-assistant.com/', image: 'https://www.google.com/favicon.ico', dataAiHint: 'personal assistant', pricing: 'Free' },
-        ]
-    },
-    {
         title: "AI Task Automation Assistants",
         icon: <Zap className="w-5 h-5 text-primary"/>,
         tools: [
@@ -458,12 +418,12 @@ export const chatbotAssistantToolData: ToolCategory[] = [
         title: "AI Context-Aware Assistants",
         icon: <BrainCircuit className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Google Assistant', description: 'Understands context to provide relevant help.', url: 'https://assistant.google.com/', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Assistant_logo.svg', dataAiHint: 'contextual assistant', pricing: 'Free' },
-            { name: 'Siri', description: 'Apple\'s intelligent assistant with contextual awareness.', url: 'https://www.apple.com/siri/', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Siri_Logo_2017.svg', dataAiHint: 'apple ai', pricing: 'Free' },
-            { name: 'Amazon Alexa', description: 'Voice service with skills that can maintain context.', url: 'https://www.amazon.com/alexa', image: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Amazon_Alexa_logo.svg', dataAiHint: 'smart speaker', pricing: 'Free' },
+            { name: 'Google Assistant', description: 'Understands context to provide relevant help.', url: 'https://assistant.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=assistant.google.com', dataAiHint: 'contextual assistant', pricing: 'Free' },
+            { name: 'Siri', description: 'Apple\'s intelligent assistant with contextual awareness.', url: 'https://www.apple.com/siri/', image: 'https://www.google.com/s2/favicons?sz=128&domain=apple.com', dataAiHint: 'apple ai', pricing: 'Free' },
+            { name: 'Amazon Alexa', description: 'Voice service with skills that can maintain context.', url: 'https://www.amazon.com/alexa', image: 'https://www.google.com/s2/favicons?sz=128&domain=amazon.com', dataAiHint: 'smart speaker', pricing: 'Free' },
             { name: 'Rasa', description: 'Build context-aware AI assistants.', url: 'https://rasa.com/', image: 'https://picsum.photos/seed/rasa-context/600/400', dataAiHint: 'conversational ai', pricing: 'Freemium' },
             { name: 'Google Dialogflow', description: 'Platform for building context-aware conversational interfaces.', url: 'https://cloud.google.com/dialogflow', image: 'https://picsum.photos/seed/dialogflow-context/600/400', dataAiHint: 'google nlu', pricing: 'Paid' },
-            { name: 'Houndify', description: 'Voice AI platform with context follow-up capabilities.', url: 'https://www.houndify.com/', image: 'https://www.soundhound.com/favicon.ico', dataAiHint: 'voice ai', pricing: 'Paid' },
+            { name: 'Houndify', description: 'Voice AI platform with context follow-up capabilities.', url: 'https://www.houndify.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=houndify.com', dataAiHint: 'voice ai', pricing: 'Paid' },
             { name: 'Cognigy', description: 'Enterprise conversational AI platform.', url: 'https://www.cognigy.com/', image: 'https://picsum.photos/seed/cognigy-context/600/400', dataAiHint: 'enterprise ai', pricing: 'Paid' },
             { name: 'Kore.ai', description: 'Build context-aware virtual assistants.', url: 'https://kore.ai/', image: 'https://picsum.photos/seed/koreai-context/600/400', dataAiHint: 'virtual assistants', pricing: 'Paid' },
             { name: 'Amelia', description: 'The leading enterprise conversational AI.', url: 'https://amelia.ai/', image: 'https://picsum.photos/seed/amelia-context/600/400', dataAiHint: 'enterprise conversational', pricing: 'Paid' },
