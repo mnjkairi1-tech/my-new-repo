@@ -39,6 +39,7 @@ import { aiSafetyTestingToolData } from './ai-safety-testing-data';
 import { advertisingToolData } from './advertising-tools-data';
 import { timeTrackingToolData } from './time-tracking-tools-data';
 import { hrRecruitmentToolData } from './hr-recruitment-tools-data';
+import { customerSupportToolData } from './customer-support-tools-data';
 import type { Tool } from './types';
 import { businessToolData } from './data/business-tools-data';
 
@@ -82,6 +83,7 @@ const allData = [
   advertisingToolData,
   timeTrackingToolData,
   hrRecruitmentToolData,
+  customerSupportToolData,
 ].flat();
 
 
