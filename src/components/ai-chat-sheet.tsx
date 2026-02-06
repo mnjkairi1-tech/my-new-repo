@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
@@ -6,21 +7,24 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetClose,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
-import { Loader2, User, Bot, Menu, UserPlus, Edit, Plus, Mic, ArrowUp, Shuffle, AudioLines, MessageSquare, Archive, MoreHorizontal, LogOut, Square, X } from 'lucide-react';
-// import { conversationalAgent, type ChatMessage } from '@/ai/flows/conversational-agent';
+import { Loader2, User, Bot, Menu, Edit, Plus, Mic, ArrowUp, Shuffle, AudioLines, MessageSquare, MoreHorizontal, Square, X } from 'lucide-react';
 import { type ChatMessage } from '@/ai/flows/conversational-agent';
-
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import { useUser } from '@/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
+
+// Check if SpeechRecognition is available on the window object
+interface IWindow extends Window {
+  SpeechRecognition: typeof SpeechRecognition;
+  webkitSpeechRecognition: typeof SpeechRecognition;
+}
 
 interface ChatHistoryItem {
     id: string;
@@ -126,6 +130,8 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
     const { toast } = useToast();
     const [input, setInput] = useState('');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isListening, setIsListening] = useState(false);
+    const recognitionRef = useRef<SpeechRecognition | null>(null);
 
     const [isLoading, setIsLoading] = useState(false);
     const [conversations, setConversations] = useState<Record<string, ChatHistoryItem>>({});
@@ -136,6 +142,73 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
     const requestCancelledRef = useRef(false);
     const activeConversationMessages = activeChatId ? conversations[activeChatId]?.messages || [] : [];
     
+    useEffect(() => {
+        if (typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
+            const SpeechRecognitionAPI = (window as IWindow).SpeechRecognition || (window as IWindow).webkitSpeechRecognition;
+            recognitionRef.current = new SpeechRecognitionAPI();
+            const recognition = recognitionRef.current;
+
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onresult = (event) => {
+                let final_transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        final_transcript += event.results[i][0].transcript;
+                    }
+                }
+                if (final_transcript) {
+                    setInput(prevInput => prevInput + final_transcript);
+                }
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech Recognition Error', event.error);
+                toast({
+                    variant: "destructive",
+                    title: "Voice Error",
+                    description: `Could not start voice recognition: ${event.error}`,
+                });
+                setIsListening(false);
+            };
+
+            recognition.onend = () => {
+                setIsListening(false);
+            };
+        }
+    }, [toast]);
+
+    const handleMicClick = async () => {
+        const recognition = recognitionRef.current;
+        if (!recognition) {
+            toast({
+                variant: "destructive",
+                title: "Unsupported",
+                description: "Your browser does not support voice recognition.",
+            });
+            return;
+        }
+
+        if (isListening) {
+            recognition.stop();
+        } else {
+            try {
+                await navigator.mediaDevices.getUserMedia({ audio: true });
+                recognition.start();
+                setIsListening(true);
+            } catch (err) {
+                console.error("Microphone permission denied", err);
+                toast({
+                    variant: "destructive",
+                    title: "Permission Denied",
+                    description: "Microphone access is required for voice input.",
+                });
+            }
+        }
+    };
+
     const getNewSuggestions = useCallback(() => {
         setSuggestions(shuffleAndPick(allSuggestions, 4));
     }, []);
@@ -191,16 +264,8 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
         setIsLoading(true);
 
         try {
-            // const currentHistory = conversations[activeChatId]?.messages || [];
-            // const result = await conversationalAgent({ 
-            //     message,
-            //     history: currentHistory,
-            // });
-
-            // Temporarily disabled for deployment
             const result = { response: "Sorry, the AI chat is temporarily disabled. We are working on a fix." };
             await new Promise(resolve => setTimeout(resolve, 1000));
-
 
             if (!requestCancelledRef.current) {
                 const newAiMessage: ChatMessage = { role: 'model', content: result.response };
@@ -239,6 +304,9 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
 
 
     const handleSend = () => {
+        if (isListening) {
+            recognitionRef.current?.stop();
+        }
         if (input.trim()) {
             handleSendMessage(input);
             setInput('');
@@ -291,11 +359,9 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                     <Button variant="ghost" size="icon" className="w-12 h-12" onClick={handleNewChat}>
                         <Edit className="w-6 h-6"/>
                     </Button>
-                    <SheetClose asChild>
-                        <Button variant="ghost" size="icon" className="w-12 h-12">
-                            <X className="w-6 h-6"/>
-                        </Button>
-                    </SheetClose>
+                    <Button variant="ghost" size="icon" className="w-12 h-12" onClick={() => onOpenChange(false)}>
+                        <X className="w-6 h-6"/>
+                    </Button>
                 </div>
             </SheetHeader>
 
@@ -372,7 +438,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                            disabled={isLoading && !requestCancelledRef.current}
+                            disabled={isLoading}
                         />
                         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                             {isLoading ? (
@@ -384,14 +450,13 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                                     <ArrowUp className="w-5 h-5"/>
                                 </Button>
                             ) : (
-                                <>
-                                    <Button type="button" size="icon" variant="ghost" className="w-9 h-9 rounded-full" disabled={isLoading}>
+                                <Button type="button" size="icon" variant="ghost" className="w-9 h-9 rounded-full" onClick={handleMicClick} disabled={isLoading}>
+                                    {isListening ? (
+                                        <AudioLines className="w-5 h-5 text-red-500 animate-pulse" />
+                                    ) : (
                                         <Mic className="w-5 h-5 text-gray-400" />
-                                    </Button>
-                                    <Button type="button" size="icon" variant="ghost" className="w-9 h-9 rounded-full" disabled={isLoading}>
-                                        <AudioLines className="w-5 h-5 text-gray-400"/>
-                                    </Button>
-                                </>
+                                    )}
+                                </Button>
                             )}
                         </div>
                     </div>
