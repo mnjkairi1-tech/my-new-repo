@@ -1,4 +1,5 @@
 
+
 // This is a server-only file to prevent client-side components (like icons)
 // from being bundled in server-side code.
 
@@ -37,6 +38,7 @@ import { smartIntegrationsToolData } from './smart-integrations-data';
 import { aiSafetyTestingToolData } from './ai-safety-testing-data';
 import { advertisingToolData } from './advertising-tools-data';
 import { timeTrackingToolData } from './time-tracking-tools-data';
+import { hrRecruitmentToolData } from './hr-recruitment-tools-data';
 import type { Tool } from './types';
 import { businessToolData } from './data/business-tools-data';
 
@@ -79,6 +81,7 @@ const allData = [
   aiSafetyTestingToolData,
   advertisingToolData,
   timeTrackingToolData,
+  hrRecruitmentToolData,
 ].flat();
 
 
