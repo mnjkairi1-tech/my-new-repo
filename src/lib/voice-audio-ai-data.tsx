@@ -116,7 +116,7 @@ export const voiceAudioAiToolData: ToolCategory[] = [
         title: "AI Dubbing", 
         icon: <Languages className="w-5 h-5 text-primary"/>, 
         tools: [
-            { name: 'HeyGen Video Translate', description: 'Translate your videos with AI voice cloning.', url: 'https://www.heygen.com/', image: 'https://picsum.photos/seed/heygen-dub/600/400', dataAiHint: 'video translate', pricing: 'Freemium' },
+             { name: 'HeyGen Video Translate', description: 'Translate your videos with AI voice cloning.', url: 'https://www.heygen.com/', image: 'https://picsum.photos/seed/heygen-dub/600/400', dataAiHint: 'video translate', pricing: 'Freemium' },
         ] 
     },
     { 
