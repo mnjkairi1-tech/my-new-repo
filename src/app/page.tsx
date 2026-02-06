@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import React, { useCallback, useMemo, useState, useRef, useEffect, Suspense, lazy } from 'react';
@@ -258,8 +259,8 @@ function HomePageContent() {
           <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-6 px-6 horizontal-scroll-container">
               {popularTools.map(tool => (
                   <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 text-center cursor-pointer" onClick={() => handleToolClick(tool)}>
-                      <div className="w-16 h-16 rounded-3xl bg-secondary flex items-center justify-center text-primary soft-shadow">
-                          {tool.icon && <ToolIcon name={tool.icon} className="w-8 h-8" />}
+                      <div className="w-16 h-16 rounded-3xl bg-secondary flex items-center justify-center p-2 text-primary soft-shadow overflow-hidden">
+                          <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain" />
                       </div>
                       <p className="text-sm font-medium text-center mt-2 text-muted-foreground">{tool.name}</p>
                   </a>
