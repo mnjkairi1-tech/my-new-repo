@@ -94,53 +94,6 @@ const ToolsLoadingSkeleton = () => (
     </div>
 );
 
-
-const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void, t: (key: string) => string }) => {
-    const { heartedTools, handleHeartToggle } = useUserPreferences();
-    const isHearted = heartedTools.some(t => t.name === tool.name);
-
-    const handleCardClick = useCallback((e: React.MouseEvent) => {
-        onClick(tool);
-        // No need to prevent default, let the anchor tag handle navigation.
-    }, [tool, onClick]);
-
-    const handleHeartClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        handleHeartToggle(tool);
-    }
-  
-    return (
-      <a href={tool.url} target="_blank" rel="noopener noreferrer" onClick={handleCardClick}>
-        <Card className="relative overflow-hidden group cursor-pointer bg-card border-border rounded-3xl h-full soft-shadow transition-transform hover:scale-105 duration-300">
-          {tool.image && <Image src={tool.image} alt={tool.name} width={300} height={200} className="w-full aspect-[4/3] object-cover" data-ai-hint={tool.dataAiHint} />}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-          {tool.isTrending && (
-            <Badge className="absolute top-2 left-2 bg-purple-500/80 text-white backdrop-blur-sm text-xs rounded-full border-none shadow-lg">
-              <TrendingUp className="w-3 h-3 mr-1"/>
-              {t('tools.trendingBadge')}
-            </Badge>
-          )}
-          <div className="absolute bottom-0 left-0 right-0 p-3">
-            <div className="flex justify-between items-end">
-              <h5 className="font-semibold text-white text-base leading-tight line-clamp-2">{tool.name}</h5>
-              <div className="flex items-center gap-1">
-                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm" onClick={(e) => onShare(e, tool)}>
-                  <Share2 />
-                </Button>
-                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm" onClick={handleHeartClick}>
-                    <Heart className={cn('w-5 h-5 transition-all', isHearted ? 'fill-red-500 text-red-500' : 'text-white')} />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Card>
-      </a>
-    );
-});
-ToolCard.displayName = 'ToolCard';
-
-
 function HomePageContent() {
   const { t } = useLanguage();
   const searchParams = useSearchParams();
@@ -512,7 +465,7 @@ function HomePageContent() {
 
               <TabsContent value="tools" className="flex-grow overflow-hidden flex flex-col mt-4">
                   <Suspense fallback={<ToolsLoadingSkeleton />}>
-                    <ToolsTabContent onShare={onShare} onClick={onClick} />
+                    <ToolsTabContent onShare={handleShareTool} onClick={handleToolClick} />
                   </Suspense>
               </TabsContent>
               
