@@ -62,7 +62,7 @@
     },
     {
       "id": "quick-tool-students",
-      "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmd8ZW58MHx8fHwxNzY5NTk2NDUzfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmdfHxlbnwwfHx8fDE3Njk1OTY0NTN8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "student studying",
       "description": "A student studying with books and a laptop."
     },
@@ -350,7 +350,7 @@
     },
     {
       "id": "biz-motion",
-      "imageUrl": "https://images.unsplash.com/photo-1691050985285-caaf3d2df0f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhaSUyMGNhbGVuZGFyfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1691050985285-caaf3d2df0f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhJTIwY2FsZW5kYXJ8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai calendar",
       "description": "Motion for business"
     },
@@ -380,7 +380,7 @@
     },
     {
       "id": "chatgpt-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhaSUyMGFzc2lzdGFudHxlbnwwfHx8fDE3Njk2NTY2MzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhJTIwYXNzaXN0YW50fGVufDB8fHx8MTc2OTY1NjYzMXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai assistant",
       "description": "ChatGPT assistant"
     },
@@ -410,7 +410,7 @@
     },
     {
       "id": "poe-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1678995632928-298d05d41671?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhaSUyMGNoYXR8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1678995632928-298d05d41671?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhJTIwY2hhdHxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai chat",
       "description": "Poe assistant"
     },
