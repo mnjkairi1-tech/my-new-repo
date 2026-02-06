@@ -318,19 +318,17 @@ function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
             </p>
         </div>
 
-        <div className={cn("relative w-full max-w-sm h-[420px] overflow-hidden rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow")}>
+        <div className="w-full max-w-sm h-[420px] [perspective:1000px]">
             <div className={cn(
-              "absolute inset-0 transition-all duration-700 ease-in-out p-6",
-              authMode === 'signin' ? 'translate-x-0 opacity-100 blur-0' : '-translate-x-full opacity-0 blur-md'
+                "relative w-full h-full transition-transform duration-700 ease-in-out [transform-style:preserve-3d]",
+                authMode === 'signup' && "[transform:rotateY(180deg)]"
             )}>
-              <SignInForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signup')} />
-            </div>
-
-            <div className={cn(
-              "absolute inset-0 transition-all duration-700 ease-in-out p-6",
-              authMode === 'signup' ? 'translate-x-0 opacity-100 blur-0' : 'translate-x-full opacity-0 blur-md'
-            )}>
-              <SignUpForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signin')}/>
+                <div className="absolute w-full h-full [backface-visibility:hidden] rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6">
+                    <SignInForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signup')} />
+                </div>
+                <div className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6">
+                    <SignUpForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signin')}/>
+                </div>
             </div>
         </div>
         
@@ -377,3 +375,5 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     />
   );
 }
+
+    
