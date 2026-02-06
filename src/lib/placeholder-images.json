@@ -3,7 +3,7 @@
     {
       "id": "featured-movie-app",
       "description": "Featured movie application background",
-      "imageUrl": "https://images.unsplash.com/photo-1563305096-9af2877f57f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGRhcmt8ZW58MHx8fHwxNzY5NTg2MjE4fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1563305096-9af2877f57f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGRhcmt8ZW58MHx8fHwxNzY5NTg2MjE4fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "abstract dark"
     },
     {
@@ -14,7 +14,7 @@
     },
     {
       "id": "pika",
-      "imageUrl": "https://images.unsplash.com/photo-1584224549374-995cbac1ab62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjcmVhdGl2ZSUyMHZpZGVvfGVufDB8fHx8MTc2OTY2Mzg3MHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1584224549374-995cbac1ab62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjcmVhdGl2ZSUyMHZpZGVvfGVufDB8fHx8MTc2OTY2Mzg3MHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "creative video",
       "description": "Pika AI tool"
     },
@@ -593,42 +593,6 @@
       "imageUrl": "https://images.unsplash.com/photo-1678229011495-2c3321d8975a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwZXJzb25hbCUyMGFpfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "personal ai",
       "description": "Personal.ai"
-    },
-    {
-      "id": "runway-motionbrush",
-      "imageUrl": "https://images.unsplash.com/photo-1517454026-6466a1240367?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhbmltYXRlZCUyMGltYWdlfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
-      "imageHint": "image animation",
-      "description": "Runway Motion Brush"
-    },
-    {
-      "id": "pika-animation",
-      "imageUrl": "https://images.unsplash.com/photo-1651044439167-7b1b9d424354?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjcmVhdGl2ZSUyMHZpZGVvfGVufDB8fHx8MTc2OTY2Mzg3MHww&ixlib.rb-4.1.0&q=80&w=1080",
-      "imageHint": "photo animation",
-      "description": "Pika Image Animation"
-    },
-    {
-      "id": "kaiber-i2v",
-      "imageUrl": "https://images.unsplash.com/photo-1616089983173-356c3d1976b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtb3ZpZSUyMHN0b3J5fGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
-      "imageHint": "visual storytelling",
-      "description": "Kaiber AI"
-    },
-    {
-      "id": "genmo-img2vid",
-      "imageUrl": "https://images.unsplash.com/photo-1692809930779-37332c021115?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnZW5lcmF0aXZlJTIwdmlkZW98ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib.rb-4.1.0&q=80&w=1080",
-      "imageHint": "generative video",
-      "description": "Genmo"
-    },
-    {
-      "id": "did-img2img",
-      "imageUrl": "https://images.unsplash.com/photo-1678995632928-298d05d41671?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx0YWxraW5nJTIwaGVhZHxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
-      "imageHint": "talking photos",
-      "description": "D-ID Creative Reality"
-    },
-    {
-      "id": "leiapix-img2img",
-      "imageUrl": "https://images.unsplash.com/photo-1755100034448-6a56e0705a26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHwzZCUyMHBob3RvfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
-      "imageHint": "3d photo",
-      "description": "LeiaPix Converter"
     }
   ]
 }
