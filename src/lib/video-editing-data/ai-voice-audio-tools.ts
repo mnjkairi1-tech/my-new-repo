@@ -18,5 +18,3 @@ export const aiVoiceAudioTools: Tool[] = [
     { name: 'Krisp', description: 'AI-powered noise cancelling app.', url: 'https://krisp.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=krisp.ai', dataAiHint: 'noise cancelling', pricing: 'Freemium' },
     { name: 'Voice.ai', description: 'Real-time voice changer for PC.', url: 'https://voice.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=voice.ai', dataAiHint: 'pc voice changer', pricing: 'Freemium' },
 ];
-
-    
