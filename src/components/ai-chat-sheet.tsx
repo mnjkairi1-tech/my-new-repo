@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
 import { Loader2, User, Bot, Menu, Edit, Plus, Mic, ArrowUp, Shuffle, AudioLines, MessageSquare, MoreHorizontal, Square, X } from 'lucide-react';
-import { type ChatMessage } from '@/ai/flows/conversational-agent';
+import { conversationalAgent, type ChatMessage } from '@/ai/flows/conversational-agent';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
@@ -166,7 +166,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
             recognition.onerror = (event) => {
                 if (event.error === 'no-speech' || event.error === 'aborted') {
                     setIsListening(false);
-                    return; // Gracefully handle common non-errors.
+                    return;
                 }
 
                 console.error('Speech Recognition Error', event.error);
@@ -198,7 +198,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
         if (isListening) {
             recognition.stop();
         } else {
-            try {
+             try {
                 // Request microphone permission. This will throw if denied.
                 await navigator.mediaDevices.getUserMedia({ audio: true });
                 recognition.start();
@@ -253,7 +253,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
         const newUserMessage: ChatMessage = { role: 'user', content: message };
         
         setConversations(prev => {
-            const currentChat = prev[activeChatId];
+            const currentChat = prev[activeChatId!];
             const updatedMessages = [...currentChat.messages, newUserMessage];
             
             const newTitle = currentChat.messages.length === 0 
@@ -262,24 +262,23 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
 
             return {
                 ...prev,
-                [activeChatId]: { ...currentChat, messages: updatedMessages, title: newTitle }
+                [activeChatId!]: { ...currentChat, messages: updatedMessages, title: newTitle }
             };
         });
         
         setIsLoading(true);
 
         try {
-            const result = { response: "Sorry, the AI chat is temporarily disabled. We are working on a fix." };
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            const result = await conversationalAgent({ history: conversations[activeChatId]?.messages || [], message });
 
             if (!requestCancelledRef.current) {
                 const newAiMessage: ChatMessage = { role: 'model', content: result.response };
                 setConversations(prev => {
-                    const currentChat = prev[activeChatId];
+                    const currentChat = prev[activeChatId!];
                     const updatedMessages = [...currentChat.messages, newAiMessage];
                     return {
                         ...prev,
-                        [activeChatId]: { ...currentChat, messages: updatedMessages }
+                        [activeChatId!]: { ...currentChat, messages: updatedMessages }
                     };
                 });
             }
@@ -292,11 +291,11 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                     description: `Could not fetch response: ${error.message}. Please try again.`,
                 });
                  setConversations(prev => {
-                    const currentChat = prev[activeChatId];
+                    const currentChat = prev[activeChatId!];
                     const revertedMessages = currentChat.messages.slice(0, -1);
                     return {
                         ...prev,
-                        [activeChatId]: { ...currentChat, messages: revertedMessages }
+                        [activeChatId!]: { ...currentChat, messages: revertedMessages }
                     };
                 });
             }
@@ -305,7 +304,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                 setIsLoading(false);
             }
         }
-    }, [activeChatId, toast]);
+    }, [activeChatId, toast, conversations]);
 
 
     const handleSend = () => {
