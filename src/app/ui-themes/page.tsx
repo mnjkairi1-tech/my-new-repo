@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Palette,
   Sun,
@@ -10,9 +10,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
 import { ClubHeader } from '@/components/club-header';
+import { cn } from '@/lib/utils';
 
 export default function UiThemesPage() {
   const { theme, setTheme } = useTheme();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const themes = [
     { name: 'default', label: 'Default', icon: Sun },
@@ -37,15 +43,17 @@ export default function UiThemesPage() {
             <Card
               key={t.name}
               onClick={() => setTheme(t.name)}
-              className={`cursor-pointer transition-all duration-300 ${
-                theme === t.name ? 'border-primary border-2 glow-shadow' : 'soft-shadow'
-              } bg-card/80 backdrop-blur-sm`}
+              className={cn(
+                'cursor-pointer transition-all duration-300 bg-card/80 backdrop-blur-sm',
+                isClient && theme === t.name ? 'border-primary border-2 glow-shadow' : 'soft-shadow'
+              )}
             >
               <CardContent className="p-4 flex flex-col items-center justify-center gap-3 aspect-square">
                 <div
-                  className={`w-16 h-16 rounded-2xl flex items-center justify-center ${
-                    theme === t.name ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'
-                  }`}
+                  className={cn(
+                    'w-16 h-16 rounded-2xl flex items-center justify-center',
+                    isClient && theme === t.name ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'
+                  )}
                 >
                   <t.icon className="w-8 h-8" />
                 </div>
