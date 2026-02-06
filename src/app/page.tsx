@@ -358,15 +358,15 @@ function HomePageContent() {
       <section className="mt-6 mb-16">
         <div className="flex justify-center items-center gap-8 my-4">
             <div className="flex flex-col items-center gap-2">
-                <Button variant={activeSavedTab === 'heart' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('heart')} className="w-16 h-16 rounded-full bg-pink-100/50 text-pink-500 shadow-lg soft-shadow"><Heart className="w-7 h-7"/></Button>
+                <Button variant={activeSavedTab === 'heart' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('heart')} className="w-20 h-16 rounded-2xl bg-pink-100/50 text-pink-500 shadow-lg soft-shadow"><Heart className="w-7 h-7"/></Button>
                 <span className="text-sm font-medium text-muted-foreground">Hearted</span>
             </div>
             <div className="flex flex-col items-center gap-2">
-                <Button variant={activeSavedTab === 'recent' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('recent')} className="w-20 h-20 rounded-full bg-blue-100/50 text-blue-500 shadow-lg soft-shadow"><History className="w-9 h-9"/></Button>
+                <Button variant={activeSavedTab === 'recent' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('recent')} className="w-24 h-20 rounded-2xl bg-blue-100/50 text-blue-500 shadow-lg soft-shadow"><History className="w-9 h-9"/></Button>
                 <span className="text-sm font-medium text-muted-foreground">Recent</span>
             </div>
             <div className="flex flex-col items-center gap-2">
-                <Button variant={activeSavedTab === 'star' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('star')} className="w-16 h-16 rounded-full bg-yellow-100/50 text-yellow-500 shadow-lg soft-shadow"><Star className="w-7 h-7"/></Button>
+                <Button variant={activeSavedTab === 'star' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('star')} className="w-20 h-16 rounded-2xl bg-yellow-100/50 text-yellow-500 shadow-lg soft-shadow"><Star className="w-7 h-7"/></Button>
                 <span className="text-sm font-medium text-muted-foreground">Starred</span>
             </div>
         </div>
@@ -512,7 +512,7 @@ function HomePageContent() {
 
               <TabsContent value="tools" className="flex-grow overflow-hidden flex flex-col mt-4">
                   <Suspense fallback={<ToolsLoadingSkeleton />}>
-                    <ToolsTabContent onShare={handleShareTool} onClick={handleToolClick} />
+                    <ToolsTabContent onShare={onShare} onClick={onClick} />
                   </Suspense>
               </TabsContent>
               
@@ -611,4 +611,6 @@ export default function GalaxyApp() {
     </AuthGate>
   );
 }
+    
+
     
