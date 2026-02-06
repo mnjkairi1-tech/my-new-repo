@@ -1,3 +1,4 @@
+
 // This is a server-only file to prevent client-side components (like icons)
 // from being bundled in server-side code.
 
@@ -18,6 +19,7 @@ import { imageEditingToolData } from './image-editing-tool-data';
 import { invoiceBillingToolData } from './invoice-billing-tool-data';
 import { marketingSeoToolData } from './marketing-seo-tool-data';
 import { productivityToolData } from './productivity-tool-data';
+import { projectManagementToolData } from './project-management-tools-data';
 import { researchKnowledgeToolData } from './research-knowledge-tool-data';
 import { securityPrivacyToolData } from './security-privacy-tool-data';
 import { seoAnalyticsToolData } from './seo-analytics-tool-data';
@@ -59,6 +61,7 @@ const allData = [
   invoiceBillingToolData,
   marketingSeoToolData,
   productivityToolData,
+  projectManagementToolData,
   researchKnowledgeToolData,
   securityPrivacyToolData,
   seoAnalyticsToolData,

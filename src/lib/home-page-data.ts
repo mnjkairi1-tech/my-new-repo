@@ -13,6 +13,7 @@ import {
   Star,
   Paintbrush,
   MessageSquare,
+  ImageDown,
 } from 'lucide-react';
 import { getImage, getHint } from './placeholder-images';
 import type { Tool } from './types';
