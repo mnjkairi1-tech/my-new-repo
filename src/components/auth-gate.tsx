@@ -25,18 +25,16 @@ import {
   FormMessage,
 } from './ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { AuthCartoon, type AuthState } from './auth-cartoon';
-import { AuthShapes } from './auth-shapes';
 import { AuthLoader } from './auth-loader';
+import { cn } from '@/lib/utils';
+import { AuthState } from './auth-cartoon';
 
 function GoogleSignInButton({
   onClick,
   isSigningIn,
-  setAuthState,
 }: {
   onClick: () => void;
   isSigningIn: boolean;
-  setAuthState: (state: AuthState) => void;
 }) {
   return (
     <Button
@@ -45,8 +43,6 @@ function GoogleSignInButton({
       className="w-full h-14 text-lg rounded-2xl bg-card border-2 border-primary/20 soft-shadow hover:bg-accent"
       onClick={onClick}
       disabled={isSigningIn}
-      onMouseEnter={() => setAuthState('hovering')}
-      onMouseLeave={() => setAuthState('idle')}
     >
       <div className="flex items-center justify-center">
         <svg className="w-6 h-6 mr-3" viewBox="0 0 48 48">
@@ -89,76 +85,47 @@ type AuthFormProps = {
   isSigningIn: boolean;
   setIsSigningIn: (isSigningIn: boolean) => void;
   onUser: (user: User) => void;
-  setAuthState: (state: AuthState) => void;
+  onSwitch: () => void;
 };
 
-const AuthForm = ({
+const SignInForm = ({
   isSigningIn,
   setIsSigningIn,
   onUser,
-  setAuthState,
+  onSwitch,
 }: AuthFormProps) => {
   const auth = useAuth();
   const { toast } = useToast();
-  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
 
-  const currentSchema = authMode === 'signin' ? signInSchema : signUpSchema;
-
-  const form = useForm<z.infer<typeof currentSchema>>({
-    resolver: zodResolver(currentSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+  const form = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: { email: '', password: '' },
   });
 
-  const onSubmit = async (values: z.infer<typeof currentSchema>) => {
+  const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     if (!auth) return;
-    setAuthState('submitting');
     setIsSigningIn(true);
     try {
-      let userCredential;
-      if (authMode === 'signin') {
-        userCredential = await signInWithEmailAndPassword(
-          auth,
-          values.email,
-          values.password
-        );
-      } else {
-        userCredential = await createUserWithEmailAndPassword(
-          auth,
-          values.email,
-          values.password
-        );
-      }
-      setAuthState('success');
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
       onUser(userCredential.user);
     } catch (error: any) {
-      setAuthState('fail');
-      let description = 'An unexpected error occurred. Please try again.';
+       let description = 'An unexpected error occurred. Please try again.';
       if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
         description = 'Invalid email or password. Please try again.';
-      } else if (error.code === 'auth/email-already-in-use') {
-        description = 'This email is already in use. Please sign in instead.';
       }
-      toast({
-        variant: 'destructive',
-        title: authMode === 'signin' ? 'Sign In Failed' : 'Sign Up Failed',
-        description,
-      });
+      toast({ variant: 'destructive', title: 'Sign In Failed', description });
     } finally {
       setIsSigningIn(false);
-      setTimeout(() => setAuthState('idle'), 2000);
     }
   };
 
-  const toggleAuthMode = () => {
-    setAuthMode(authMode === 'signin' ? 'signup' : 'signin');
-    form.reset();
-  };
-
   return (
-    <div className="w-full max-w-sm space-y-4">
+    <div className="text-center text-foreground">
+      <h2 className="text-2xl font-bold mb-4">Login</h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -166,15 +133,8 @@ const AuthForm = ({
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="your@email.com"
-                    {...field}
-                    className="h-12 rounded-xl"
-                    onFocus={() => setAuthState('typing')}
-                    onBlur={() => setAuthState('idle')}
-                  />
+                  <Input placeholder="Email" {...field} className="h-12 rounded-xl" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -185,61 +145,105 @@ const AuthForm = ({
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="********"
-                    {...field}
-                    className="h-12 rounded-xl"
-                    onFocus={() => setAuthState('peeking')}
-                    onBlur={() => setAuthState('idle')}
-                  />
+                  <Input type="password" placeholder="Password" {...field} className="h-12 rounded-xl" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            disabled={isSigningIn}
-            className="w-full h-12 rounded-xl text-base"
-            onMouseEnter={() => setAuthState('hovering')}
-            onMouseLeave={() => setAuthState('idle')}
-          >
-            {isSigningIn
-              ? 'Processing...'
-              : authMode === 'signin'
-              ? 'Sign In'
-              : 'Sign Up'}
+          <Button type="submit" disabled={isSigningIn} className="w-full h-12 rounded-xl text-base">
+            {isSigningIn ? 'Signing In...' : 'Login'}
           </Button>
         </form>
       </Form>
-      <p className="text-center text-sm text-muted-foreground">
-        {authMode === 'signin'
-          ? "Don't have an account?"
-          : 'Already have an account?'}{' '}
-        <button
-          onClick={toggleAuthMode}
-          className="font-semibold text-primary hover:underline"
-        >
-          {authMode === 'signin' ? 'Sign Up' : 'Sign In'}
-        </button>
-      </p>
+      <p className="mt-4">Don't have an account? <span onClick={onSwitch} className="text-primary cursor-pointer font-semibold">Register</span></p>
     </div>
   );
 };
 
+const SignUpForm = ({
+  isSigningIn,
+  setIsSigningIn,
+  onUser,
+  onSwitch,
+}: AuthFormProps) => {
+  const auth = useAuth();
+  const { toast } = useToast();
+
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: { email: '', password: '' },
+  });
+
+  const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+    if (!auth) return;
+    setIsSigningIn(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      onUser(userCredential.user);
+    } catch (error: any) {
+      let description = 'An unexpected error occurred. Please try again.';
+      if (error.code === 'auth/email-already-in-use') {
+        description = 'This email is already in use. Please sign in instead.';
+      }
+      toast({ variant: 'destructive', title: 'Sign Up Failed', description });
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
+  return (
+    <div className="text-center text-foreground">
+      <h2 className="text-2xl font-bold mb-4">Register</h2>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Email" {...field} className="h-12 rounded-xl" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type="password" placeholder="Password" {...field} className="h-12 rounded-xl" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={isSigningIn} className="w-full h-12 rounded-xl text-base">
+            {isSigningIn ? 'Registering...' : 'Register'}
+          </Button>
+        </form>
+      </Form>
+      <p className="mt-4">Already have an account? <span onClick={onSwitch} className="text-primary cursor-pointer font-semibold">Login</span></p>
+    </div>
+  );
+};
+
+
 function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   const auth = useAuth();
   const { toast } = useToast();
-  const [authState, setAuthState] = useState<AuthState>('idle');
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
   const [isSigningIn, setIsSigningIn] = useState(false);
   
   const handleGoogleSignIn = async () => {
-    // For custom web viewers, post a message to the native app to handle the login.
-    // The native wrapper should listen for this message, perform the native Google sign-in,
-    // get a custom token from your backend, and then call `window.handleCustomTokenSignIn(token)`.
     if ((window as any).flutter_inappwebview) {
         (window as any).flutter_inappwebview.callHandler('requestGoogleSignIn');
         return;
@@ -249,17 +253,13 @@ function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
        return;
     }
 
-    // Fallback for standard browsers
     if (!auth) return;
-    setAuthState('submitting');
     setIsSigningIn(true);
     try {
         const provider = new GoogleAuthProvider();
         const result = await signInWithPopup(auth, provider);
-        setAuthState('success');
         onUser(result.user);
     } catch (error: any) {
-        setAuthState('fail');
         console.error("Google Sign-In Error:", error);
         let description = 'Could not complete the sign-in process.';
         if (error.code === 'auth/popup-closed-by-user') {
@@ -280,8 +280,6 @@ function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   useEffect(() => {
     if (!auth) return;
   
-    // This function will be called by the native wrapper after it completes the native
-    // Google Sign-In and gets a custom token from your backend.
     (window as any).handleCustomTokenSignIn = async (token: string) => {
       if (!token) {
         toast({ variant: 'destructive', title: 'Sign-In Failed', description: 'Received an empty token from native app.' });
@@ -289,12 +287,9 @@ function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
       }
       try {
         setIsSigningIn(true);
-        setAuthState('submitting');
         const userCredential = await signInWithCustomToken(auth, token);
-        setAuthState('success');
         onUser(userCredential.user);
       } catch (error) {
-        setAuthState('fail');
         console.error("Custom Token Sign-In Error:", error);
         toast({
           variant: 'destructive',
@@ -314,45 +309,53 @@ function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 font-body">
       <div className="flex flex-col items-center justify-center w-full max-w-sm z-10">
-        <div className="flex flex-col items-center justify-center gap-8 w-full">
-            <div className="w-full text-center">
-            <div className="flex flex-col items-center mb-8">
-                <GalaxyLogo className="w-16 h-16 mb-4 text-primary" />
-                <h1 className="text-3xl font-bold text-foreground">
-                Welcome to AI Atlas
-                </h1>
-                <p className="mt-2 text-md text-muted-foreground">
-                Sign in to get started.
-                </p>
-            </div>
-            <div className="space-y-6">
-                <GoogleSignInButton
-                onClick={handleGoogleSignIn}
-                isSigningIn={isSigningIn}
-                setAuthState={setAuthState}
-                />
-                <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                    Or continue with
-                    </span>
-                </div>
-                </div>
-                <AuthForm
-                isSigningIn={isSigningIn}
-                setIsSigningIn={setIsSigningIn}
-                onUser={onUser}
-                setAuthState={setAuthState}
-                />
-            </div>
-            <p className="text-xs text-muted-foreground max-w-sm mt-8 text-center">
-                By signing in, you agree to our Terms of Service and Privacy Policy.
+        <div className="flex flex-col items-center mb-8">
+            <GalaxyLogo className="w-16 h-16 mb-4 text-primary" />
+            <h1 className="text-3xl font-bold text-foreground">
+            Welcome to AI Atlas
+            </h1>
+            <p className="mt-2 text-md text-muted-foreground">
+            Sign in or create an account to get started.
             </p>
+        </div>
+
+        <div className={cn("relative w-full max-w-sm h-[420px] overflow-hidden rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow")}>
+            <div className={cn(
+              "absolute inset-0 transition-all duration-700 ease-in-out p-6",
+              authMode === 'signin' ? 'translate-x-0 opacity-100 blur-0' : '-translate-x-full opacity-0 blur-md'
+            )}>
+              <SignInForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signup')} setAuthState={() => {}} />
+            </div>
+
+            <div className={cn(
+              "absolute inset-0 transition-all duration-700 ease-in-out p-6",
+              authMode === 'signup' ? 'translate-x-0 opacity-100 blur-0' : 'translate-x-full opacity-0 blur-md'
+            )}>
+              <SignUpForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signin')} setAuthState={() => {}}/>
             </div>
         </div>
+        
+        <div className="relative my-6 w-full max-w-sm">
+            <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                Or continue with
+                </span>
+            </div>
+        </div>
+
+        <div className="w-full max-w-sm">
+            <GoogleSignInButton
+            onClick={handleGoogleSignIn}
+            isSigningIn={isSigningIn}
+            />
+        </div>
+
+        <p className="text-xs text-muted-foreground max-w-sm mt-8 text-center">
+            By signing in, you agree to our Terms of Service and Privacy Policy.
+        </p>
       </div>
     </div>
   );
