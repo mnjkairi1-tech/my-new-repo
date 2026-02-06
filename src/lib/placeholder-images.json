@@ -38,7 +38,7 @@
     },
     {
       "id": "quick-tool-1",
-      "imageUrl": "https://images.unsplash.com/photo-1551302175-952301267d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx2aWRlbyUyMGVkaXRpbmd8ZW58MHx8fHwxNzY5NTY4ODA1fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1551302175-9523011267d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx2aWRlbyUyMGVkaXRpbmd8ZW58MHx8fHwxNzY5NTY4ODA1fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "video editing",
       "description": "Quick tool 1"
     },
@@ -194,9 +194,9 @@
     },
     {
       "id": "quick-tool-time-tracking",
+      "description": "Time Tracking Tools quick access",
       "imageUrl": "https://images.unsplash.com/photo-1499290731724-12e120cfaef3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0aW1lJTIwdHJhY2tpbmd8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib.rb-4.1.0&q=80&w=1080",
-      "imageHint": "time tracking",
-      "description": "Time Tracking Tools"
+      "imageHint": "time tracking"
     },
     {
       "id": "quick-tool-project-management",
@@ -578,7 +578,7 @@
     },
     {
       "id": "sunsama-agent",
-      "imageUrl": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkYWlseSUyMHBsYW5uZXJ8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkYWlseSUyMHBsYW5uZXxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "daily planner",
       "description": "Sunsama"
     },

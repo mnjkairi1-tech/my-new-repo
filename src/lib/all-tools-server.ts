@@ -34,6 +34,7 @@ import { healthcareAiToolData } from './healthcare-ai-data';
 import { smartIntegrationsToolData } from './smart-integrations-data';
 import { aiSafetyTestingToolData } from './ai-safety-testing-data';
 import { advertisingToolData } from './advertising-tools-data';
+import { timeTrackingToolData } from './time-tracking-tools-data';
 import type { Tool } from './types';
 import { businessToolData } from './data/business-tools-data';
 
@@ -74,6 +75,7 @@ const allData = [
   smartIntegrationsToolData,
   aiSafetyTestingToolData,
   advertisingToolData,
+  timeTrackingToolData,
 ].flat();
 
 
