@@ -98,9 +98,13 @@ export const quickToolCategories = [
     { name: 'Automation & Workflow Tools', url: '/automation-workflow-tools', image: getImage('quick-tool-automation-workflow'), dataAiHint: getHint('quick-tool-automation-workflow'), translationKey: 'automationWorkflowTools' },
     { name: 'AI Agents', url: '/ai-agents', image: getImage('quick-tool-ai-agents'), dataAiHint: getHint('quick-tool-ai-agents'), translationKey: 'aiAgents' },
     { name: 'Voice & Audio AI', url: '/voice-audio-ai', image: getImage('quick-tool-voice-audio-ai'), dataAiHint: getHint('quick-tool-voice-audio-ai'), translationKey: 'voiceAudioAi' },
+    { name: 'AI Search', url: '/ai-search', image: getImage('quick-tool-ai-search'), dataAiHint: getHint('quick-tool-ai-search'), translationKey: 'aiSearch' },
     { name: 'Healthcare AI', url: '/healthcare-ai', image: getImage('quick-tool-healthcare-ai'), dataAiHint: getHint('quick-tool-healthcare-ai'), translationKey: 'healthcareAi' },
+    { name: 'Legal AI', url: '/legal-ai', image: getImage('quick-tool-legal-ai'), dataAiHint: getHint('quick-tool-legal-ai'), translationKey: 'legalAi' },
     { name: 'Automation (RPA)', url: '/automation-rpa', image: getImage('quick-tool-automation-rpa'), dataAiHint: getHint('quick-tool-automation-rpa'), translationKey: 'automationRpa' },
+    { name: 'AI Infrastructure', url: '/ai-infrastructure', image: getImage('quick-tool-ai-infrastructure'), dataAiHint: getHint('quick-tool-ai-infrastructure'), translationKey: 'aiInfrastructure' },
     { name: 'AI Safety & Testing', url: '/ai-safety-testing', image: getImage('quick-tool-ai-safety-testing'), dataAiHint: getHint('quick-tool-ai-safety-testing'), translationKey: 'aiSafetyTesting' },
+    { name: 'AI Marketplaces', url: '/ai-marketplaces', image: getImage('quick-tool-ai-marketplaces'), dataAiHint: getHint('quick-tool-ai-marketplaces'), translationKey: 'aiMarketplaces' },
     { name: 'Smart Integrations', url: '/smart-integrations', image: getImage('quick-tool-smart-integrations'), dataAiHint: getHint('quick-tool-smart-integrations'), translationKey: 'smartIntegrations' },
 ];
       

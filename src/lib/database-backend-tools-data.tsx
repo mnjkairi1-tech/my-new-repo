@@ -101,7 +101,7 @@ export const databaseBackendToolData: ToolCategory[] = [
         tools: apiDevelopmentTools
     },
     {
-        title: "Authentication &amp; Authorization",
+        title: "Authentication & Authorization",
         icon: <Lock className="w-5 h-5 text-primary"/>,
         tools: authTools
     },
@@ -111,7 +111,7 @@ export const databaseBackendToolData: ToolCategory[] = [
         tools: baasTools
     },
     {
-        title: "Message Queues &amp; Event Streaming",
+        title: "Message Queues & Event Streaming",
         icon: <MessageSquare className="w-5 h-5 text-primary"/>,
         tools: messageQueuesTools
     },
@@ -121,7 +121,7 @@ export const databaseBackendToolData: ToolCategory[] = [
         tools: cachingSystemsTools
     },
     {
-        title: "ORM &amp; Database Abstraction",
+        title: "ORM & Database Abstraction",
         icon: <Repeat className="w-5 h-5 text-primary"/>,
         tools: ormTools
     },
@@ -131,7 +131,7 @@ export const databaseBackendToolData: ToolCategory[] = [
         tools: backendTestingTools
     },
     {
-        title: "Server Management &amp; Monitoring",
+        title: "Server Management & Monitoring",
         icon: <ServerCog className="w-5 h-5 text-primary"/>,
         tools: serverMonitoringTools
     },
@@ -156,7 +156,7 @@ export const databaseBackendToolData: ToolCategory[] = [
         tools: cicdPipelinesTools
     },
     {
-        title: "ETL &amp; Data Pipelines",
+        title: "ETL & Data Pipelines",
         icon: <GitBranch className="w-5 h-5 text-primary"/>,
         tools: etlDataPipelinesTools
     },
@@ -171,7 +171,7 @@ export const databaseBackendToolData: ToolCategory[] = [
         tools: databaseMigrationTools
     },
     {
-        title: "Backup &amp; Recovery Tools",
+        title: "Backup & Recovery Tools",
         icon: <FileUp className="w-5 h-5 text-primary"/>,
         tools: backupRecoveryTools
     },
