@@ -13,5 +13,3 @@ export const aiInteractiveVideoTools: Tool[] = [
     { name: 'ThingLink', description: 'Create unique experiences with interactive images, videos & 360° media.', url: 'https://www.thinglink.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=thinglink.com', dataAiHint: 'interactive images', pricing: 'Freemium' },
     { name: 'Kaltura', description: 'Interactive video tools for education and enterprise.', url: 'https://corp.kaltura.com/products/video-for-business/interactive-video/', image: 'https://www.google.com/s2/favicons?sz=128&domain=kaltura.com', dataAiHint: 'enterprise video', pricing: 'Paid' },
 ];
-
-    

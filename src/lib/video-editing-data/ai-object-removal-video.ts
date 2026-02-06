@@ -13,5 +13,3 @@ export const aiObjectRemovalVideoTools: Tool[] = [
     { name: 'Media.io', description: 'Online video editor with object removal features.', url: 'https://www.media.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=media.io', dataAiHint: 'online video tools', pricing: 'Freemium' },
     { name: 'Mocha Pro', description: 'Planar tracking and roto-masking tool for VFX.', url: 'https://borisfx.com/products/mocha-pro/', image: 'https://www.google.com/s2/favicons?sz=128&domain=borisfx.com', dataAiHint: 'planar tracking', pricing: 'Paid' },
 ];
-
-    

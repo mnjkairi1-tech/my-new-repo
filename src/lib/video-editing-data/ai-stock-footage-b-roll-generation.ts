@@ -13,5 +13,3 @@ export const aiStockFootageBRollGenerationTools: Tool[] = [
     { name: 'Dissolve', description: 'HD and 4K stock video and photos.', url: 'https://dissolve.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=dissolve.com', dataAiHint: '4k video', pricing: 'Paid' },
     { name: 'Pexels Videos', description: 'Free stock videos you can use everywhere.', url: 'https://www.pexels.com/videos/', image: 'https://www.google.com/s2/favicons?sz=128&domain=pexels.com', dataAiHint: 'free videos', pricing: 'Free' },
 ];
-
-    

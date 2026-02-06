@@ -21,5 +21,3 @@ export const aiVideoEditorsTools: Tool[] = [
     { name: 'Magisto', description: 'Smart video editor powered by A.I.', url: 'https://www.magisto.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=magisto.com', dataAiHint: 'vimeo create', pricing: 'Freemium' },
     { name: 'Type Studio', description: 'Text-based video editor.', url: 'https://www.typestudio.co/', image: 'https://www.google.com/s2/favicons?sz=128&domain=typestudio.co', dataAiHint: 'video transcript', pricing: 'Freemium' },
 ];
-
-    

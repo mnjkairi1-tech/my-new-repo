@@ -13,5 +13,3 @@ export const aiVideoAssetManagementTools: Tool[] = [
     { name: 'Evolphin Zoom', description: 'Media asset management and workflow automation.', url: 'https://www.evolphin.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=evolphin.com', dataAiHint: 'workflow automation', pricing: 'Paid' },
     { name: 'CatDV', description: 'Media asset management.', url: 'https://www.catdv.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=catdv.com', dataAiHint: 'asset management', pricing: 'Paid' },
 ];
-
-    

@@ -13,5 +13,3 @@ export const aiTextToMusicSoundEffectsTools: Tool[] = [
     { name: 'Amadeus Code', description: 'AI-powered songwriting assistant.', url: 'https://amadeuscode.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=amadeuscode.com', dataAiHint: 'songwriting assistant', pricing: 'Paid' },
     { name: 'Splash', description: 'Bringing the joy of music making to everyone.', url: 'https://www.splashmusic.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=splashmusic.com', dataAiHint: 'music games', pricing: 'Free' },
 ];
-
-    

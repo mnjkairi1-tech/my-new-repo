@@ -13,5 +13,3 @@ export const aiVideoToTextTranscriptionTools: Tool[] = [
     { name: 'Notta', description: 'Real-time transcription for meetings and videos.', url: 'https://www.notta.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=notta.ai', dataAiHint: 'real-time transcript', pricing: 'Freemium' },
     { name: 'Airgram', description: 'AI assistant to record, transcribe, and summarize video meetings.', url: 'https://www.airgram.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=airgram.io', dataAiHint: 'meeting summary', pricing: 'Freemium' },
 ];
-
-    

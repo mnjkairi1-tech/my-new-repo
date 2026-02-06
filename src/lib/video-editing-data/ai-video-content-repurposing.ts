@@ -13,5 +13,3 @@ export const aiVideoContentRepurposingTools: Tool[] = [
     { name: 'Headliner', description: 'Create video clips from audio to share on social media.', url: 'https://www.headliner.app/', image: 'https://www.google.com/s2/favicons?sz=128&domain=headliner.app', dataAiHint: 'audiograms', pricing: 'Freemium' },
     { name: 'Wavve', description: 'Turn audio into shareable social media videos.', url: 'https://wavve.co/', image: 'https://www.google.com/s2/favicons?sz=128&domain=wavve.co', dataAiHint: 'social videos', pricing: 'Freemium' },
 ];
-
-    

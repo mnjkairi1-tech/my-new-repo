@@ -13,5 +13,3 @@ export const aiLipSyncDubbingTools: Tool[] = [
     { name: 'Resemble AI', description: 'Voice cloning for dubbing.', url: 'https://www.resemble.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=resemble.ai', dataAiHint: 'voice cloning', pricing: 'Paid' },
     { name: 'Adobe Character Animator', description: 'Real-time animation with automatic lip-sync.', url: 'https://www.adobe.com/products/character-animator.html', image: 'https://www.google.com/s2/favicons?sz=128&domain=adobe.com', dataAiHint: 'real-time animation', pricing: 'Paid' },
 ];
-
-    

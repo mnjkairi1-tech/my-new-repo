@@ -13,5 +13,3 @@ export const aiAutomatedVideoDubbingTools: Tool[] = [
     { name: 'Vidby', description: 'AI-powered video translation and dubbing.', url: 'https://vidby.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=vidby.com', dataAiHint: 'video translation', pricing: 'Paid' },
     { name: 'Dubverse.ai', description: 'Another AI video dubbing platform.', url: 'https://dubverse.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=dubverse.ai', dataAiHint: 'ai dubbing', pricing: 'Freemium' },
 ];
-
-    

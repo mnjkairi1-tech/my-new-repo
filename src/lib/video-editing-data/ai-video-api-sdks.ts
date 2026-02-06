@@ -13,5 +13,3 @@ export const aiVideoApiSdksTools: Tool[] = [
     { name: 'Agora', description: 'Real-Time Engagement Platform.', url: 'https://www.agora.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=agora.io', dataAiHint: 'real-time engagement', pricing: 'Freemium' },
     { name: 'Sightengine', description: 'AI models for image and video moderation.', url: 'https://sightengine.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=sightengine.com', dataAiHint: 'video moderation', pricing: 'Paid' },
 ];
-
-    

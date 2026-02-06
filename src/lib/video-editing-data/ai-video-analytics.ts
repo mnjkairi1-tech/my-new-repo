@@ -13,5 +13,3 @@ export const aiVideoAnalyticsTools: Tool[] = [
     { name: 'IRIS.TV', description: 'Video data platform.', url: 'https://www.iris.tv/', image: 'https://www.google.com/s2/favicons?sz=128&domain=iris.tv', dataAiHint: 'contextual video', pricing: 'Paid' },
     { name: 'NPAW', description: 'Video analytics and business intelligence.', url: 'https://npaw.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=npaw.com', dataAiHint: 'video bi', pricing: 'Paid' },
 ];
-
-    

@@ -13,5 +13,3 @@ export const aiSlowMotionSpeedRampingTools: Tool[] = [
     { name: 'Twixter', description: 'Intelligent slow motion and speed ramping plugin.', url: 'https://revisionfx.com/products/twixtor/', image: 'https://www.google.com/s2/favicons?sz=128&domain=revisionfx.com', dataAiHint: 'vfx plugin', pricing: 'Paid' },
     { name: 'LumaFusion', description: 'Mobile video editor with speed effects.', url: 'https://luma-touch.com/lumafusion-for-ios/', image: 'https://www.google.com/s2/favicons?sz=128&domain=luma-touch.com', dataAiHint: 'mobile editing', pricing: 'Paid' },
 ];
-
-    

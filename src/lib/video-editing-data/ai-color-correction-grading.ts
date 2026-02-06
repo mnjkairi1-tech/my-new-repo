@@ -13,5 +13,3 @@ export const aiColorCorrectionGradingTools: Tool[] = [
     { name: 'Baselight', description: 'High-performance colour grading system.', url: 'https://www.filmlight.ltd.uk/products/baselight/overview_bl.php', image: 'https://www.google.com/s2/favicons?sz=128&domain=filmlight.ltd.uk', dataAiHint: 'professional color', pricing: 'Paid' },
     { name: 'Nuke Studio', description: 'VFX, editorial and finishing studio.', url: 'https://www.foundry.com/products/nuke-family/nuke-studio', image: 'https://www.google.com/s2/favicons?sz=128&domain=foundry.com', dataAiHint: 'vfx studio', pricing: 'Paid' },
 ];
-
-    

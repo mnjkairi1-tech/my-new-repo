@@ -13,5 +13,3 @@ export const aiAutoReframingResizingTools: Tool[] = [
     { name: 'Sprout Social', description: 'Optimize video for every social network.', url: 'https://sproutsocial.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=sproutsocial.com', dataAiHint: 'social video', pricing: 'Paid' },
     { name: 'Biteable', description: 'Create studio-quality videos in minutes.', url: 'https://biteable.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=biteable.com', dataAiHint: 'video templates', pricing: 'Freemium' },
 ];
-
-    

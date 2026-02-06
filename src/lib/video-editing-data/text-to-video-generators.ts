@@ -23,5 +23,3 @@ export const textToVideoGeneratorsTools: Tool[] = [
     { name: 'Genmo', description: 'The creative copilot for video.', url: 'https://www.genmo.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=genmo.ai', dataAiHint: 'video copilot', pricing: 'Freemium' },
     { name: 'Moonvalley', description: 'AI model for generating videos from text.', url: 'https://moonvalley.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=moonvalley.ai', dataAiHint: 'cinematic video', pricing: 'Freemium' },
 ];
-
-    

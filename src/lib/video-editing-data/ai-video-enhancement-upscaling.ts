@@ -13,5 +13,3 @@ export const aiVideoEnhancementUpscalingTools: Tool[] = [
     { name: 'Pika', description: 'Video enhancement features for creative content.', url: 'https://pika.art/', image: 'https://www.google.com/s2/favicons?sz=128&domain=pika.art', dataAiHint: 'creative video', pricing: 'Freemium' },
     { name: 'Neural.love', description: 'AI Image & Video Enhance.', url: 'https://neural.love/', image: 'https://www.google.com/s2/favicons?sz=128&domain=neural.love', dataAiHint: 'video restore', pricing: 'Freemium' },
 ];
-
-    

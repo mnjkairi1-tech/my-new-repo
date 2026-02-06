@@ -13,5 +13,3 @@ export const aiVideoFaceSwapTools: Tool[] = [
     { name: 'Miocreate', description: 'Free online AI face swap.', url: 'https://www.miocreate.com/face-swap.html', image: 'https://www.google.com/s2/favicons?sz=128&domain=miocreate.com', dataAiHint: 'online swap', pricing: 'Free' },
     { name: 'Deepfakes web', description: 'Create your own deepfake videos online.', url: 'https://deepfakesweb.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=deepfakesweb.com', dataAiHint: 'deepfake video', pricing: 'Paid' },
 ];
-
-    

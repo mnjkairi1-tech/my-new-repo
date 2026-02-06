@@ -13,5 +13,3 @@ export const aiSubtitleCaptionGenerationTools: Tool[] = [
     { name: 'Aegisub', description: 'Free, cross-platform open source tool for creating and modifying subtitles.', url: 'http://www.aegisub.org/', image: 'https://www.google.com/s2/favicons?sz=128&domain=aegisub.org', dataAiHint: 'open source', pricing: 'Free' },
     { name: 'Subtitle Edit', description: 'An editor for video subtitles.', url: 'https://www.nikse.dk/subtitleedit', image: 'https://www.google.com/s2/favicons?sz=128&domain=nikse.dk', dataAiHint: 'subtitle editor', pricing: 'Free' },
 ];
-
-    

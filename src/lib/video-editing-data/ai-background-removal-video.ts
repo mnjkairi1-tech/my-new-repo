@@ -13,5 +13,3 @@ export const aiBackgroundRemovalVideoTools: Tool[] = [
     { name: 'DaVinci Resolve', description: 'Advanced keying and masking in Fusion and Color pages.', url: 'https://www.blackmagicdesign.com/products/davinciresolve', image: 'https://www.google.com/s2/favicons?sz=128&domain=blackmagicdesign.com', dataAiHint: 'fusion page', pricing: 'Freemium' },
     { name: 'Cutout.pro', description: 'Remove video background online.', url: 'https://www.cutout.pro/video-background-remover', image: 'https://www.google.com/s2/favicons?sz=128&domain=cutout.pro', dataAiHint: 'online video remover', pricing: 'Freemium' },
 ];
-
-    

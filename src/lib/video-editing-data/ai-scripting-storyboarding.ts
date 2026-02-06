@@ -13,5 +13,3 @@ export const aiScriptingStoryboardingTools: Tool[] = [
     { name: 'StudioBinder', description: 'Production management software with scriptwriting features.', url: 'https://www.studiobinder.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=studiobinder.com', dataAiHint: 'call sheets', pricing: 'Freemium' },
     { name: 'WriterDuet', description: 'Real-time collaborative screenwriting software.', url: 'https://writerduet.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=writerduet.com', dataAiHint: 'collaboration', pricing: 'Freemium' },
 ];
-
-    

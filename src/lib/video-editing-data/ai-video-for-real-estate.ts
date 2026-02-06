@@ -13,5 +13,3 @@ export const aiVideoForRealEstateTools: Tool[] = [
     { name: 'Studeo', description: 'Storytelling platform for real estate.', url: 'https://studeo.co/', image: 'https://www.google.com/s2/favicons?sz=128&domain=studeo.co', dataAiHint: 'digital storybooks', pricing: 'Paid' },
     { name: 'Circle-A', description: 'Create amazing property videos in minutes.', url: 'https://circle-a.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=circle-a.com', dataAiHint: 'property videos', pricing: 'Paid' },
 ];
-
-    

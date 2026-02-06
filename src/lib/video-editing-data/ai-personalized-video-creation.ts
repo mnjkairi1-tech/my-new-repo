@@ -13,5 +13,3 @@ export const aiPersonalizedVideoCreationTools: Tool[] = [
     { name: 'Vouch', description: 'Collect video testimonials and feedback.', url: 'https://www.vouch.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=vouch.io', dataAiHint: 'video testimonials', pricing: 'Freemium' },
     { name: 'Sendspark', description: 'Video outreach platform.', url: 'https://www.sendspark.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=sendspark.com', dataAiHint: 'video outreach', pricing: 'Freemium' },
 ];
-
-    

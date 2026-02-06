@@ -13,5 +13,3 @@ export const aiSpecialEffectsVfxTools: Tool[] = [
     { name: 'Ebsynth', description: 'Bring paintings to life with video synthesis.', url: 'https://ebsynth.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=ebsynth.com', dataAiHint: 'video synthesis', pricing: 'Free' },
     { name: 'ZBrush', description: 'Digital sculpting tool for detailed models used in VFX.', url: 'https://www.maxon.net/en/zbrush', image: 'https://www.google.com/s2/favicons?sz=128&domain=maxon.net', dataAiHint: 'digital sculpting', pricing: 'Paid' },
 ];
-
-    

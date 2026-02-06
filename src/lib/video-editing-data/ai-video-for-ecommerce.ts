@@ -13,5 +13,3 @@ export const aiVideoForEcommerceTools: Tool[] = [
     { name: 'AdCreative.ai', description: 'Generate conversion-focused ad creatives and videos.', url: 'https://www.adcreative.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=adcreative.ai', dataAiHint: 'ad creatives', pricing: 'Paid' },
     { name: 'Waymark', description: 'Instantly create high-impact TV and streaming commercials.', url: 'https://waymark.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=waymark.com', dataAiHint: 'tv commercials', pricing: 'Paid' },
 ];
-
-    
