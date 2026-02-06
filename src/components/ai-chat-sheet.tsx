@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
@@ -165,6 +164,11 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
             };
 
             recognition.onerror = (event) => {
+                if (event.error === 'no-speech' || event.error === 'aborted') {
+                    setIsListening(false);
+                    return; // Gracefully handle common non-errors.
+                }
+
                 console.error('Speech Recognition Error', event.error);
                 toast({
                     variant: "destructive",
@@ -195,6 +199,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
             recognition.stop();
         } else {
             try {
+                // Request microphone permission. This will throw if denied.
                 await navigator.mediaDevices.getUserMedia({ audio: true });
                 recognition.start();
                 setIsListening(true);
@@ -203,7 +208,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                 toast({
                     variant: "destructive",
                     title: "Permission Denied",
-                    description: "Microphone access is required for voice input.",
+                    description: "Microphone access is required for voice input. Please enable it in your browser settings.",
                 });
             }
         }
@@ -300,7 +305,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                 setIsLoading(false);
             }
         }
-    }, [activeChatId, conversations, toast]);
+    }, [activeChatId, toast]);
 
 
     const handleSend = () => {
@@ -350,17 +355,14 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
         />
         <Sheet open={isOpen} onOpenChange={onOpenChange}>
           <SheetContent side="bottom" className="h-[100dvh] md:h-[90vh] flex flex-col bg-black text-white border-t-0 rounded-t-3xl p-0">
-            <SheetHeader className="flex flex-row items-center justify-between p-4 border-b border-gray-800 flex-shrink-0 text-left">
-                <Button variant="ghost" size="icon" className="w-12 h-12" onClick={() => setIsSidebarOpen(true)}>
-                    <Menu className="w-6 h-6"/>
+            <SheetHeader className="flex flex-row items-center justify-between p-2 sm:p-4 border-b border-gray-800 flex-shrink-0 text-left">
+                <Button variant="ghost" size="icon" className="w-10 h-10 sm:w-12 sm:h-12" onClick={() => setIsSidebarOpen(true)}>
+                    <Menu className="w-5 h-5 sm:w-6 sm:h-6"/>
                 </Button>
                 <SheetTitle>AI Atlas</SheetTitle>
-                <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="w-12 h-12" onClick={handleNewChat}>
-                        <Edit className="w-6 h-6"/>
-                    </Button>
-                    <Button variant="ghost" size="icon" className="w-12 h-12" onClick={() => onOpenChange(false)}>
-                        <X className="w-6 h-6"/>
+                <div className="flex items-center gap-1 sm:gap-2">
+                    <Button variant="ghost" size="icon" className="w-10 h-10 sm:w-12 sm:h-12" onClick={handleNewChat}>
+                        <Edit className="w-5 h-5 sm:w-6 sm:h-6"/>
                     </Button>
                 </div>
             </SheetHeader>
@@ -467,3 +469,4 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
         </>
     );
 }
+    
