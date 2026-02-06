@@ -6,11 +6,12 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetClose,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
-import { Loader2, User, Bot, Menu, UserPlus, Edit, Plus, Mic, ArrowUp, Shuffle, AudioLines, MessageSquare, Archive, MoreHorizontal, LogOut, Square } from 'lucide-react';
+import { Loader2, User, Bot, Menu, UserPlus, Edit, Plus, Mic, ArrowUp, Shuffle, AudioLines, MessageSquare, Archive, MoreHorizontal, LogOut, Square, X } from 'lucide-react';
 // import { conversationalAgent, type ChatMessage } from '@/ai/flows/conversational-agent';
 import { type ChatMessage } from '@/ai/flows/conversational-agent';
 
@@ -281,11 +282,20 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
         />
         <Sheet open={isOpen} onOpenChange={onOpenChange}>
           <SheetContent side="bottom" className="h-[100dvh] md:h-[90vh] flex flex-col bg-black text-white border-t-0 rounded-t-3xl p-0">
-            <SheetHeader className="flex flex-row items-center justify-between p-2 sm:p-4 border-b border-gray-800 flex-shrink-0 text-left">
-                <Button variant="ghost" size="icon" onClick={() => setIsSidebarOpen(true)}><Menu /></Button>
+            <SheetHeader className="flex flex-row items-center justify-between p-4 border-b border-gray-800 flex-shrink-0 text-left">
+                <Button variant="ghost" size="icon" className="w-12 h-12" onClick={() => setIsSidebarOpen(true)}>
+                    <Menu className="w-6 h-6"/>
+                </Button>
                 <SheetTitle>AI Atlas</SheetTitle>
-                <div className="flex items-center gap-1 sm:gap-2">
-                    <Button variant="ghost" size="icon" onClick={handleNewChat}><Edit size={20} /></Button>
+                <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="icon" className="w-12 h-12" onClick={handleNewChat}>
+                        <Edit className="w-6 h-6"/>
+                    </Button>
+                    <SheetClose asChild>
+                        <Button variant="ghost" size="icon" className="w-12 h-12">
+                            <X className="w-6 h-6"/>
+                        </Button>
+                    </SheetClose>
                 </div>
             </SheetHeader>
 
