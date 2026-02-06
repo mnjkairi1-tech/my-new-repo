@@ -27,7 +27,6 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { AuthLoader } from './auth-loader';
 import { cn } from '@/lib/utils';
-import { AuthState } from './auth-cartoon';
 
 function GoogleSignInButton({
   onClick,
@@ -324,14 +323,14 @@ function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
               "absolute inset-0 transition-all duration-700 ease-in-out p-6",
               authMode === 'signin' ? 'translate-x-0 opacity-100 blur-0' : '-translate-x-full opacity-0 blur-md'
             )}>
-              <SignInForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signup')} setAuthState={() => {}} />
+              <SignInForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signup')} />
             </div>
 
             <div className={cn(
               "absolute inset-0 transition-all duration-700 ease-in-out p-6",
               authMode === 'signup' ? 'translate-x-0 opacity-100 blur-0' : 'translate-x-full opacity-0 blur-md'
             )}>
-              <SignUpForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signin')} setAuthState={() => {}}/>
+              <SignUpForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} onSwitch={() => setAuthMode('signin')}/>
             </div>
         </div>
         
