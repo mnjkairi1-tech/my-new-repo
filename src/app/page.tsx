@@ -526,21 +526,19 @@ function HomePageContent() {
         {activeTab === 'tools' && comparisonList.length > 0 && (
           <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 animate-fade-in-up w-[90%] max-w-sm">
             <Card className="p-2 rounded-full flex items-center gap-2 soft-shadow bg-card/90 backdrop-blur-xl">
-              <div className='flex-grow flex items-center gap-2 px-2 overflow-hidden min-w-0'>
-                <span className='font-semibold truncate'>{comparisonList[0].name}</span>
-                {comparisonList.length === 2 && (
-                  <>
-                    <span className='text-muted-foreground'>vs</span>
-                    <span className='font-semibold truncate'>{comparisonList[1].name}</span>
-                  </>
-                )}
-                {comparisonList.length === 1 && (
-                    <span className='text-muted-foreground text-sm truncate'>Select another tool</span>
-                )}
-              </div>
-              <Link href="/compare-tools" passHref onClick={(e) => { if (comparisonList.length !== 2) e.preventDefault(); }} className="flex-shrink-0">
-                <Button size="default" className="rounded-full glow-shadow" disabled={comparisonList.length !== 2}>Compare</Button>
-              </Link>
+              {comparisonList.length === 2 ? (
+                <Link href="/compare-tools" className="flex-grow">
+                  <Button size="lg" className="w-full rounded-full glow-shadow font-bold text-base">
+                    <Scale className="mr-2 h-5 w-5" />
+                    Compare ({comparisonList.length})
+                  </Button>
+                </Link>
+              ) : (
+                <div className='flex-grow flex items-center gap-2 px-2 overflow-hidden min-w-0'>
+                  <span className='font-semibold truncate'>{comparisonList[0].name}</span>
+                  <span className='text-muted-foreground text-sm truncate'>selected</span>
+                </div>
+              )}
               <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0" onClick={clearComparison}>
                 <X className="w-5 h-5"/>
               </Button>
