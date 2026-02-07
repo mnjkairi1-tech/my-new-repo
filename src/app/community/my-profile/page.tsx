@@ -284,7 +284,7 @@ function MyProfilePageContent() {
                                     <Link href={`/community/${club.id}`} key={club.id} className="block group">
                                         <Card className="p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors duration-200 soft-shadow">
                                             <Avatar className="h-14 w-14 border-2 border-white">
-                                                <AvatarImage src={club.avatar} alt={club.name} />
+                                                <AvatarImage src={`https://ui-avatars.com/api/?name=${encodeURIComponent(club.name)}&background=random&color=fff&size=128`} alt={club.name} />
                                                 <AvatarFallback>{club.name.charAt(0)}</AvatarFallback>
                                             </Avatar>
                                             <div className="flex-grow overflow-hidden">

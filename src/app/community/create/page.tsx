@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState } from 'react';
@@ -56,7 +57,7 @@ export default function CreateClubPage() {
         setIsSubmitting(true);
     
         try {
-          const avatarUrl = `https://picsum.photos/seed/${data.clubName.replace(/\s/g, '-')}/400/400`;
+          const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.clubName)}&background=random&color=fff&size=128`;
 
           const groupData = {
             name: data.clubName,

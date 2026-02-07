@@ -350,7 +350,7 @@ export default function ClubDetailsPageClient() {
                     </Button>
                     <Link href={`/community/${clubId}/info`} className="flex items-center gap-3">
                         <Avatar className='h-10 w-10'>
-                            <AvatarImage src={clubData?.avatar || ''} alt={clubData?.name} />
+                            <AvatarImage src={clubData?.name ? `https://ui-avatars.com/api/?name=${encodeURIComponent(clubData.name)}&background=random&color=fff&size=128` : ''} alt={clubData?.name} />
                             <AvatarFallback>{clubData?.name?.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>
