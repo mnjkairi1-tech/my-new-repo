@@ -2,7 +2,7 @@ import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/google-genai';
 
 // Centralized model configuration
-export const geminiModel = 'googleai/gemini-1.5-flash';
+export const geminiModel = 'googleai/gemini-pro';
 
 export const ai = genkit({
   plugins: [
