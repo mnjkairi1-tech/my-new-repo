@@ -3,7 +3,7 @@ import type { Tool } from '@/lib/types';
 
 export const aiPersonalAssistantsTools: Tool[] = [
     { name: 'Motion', description: 'Uses AI to intelligently plan your day.', url: 'https://www.usemotion.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=usemotion.com', dataAiHint: 'ai planner', pricing: 'Paid' },
-    { name: 'Google Assistant', description: 'Your personal Google, always ready to help.', url: 'https://assistant.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=assistant.google.com', dataAiHint: 'voice assistant', pricing: 'Free' },
+    { name: 'Google Assistant', description: 'Your personal Google, always ready to help.', url: 'https://assistant.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'voice assistant', pricing: 'Free' },
     { name: 'Siri', description: 'Apple\'s intelligent assistant.', url: 'https://www.apple.com/siri/', image: 'https://www.google.com/s2/favicons?sz=128&domain=apple.com', dataAiHint: 'apple assistant', pricing: 'Free' },
     { name: 'Amazon Alexa', description: 'The voice service that powers Echo.', url: 'https://developer.amazon.com/alexa', image: 'https://www.google.com/s2/favicons?sz=128&domain=amazon.com', dataAiHint: 'smart speaker', pricing: 'Free' },
     { name: 'Microsoft Copilot', description: 'Your everyday AI companion.', url: 'https://copilot.microsoft.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=microsoft.com', dataAiHint: 'ai companion', pricing: 'Freemium' },

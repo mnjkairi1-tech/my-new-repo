@@ -29,42 +29,42 @@ export const startupToolData: ToolCategory[] = [
         title: "AI Idea Validation Tools",
         icon: <Lightbulb className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'The Business Idea Generator', description: 'AI-powered tool to generate and validate startup ideas.', url: 'https://businessideagenerator.com/', image: 'https://picsum.photos/seed/bizidea-startup/600/400', dataAiHint: 'startup idea', pricing: 'Free' },
+            { name: 'The Business Idea Generator', description: 'AI-powered tool to generate and validate startup ideas.', url: 'https://businessideagenerator.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=businessideagenerator.com', dataAiHint: 'startup idea', pricing: 'Free' },
         ]
     },
     {
         title: "AI Market Research Tools",
         icon: <Search className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Attest', description: 'Consumer research platform for fast insights.', url: 'https://www.askattest.com/', image: 'https://picsum.photos/seed/attest-startup/600/400', dataAiHint: 'consumer research', pricing: 'Paid' },
+            { name: 'Attest', description: 'Consumer research platform for fast insights.', url: 'https://www.askattest.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=askattest.com', dataAiHint: 'consumer research', pricing: 'Paid' },
         ]
     },
     {
         title: "AI Competitive Analysis Tools",
         icon: <Users className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Crayon', description: 'Market and competitive intelligence software.', url: 'https://www.crayon.co/', image: 'https://picsum.photos/seed/crayon-startup/600/400', dataAiHint: 'competitive intel', pricing: 'Paid' },
+            { name: 'Crayon', description: 'Market and competitive intelligence software.', url: 'https://www.crayon.co/', image: 'https://www.google.com/s2/favicons?sz=128&domain=crayon.co', dataAiHint: 'competitive intel', pricing: 'Paid' },
         ]
     },
     {
         title: "AI Business Plan Generators",
         icon: <FileText className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'LivePlan', description: 'Business plan software with performance tracking.', url: 'https://www.liveplan.com/', image: 'https://picsum.photos/seed/liveplan-startup/600/400', dataAiHint: 'business plan', pricing: 'Paid' },
+            { name: 'LivePlan', description: 'Business plan software with performance tracking.', url: 'https://www.liveplan.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=liveplan.com', dataAiHint: 'business plan', pricing: 'Paid' },
         ]
     },
     {
         title: "AI Pitch Deck Creation Tools",
         icon: <Presentation className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Tome', description: 'The AI-powered storytelling format for presentations.', url: 'https://tome.app/', image: 'https://picsum.photos/seed/tome-startup/600/400', dataAiHint: 'ai presentation', pricing: 'Freemium' },
+            { name: 'Tome', description: 'The AI-powered storytelling format for presentations.', url: 'https://tome.app/', image: 'https://www.google.com/s2/favicons?sz=128&domain=tome.app', dataAiHint: 'ai presentation', pricing: 'Freemium' },
         ]
     },
     {
         title: "AI Financial Planning & Forecasting",
         icon: <LineChart className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Glean', description: 'Modern financial planning and analysis.', url: 'https://glean.io/', image: 'https://picsum.photos/seed/glean-finance-startup/600/400', dataAiHint: 'financial planning', pricing: 'Paid' },
+            { name: 'Glean', description: 'Modern financial planning and analysis.', url: 'https://glean.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=glean.io', dataAiHint: 'financial planning', pricing: 'Paid' },
         ]
     },
     {
@@ -81,49 +81,49 @@ export const startupToolData: ToolCategory[] = [
         title: "AI Legal & Compliance Tools",
         icon: <Shield className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Clerky', description: 'The easiest way for startups to get legal paperwork done.', url: 'https://www.clerky.com/', image: 'https://picsum.photos/seed/clerky-startup/600/400', dataAiHint: 'legal paperwork', pricing: 'Paid' },
+            { name: 'Clerky', description: 'The easiest way for startups to get legal paperwork done.', url: 'https://www.clerky.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=clerky.com', dataAiHint: 'legal paperwork', pricing: 'Paid' },
         ]
     },
     {
         title: "AI Company Registration Tools",
         icon: <Building className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Stripe Atlas', description: 'Setup your internet business from anywhere.', url: 'https://stripe.com/atlas', image: 'https://picsum.photos/seed/stripe-atlas-startup/600/400', dataAiHint: 'business formation', pricing: 'Paid' },
+            { name: 'Stripe Atlas', description: 'Setup your internet business from anywhere.', url: 'https://stripe.com/atlas', image: 'https://www.google.com/s2/favicons?sz=128&domain=stripe.com', dataAiHint: 'business formation', pricing: 'Paid' },
         ]
     },
     {
         title: "AI Product Management Tools",
         icon: <Box className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Productboard', description: 'The product management system.', url: 'https://www.productboard.com/', image: 'https://picsum.photos/seed/productboard-startup/600/400', dataAiHint: 'product roadmap', pricing: 'Paid' },
+            { name: 'Productboard', description: 'The product management system.', url: 'https://www.productboard.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=productboard.com', dataAiHint: 'product roadmap', pricing: 'Paid' },
         ]
     },
     {
         title: "AI MVP & Prototyping Tools",
         icon: <Puzzle className="w-5 h-5 text-primary"/>,
         tools: [
-             { name: 'Figma', description: 'Collaborative interface design tool.', url: 'https://www.figma.com/', image: 'https://picsum.photos/seed/figma-mvp-startup/600/400', dataAiHint: 'prototyping', pricing: 'Freemium' },
+             { name: 'Figma', description: 'Collaborative interface design tool.', url: 'https://www.figma.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=figma.com', dataAiHint: 'prototyping', pricing: 'Freemium' },
         ]
     },
     {
         title: "AI UX/UI Design Tools",
         icon: <Brush className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Uizard', description: 'AI-powered design tool for creating apps and websites.', url: 'https://uizard.io/', image: 'https://picsum.photos/seed/uizard-ux-startup/600/400', dataAiHint: 'ui design', pricing: 'Freemium' },
+            { name: 'Uizard', description: 'AI-powered design tool for creating apps and websites.', url: 'https://uizard.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=uizard.io', dataAiHint: 'ui design', pricing: 'Freemium' },
         ]
     },
     {
         title: "AI Website & App Builders",
         icon: <Code className="w-5 h-5 text-primary"/>,
         tools: [
-            { name: 'Webflow', description: 'Build responsive websites visually.', url: 'https://webflow.com/', image: 'https://picsum.photos/seed/webflow-builder-startup/600/400', dataAiHint: 'website builder', pricing: 'Freemium' },
+            { name: 'Webflow', description: 'Build responsive websites visually.', url: 'https://webflow.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=webflow.com', dataAiHint: 'website builder', pricing: 'Freemium' },
         ]
     },
     {
         title: "AI No-Code / Low-Code Platforms",
         icon: <Cpu className="w-5 h-5 text-primary"/>,
         tools: [
-             { name: 'Bubble', description: 'Build production-ready web apps without code.', url: 'https://bubble.io/', image: 'https://picsum.photos/seed/bubble-nocode-startup/600/400', dataAiHint: 'no-code app', pricing: 'Freemium' },
+             { name: 'Bubble', description: 'Build production-ready web apps without code.', url: 'https://bubble.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=bubble.io', dataAiHint: 'no-code app', pricing: 'Freemium' },
         ]
     },
     {
@@ -199,6 +199,8 @@ export const startupToolData: ToolCategory[] = [
     {
         title: "AI Scaling & Optimization Tools",
         icon: <UploadCloud className="w-5 h-5 text-primary"/>,
-        tools: [],
+        tools: [
+            { name: 'Datadog', description: 'Monitoring and security platform for cloud applications.', url: 'https://www.datadoghq.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=datadoghq.com', dataAiHint: 'cloud monitoring', pricing: 'Paid' },
+        ]
     }
 ];
