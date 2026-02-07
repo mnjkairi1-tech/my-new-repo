@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -20,6 +21,7 @@ import { Input } from './ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { AuthLoader } from './auth-loader';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
+import { MailCheck } from 'lucide-react';
 
 function GoogleSignInButton({
   onClick,
@@ -72,8 +74,28 @@ const signInSchema = z.object({
 });
 
 
+function PostSignUpMessage({ email, setAuthMode }: { email: string; setAuthMode: (mode: 'signIn' | 'signUp') => void; }) {
+  return (
+    <div className="rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6 text-center">
+        <MailCheck className="w-16 h-16 text-green-500 mx-auto mb-4" />
+        <h2 className="text-2xl font-bold mb-2">Verify Your Email</h2>
+        <p className="text-muted-foreground mb-4">
+            We've sent a verification link to <span className="font-semibold text-foreground">{email}</span>.
+        </p>
+        <p className="text-muted-foreground">
+            Please check your inbox and click the link to finish creating your account.
+        </p>
+        <Button className="w-full mt-6" onClick={() => setAuthMode('signIn')}>
+            Back to Sign In
+        </Button>
+    </div>
+  );
+}
+
 function EmailAuth() {
   const [authMode, setAuthMode] = useState<'signIn' | 'signUp'>('signUp');
+  const [signUpState, setSignUpState] = useState<'form' | 'pendingVerification'>('form');
+  const [emailForVerification, setEmailForVerification] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const auth = useAuth();
   const { toast } = useToast();
@@ -88,38 +110,59 @@ function EmailAuth() {
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
-    try {
-      if (authMode === 'signUp') {
+    if (authMode === 'signUp') {
+      try {
         const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
         await sendEmailVerification(userCredential.user);
         toast({
-          title: "Account Created!",
-          description: "A verification email has been sent. Please check your inbox.",
+          title: "Verification Email Sent!",
+          description: "Please check your inbox to verify your account.",
         });
-      } else {
+        setEmailForVerification(data.email);
+        setSignUpState('pendingVerification');
+      } catch (error: any) {
+        console.error(`Sign Up error:`, error);
+        let description = error.message;
+        if (error.code === 'auth/email-already-in-use') {
+          description = 'This email is already in use. Please sign in instead.';
+        }
+        toast({
+          variant: 'destructive',
+          title: `Sign Up Failed`,
+          description: description,
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else { // Sign In logic
+      try {
         await signInWithEmailAndPassword(auth, data.email, data.password);
+        // The AuthGate will handle the redirect on successful sign-in
+      } catch (error: any) {
+        console.error(`Sign In error:`, error);
+        let description = 'Invalid email or password.';
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+          description = 'Invalid email or password.';
+        }
+        toast({
+          variant: 'destructive',
+          title: `Sign In Failed`,
+          description: description,
+        });
+      } finally {
+        setIsSubmitting(false);
       }
-    } catch (error: any) {
-      console.error(`${authMode} error:`, error);
-      let description = error.message;
-      if (error.code === 'auth/email-already-in-use') {
-        description = 'This email is already in use. Please sign in instead.';
-      } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-        description = 'Invalid email or password.';
-      }
-      toast({
-        variant: 'destructive',
-        title: `Sign ${authMode === 'signUp' ? 'Up' : 'In'} Failed`,
-        description: description,
-      });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   useEffect(() => {
     form.reset();
+    setSignUpState('form'); // Reset signup state when mode changes
   }, [authMode, form]);
+
+  if (signUpState === 'pendingVerification' && authMode === 'signUp') {
+      return <PostSignUpMessage email={emailForVerification} setAuthMode={setAuthMode} />;
+  }
 
   return (
     <div className="rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6">
@@ -280,14 +323,101 @@ function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   );
 }
 
+function VerifyEmailScreen() {
+    const auth = useAuth();
+    const { toast } = useToast();
+    const [isSending, setIsSending] = useState(false);
+    const user = auth.currentUser;
+
+    const handleResend = async () => {
+        if (!user) return;
+        setIsSending(true);
+        try {
+            await sendEmailVerification(user);
+            toast({
+                title: 'Verification Email Sent!',
+                description: "A new verification link has been sent to your inbox.",
+            });
+        } catch (error: any) {
+            console.error("Resend Verification Error:", error);
+            let description = error.message;
+            if (error.code === 'auth/too-many-requests') {
+                description = 'You have requested a verification email too many times. Please try again later.'
+            }
+            toast({ variant: 'destructive', title: 'Error', description });
+        } finally {
+            setIsSending(false);
+        }
+    };
+
+    const handleSignOutAndBack = async () => {
+        await signOut(auth);
+    };
+    
+    // This button is mostly for user feedback, as the check is now automatic.
+    const handleRefresh = () => {
+        window.location.reload();
+    };
+
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 font-body">
+            <div className="w-full max-w-sm text-center">
+                <div className="flex justify-center mb-6">
+                    <MailCheck className="w-20 h-20 text-primary" />
+                </div>
+                <h1 className="text-3xl font-bold text-foreground mb-2">Verify Your Email</h1>
+                <p className="text-lg text-muted-foreground mb-6">
+                    We've sent a verification link to <span className="font-semibold text-foreground">{user?.email}</span>. Please check your inbox and click the link to continue.
+                </p>
+                <div className="space-y-4">
+                     <Button onClick={handleRefresh} className="w-full">
+                        I've Verified, Continue
+                    </Button>
+                    <Button onClick={handleResend} disabled={isSending} className="w-full" variant="secondary">
+                        {isSending ? 'Sending...' : 'Resend Verification Email'}
+                    </Button>
+                    <Button variant="link" onClick={handleSignOutAndBack} className="w-full">
+                        Back to Sign In
+                    </Button>
+                </div>
+                <p className="text-xs text-muted-foreground mt-8">
+                    Can't find the email? Check your spam folder.
+                </p>
+            </div>
+        </div>
+    );
+}
+
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, isUserLoading } = useUser();
+  const auth = useAuth();
+  
+  // This effect will run on the client side and check for verification status periodically.
+  useEffect(() => {
+    if (user && !user.emailVerified && user.providerData.some(p => p.providerId === 'password')) {
+        const intervalId = setInterval(async () => {
+            // It's important to reload the user object to get the latest state
+            await user.reload();
+            if (auth.currentUser?.emailVerified) {
+                clearInterval(intervalId);
+                // Reload the entire page to force a state update in the AuthGate
+                window.location.reload(); 
+            }
+        }, 3000); // Check every 3 seconds
+
+        return () => clearInterval(intervalId); // Cleanup on component unmount
+    }
+  }, [user, auth]);
 
   if (isUserLoading) {
     return <AuthLoader />;
   }
 
   if (user) {
+    const isPasswordProvider = user.providerData.some(p => p.providerId === 'password');
+    if (isPasswordProvider && !user.emailVerified) {
+      return <VerifyEmailScreen />;
+    }
     return <>{children}</>;
   }
 
