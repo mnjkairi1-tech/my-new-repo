@@ -5,7 +5,7 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Filter, ShieldCheck, FlaskConical, Bug, Scale, FileSearch, Users, CloudCog, BrainCircuit, KeyRound, Eye, ClipboardCheck, BarChart, RefreshCw, File, BookCopy, GitBranch, Network, Code, TestTube, Beaker, Lightbulb, FileLock2, Fingerprint, GanttChartSquare, Workflow, Microscope, Archive, Database, Bot, Lock, Code2, Layers, Server, Activity, ShieldQuestion, ShieldAlert, Shield
+    ArrowLeft, ExternalLink, Star, Share2, Filter, ShieldCheck, FlaskConical, Bug, Scale, FileSearch, Users, CloudCog, BrainCircuit, KeyRound, Eye, ClipboardCheck, BarChart, RefreshCw, File, BookCopy, GitBranch, Network, Code, TestTube, Beaker, Lightbulb, FileLock2, Fingerprint, GanttChartSquare, Workflow, Microscope, Archive, Database, Bot, Lock, Code2, Layers, Server, Activity, ShieldQuestion, ShieldAlert, Shield, CheckCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
