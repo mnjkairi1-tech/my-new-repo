@@ -5,7 +5,7 @@ import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Filter, Search, BrainCircuit, Building, FileSearch, Globe, ImageIcon, Video, Mic, Code, GraduationCap, Scale, HeartPulse, Languages, Crosshair, MessageSquare, GitBranch, Clock, ShoppingCart, Newspaper, Wrench, Database, Globe2, HelpCircle, Users, BarChart, Eye, CheckCheck
+    ArrowLeft, ExternalLink, Star, Share2, Filter, Search, BrainCircuit, Building, FileSearch, Globe, ImageIcon, Video, Mic, Code, GraduationCap, Scale, HeartPulse, Languages, Crosshair, MessageSquare, GitBranch, Clock, ShoppingCart, Newspaper, Wrench, Database, Globe2, HelpCircle, Users, BarChart, Eye, CheckCheck, Shield
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
