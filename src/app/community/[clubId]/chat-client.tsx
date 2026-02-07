@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
@@ -14,7 +13,7 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter, useParams } from 'next/navigation';
 import { Card } from '@/components/ui/card';
-import { allTools } from '@/lib/tools-data';
+import { allToolsServer } from '@/lib/all-tools-server';
 import { ToolIcon } from '@/lib/tool-icons';
 import { collection, doc, query, orderBy, limit, addDoc, serverTimestamp, setDoc, updateDoc, increment } from 'firebase/firestore';
 import { useCollection, useDoc } from '@/firebase';
@@ -57,13 +56,17 @@ interface GroupTool {
 }
 
 const ToolCard = ({ tool }: { tool: GroupTool }) => {
-    const fullTool = useMemo(() => allTools.find(t => t.name === tool.toolName), [tool.toolName]);
+    const fullTool = useMemo(() => allToolsServer.find(t => t.name === tool.toolName), [tool.toolName]);
     
     return (
         <a href={tool.toolUrl} target="_blank" rel="noopener noreferrer">
             <Card className="p-2 w-28 h-28 flex flex-col items-center justify-center gap-2 shrink-0 group hover:bg-accent transition-colors">
-                <div className='w-12 h-12 bg-secondary rounded-2xl flex items-center justify-center'>
-                    {fullTool?.icon ? <ToolIcon name={fullTool.icon} className="w-6 h-6 text-primary" /> : <Users className="w-6 h-6 text-primary"/>}
+                <div className='w-12 h-12 bg-secondary rounded-2xl flex items-center justify-center overflow-hidden'>
+                    {fullTool?.image ? (
+                        <Image src={fullTool.image} alt={tool.toolName} width={32} height={32} className="object-contain" />
+                    ) : (
+                        <Users className="w-6 h-6 text-primary"/>
+                    )}
                 </div>
                 <p className="text-xs font-semibold text-center line-clamp-2">{tool.toolName}</p>
                 <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
