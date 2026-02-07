@@ -45,8 +45,8 @@ export function BottomNavBar({ activeTab }: { activeTab: string }) {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-20 w-full max-w-md mx-auto z-50 md:hidden">
-        <div className="absolute inset-x-0 bottom-0 h-full bg-card/80 backdrop-blur-xl border-t border-border/50 shadow-t-lg">
+    <div className="fixed bottom-4 left-4 right-4 h-20 w-auto max-w-md mx-auto z-50 md:hidden">
+        <div className="relative h-full bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg rounded-full">
           <div className="flex justify-around items-center h-full">
             <NavItem href="/?tab=home" path="home" icon={Home} label="Home" currentActiveTab={activeTab} />
             <NavItem href="/?tab=tools" path="tools" icon={LayoutGrid} label="Tools" currentActiveTab={activeTab} />
