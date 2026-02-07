@@ -538,10 +538,10 @@ function HomePageContent() {
                     <span className='text-muted-foreground text-sm truncate'>Select another tool</span>
                 )}
               </div>
-              <Link href="/compare-tools" passHref onClick={(e) => { if (comparisonList.length !== 2) e.preventDefault(); }}>
+              <Link href="/compare-tools" passHref onClick={(e) => { if (comparisonList.length !== 2) e.preventDefault(); }} className="flex-shrink-0">
                 <Button size="default" className="rounded-full glow-shadow" disabled={comparisonList.length !== 2}>Compare</Button>
               </Link>
-              <Button variant="ghost" size="icon" className="rounded-full" onClick={clearComparison}>
+              <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0" onClick={clearComparison}>
                 <X className="w-5 h-5"/>
               </Button>
             </Card>
