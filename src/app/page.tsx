@@ -77,7 +77,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { AIChatSheet } from '@/components/ai-chat-sheet';
 
 const ToolsTabContent = lazy(() => import('@/components/tools-tab-content'));
 
@@ -110,26 +109,25 @@ function HomePageContent() {
   const [activeSavedTab, setActiveSavedTab] = useState('recent');
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  
   const ChatInputTrigger = () => (
     <div className="my-4">
       <label className="block text-center text-muted-foreground text-sm mb-2">Ask what AI you want</label>
-      <div 
-        className="relative cursor-pointer"
-        onClick={() => setIsChatOpen(true)}
-      >
-        <Input
-            readOnly
-            placeholder="Chat with AI Atlas..."
-            className="bg-background rounded-full h-14 text-base pl-5 pr-14 border-2 border-primary/20 shadow-lg"
-        />
-        <div
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 bg-primary text-primary-foreground glow-shadow flex items-center justify-center"
+      <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
+        <div 
+          className="relative cursor-pointer"
         >
-            <Send className="w-5 h-5"/>
+          <Input
+              readOnly
+              placeholder="Chat with AI Atlas..."
+              className="bg-background rounded-full h-14 text-base pl-5 pr-14 border-2 border-primary/20 shadow-lg cursor-pointer"
+          />
+          <div
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 bg-primary text-primary-foreground glow-shadow flex items-center justify-center"
+          >
+              <Send className="w-5 h-5"/>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   );
   
@@ -549,11 +547,6 @@ function HomePageContent() {
             </Card>
           </div>
         )}
-
-        <AIChatSheet 
-            isOpen={isChatOpen}
-            onOpenChange={setIsChatOpen}
-        />
     </div>
   );
 }
