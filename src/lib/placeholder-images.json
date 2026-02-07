@@ -8,104 +8,104 @@
     },
     {
       "id": "runway",
-      "imageUrl": "https://images.unsplash.com/photo-1490810194309-344b3661ba39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx2aWRlbyUyMGVkaXRpbmd8ZW58MHx8fHwxNzY5NTY4ODA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1490810194309-344b3661ba39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx2aWRlbyUyMGVkaXRpbmd8ZW58MHx8fHwxNzY5NTY4ODA1fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "video editing",
       "description": "Runway AI tool"
     },
     {
       "id": "pika",
-      "imageUrl": "https://images.unsplash.com/photo-1584224549374-995cbac1ab62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjcmVhdGl2ZSUyMHZpZGVvfGVufDB8fHx8MTc2OTY2Mzg3MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1584224549374-995cbac1ab62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjcmVhdGl2ZSUyMHZpZGVvfGVufDB8fHx8MTc2OTY2Mzg3MHww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "creative video",
       "description": "Pika AI tool"
     },
     {
       "id": "elevenlabs",
-      "imageUrl": "https://images.unsplash.com/photo-1765445773804-673b765aed52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhdWRpbyUyMHdhdmVmb3JtfGVufDB8fHx8MTc2OTU4OTQ1M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1765445773804-673b765aed52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhdWRpbyUyMHdhdmVmb3JtfGVufDB8fHx8MTc2OTU4OTQ1M3ww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "audio waveform",
       "description": "ElevenLabs AI tool"
     },
     {
       "id": "lensa",
-      "imageUrl": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njk2NjM4NzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njk2NjM4NzB8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "avatar portrait",
       "description": "Lensa AI tool"
     },
     {
       "id": "quick-tool-image-editing",
       "description": "A vibrant and abstract colorful background representing creativity in image editing.",
-      "imageUrl": "https://images.unsplash.com/photo-1552250575-e508473b090f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGNvbG9yc3xlbnwwfHx8fDE3Njk2MjY2OTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1552250575-e508473b090f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGNvbG9yc3xlbnwwfHx8fDE3Njk2MjY2OTh8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "abstract colors"
     },
     {
       "id": "quick-tool-1",
-      "imageUrl": "https://images.unsplash.com/photo-1551302175-9523011267d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx2aWRlbyUyMGVkaXRpbmd8ZW58MHx8fHwxNzY5NTY4ODA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1579109652910-99b9be06aaec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8dmlkZW8lMjBlZGl0aW5nfGVufDB8fHx8MTc3MDM1ODc0OHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "video editing",
       "description": "Quick tool 1"
     },
     {
       "id": "quick-tool-content-creation",
-      "imageUrl": "https://images.unsplash.com/photo-1726066012749-f81bf4422d4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb250ZW50JTIwY3JlYXRpb258ZW58MHx8fHwxNzY5NjA2NjExfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1726066012749-f81bf4422d4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb250ZW50JTIwY3JlYXRpb258ZW58MHx8fHwxNzY5NjA2NjExfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "content creation",
       "description": "A desk with a camera, notebook, and other content creation tools."
     },
     {
       "id": "quick-tool-productivity",
-      "imageUrl": "https://images.unsplash.com/photo-1576768324656-b8f41d7457f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9kdWN0aXZpdHklMjBkZXNrfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1576768324656-b8f41d7457f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9kdWN0aXZpdHklMjBkZXNrfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "productivity desk",
       "description": "Productivity tools quick access"
     },
     {
       "id": "quick-tool-writing",
-      "imageUrl": "https://images.unsplash.com/photo-1687145183501-0c8e76bc2175?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3cml0aW5nJTIwaGFuZHxlbnwwfHx8fDE3Njk2NjM4NzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1687145183501-0c8e76bc2175?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3cml0aW5nJTIwaGFuZHxlbnwwfHx8fDE3Njk2NjM4NzB8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "writing hand",
       "description": "A person's hand writing in a notebook."
     },
     {
       "id": "quick-tool-students",
-      "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmdfHxlbnwwfHx8fDE3Njk1OTY0NTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmdfHxlbnwwfHx8fDE3Njk1OTY0NTN8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "student studying",
       "description": "A student studying with books and a laptop."
     },
     {
       "id": "quick-tool-business",
-      "imageUrl": "https://images.unsplash.com/39/lIZrwvbeRuuzqOoWJUEn_Photoaday_CSD%20%281%20of%201%29-5.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxidXNpbmVzcyUyMG1lZXRpbmd8ZW58MHx8fHwxNzY5NjI0MjY4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/39/lIZrwvbeRuuzqOoWJUEn_Photoaday_CSD%20%281%20of%201%29-5.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxidXNpbmVzcyUyMG1lZXRpbmd8ZW58MHx8fHwxNzY5NjI0MjY4fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "business meeting",
       "description": "Business tools quick access"
     },
     {
       "id": "quick-tool-chatbot",
-      "imageUrl": "https://images.unsplash.com/photo-1620429948700-24e48a41d5aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxyb2JvdCUyMGNoYXR8ZW58MHx8fHwxNzY5NTkxOTk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1620429948700-24e48a41d5aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxyb2JvdCUyMGNoYXR8ZW58MHx8fHwxNzY5NTkxOTk4fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "robot chat",
       "description": "Chatbot tools quick access"
     },
     {
       "id": "quick-tool-converters",
-      "imageUrl": "https://images.unsplash.com/photo-1572043394858-11e1d5549f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhcnJvd3MlMjBjb252ZXJzaW9ufGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1572043394858-11e1d5549f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhcnJvd3MlMjBjb252ZXJzaW9ufGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "arrows conversion",
       "description": "Converter tools quick access"
     },
     {
       "id": "quick-tool-data-analytics",
       "description": "A person pointing at a screen with charts and graphs, indicating data analysis.",
-      "imageUrl": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGF0YSUyMGFuYWx5dGljc3xlbnwwfHx8fDE3Njk2NDYzNDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGF0YSUyMGFuYWx5dGljc3xlbnwwfHx8fDE3Njk2NDYzNDh8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "data analytics"
     },
     {
       "id": "quick-tool-ecommerce",
       "description": "A person making a purchase on a laptop, with a shopping cart icon overlay.",
-      "imageUrl": "https://images.unsplash.com/photo-1664455340023-214c33a9d0bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxlY29tbWVyY2V8ZW58MHx8fHwxNzY5NjQxMzY1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1664455340023-214c33a9d0bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxlY29tbWVyY2V8ZW58MHx8fHwxNzY5NjQxMzY1fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ecommerce"
     },
     {
       "id": "quick-tool-seo-analytics",
       "description": "A laptop screen showing a website's SEO performance dashboard with graphs and charts.",
-      "imageUrl": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzZW8lMjBhbmFseXRpY3N8ZW58MHx8fHwxNzY5NTg3NjI4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzZW8lMjBhbmFseXRpY3N8ZW58MHx8fHwxNzY5NTg3NjI4fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "seo analytics"
     },
     {
       "id": "quick-tool-social-media",
       "description": "A smartphone displaying a social media feed with various posts and interactions.",
-      "imageUrl": "https://images.unsplash.com/photo-1600096194534-95cf5ece04cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzb2NpYWwlMjBtZWRpYXxlbnwwfHx8fDE3Njk2MjE2Njl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1600096194534-95cf5ece04cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzb2NpYWwlMjBtZWRpYXxlbnwwfHx8fDE3Njk2MjE2Njl8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "social media"
     },
     {
@@ -128,7 +128,7 @@
     },
     {
       "id": "quick-tool-graphic-design",
-      "imageUrl": "https://images.unsplash.com/photo-1613909207039-6b173b755cc1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxncmFwaGljJTIwZGVzaWdufGVufDB8fHx8MTc2OTYyMDU5OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1613909207039-6b173b755cc1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxncmFwaGljJTIwZGVzaWdufGVufDB8fHx8MTc2OTYyMDU5OHww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "graphic design",
       "description": "A colorful abstract design representing creativity in graphic design, updated."
     },
@@ -146,49 +146,49 @@
     },
     {
       "id": "quick-tool-summarizing",
-      "imageUrl": "https://images.unsplash.com/photo-1719464521902-4dc9595b182d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdW1tYXJ5JTIwbm90ZXN8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1719464521902-4dc9595b182d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdW1tYXJ5JTIwbm90ZXN8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "summary notes",
       "description": "A summarized text with highlighted keywords."
     },
     {
       "id": "quick-tool-coding",
-      "imageUrl": "https://images.unsplash.com/photo-1555066932-e78dd8fb77bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb2RpbmclMjBsYXB0b3B8ZW58MHx8fHwxNzY5NTUyNjA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1555066932-e78dd8fb77bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb2RpbmclMjBsYXB0b3B8ZW58MHx8fHwxNzY5NTUyNjA0fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "coding laptop",
       "description": "A laptop screen with lines of code."
     },
     {
       "id": "quick-tool-marketing-seo",
-      "imageUrl": "https://images.unsplash.com/photo-1639389016105-2fb11199fb6b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYXJrZXRpbmclMjBjaGFydHxlbnwwfHx8fDE3Njk2NDg4OTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1639389016105-2fb11199fb6b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYXJrZXRpbmclMjBjaGFydHxlbnwwfHx8fDE3Njk2NDg4OTZ8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "marketing chart",
       "description": "Marketing & SEO tools quick access"
     },
     {
       "id": "quick-tool-research-knowledge",
-      "imageUrl": "https://images.unsplash.com/photo-1761319115143-025ed7fcf6f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxyZXNlYXJjaCUyMGJvb2tzfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1761319115143-025ed7fcf6f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxyZXNlYXJjaCUyMGJvb2tzfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "research books",
       "description": "Research & Knowledge tools quick access"
     },
     {
       "id": "quick-tool-security-privacy",
-      "imageUrl": "https://images.unsplash.com/photo-1744329629840-72bb30de38eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzZWN1cml0eSUyMGxvY2t8ZW58MHx8fHwxNzY5NjI4OTU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1744329629840-72bb30de38eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzZWN1cml0eSUyMGxvY2t8ZW58MHx8fHwxNzY5NjI4OTU4fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "security lock",
       "description": "Security & Privacy tools quick access"
     },
     {
       "id": "quick-tool-pdf-files",
-      "imageUrl": "https://images.unsplash.com/photo-1749424095233-f068cdb397eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHhkb2N1bWVudHMlMjBmaWxlc3xlbnwwfHx8fDE3Njk2NTU1ODh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1749424095233-f068cdb397eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHhkb2N1bWVudHMlMjBmaWxlc3xlbnwwfHx8fDE3Njk2NTU1ODh8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "documents files",
       "description": "PDF & File Tools"
     },
     {
       "id": "quick-tool-website-builder",
-      "imageUrl": "https://images.unsplash.com/photo-1560472355-109703aa3edc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3ZWJzaXRlJTIwYnVpbGRlcnxlbnwwfHx8fDE3Njk2MDI3OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1560472355-109703aa3edc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3ZWJzaXRlJTIwYnVpbGRlcnxlbnwwfHx8fDE3Njk2MDI3OTR8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "website builder",
       "description": "Website Builder Tools"
     },
     {
       "id": "quick-tool-advertising",
-      "imageUrl": "https://images.unsplash.com/photo-1611926653458-09294b3142bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhZHZlcnRpc2luZ3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1611926653458-09294b3142bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhZHZlcnRpc2luZ3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "advertising",
       "description": "Advertising Tools"
     },
@@ -200,13 +200,13 @@
     },
     {
       "id": "quick-tool-project-management",
-      "imageUrl": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9qZWN0JTIwbWFuYWdlbWVudHxlbnwwfHx8fDE3Njk2MDAyNDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9qZWN0JTIwbWFuYWdlbWVudHxlbnwwfHx8fDE3Njk2MDAyNDh8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "project management",
       "description": "Project Management Tools"
     },
     {
       "id": "quick-tool-hr-recruitment",
-      "imageUrl": "https://images.unsplash.com/photo-1518893494013-481c1d8ed3fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxyZWNydWl0bWVudHxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1518893494013-481c1d8ed3fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxyZWNydWl0bWVudHxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "recruitment",
       "description": "HR & Recruitment Tools"
     },
@@ -218,7 +218,7 @@
     },
     {
       "id": "quick-tool-database-backend",
-      "imageUrl": "https://images.unsplash.com/photo-1763568258696-32147bb44379?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHhkYXRhYmFzZSUyMGJhY2tlbmR8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1763568258696-32147bb44379?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHhkYXRhYmFzZSUyMGJhY2tlbmR8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "database backend",
       "description": "Database & Backend Tools"
     },
@@ -230,13 +230,13 @@
     },
     {
       "id": "quick-tool-ai-agents",
-      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxyb2JvdCUyMGh1bWFufGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxyb2JvdCUyMGh1bWFufGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "robot human",
       "description": "AI Agents tools quick access"
     },
     {
       "id": "quick-tool-voice-audio-ai",
-      "imageUrl": "https://images.unsplash.com/photo-1704643770744-154e115d454d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzb3VuZCUyMHdhdmV8ZW58MHx8fHwxNzY5NjQwMjY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1704643770744-154e115d454d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzb3VuZCUyMHdhdmV8ZW58MHx8fHwxNzY5NjQwMjY0fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "sound wave",
       "description": "Voice & Audio AI tools quick access"
     },
@@ -254,25 +254,25 @@
     },
     {
       "id": "biz-jasper",
-      "imageUrl": "https://images.unsplash.com/photo-1737641624486-7846df8528dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhaSUyMHdyaXRlcnxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1737641624486-7846df8528dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhaSUyMHdyaXRlcnxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai writer",
       "description": "Jasper AI tool for business"
     },
     {
       "id": "biz-copyai",
-      "imageUrl": "https://images.unsplash.com/photo-1758598497330-29c297403312?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtYXJrZXRpbmclMjBjb3B5fGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1758598497330-29c297403312?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtYXJrZXRpbmclMjBjb3B5fGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "marketing copy",
       "description": "Copy.ai tool for business"
     },
     {
       "id": "biz-hubspot",
-      "imageUrl": "https://images.unsplash.com/photo-1573106941301-f6249718be96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjcm0lMjBwbGF0Zm9ybXxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1573106941301-f6249718be96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjcm0lMjBwbGF0Zm9ybXxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "crm platform",
       "description": "HubSpot AI for business"
     },
     {
       "id": "biz-intercom",
-      "imageUrl": "https://images.unsplash.com/photo-1613963931023-5dc59437c8a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjdXN0b21lciUyMHNlcnZpY2V8ZW58MHx8fHwxNzY5NjE0NTA2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1613963931023-5dc59437c8a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjdXN0b21lciUyMHNlcnZpY2V8ZW58MHx8fHwxNzY5NjE0NTA2fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "customer service",
       "description": "Intercom for business"
     },
@@ -284,7 +284,7 @@
     },
     {
       "id": "biz-drift",
-      "imageUrl": "https://images.unsplash.com/photo-1762340277380-04c2c30d0ef8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHhjb252ZXJzYXRpb25hbCUyMGFpfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1762340277380-04c2c30d0ef8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHhjb252ZXJzYXRpb25hbCUyMGFpfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "conversational ai",
       "description": "Drift for business"
     },
@@ -296,7 +296,7 @@
     },
     {
       "id": "biz-eightfold",
-      "imageUrl": "https://images.unsplash.com/photo-1765662844093-8d5788b58e96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0YWxlbnQlMjBpbnRlbGxpZ2VuY2V8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1765662844093-8d5788b58e96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0YWxlbnQlMjBpbnRlbGxpZ2VuY2V8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "talent intelligence",
       "description": "Eightfold AI for business"
     },
@@ -308,19 +308,19 @@
     },
     {
       "id": "biz-fireflies",
-      "imageUrl": "https://images.unsplash.com/photo-1761311984112-ce2c5db45984?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtZWV0aW5nJTIwYXNzaXN0YW50fGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1761311984112-ce2c5db45984?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtZWV0aW5nJTIwYXNzaXN0YW50fGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "meeting assistant",
       "description": "Fireflies.ai for business"
     },
     {
       "id": "biz-motion",
-      "imageUrl": "https://images.unsplash.com/photo-1691050985285-caaf3d2df0f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhJTIwY2FsZW5kYXJ8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1691050985285-caaf3d2df0f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhJTIwY2FsZW5kYXJ8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai calendar",
       "description": "Motion for business"
     },
     {
       "id": "biz-clickup",
-      "imageUrl": "https://images.unsplash.com/photo-1677078610588-aed2834ad968?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwcm9qZWN0JTIwbWFuYWdlbWVudHxlbnwwfHx8fDE3Njk2MDAyNDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1677078610588-aed2834ad968?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwcm9qZWN0JTIwbWFuYWdlbWVudHxlbnwwfHx8fDE3Njk2MDAyNDh8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "project management",
       "description": "ClickUp AI for business"
     },
@@ -332,31 +332,31 @@
     },
     {
       "id": "midjourney",
-      "imageUrl": "https://images.unsplash.com/photo-1763194980278-d888773aaa9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZmFudGFzeSUyMGFydHxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1763194980278-d888773aaa9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZmFudGFzeSUyMGFydHxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "fantasy art",
       "description": "Midjourney AI tool (Trending)"
     },
     {
       "id": "ideogram",
-      "imageUrl": "https://images.unsplash.com/photo-1721492134985-1dd5b72a3dd6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx0eXBvZ3JhcGh5JTIwZGVzaWdufGVufDB8fHx8MTc2OTYwOTMwOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1721492134985-1dd5b72a3dd6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx0eXBvZ3JhcGh5JTIwZGVzaWdufGVufDB8fHx8MTc2OTYwOTMwOXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "typography design",
       "description": "Ideogram AI tool (Trending)"
     },
     {
       "id": "chatgpt-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhJTIwYXNzaXN0YW50fGVufDB8fHx8MTc2OTY1NjYzMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhJTIwYXNzaXN0YW50fGVufDB8fHx8MTc2OTY1NjYzMXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai assistant",
       "description": "ChatGPT assistant"
     },
     {
       "id": "gemini-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1717501219716-b93a67d2f7b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxnb29nbGUlMjBhaXxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1717501219716-b93a67d2f7b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxnb29nbGUlMjBhaXxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "google ai",
       "description": "Gemini assistant"
     },
     {
       "id": "perplexity-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1601368704635-fbcfc6349b93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YW5zd2VyJTIwZW5naW5lfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1601368704635-fbcfc6349b93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YW5zd2VyJTIwZW5naW5lfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "answer engine",
       "description": "Perplexity AI assistant"
     },
@@ -368,85 +368,85 @@
     },
     {
       "id": "qchat-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1666214280465-a40313304801?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkeSUyMGNoYXR8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1666214280465-a40313304801?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkeSUyMGNoYXR8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "study chat",
       "description": "Quizlet Q-Chat assistant"
     },
     {
       "id": "poe-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1678995632928-298d05d41671?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhJTIwY2hhdHxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1678995632928-298d05d41671?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhJTIwY2hhdHxlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai chat",
       "description": "Poe assistant"
     },
     {
       "id": "mindgrasp-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1655891709782-15c1303a2a25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWklMjBsZWFybmluZ3xlbnwwfHx8fDE3Njk2MzYxNjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1655891709782-15c1303a2a25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWklMjBsZWFybmluZ3xlbnwwfHx8fDE3Njk2MzYxNjl8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai learning",
       "description": "Mindgrasp assistant"
     },
     {
       "id": "notionai-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1760024354746-85e3b40f2e83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3b3Jrc3BhY2UlMjBhc3Npc3RhbnR8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1760024354746-85e3b40f2e83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3b3Jrc3BhY2UlMjBhc3Npc3RhbnR8ZW58MHx8fHwxNzY5NjYzODcxfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "workspace assistant",
       "description": "Notion AI assistant"
     },
     {
       "id": "sharlyai-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1761558794306-466448dab4bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkb2N1bWVudCUyMGFuYWx5c2lzfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1761558794306-466448dab4bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkb2N1bWVudCUyMGFuYWx5c2lzfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "document analysis",
       "description": "Sharly AI assistant"
     },
     {
       "id": "socratic-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1758612898715-a354d0e62a03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxob21ld29yayUyMGhlbHB8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1758612898715-a354d0e62a03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxob21ld29yayUyMGhlbHB8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "homework help",
       "description": "Socratic for homework"
     },
     {
       "id": "photomath-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1525212746907-ff35fbdef9ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtYXRoJTIwc29sdmVyfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1525212746907-ff35fbdef9ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtYXRoJTIwc29sdmVyfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "math solver",
       "description": "Photomath for homework"
     },
     {
       "id": "chegg-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1725869973689-425c74f79a48?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0ZXh0Ym9vayUyMHNvbHV0aW9uc3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1725869973689-425c74f79a48?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0ZXh0Ym9vayUyMHNvbHV0aW9uc3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "textbook solutions",
       "description": "Chegg for homework"
     },
     {
       "id": "brainly-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1758270705639-9727f350f026?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdHVkZW50JTIwY29tbXVuaXR5fGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1758270705639-9727f350f026?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdHVkZW50JTIwY29tbXVuaXR5fGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "student community",
       "description": "Brainly for homework"
     },
     {
       "id": "gauthmath-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1758685845872-4edbf0e76014?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYXRoJTIwaGVscGVyfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1758685845872-4edbf0e76014?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYXRoJTIwaGVscGVyfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "math helper",
       "description": "Gauthmath for homework"
     },
     {
       "id": "homeworkify-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1766995085121-583d67efea28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmcmVlJTIwYW5zd2Vyc3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1766995085121-583d67efea28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmcmVlJTIwYW5zd2Vyc3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "free answers",
       "description": "Homeworkify for homework"
     },
     {
       "id": "coursehero-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1511377107391-116a9d5d20b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkeSUyMHJlc291cmNlc3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1511377107391-116a9d5d20b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkeSUyMHJlc291cmNlc3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "study resources",
       "description": "Course Hero for homework"
     },
     {
       "id": "studypool-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1588873281272-14886ba1f737?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjB0dXRvcmluZ3xlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1588873281272-14886ba1f737?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjB0dXRvcmluZ3xlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "online tutoring",
       "description": "StudyPool for homework"
     },
     {
       "id": "tutordotcom-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1614492898637-435e0f87cef8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0dXRvcmluZyUyMHNlcnZpY2V8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1614492898637-435e0f87cef8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0dXRvcmluZyUyMHNlcnZpY2V8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "tutoring service",
       "description": "Tutor.com for homework"
     },
@@ -458,25 +458,25 @@
     },
     {
       "id": "byjus-hw",
-      "imageUrl": "https://images.unsplash.com/photo-1762329389942-c721052cb5ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxsZWFybmluZyUyMGFwcHxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1762329389942-c721052cb5ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxsZWFybmluZyUyMGFwcHxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "learning app",
       "description": "BYJU'S for homework"
     },
     {
       "id": "knowt-assist",
-      "imageUrl": "https://images.unsplash.com/photo-1585314062528-0c3742fa6102?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhSUyMGZsYXNoY2FyZHN8ZW58MHx8fHwxNzY5NjYzODc1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1585314062528-0c3742fa6102?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhSUyMGZsYXNoY2FyZHN8ZW58MHx8fHwxNzY5NjYzODc1fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai flashcards",
       "description": "Knowt assistant"
     },
     {
       "id": "cramly",
-      "imageUrl": "https://images.unsplash.com/photo-1591195852468-03a01d1375d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdHVkeSUyMHRvb2xzfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1591195852468-03a01d1375d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdHVkeSUyMHRvb2xzfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "study tools",
       "description": "Cramly AI tool"
     },
     {
       "id": "coursera-skill",
-      "imageUrl": "https://images.unsplash.com/photo-1588702547981-5f8fed370e68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxvbmxpbmUlMjBjb3Vyc2VzfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1588702547981-5f8fed370e68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxvbmxpbmUlMjBjb3Vyc2VzfGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "online courses",
       "description": "Coursera"
     },
@@ -488,13 +488,13 @@
     },
     {
       "id": "linkedin-skill",
-      "imageUrl": "https://images.unsplash.com/photo-1572103038118-c32bb7c23d25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9mZXNzaW9uYWwlMjBza2lsbHN8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1572103038118-c32bb7c23d25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9mZXNzaW9uYWwlMjBza2lsbHN8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "professional skills",
       "description": "LinkedIn Learning"
     },
     {
       "id": "skillshare-skill",
-      "imageUrl": "https://images.unsplash.com/photo-1760009230176-be362b5eaecc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjcmVhdGl2ZSUyMGNsYXNzZXN8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1760009230176-be362b5eaecc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjcmVhdGl2ZSUyMGNsYXNzZXN8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "creative classes",
       "description": "Skillshare"
     },
@@ -506,49 +506,49 @@
     },
     {
       "id": "edx-skill",
-      "imageUrl": "https://images.unsplash.com/photo-1762329386486-f38ef2077a06?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx1bml2ZXJzaXR5JTIwY291cnNlc3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1762329386486-f38ef2077a06?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx1bml2ZXJzaXR5JTIwY291cnNlc3xlbnwwfHx8fDE3Njk2NjM4NzF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "university courses",
       "description": "edX"
     },
     {
       "id": "udacity-skill",
-      "imageUrl": "https://images.unsplash.com/photo-1683132090499-4a79fbd75965?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxuYW5vZGVncmVlfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1683132090499-4a79fbd75965?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxuYW5vZGVncmVlfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "nanodegree",
       "description": "Udacity"
     },
     {
       "id": "datacamp-skill",
-      "imageUrl": "https://images.unsplash.com/photo-1617240016072-d92174e44171?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkYXRhJTIwc2NpZW5jZXxlbnwwfHx8fDE3Njk1Njk5MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1617240016072-d92174e44171?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkYXRhJTIwc2NpZW5jZXxlbnwwfHx8fDE3Njk1Njk5MzZ8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "data science",
       "description": "DataCamp"
     },
     {
       "id": "codecademy-skill",
-      "imageUrl": "https://images.unsplash.com/photo-1763568258445-70fecf4e78af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxsZWFybiUyMHRvJTIwY29kZXxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1763568258445-70fecf4e78af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxsZWFybiUyMHRvJTIwY29kZXxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "learn to code",
       "description": "Codecademy"
     },
     {
       "id": "brilliant-skill",
-      "imageUrl": "https://images.unsplash.com/photo-1758685733737-71f8945decf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYXRoJTIwc2NpZW5jZXxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1758685733737-71f8945decf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYXRoJTIwc2NpZW5jZXxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "math science",
       "description": "Brilliant.org"
     },
     {
       "id": "motion-agent",
-      "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhJTIwYXNzaXN0YW50fGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhJTIwYXNzaXN0YW50fGVufDB8fHx8MTc2OTY2Mzg3Mnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "ai assistant",
       "description": "Motion"
     },
     {
       "id": "sunsama-agent",
-      "imageUrl": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkYWlseSUyMHBsYW5uZXxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkYWlseSUyMHBsYW5uZXxlbnwwfHx8fDE3Njk2NjM4NzJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "daily planner",
       "description": "Sunsama"
     },
     {
       "id": "reclaimai-agent",
-      "imageUrl": "https://images.unsplash.com/photo-1543269865-cbf427effbad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx0aW1lJTIwYmxvY2tpbmd8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1543269865-cbf427effbad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx0aW1lJTIwYmxvY2tpbmd8ZW58MHx8fHwxNzY5NjYzODcyfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "time blocking",
       "description": "Reclaim.ai"
     },
