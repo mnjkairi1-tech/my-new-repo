@@ -4,7 +4,7 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Filter, Bot
+    ArrowLeft, ExternalLink, Star, Share2, Filter, Bot, User, Zap, Users, DollarSign, BrainCircuit, Code, BarChart, TrendingUp, Megaphone, UserPlus, Wallet, Globe, GraduationCap, Gamepad2, Workflow, Briefcase, Calendar, Mail, CheckSquare, ShoppingCart, ThumbsUp, BookOpen, Cpu, Network, Milestone, Monitor, ShieldCheck, Shield
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
@@ -14,6 +14,38 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenu
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, type ToolCategory, aiAgentsToolData } from '@/lib/ai-agents-data';
 
+const iconMap: { [key: string]: React.ReactNode } = {
+    User: <User className="w-5 h-5 text-primary"/>,
+    Zap: <Zap className="w-5 h-5 text-primary"/>,
+    Users: <Users className="w-5 h-5 text-primary"/>,
+    DollarSign: <DollarSign className="w-5 h-5 text-primary"/>,
+    BrainCircuit: <BrainCircuit className="w-5 h-5 text-primary"/>,
+    Code: <Code className="w-5 h-5 text-primary"/>,
+    BarChart: <BarChart className="w-5 h-5 text-primary"/>,
+    TrendingUp: <TrendingUp className="w-5 h-5 text-primary"/>,
+    Megaphone: <Megaphone className="w-5 h-5 text-primary"/>,
+    UserPlus: <UserPlus className="w-5 h-5 text-primary"/>,
+    Wallet: <Wallet className="w-5 h-5 text-primary"/>,
+    Globe: <Globe className="w-5 h-5 text-primary"/>,
+    GraduationCap: <GraduationCap className="w-5 h-5 text-primary"/>,
+    Gamepad2: <Gamepad2 className="w-5 h-5 text-primary"/>,
+    Workflow: <Workflow className="w-5 h-5 text-primary"/>,
+    Briefcase: <Briefcase className="w-5 h-5 text-primary"/>,
+    Calendar: <Calendar className="w-5 h-5 text-primary"/>,
+    Mail: <Mail className="w-5 h-5 text-primary"/>,
+    Share2: <Share2 className="w-5 h-5 text-primary"/>,
+    CheckSquare: <CheckSquare className="w-5 h-5 text-primary"/>,
+    ShoppingCart: <ShoppingCart className="w-5 h-5 text-primary"/>,
+    ThumbsUp: <ThumbsUp className="w-5 h-5 text-primary"/>,
+    Bot: <Bot className="w-5 h-5 text-primary"/>,
+    BookOpen: <BookOpen className="w-5 h-5 text-primary"/>,
+    Cpu: <Cpu className="w-5 h-5 text-primary"/>,
+    Network: <Network className="w-5 h-5 text-primary"/>,
+    Milestone: <Milestone className="w-5 h-5 text-primary"/>,
+    Monitor: <Monitor className="w-5 h-5 text-primary"/>,
+    ShieldCheck: <ShieldCheck className="w-5 h-5 text-primary"/>,
+    Shield: <Shield className="w-5 h-5 text-primary"/>,
+};
 
 export default function AIAgentsPage() {
     const { toast } = useToast();
@@ -138,7 +170,7 @@ export default function AIAgentsPage() {
               <section key={index}>
                   <div className="flex justify-between items-center mb-3 px-2">
                       <h2 className="font-semibold text-xl flex items-center gap-2">
-                          {category.icon}
+                          {iconMap[category.icon] || <Bot className="w-5 h-5 text-primary"/>}
                           {category.title}
                       </h2>
                       {index === 0 && isClient && (

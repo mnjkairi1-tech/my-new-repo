@@ -1,12 +1,4 @@
 
-'use client';
-
-import React from 'react';
-import { 
-    BrainCircuit, Building, FileSearch, Globe, ImageIcon, Video, Mic, Code, GraduationCap, Scale,
-    HeartPulse, Languages, Crosshair, MessageSquare, GitBranch, Clock, ShoppingCart, Newspaper, Share2,
-    User, Shield, ThumbsUp, Wrench, Database, Globe2, HelpCircle, Users, BarChart, Eye, CheckCheck
-} from 'lucide-react';
 
 export type Tool = {
     name: string;
@@ -19,14 +11,14 @@ export type Tool = {
 
 export type ToolCategory = {
     title: string;
-    icon: React.ReactNode;
+    icon: string;
     tools: Tool[];
 };
 
 export const aiSearchToolData: ToolCategory[] = [
     {
         title: "Semantic Search",
-        icon: <BrainCircuit className="w-5 h-5 text-primary"/>,
+        icon: "BrainCircuit",
         tools: [
             { name: 'Pinecone', description: 'Vector database for AI-powered search.', url: 'https://www.pinecone.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=pinecone.io', dataAiHint: 'vector database', pricing: 'Freemium' },
             { name: 'Weaviate', description: 'Open-source vector database.', url: 'https://weaviate.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=weaviate.io', dataAiHint: 'open source vector', pricing: 'Free' },
@@ -42,7 +34,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     {
         title: "Enterprise Search",
-        icon: <Building className="w-5 h-5 text-primary"/>,
+        icon: "Building",
         tools: [
             { name: 'Algolia', description: 'Hosted search API for websites and mobile apps.', url: 'https://www.algolia.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=algolia.com', dataAiHint: 'search api', pricing: 'Paid' },
             { name: 'Elasticsearch', description: 'A distributed, RESTful search and analytics engine.', url: 'https://www.elastic.co/elasticsearch/', image: 'https://www.google.com/s2/favicons?sz=128&domain=elastic.co', dataAiHint: 'search engine', pricing: 'Freemium' },
@@ -53,7 +45,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     {
         title: "Document Search",
-        icon: <FileSearch className="w-5 h-5 text-primary"/>,
+        icon: "FileSearch",
         tools: [
             { name: 'Humata AI', description: 'Your AI for files. Ask questions, get answers, and summarize.', url: 'https://www.humata.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=humata.ai', dataAiHint: 'document ai', pricing: 'Freemium' },
             { name: 'ChatPDF', description: 'Chat with any PDF to get summaries and answers.', url: 'https://www.chatpdf.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=chatpdf.com', dataAiHint: 'pdf conversation', pricing: 'Freemium' },
@@ -64,7 +56,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     {
         title: "Website Search",
-        icon: <Globe className="w-5 h-5 text-primary"/>,
+        icon: "Globe",
         tools: [
             { name: 'Algolia', description: 'Add a powerful search to your website.', url: 'https://www.algolia.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=algolia.com', dataAiHint: 'site search', pricing: 'Paid' },
             { name: 'Google Programmable Search', description: 'Create a search engine for your website.', url: 'https://programmablesearchengine.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'custom search', pricing: 'Freemium' },
@@ -74,7 +66,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     {
         title: "Image Search AI",
-        icon: <ImageIcon className="w-5 h-5 text-primary"/>,
+        icon: "ImageIcon",
         tools: [
             { name: 'Google Lens', description: 'Search what you see.', url: 'https://lens.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'visual search', pricing: 'Free' },
             { name: 'Pinterest Lens', description: 'Visual discovery tool for finding ideas on Pinterest.', url: 'https://help.pinterest.com/en/article/pinterest-lens', image: 'https://www.google.com/s2/favicons?sz=128&domain=pinterest.com', dataAiHint: 'idea discovery', pricing: 'Free' },
@@ -84,7 +76,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     {
         title: "Video Search AI",
-        icon: <Video className="w-5 h-5 text-primary"/>,
+        icon: "Video",
         tools: [
             { name: 'Twelve Labs', description: 'Multimodal AI for understanding video.', url: 'https://twelvelabs.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=twelvelabs.io', dataAiHint: 'video understanding', pricing: 'Paid' },
             { name: 'VFRAME', description: 'Open source computer vision for video analysis.', url: 'https://vframe.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=vframe.io', dataAiHint: 'video analysis', pricing: 'Free' },
@@ -94,7 +86,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     {
         title: "Voice Search",
-        icon: <Mic className="w-5 h-5 text-primary"/>,
+        icon: "Mic",
         tools: [
             { name: 'Google Assistant', description: 'Your personal Google, always ready to help.', url: 'https://assistant.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'voice assistant', pricing: 'Free' },
             { name: 'Amazon Alexa', description: 'The voice service that powers Echo devices.', url: 'https://www.amazon.com/alexa', image: 'https://www.google.com/s2/favicons?sz=128&domain=amazon.com', dataAiHint: 'smart speaker', pricing: 'Free' },
@@ -104,7 +96,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     {
         title: "Code Search AI",
-        icon: <Code className="w-5 h-5 text-primary"/>,
+        icon: "Code",
         tools: [
             { name: 'Sourcegraph', description: 'Understand and fix code faster with code search.', url: 'https://about.sourcegraph.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=sourcegraph.com', dataAiHint: 'code search', pricing: 'Freemium' },
             { name: 'Phind', description: 'The AI search engine for developers.', url: 'https://www.phind.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=phind.com', dataAiHint: 'developer search', pricing: 'Free' },
@@ -114,7 +106,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     {
         title: "Academic Search",
-        icon: <GraduationCap className="w-5 h-5 text-primary"/>,
+        icon: "GraduationCap",
         tools: [
             { name: 'Google Scholar', description: 'Broadly search for scholarly literature.', url: 'https://scholar.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'academic search', pricing: 'Free' },
             { name: 'Semantic Scholar', description: 'AI-powered research tool for scientific literature.', url: 'https://www.semanticscholar.org/', image: 'https://www.google.com/s2/favicons?sz=128&domain=semanticscholar.org', dataAiHint: 'scientific literature', pricing: 'Free' },
@@ -124,7 +116,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     { 
         title: "Legal Document Search", 
-        icon: <Scale className="w-5 h-5 text-primary"/>, 
+        icon: "Scale", 
         tools: [
             { name: 'Casetext', description: 'AI legal research.', url: 'https://casetext.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=casetext.com', dataAiHint: 'legal research', pricing: 'Paid' },
             { name: 'LexisNexis', description: 'Legal & professional solutions.', url: 'https://www.lexisnexis.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=lexisnexis.com', dataAiHint: 'legal database', pricing: 'Paid' },
@@ -134,7 +126,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     { 
         title: "Medical Search AI", 
-        icon: <HeartPulse className="w-5 h-5 text-primary"/>, 
+        icon: "HeartPulse", 
         tools: [
             { name: 'PubMed', description: 'Biomedical literature from MEDLINE.', url: 'https://pubmed.ncbi.nlm.nih.gov/', image: 'https://www.google.com/s2/favicons?sz=128&domain=ncbi.nlm.nih.gov', dataAiHint: 'medical literature', pricing: 'Free' },
             { name: 'UpToDate', description: 'Evidence-based clinical decision support.', url: 'https://www.uptodate.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=wolterskluwer.com', dataAiHint: 'clinical support', pricing: 'Paid' },
@@ -144,7 +136,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     { 
         title: "Multilingual Search", 
-        icon: <Languages className="w-5 h-5 text-primary"/>, 
+        icon: "Languages", 
         tools: [
             { name: 'Yandex', description: 'A Russian multinational technology company.', url: 'https://yandex.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=yandex.com', dataAiHint: 'russian search', pricing: 'Free' },
             { name: 'Baidu', description: 'A Chinese multinational technology company.', url: 'https://www.baidu.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=baidu.com', dataAiHint: 'chinese search', pricing: 'Free' },
@@ -153,7 +145,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     { 
         title: "Context-Aware Search", 
-        icon: <Crosshair className="w-5 h-5 text-primary"/>, 
+        icon: "Crosshair", 
         tools: [
              { name: 'Kagi', description: 'A user-centric search engine that provides context.', url: 'https://kagi.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=kagi.com', dataAiHint: 'user-centric search', pricing: 'Paid' },
              { name: 'Google', description: 'The world\'s most popular search engine.', url: 'https://google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'search engine', pricing: 'Free' },
@@ -161,7 +153,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     {
         title: "Conversational Search",
-        icon: <MessageSquare className="w-5 h-5 text-primary"/>,
+        icon: "MessageSquare",
         tools: [
             { name: 'Perplexity AI', description: 'An answer engine for discovering and sharing knowledge.', url: 'https://www.perplexity.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=perplexity.ai', dataAiHint: 'answer engine', pricing: 'Freemium' },
             { name: 'ChatGPT', description: 'Conversational AI that can search the web.', url: 'https://chat.openai.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=openai.com', dataAiHint: 'ai chat', pricing: 'Freemium' },
@@ -172,26 +164,26 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     { 
         title: "Real-Time Search", 
-        icon: <Clock className="w-5 h-5 text-primary"/>, 
+        icon: "Clock", 
         tools: [
             { name: 'X (Twitter)', description: 'Search for real-time conversations and news.', url: 'https://x.com/explore', image: 'https://www.google.com/s2/favicons?sz=128&domain=x.com', dataAiHint: 'real-time news', pricing: 'Free' },
-            { name: 'Google News', description: 'Comprehensive up-to-date news coverage.', url: 'https://news.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=news.google.com', dataAiHint: 'news coverage', pricing: 'Free' },
+            { name: 'Google News', description: 'Comprehensive up-to-date news coverage.', url: 'https://news.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'news coverage', pricing: 'Free' },
             { name: 'Datadog', description: 'Real-time monitoring and log management.', url: 'https://www.datadoghq.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=datadoghq.com', dataAiHint: 'log management', pricing: 'Paid' },
         ]
     },
     { 
         title: "Privacy-Focused Search", 
-        icon: <Shield className="w-5 h-5 text-primary"/>, 
+        icon: "Shield", 
         tools: [
             { name: 'DuckDuckGo', description: 'The search engine that doesn\'t track you.', url: 'https://duckduckgo.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=duckduckgo.com', dataAiHint: 'privacy search', pricing: 'Free' },
             { name: 'Brave Search', description: 'Private, independent search engine.', url: 'https://search.brave.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=brave.com', dataAiHint: 'independent search', pricing: 'Free' },
             { name: 'Startpage', description: 'Search privately without tracking.', url: 'https://www.startpage.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=startpage.com', dataAiHint: 'private search', pricing: 'Free' },
             { name: 'Swisscows', description: 'A data-secure search engine.', url: 'https://swisscows.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=swisscows.com', dataAiHint: 'data secure', pricing: 'Free' },
-        ]
+        ] 
     },
     { 
         title: "News Search AI", 
-        icon: <Newspaper className="w-5 h-5 text-primary"/>, 
+        icon: "Newspaper", 
         tools: [
             { name: 'Google News', description: 'Comprehensive up-to-date news coverage.', url: 'https://news.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'news coverage', pricing: 'Free' },
             { name: 'Bing News', description: 'News from thousands of the world’s most popular sources.', url: 'https://www.bing.com/news', image: 'https://www.google.com/s2/favicons?sz=128&domain=bing.com', dataAiHint: 'microsoft news', pricing: 'Free' },
@@ -201,7 +193,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     { 
         title: "Knowledge Graph Search", 
-        icon: <Share2 className="w-5 h-5 text-primary"/>, 
+        icon: "Share2", 
         tools: [
             { name: 'Diffbot', description: 'Knowledge-as-a-Service, creating a universal database of structured knowledge.', url: 'https://www.diffbot.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=diffbot.com', dataAiHint: 'structured knowledge', pricing: 'Paid' },
             { name: 'Stardog', description: 'An enterprise Knowledge Graph Platform.', url: 'https://www.stardog.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=stardog.com', dataAiHint: 'enterprise kg', pricing: 'Paid' },
@@ -210,7 +202,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     { 
         title: "Internal Tool Search", 
-        icon: <Wrench className="w-5 h-5 text-primary"/>, 
+        icon: "Wrench", 
         tools: [
             { name: 'Glean', description: 'AI-powered work assistant that searches across all your company\'s apps.', url: 'https://www.glean.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=glean.com', dataAiHint: 'work assistant', pricing: 'Paid' },
             { name: 'Elastic Workplace Search', description: 'A single search experience for your team\'s content.', url: 'https://www.elastic.co/workplace-search', image: 'https://www.google.com/s2/favicons?sz=128&domain=elastic.co', dataAiHint: 'workplace search', pricing: 'Paid' },
@@ -219,7 +211,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     { 
         title: "AI Web Crawlers", 
-        icon: <Globe2 className="w-5 h-5 text-primary"/>, 
+        icon: "Globe2", 
         tools: [
             { name: 'Scrapy', description: 'An open source and collaborative framework for extracting the data you need from websites.', url: 'https://scrapy.org/', image: 'https://www.google.com/s2/favicons?sz=128&domain=scrapy.org', dataAiHint: 'web crawling', pricing: 'Free' },
             { name: 'Apify', description: 'Web scraping and automation platform.', url: 'https://apify.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=apify.com', dataAiHint: 'web automation', pricing: 'Freemium' },
@@ -228,7 +220,7 @@ export const aiSearchToolData: ToolCategory[] = [
     },
     { 
         title: "AI Fact-Checking Search", 
-        icon: <CheckCheck className="w-5 h-5 text-primary"/>, 
+        icon: "CheckCheck", 
         tools: [
             { name: 'Snopes', description: 'The internet\'s definitive fact-checking resource.', url: 'https://www.snopes.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=snopes.com', dataAiHint: 'fact check', pricing: 'Free' },
             { name: 'PolitiFact', description: 'Fact-checking U.S. politics.', url: 'https://www.politifact.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=politifact.com', dataAiHint: 'political facts', pricing: 'Free' },

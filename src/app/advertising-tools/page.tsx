@@ -4,7 +4,7 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Megaphone, Filter
+    ArrowLeft, ExternalLink, Star, Share2, Megaphone, Filter, Target, BarChart, Search, Bot, Users, Palette,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
@@ -14,6 +14,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenu
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, type ToolCategory, advertisingToolData } from '@/lib/advertising-tools-data';
 
+const iconMap: { [key: string]: React.ReactNode } = {
+    Search: <Search className="w-5 h-5 text-primary"/>,
+    Users: <Users className="w-5 h-5 text-primary"/>,
+    Palette: <Palette className="w-5 h-5 text-primary"/>,
+    Bot: <Bot className="w-5 h-5 text-primary"/>,
+    BarChart: <BarChart className="w-5 h-5 text-primary"/>,
+};
 
 export default function AdvertisingToolsPage() {
     const { toast } = useToast();
@@ -138,7 +145,7 @@ export default function AdvertisingToolsPage() {
               <section key={index}>
                   <div className="flex justify-between items-center mb-3 px-2">
                       <h2 className="font-semibold text-xl flex items-center gap-2">
-                          {category.icon}
+                          {iconMap[category.icon] || <Megaphone className="w-5 h-5 text-primary"/>}
                           {category.title}
                       </h2>
                       {index === 0 && isClient && (

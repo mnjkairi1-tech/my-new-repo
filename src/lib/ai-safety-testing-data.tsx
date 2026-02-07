@@ -1,12 +1,3 @@
-'use client';
-
-import React from 'react';
-import { 
-    ShieldCheck, FlaskConical, Bug, Scale, FileSearch, Users, CloudCog, BrainCircuit, KeyRound, Eye,
-    ClipboardCheck, BarChart, RefreshCw, File, BookCopy, GitBranch, Network, Code, TestTube, Beaker,
-    Lightbulb, FileLock2, Fingerprint, Share2, GanttChartSquare, Workflow, Microscope, CheckCircle,
-    Archive, Database, Bot, Lock, Code2, Layers, Server, Activity, ShieldQuestion, ShieldAlert, Shield
-} from 'lucide-react';
 
 export type Tool = {
     name: string;
@@ -19,14 +10,14 @@ export type Tool = {
 
 export type ToolCategory = {
     title: string;
-    icon: React.ReactNode;
+    icon: string;
     tools: Tool[];
 };
 
 export const aiSafetyTestingToolData: ToolCategory[] = [
     {
         title: "AI Model Testing & Validation",
-        icon: <FlaskConical className="w-5 h-5 text-primary"/>,
+        icon: "FlaskConical",
         tools: [
             { name: 'Kolena', description: 'Test your ML models with rigor.', url: 'https://www.kolena.com/', image: 'https://picsum.photos/seed/kolena-test/600/400', dataAiHint: 'ml testing', pricing: 'Freemium' },
             { name: 'Credo AI', description: 'AI Governance Platform.', url: 'https://www.credo.ai/', image: 'https://picsum.photos/seed/credoai-test/600/400', dataAiHint: 'ai governance', pricing: 'Paid' },
@@ -52,7 +43,7 @@ export const aiSafetyTestingToolData: ToolCategory[] = [
     },
     {
         title: "Adversarial Attack Simulation",
-        icon: <Bug className="w-5 h-5 text-primary"/>,
+        icon: "Bug",
         tools: [
             { name: 'Adversarial Robustness Toolbox (ART)', description: 'A Python library for machine learning security.', url: 'https://github.com/Trusted-AI/adversarial-robustness-toolbox', image: 'https://picsum.photos/seed/art-toolbox/600/400', dataAiHint: 'ml security', pricing: 'Free' },
             { name: 'CleverHans', description: 'An adversarial example library for benchmarking machine learning systems\' vulnerability.', url: 'https://github.com/cleverhans-lab/cleverhans', image: 'https://picsum.photos/seed/cleverhans/600/400', dataAiHint: 'adversarial examples', pricing: 'Free' },
@@ -78,7 +69,7 @@ export const aiSafetyTestingToolData: ToolCategory[] = [
     },
     {
         title: "Explainable AI (XAI) Tools",
-        icon: <BrainCircuit className="w-5 h-5 text-primary"/>,
+        icon: "BrainCircuit",
         tools: [
             { name: 'SHAP (SHapley Additive exPlanations)', description: 'A game theoretic approach to explain the output of any machine learning model.', url: 'https://github.com/slundberg/shap', image: 'https://picsum.photos/seed/shap-xai/600/400', dataAiHint: 'model explanation', pricing: 'Free' },
             { name: 'LIME (Local Interpretable Model-agnostic Explanations)', description: 'Explaining the predictions of any machine learning model.', url: 'https://github.com/marcotcr/lime', image: 'https://picsum.photos/seed/lime-xai/600/400', dataAiHint: 'model interpretation', pricing: 'Free' },
@@ -106,33 +97,33 @@ export const aiSafetyTestingToolData: ToolCategory[] = [
 ];
 
 const otherCategories: ToolCategory[] = [
-    { title: "AI Fairness & Bias Detection", icon: <Scale className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "AI Model Monitoring", icon: <Eye className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "AI Governance & Risk Management", icon: <ClipboardCheck className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Privacy-Preserving ML (PPM)", icon: <Shield className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "AI Security Platforms", icon: <ShieldCheck className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Data Validation & Quality", icon: <CheckCircle className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "LLM Evaluation & Testing", icon: <TestTube className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Red Teaming Tools", icon: <Users className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Model Robustness Testing", icon: <BarChart className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Compliance & Auditing", icon: <FileSearch className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Ethical AI Frameworks", icon: <BookCopy className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "AI Watermarking & Provenance", icon: <FileLock2 className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Responsible AI Toolkits", icon: <Archive className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Model Observability", icon: <Activity className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Prompt Injection Detection", icon: <ShieldAlert className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Data Drift Detection", icon: <RefreshCw className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Concept Drift Detection", icon: <Lightbulb className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Model Management & Versioning", icon: <GitBranch className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Secure AI Enclaves", icon: <Lock className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Federated Learning Platforms", icon: <Share2 className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Differential Privacy Tools", icon: <Users className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Homomorphic Encryption Libraries", icon: <KeyRound className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "AI Safety Research Groups", icon: <Microscope className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "MLOps Security", icon: <ShieldCheck className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "AI Bug Bounty Platforms", icon: <Bug className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "AI Regulation & Policy Trackers", icon: <Scale className="w-5 h-5 text-primary"/>, tools: [] },
-    { title: "Synthetic Data for Testing", icon: <Beaker className="w-5 h-5 text-primary"/>, tools: [] },
+    { title: "AI Fairness & Bias Detection", icon: "Scale", tools: [] },
+    { title: "AI Model Monitoring", icon: "Eye", tools: [] },
+    { title: "AI Governance & Risk Management", icon: "ClipboardCheck", tools: [] },
+    { title: "Privacy-Preserving ML (PPM)", icon: "Shield", tools: [] },
+    { title: "AI Security Platforms", icon: "ShieldCheck", tools: [] },
+    { title: "Data Validation & Quality", icon: "CheckCircle", tools: [] },
+    { title: "LLM Evaluation & Testing", icon: "TestTube", tools: [] },
+    { title: "Red Teaming Tools", icon: "Users", tools: [] },
+    { title: "Model Robustness Testing", icon: "BarChart", tools: [] },
+    { title: "Compliance & Auditing", icon: "FileSearch", tools: [] },
+    { title: "Ethical AI Frameworks", icon: "BookCopy", tools: [] },
+    { title: "AI Watermarking & Provenance", icon: "FileLock2", tools: [] },
+    { title: "Responsible AI Toolkits", icon: "Archive", tools: [] },
+    { title: "Model Observability", icon: "Activity", tools: [] },
+    { title: "Prompt Injection Detection", icon: "ShieldAlert", tools: [] },
+    { title: "Data Drift Detection", icon: "RefreshCw", tools: [] },
+    { title: "Concept Drift Detection", icon: "Lightbulb", tools: [] },
+    { title: "Model Management & Versioning", icon: "GitBranch", tools: [] },
+    { title: "Secure AI Enclaves", icon: "Lock", tools: [] },
+    { title: "Federated Learning Platforms", icon: "Share2", tools: [] },
+    { title: "Differential Privacy Tools", icon: "Users", tools: [] },
+    { title: "Homomorphic Encryption Libraries", icon: "KeyRound", tools: [] },
+    { title: "AI Safety Research Groups", icon: "Microscope", tools: [] },
+    { title: "MLOps Security", icon: "ShieldCheck", tools: [] },
+    { title: "AI Bug Bounty Platforms", icon: "Bug", tools: [] },
+    { title: "AI Regulation & Policy Trackers", icon: "Scale", tools: [] },
+    { title: "Synthetic Data for Testing", icon: "Beaker", tools: [] },
 ];
 
 otherCategories.forEach(category => {

@@ -1,13 +1,4 @@
 
-'use client';
-
-import React from 'react';
-import { 
-    Megaphone, Target, BarChart, TrendingUp, Search, Bot, Users, Video, Mail, ShoppingCart,
-    Globe, FileText, CheckCircle, SlidersHorizontal, MousePointer, Eye, Shuffle, Palette, Code,
-    FileImage, Clapperboard, AudioLines
-} from 'lucide-react';
-
 export type Tool = {
     name: string;
     description: string;
@@ -19,14 +10,14 @@ export type Tool = {
 
 export type ToolCategory = {
     title: string;
-    icon: React.ReactNode;
+    icon: string;
     tools: Tool[];
 };
 
 export const advertisingToolData: ToolCategory[] = [
     {
         title: "PPC & SEM Platforms",
-        icon: <Search className="w-5 h-5 text-primary"/>,
+        icon: "Search",
         tools: [
             { name: 'Google Ads', description: 'Online advertising platform by Google.', url: 'https://ads.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'ppc ads', pricing: 'Paid' },
             { name: 'Microsoft Advertising', description: 'Advertise on Bing, AOL, and Yahoo.', url: 'https://ads.microsoft.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=microsoft.com', dataAiHint: 'bing ads', pricing: 'Paid' },
@@ -37,7 +28,7 @@ export const advertisingToolData: ToolCategory[] = [
     },
     {
         title: "Social Media Advertising",
-        icon: <Users className="w-5 h-5 text-primary"/>,
+        icon: "Users",
         tools: [
             { name: 'Facebook Ads Manager', description: 'Create and manage ads on Facebook and Instagram.', url: 'https://www.facebook.com/business/tools/ads-manager', image: 'https://www.google.com/s2/favicons?sz=128&domain=facebook.com', dataAiHint: 'facebook ads', pricing: 'Paid' },
             { name: 'LinkedIn Ads', description: 'Reach a professional audience with targeted ads.', url: 'https://www.linkedin.com/business/marketing/ads', image: 'https://www.google.com/s2/favicons?sz=128&domain=linkedin.com', dataAiHint: 'b2b advertising', pricing: 'Paid' },
@@ -48,7 +39,7 @@ export const advertisingToolData: ToolCategory[] = [
     },
     {
         title: "AI Ad Creative Generation",
-        icon: <Palette className="w-5 h-5 text-primary"/>,
+        icon: "Palette",
         tools: [
             { name: 'AdCreative.ai', description: 'Generate conversion-focused ad creatives.', url: 'https://www.adcreative.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=adcreative.ai', dataAiHint: 'ad creatives', pricing: 'Paid' },
             { name: 'Jasper', description: 'AI writer for ad copy and creative.', url: 'https://www.jasper.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=jasper.ai', dataAiHint: 'ad copy', pricing: 'Paid' },
@@ -58,7 +49,7 @@ export const advertisingToolData: ToolCategory[] = [
     },
     {
         title: "Programmatic Advertising",
-        icon: <Bot className="w-5 h-5 text-primary"/>,
+        icon: "Bot",
         tools: [
             { name: 'Google Display & Video 360', description: 'Integrated tool for ad campaigns.', url: 'https://marketingplatform.google.com/about/display-video-360/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'programmatic ads', pricing: 'Paid' },
             { name: 'The Trade Desk', description: 'A global technology platform for buyers of advertising.', url: 'https://www.thetradedesk.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=thetradedesk.com', dataAiHint: 'ad buying', pricing: 'Paid' },
@@ -68,7 +59,7 @@ export const advertisingToolData: ToolCategory[] = [
     },
     {
         title: "Ad Analytics & Tracking",
-        icon: <BarChart className="w-5 h-5 text-primary"/>,
+        icon: "BarChart",
         tools: [
             { name: 'Google Analytics', description: 'Track ad campaign performance and conversions.', url: 'https://analytics.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', dataAiHint: 'campaign tracking', pricing: 'Free' },
             { name: 'Triple Whale', description: 'E-commerce analytics platform.', url: 'https://www.triplewhale.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=triplewhale.com', dataAiHint: 'ecommerce analytics', pricing: 'Paid' },

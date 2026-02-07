@@ -5,7 +5,7 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Filter, ShieldCheck
+    ArrowLeft, ExternalLink, Star, Share2, Filter, ShieldCheck, FlaskConical, Bug, Scale, FileSearch, Users, CloudCog, BrainCircuit, KeyRound, Eye, ClipboardCheck, BarChart, RefreshCw, File, BookCopy, GitBranch, Network, Code, TestTube, Beaker, Lightbulb, FileLock2, Fingerprint, GanttChartSquare, Workflow, Microscope, Archive, Database, Bot, Lock, Code2, Layers, Server, Activity, ShieldQuestion, ShieldAlert, Shield
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
@@ -14,6 +14,35 @@ import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, type ToolCategory, aiSafetyTestingToolData } from '@/lib/ai-safety-testing-data';
+
+const iconMap: { [key: string]: React.ReactNode } = {
+    FlaskConical: <FlaskConical className="w-5 h-5 text-primary"/>,
+    Bug: <Bug className="w-5 h-5 text-primary"/>,
+    BrainCircuit: <BrainCircuit className="w-5 h-5 text-primary"/>,
+    Scale: <Scale className="w-5 h-5 text-primary"/>,
+    Eye: <Eye className="w-5 h-5 text-primary"/>,
+    ClipboardCheck: <ClipboardCheck className="w-5 h-5 text-primary"/>,
+    Shield: <Shield className="w-5 h-5 text-primary"/>,
+    ShieldCheck: <ShieldCheck className="w-5 h-5 text-primary"/>,
+    CheckCircle: <CheckCircle className="w-5 h-5 text-primary"/>,
+    TestTube: <TestTube className="w-5 h-5 text-primary"/>,
+    Users: <Users className="w-5 h-5 text-primary"/>,
+    BarChart: <BarChart className="w-5 h-5 text-primary"/>,
+    FileSearch: <FileSearch className="w-5 h-5 text-primary"/>,
+    BookCopy: <BookCopy className="w-5 h-5 text-primary"/>,
+    FileLock2: <FileLock2 className="w-5 h-5 text-primary"/>,
+    Archive: <Archive className="w-5 h-5 text-primary"/>,
+    Activity: <Activity className="w-5 h-5 text-primary"/>,
+    ShieldAlert: <ShieldAlert className="w-5 h-5 text-primary"/>,
+    RefreshCw: <RefreshCw className="w-5 h-5 text-primary"/>,
+    Lightbulb: <Lightbulb className="w-5 h-5 text-primary"/>,
+    GitBranch: <GitBranch className="w-5 h-5 text-primary"/>,
+    Lock: <Lock className="w-5 h-5 text-primary"/>,
+    Share2: <Share2 className="w-5 h-5 text-primary"/>,
+    KeyRound: <KeyRound className="w-5 h-5 text-primary"/>,
+    Microscope: <Microscope className="w-5 h-5 text-primary"/>,
+    Beaker: <Beaker className="w-5 h-5 text-primary"/>,
+};
 
 
 export default function AiSafetyTestingPage() {
@@ -139,7 +168,7 @@ export default function AiSafetyTestingPage() {
               <section key={index}>
                   <div className="flex justify-between items-center mb-3 px-2">
                       <h2 className="font-semibold text-xl flex items-center gap-2">
-                          {category.icon}
+                          {iconMap[category.icon as string] || <FlaskConical className="w-5 h-5 text-primary"/>}
                           {category.title}
                       </h2>
                       {index === 0 && isClient && (

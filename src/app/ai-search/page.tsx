@@ -5,7 +5,7 @@ import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Filter, Search
+    ArrowLeft, ExternalLink, Star, Share2, Filter, Search, BrainCircuit, Building, FileSearch, Globe, ImageIcon, Video, Mic, Code, GraduationCap, Scale, HeartPulse, Languages, Crosshair, MessageSquare, GitBranch, Clock, ShoppingCart, Newspaper, Wrench, Database, Globe2, HelpCircle, Users, BarChart, Eye, CheckCheck
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
@@ -14,6 +14,30 @@ import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, type ToolCategory, aiSearchToolData } from '@/lib/ai-search-data';
+
+const iconMap: { [key: string]: React.ReactNode } = {
+    BrainCircuit: <BrainCircuit className="w-5 h-5 text-primary"/>,
+    Building: <Building className="w-5 h-5 text-primary"/>,
+    FileSearch: <FileSearch className="w-5 h-5 text-primary"/>,
+    Globe: <Globe className="w-5 h-5 text-primary"/>,
+    ImageIcon: <ImageIcon className="w-5 h-5 text-primary"/>,
+    Video: <Video className="w-5 h-5 text-primary"/>,
+    Mic: <Mic className="w-5 h-5 text-primary"/>,
+    Code: <Code className="w-5 h-5 text-primary"/>,
+    GraduationCap: <GraduationCap className="w-5 h-5 text-primary"/>,
+    Scale: <Scale className="w-5 h-5 text-primary"/>,
+    HeartPulse: <HeartPulse className="w-5 h-5 text-primary"/>,
+    Languages: <Languages className="w-5 h-5 text-primary"/>,
+    Crosshair: <Crosshair className="w-5 h-5 text-primary"/>,
+    MessageSquare: <MessageSquare className="w-5 h-5 text-primary"/>,
+    Clock: <Clock className="w-5 h-5 text-primary"/>,
+    Shield: <Shield className="w-5 h-5 text-primary"/>,
+    Newspaper: <Newspaper className="w-5 h-5 text-primary"/>,
+    Share2: <Share2 className="w-5 h-5 text-primary"/>,
+    Wrench: <Wrench className="w-5 h-5 text-primary"/>,
+    Globe2: <Globe2 className="w-5 h-5 text-primary"/>,
+    CheckCheck: <CheckCheck className="w-5 h-5 text-primary"/>,
+};
 
 export default function AiSearchPage() {
     const { toast } = useToast();
@@ -138,7 +162,7 @@ export default function AiSearchPage() {
               <section key={index}>
                   <div className="flex justify-between items-center mb-3 px-2">
                       <h2 className="font-semibold text-xl flex items-center gap-2">
-                          {category.icon}
+                          {iconMap[category.icon] || <Search className="w-5 h-5 text-primary"/>}
                           {category.title}
                       </h2>
                       {index === 0 && isClient && (
