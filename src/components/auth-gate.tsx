@@ -5,18 +5,21 @@ import {
   User,
   signInWithPopup,
   signInWithCustomToken,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  ConfirmationResult,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
 } from 'firebase/auth';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Button } from './ui/button';
 import { GalaxyLogo } from './galaxy-logo';
 import { useUser } from '@/firebase/auth/use-user';
 import { Input } from './ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { AuthLoader } from './auth-loader';
-import { cn } from '@/lib/utils';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 
 function GoogleSignInButton({
   onClick,
@@ -58,131 +61,112 @@ function GoogleSignInButton({
   );
 }
 
-const PhoneAuthForm = ({
-  isSigningIn,
-  setIsSigningIn,
-  onUser,
-}: {
-  isSigningIn: boolean;
-  setIsSigningIn: (isSigningIn: boolean) => void;
-  onUser: (user: User) => void;
-}) => {
+const signUpSchema = z.object({
+  email: z.string().email({ message: "Invalid email address." }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
+});
+
+const signInSchema = z.object({
+  email: z.string().email({ message: "Invalid email address." }),
+  password: z.string().min(1, { message: "Password is required." }),
+});
+
+
+function EmailAuth() {
+  const [authMode, setAuthMode] = useState<'signIn' | 'signUp'>('signUp');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const auth = useAuth();
   const { toast } = useToast();
-  const [phone, setPhone] = useState('');
-  const [otp, setOtp] = useState('');
-  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
-  const [showOtpInput, setShowOtpInput] = useState(false);
-  const recaptchaContainerRef = useRef<HTMLDivElement>(null);
+
+  const form = useForm({
+    resolver: zodResolver(authMode === 'signUp' ? signUpSchema : signInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
+    setIsSubmitting(true);
+    try {
+      if (authMode === 'signUp') {
+        const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+        await sendEmailVerification(userCredential.user);
+        toast({
+          title: "Account Created!",
+          description: "A verification email has been sent. Please check your inbox.",
+        });
+      } else {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+      }
+    } catch (error: any) {
+      console.error(`${authMode} error:`, error);
+      let description = error.message;
+      if (error.code === 'auth/email-already-in-use') {
+        description = 'This email is already in use. Please sign in instead.';
+      } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        description = 'Invalid email or password.';
+      }
+      toast({
+        variant: 'destructive',
+        title: `Sign ${authMode === 'signUp' ? 'Up' : 'In'} Failed`,
+        description: description,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
-    if (!auth) return;
-
-    const setupRecaptcha = () => {
-      if (!recaptchaContainerRef.current) return;
-      if ((window as any).recaptchaVerifier) {
-        (window as any).recaptchaVerifier.clear();
-      }
-      (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, recaptchaContainerRef.current, {
-        'size': 'invisible',
-        'callback': (response: any) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-        }
-      });
-    };
-
-    // Delay setup to ensure DOM is ready
-    const timeoutId = setTimeout(setupRecaptcha, 100);
-
-    return () => {
-      clearTimeout(timeoutId);
-      if ((window as any).recaptchaVerifier) {
-        (window as any).recaptchaVerifier.clear();
-      }
-    };
-  }, [auth]);
-
-  const handleSendOtp = async () => {
-    if (!auth || !(window as any).recaptchaVerifier) {
-        toast({
-            variant: 'destructive',
-            title: 'Error',
-            description: 'Authentication service not ready. Please try again in a moment.',
-        });
-        return;
-    }
-    setIsSigningIn(true);
-    try {
-      const result = await signInWithPhoneNumber(auth, `+${phone}`, (window as any).recaptchaVerifier);
-      setConfirmationResult(result);
-      setShowOtpInput(true);
-      toast({ title: 'OTP Sent!', description: 'Please check your phone.' });
-    } catch (error: any) {
-      console.error("Error sending OTP:", error);
-      toast({
-        variant: 'destructive',
-        title: 'Failed to Send OTP',
-        description: error.message || 'Please check the phone number and try again.',
-      });
-    } finally {
-      setIsSigningIn(false);
-    }
-  };
-
-  const handleVerifyOtp = async () => {
-    if (!confirmationResult) return;
-    setIsSigningIn(true);
-    try {
-      const userCredential = await confirmationResult.confirm(otp);
-      onUser(userCredential.user);
-    } catch (error: any) {
-      console.error("Error verifying OTP:", error);
-      toast({
-        variant: 'destructive',
-        title: 'Invalid OTP',
-        description: 'The code you entered is incorrect. Please try again.',
-      });
-    } finally {
-      setIsSigningIn(false);
-    }
-  };
+    form.reset();
+  }, [authMode, form]);
 
   return (
-    <div className="text-center text-foreground space-y-4">
-       <h2 className="text-2xl font-bold mb-4">Sign In with Phone</h2>
-       {!showOtpInput ? (
-         <>
-           <Input
-             type="tel"
-             placeholder="91XXXXXXXXXX (include country code)"
-             value={phone}
-             onChange={(e) => setPhone(e.target.value)}
-             className="h-12 rounded-xl"
-             disabled={isSigningIn}
-           />
-           <Button onClick={handleSendOtp} disabled={isSigningIn || !phone} className="w-full h-12 rounded-xl text-base">
-             {isSigningIn ? 'Sending...' : 'Send OTP'}
-           </Button>
-         </>
-       ) : (
-         <>
-           <Input
-             type="text"
-             placeholder="Enter OTP"
-             value={otp}
-             onChange={(e) => setOtp(e.target.value)}
-             className="h-12 rounded-xl"
-             disabled={isSigningIn}
-           />
-           <Button onClick={handleVerifyOtp} disabled={isSigningIn || otp.length < 6} className="w-full h-12 rounded-xl text-base">
-             {isSigningIn ? 'Verifying...' : 'Verify OTP & Sign In'}
-           </Button>
-         </>
-       )}
-       <div id="recaptcha-container" ref={recaptchaContainerRef}></div>
+    <div className="rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6">
+      <h2 className="text-2xl font-bold mb-4 text-center">
+        {authMode === 'signUp' ? 'Create an Account' : 'Sign In'}
+      </h2>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={isSubmitting} className="w-full h-12 rounded-xl text-base">
+            {isSubmitting ? 'Submitting...' : (authMode === 'signUp' ? 'Create Account' : 'Sign In')}
+          </Button>
+        </form>
+      </Form>
+      <div className="mt-4 text-center">
+        <Button variant="link" onClick={() => setAuthMode(authMode === 'signUp' ? 'signIn' : 'signUp')}>
+          {authMode === 'signUp' ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+        </Button>
+      </div>
     </div>
   );
-};
+}
 
 
 function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
@@ -267,9 +251,7 @@ function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
         </div>
 
         <div className="w-full max-w-sm">
-            <div className="rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6">
-                <PhoneAuthForm onUser={onUser} isSigningIn={isSigningIn} setIsSigningIn={setIsSigningIn} />
-            </div>
+           <EmailAuth />
         </div>
         
         <div className="relative my-6 w-full max-w-sm">
@@ -300,15 +282,6 @@ function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
 
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, isUserLoading } = useUser();
-
-  useEffect(() => {
-    // This is a workaround for a Firebase Auth issue where the reCAPTCHA
-    // verifier can sometimes persist across page loads.
-    if (!(window as any).recaptchaVerifier) {
-      (window as any).recaptchaVerifier = {} as RecaptchaVerifier;
-      (window as any).recaptchaVerifier.clear = () => {};
-    }
-  }, []);
 
   if (isUserLoading) {
     return <AuthLoader />;

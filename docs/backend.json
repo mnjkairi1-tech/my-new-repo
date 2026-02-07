@@ -132,7 +132,7 @@
     }
   },
   "auth": {
-    "providers": ["password", "anonymous", "google.com", "phone"]
+    "providers": ["password", "anonymous", "google.com"]
   },
   "firestore": {
     "structure": [
