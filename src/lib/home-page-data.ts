@@ -74,13 +74,13 @@ export const popularTools: Tool[] = [
     icon: 'Mic',
   },
   {
-    name: 'Lensa AI',
-    category: 'AI Avatar',
-    url: 'https://lensa.ai/',
-    image: 'https://www.google.com/s2/favicons?sz=128&domain=lensa.ai',
-    dataAiHint: 'magic avatars',
-    description: 'Create stylized AI avatars from your photos.',
-    icon: 'UserSquare',
+    name: 'ChatGPT',
+    category: 'AI Chatbot',
+    url: 'https://chat.openai.com/',
+    image: 'https://www.google.com/s2/favicons?sz=128&domain=openai.com',
+    dataAiHint: 'openai chat',
+    description: 'Conversational AI by OpenAI.',
+    icon: 'Bot',
   },
 ];
 
