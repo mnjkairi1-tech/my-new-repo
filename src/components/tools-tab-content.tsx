@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useMemo, useState } from 'react';
@@ -47,7 +46,7 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
     return (
       <a href={tool.url} target="_blank" rel="noopener noreferrer" onClick={handleCardClick}>
         <Card className="relative overflow-hidden group cursor-pointer bg-card border-border rounded-3xl h-full soft-shadow transition-transform hover:scale-105 duration-300">
-          {tool.image && <Image src={tool.image} alt={tool.name} width={300} height={200} className="w-full aspect-[4/3] object-cover" data-ai-hint={tool.dataAiHint} />}
+          {tool.image && <Image src={tool.image} alt={tool.name} width={300} height={200} className="w-full aspect-[4/3] object-cover" data-ai-hint={tool.dataAiHint} unoptimized />}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           {tool.isTrending && (
             <Badge className="absolute top-2 left-2 bg-purple-500/80 text-white backdrop-blur-sm text-xs rounded-full border-none shadow-lg">
@@ -82,6 +81,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     
     const [searchTerm, setSearchTerm] = useState('');
     const [priceFilter, setPriceFilter] = useState('All');
+    const [visibleCount, setVisibleCount] = useState(20);
     
     const tools = useMemo(() => {
         let filteredTools: Tool[] = allToolsServer;
@@ -90,7 +90,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
         if (lowerCaseSearchTerm) {
             filteredTools = filteredTools.filter(tool =>
                 tool.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-                tool.description.toLowerCase().includes(lowerCaseSearchTerm) ||
+                (tool.description && tool.description.toLowerCase().includes(lowerCaseSearchTerm)) ||
                 (tool.category && tool.category.toLowerCase().includes(lowerCaseSearchTerm))
             );
         }
@@ -102,6 +102,10 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
         return filteredTools;
     }, [searchTerm, priceFilter]);
 
+    const handleLoadMore = () => {
+        setVisibleCount(prevCount => prevCount + 20);
+    };
+
     return (
         <>
             <div className="px-4 pb-2">
@@ -112,7 +116,10 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                             placeholder="Search tools..."
                             className="pl-10 bg-card rounded-full h-12 border-border soft-shadow"
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value);
+                                setVisibleCount(20); // Reset count on new search
+                            }}
                         />
                     </div>
                      <DropdownMenu>
@@ -124,7 +131,10 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                         <DropdownMenuContent className="w-56">
                             <DropdownMenuLabel>Sort by Price</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuRadioGroup value={priceFilter} onValueChange={setPriceFilter}>
+                            <DropdownMenuRadioGroup value={priceFilter} onValueChange={(value) => {
+                                setPriceFilter(value);
+                                setVisibleCount(20); // Reset count on filter change
+                            }}>
                                 <DropdownMenuRadioItem value="All">All</DropdownMenuRadioItem>
                                 <DropdownMenuRadioItem value="Free">Free & Freemium</DropdownMenuRadioItem>
                             </DropdownMenuRadioGroup>
@@ -137,7 +147,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
             </div>
             <div className="flex-grow overflow-y-auto px-4 no-scrollbar pt-2 pb-4">
                  <div className="grid grid-cols-2 gap-4">
-                    {tools.map(tool => (
+                    {tools.slice(0, visibleCount).map(tool => (
                         <ToolCard
                             key={tool.name}
                             tool={tool}
@@ -147,6 +157,11 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                         />
                     ))}
                 </div>
+                {visibleCount < tools.length && (
+                    <div className="text-center mt-6">
+                        <Button onClick={handleLoadMore}>Load More</Button>
+                    </div>
+                )}
             </div>
         </>
     );
