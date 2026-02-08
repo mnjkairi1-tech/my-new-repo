@@ -298,27 +298,25 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                         <ArrowLeft />
                     </Button>
                     <div className="absolute top-4 right-4">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="w-12 h-12 rounded-full bg-black/20 text-white backdrop-blur-sm">
+                                    <MoreVertical />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem>
+                                    <Edit className="mr-2 h-4 w-4" />
+                                    <span>Edit Group</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={() => setIsAddMemberOpen(true)}>
+                                    <UserPlus className="mr-2 h-4 w-4" />
+                                    <span>Add Members</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                         <Dialog open={isAddMemberOpen} onOpenChange={setIsAddMemberOpen}>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="w-12 h-12 rounded-full bg-black/20 text-white backdrop-blur-sm">
-                                        <MoreVertical />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem>
-                                        <Edit className="mr-2 h-4 w-4" />
-                                        <span>Edit Group</span>
-                                    </DropdownMenuItem>
-                                    <DialogTrigger asChild>
-                                        <DropdownMenuItem>
-                                            <UserPlus className="mr-2 h-4 w-4" />
-                                            <span>Add Members</span>
-                                        </DropdownMenuItem>
-                                    </DialogTrigger>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                            <AddMemberDialog clubId={clubId} groupRef={groupRef} />
+                           <AddMemberDialog clubId={clubId} groupRef={groupRef} />
                         </Dialog>
                     </div>
                 </div>
