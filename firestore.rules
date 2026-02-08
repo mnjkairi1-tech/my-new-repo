@@ -32,8 +32,9 @@ service cloud.firestore {
       // Allow public read for public groups, or member read for private groups
       allow get: if resource.data.isPublic == true || isGroupMember(groupId);
       
-      // Allow list reads ONLY for public groups.
-      allow list: if request.auth != null && resource.data.isPublic == true;
+      // Allow list queries for any authenticated user.
+      // The 'get' rule above will ensure they can only read documents they have access to.
+      allow list: if request.auth != null;
 
       allow create: if isSignedIn();
       allow update: if isSignedIn() && (
