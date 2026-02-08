@@ -39,6 +39,14 @@
           "type": "string",
           "format": "date-time",
           "description": "The timestamp when the group was created."
+        },
+        "allowMembersToAddTools": {
+          "type": "boolean",
+          "description": "Indicates if members can add new tools to the group."
+        },
+        "allowMembersToAddMembers": {
+          "type": "boolean",
+          "description": "Indicates if members can add other members to the group."
         }
       },
       "required": ["id", "name", "description", "avatar", "isPublic", "ownerId", "memberCount", "createdAt"]

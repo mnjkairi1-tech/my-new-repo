@@ -24,6 +24,7 @@ const clubFormSchema = z.object({
   clubDescription: z.string().max(500, { message: "Description cannot exceed 500 characters." }),
   visibility: z.enum(["public", "private"]).default("public"),
   allowMembersToAddTools: z.boolean().default(true),
+  allowMembersToAddMembers: z.boolean().default(true),
 });
 
 type ClubFormValues = z.infer<typeof clubFormSchema>;
@@ -42,6 +43,7 @@ export default function CreateClubPage() {
             clubDescription: '',
             visibility: 'public',
             allowMembersToAddTools: true,
+            allowMembersToAddMembers: true,
         },
     });
 
@@ -67,6 +69,8 @@ export default function CreateClubPage() {
             createdAt: serverTimestamp(),
             memberCount: 1,
             avatar: avatarUrl,
+            allowMembersToAddTools: data.allowMembersToAddTools,
+            allowMembersToAddMembers: data.allowMembersToAddMembers,
           };
 
           const groupsCollection = collection(firestore, 'groups');
@@ -195,6 +199,28 @@ export default function CreateClubPage() {
                                     </FormItem>
                                     )}
                                 />
+                                 <FormField
+                                    control={methods.control}
+                                    name="allowMembersToAddMembers"
+                                    render={({ field }) => (
+                                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                        <div className="space-y-0.5">
+                                        <FormLabel className="text-base">
+                                            Allow Members to Add Others
+                                        </FormLabel>
+                                        <p className="text-sm text-muted-foreground">
+                                            Can members invite other users to the club?
+                                        </p>
+                                        </div>
+                                        <FormControl>
+                                        <Switch
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
+                                        </FormControl>
+                                    </FormItem>
+                                    )}
+                                />
                             </CardContent>
                         </Card>
                         <div className="flex justify-end mt-8">
@@ -209,4 +235,3 @@ export default function CreateClubPage() {
     );
 }
 
-    

@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Users, Star, MoreVertical, Edit, Heart, History, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Users, Star, MoreVertical, Edit, Heart, History, ChevronRight, Copy } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ClubHeader } from '@/components/club-header';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -20,6 +20,7 @@ import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
 import type { Tool } from '@/lib/types';
 import { useLanguage } from '@/lib/language';
+import { useToast } from '@/hooks/use-toast';
 
 interface Group {
     id: string;
@@ -62,6 +63,7 @@ function MyProfilePageContent() {
     const { heartedTools, starredTools, recentTools, handleHeartToggle, handleStarToggle } = useUserPreferences();
     const [activeSavedTab, setActiveSavedTab] = useState('recent');
     const { t } = useLanguage();
+    const { toast } = useToast();
 
 
     const groupsRef = useMemoFirebase(() => {
@@ -167,6 +169,20 @@ function MyProfilePageContent() {
                                     <Link href="/avatar-editor">
                                         <Button variant="outline" size="sm" className="text-xs h-7">Change Avatar</Button>
                                     </Link>
+                                </div>
+                                <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
+                                    <span className="font-mono text-xs">UID: {user.uid.substring(0, 12)}...</span>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="w-6 h-6"
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(user.uid);
+                                            toast({ title: 'User ID Copied!' });
+                                        }}
+                                    >
+                                        <Copy className="w-4 h-4" />
+                                    </Button>
                                 </div>
                             </div>
                         </div>
