@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -21,6 +22,8 @@ type UserPreferencesContextType = {
   comparisonList: Tool[];
   selectForCompare: (tool: Tool) => void;
   clearComparison: () => void;
+  pinnedGroups: Set<string>;
+  handlePinGroupToggle: (groupId: string) => void;
 };
 
 const UserPreferencesContext = createContext<UserPreferencesContextType | undefined>(undefined);
@@ -34,6 +37,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   const [recentTools, setRecentTools] = useState<Tool[]>([]);
   const [comparisonList, setComparisonList] = useState<Tool[]>([]);
   const { toast } = useToast();
+  const [pinnedGroups, setPinnedGroups] = useState<Set<string>>(new Set());
 
 
   useEffect(() => {
@@ -43,6 +47,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     const storedStarredTools = localStorage.getItem('starredTools');
     const storedPinnedTools = localStorage.getItem('pinnedTools');
     const storedRecentTools = localStorage.getItem('recentTools');
+    const storedPinnedGroups = localStorage.getItem('pinnedGroups');
 
     setTheme(storedTheme);
     setFontSize(storedFontSize);
@@ -60,6 +65,9 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     }
     if (storedRecentTools) {
       setRecentTools(JSON.parse(storedRecentTools));
+    }
+    if (storedPinnedGroups) {
+      setPinnedGroups(new Set(JSON.parse(storedPinnedGroups)));
     }
   }, []);
 
@@ -139,6 +147,19 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     setComparisonList([]);
   };
 
+  const handlePinGroupToggle = (groupId: string) => {
+    setPinnedGroups(prev => {
+      const newPinned = new Set(prev);
+      if (newPinned.has(groupId)) {
+        newPinned.delete(groupId);
+      } else {
+        newPinned.add(groupId);
+      }
+      localStorage.setItem('pinnedGroups', JSON.stringify(Array.from(newPinned)));
+      return newPinned;
+    });
+  };
+
   return (
     <UserPreferencesContext.Provider value={{ 
       theme, 
@@ -156,6 +177,8 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
       comparisonList,
       selectForCompare,
       clearComparison,
+      pinnedGroups,
+      handlePinGroupToggle,
     }}>
       {children}
     </UserPreferencesContext.Provider>
