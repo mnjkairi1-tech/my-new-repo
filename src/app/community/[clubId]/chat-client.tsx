@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
@@ -233,7 +234,7 @@ export default function ClubDetailsPageClient() {
 
 
   const handleJoinClub = async () => {
-    if (!user || !firestore || !groupRef || !memberRef) return;
+    if (!user || !firestore || !groupRef || !memberRef || !clubId) return;
     
     setIsJoining(true);
 
@@ -248,12 +249,15 @@ export default function ClubDetailsPageClient() {
     setDocumentNonBlocking(memberRef, memberData, { merge: false });
     updateDocumentNonBlocking(groupRef, { memberCount: increment(1) });
     
+    // Add group membership to user's subcollection for easy querying
+    const userGroupMembershipRef = doc(firestore, 'users', user.uid, 'groupMemberships', clubId);
+    setDocumentNonBlocking(userGroupMembershipRef, { groupId: clubId }, { merge: false });
+
     toast({
       title: "Welcome!",
       description: `You've successfully joined ${clubData?.name}.`,
     });
     
-    // UI will update reactively via useDoc hook. No need to await.
     setIsJoining(false);
   }
 
@@ -466,3 +470,5 @@ export default function ClubDetailsPageClient() {
     </div>
   );
 }
+
+    

@@ -70,16 +70,13 @@ export default function CreateClubPage() {
           };
 
           const groupsCollection = collection(firestore, 'groups');
-          // Don't await the addDoc call, but await the promise to get the ID for redirection
           const groupRefPromise = addDocumentNonBlocking(groupsCollection, groupData);
           
-          // Show toast immediately
           toast({
             title: 'Club Created!',
             description: `Your club "${data.clubName}" is now live.`,
           });
           
-          // Get the new group ID from the promise
           const groupRef = await groupRefPromise;
           const groupId = groupRef.id;
     
@@ -92,9 +89,12 @@ export default function CreateClubPage() {
             photoURL: user.photoURL || '',
           };
 
-          // This can also be non-blocking as it doesn't affect the immediate UI flow
           setDocumentNonBlocking(memberRef, memberData, { merge: false });
     
+          // Add group membership to user's subcollection for easy querying
+          const userGroupMembershipRef = doc(firestore, 'users', user.uid, 'groupMemberships', groupId);
+          setDocumentNonBlocking(userGroupMembershipRef, { groupId: groupId }, { merge: false });
+
           router.push(`/community/${groupId}`);
     
         } catch (error) {
@@ -104,9 +104,8 @@ export default function CreateClubPage() {
             title: 'Error creating club',
             description: 'Something went wrong. Please try again.',
           });
-          setIsSubmitting(false); // Only set to false on error
+          setIsSubmitting(false);
         } 
-        // No finally block needed as we want to keep it "submitting" during redirect
       };
 
     return (
@@ -209,3 +208,5 @@ export default function CreateClubPage() {
         </div>
     );
 }
+
+    
