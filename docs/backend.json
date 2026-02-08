@@ -137,6 +137,23 @@
         }
       },
       "required": ["userId", "userName", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "type": "object",
+      "description": "Publicly readable user profile information.",
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "The display name of the user."
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "URL of the user's avatar.",
+          "format": "uri"
+        }
+      },
+      "required": ["displayName"]
     }
   },
   "auth": {
@@ -182,6 +199,16 @@
             "$ref": "#/entities/Message"
           },
           "description": "Stores chat messages for each group."
+        }
+      },
+      {
+        "path": "/user_profiles/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/entities/UserProfile"
+          },
+          "description": "Stores public user profile information, keyed by user ID."
         }
       }
     ]

@@ -26,6 +26,11 @@ service cloud.firestore {
           allow create, delete: if request.auth != null && request.auth.uid == userId;
       }
     }
+    
+    match /user_profiles/{userId} {
+        allow get: if isSignedIn();
+        allow write: if request.auth.uid == userId;
+    }
 
     match /groups/{groupId} {
       // Group document rules

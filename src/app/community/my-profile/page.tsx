@@ -1,8 +1,8 @@
 
 'use client';
 
-import React, { Suspense, useState } from 'react';
-import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
+import React, { Suspense, useState, useEffect } from 'react';
+import { useUser, useFirestore, useCollection, useMemoFirebase, doc, setDocumentNonBlocking, useDoc } from '@/firebase';
 import { collection, query, where, Timestamp } from 'firebase/firestore';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -30,6 +30,11 @@ interface Group {
     avatar: string;
     createdAt: Timestamp;
     ownerId: string;
+}
+
+interface UserProfile {
+    displayName: string;
+    photoURL: string;
 }
 
 const MyProfileSkeleton = () => (
@@ -64,6 +69,19 @@ function MyProfilePageContent() {
     const [activeSavedTab, setActiveSavedTab] = useState('recent');
     const { t } = useLanguage();
     const { toast } = useToast();
+
+    const userProfileRef = useMemoFirebase(() => firestore && user ? doc(firestore, 'user_profiles', user.uid) : null, [firestore, user]);
+    const { data: userProfileData, isLoading: isProfileLoading } = useDoc<UserProfile>(userProfileRef);
+
+    useEffect(() => {
+        if (user && firestore && !isProfileLoading && !userProfileData) {
+            const profileData = {
+                displayName: user.displayName || user.email?.split('@')[0] || 'Anonymous',
+                photoURL: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email || 'A')}&background=random&color=fff&size=128`,
+            };
+            setDocumentNonBlocking(userProfileRef!, profileData, { merge: true });
+        }
+    }, [user, firestore, userProfileData, isProfileLoading, userProfileRef]);
 
 
     const groupsRef = useMemoFirebase(() => {
@@ -341,3 +359,4 @@ export default function MyProfilePage() {
 }
 
     
+

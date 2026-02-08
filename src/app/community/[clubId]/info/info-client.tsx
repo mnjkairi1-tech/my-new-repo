@@ -1,25 +1,23 @@
 
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useFirestore, useDoc, useCollection, useUser, useMemoFirebase } from '@/firebase';
-import { doc, collection, query, orderBy, Timestamp, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useFirestore, useDoc, useCollection, useUser, useMemoFirebase, updateDocumentNonBlocking } from '@/firebase';
+import { doc, collection, query, orderBy, Timestamp, addDoc, serverTimestamp, getDoc, setDoc, increment } from 'firebase/firestore';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, BadgeCheck, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2 } from 'lucide-react';
+import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, BadgeCheck, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2, User as UserIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { allTools, Tool } from '@/lib/tools-data';
 import { useToast } from '@/hooks/use-toast';
-import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-// Temporarily disabled due to build issues
-// import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
+import { addDocumentNonBlocking, setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 interface Group {
     id: string;
@@ -29,6 +27,7 @@ interface Group {
     avatar: string;
     isPublic: boolean;
     ownerId: string;
+    allowMembersToAddMembers?: boolean;
 }
 
 interface GroupMember {
@@ -49,6 +48,122 @@ interface GroupTool {
     upvotes: number;
 }
 
+interface UserProfile {
+    displayName: string;
+    photoURL: string;
+}
+
+function AddMemberDialog({ clubId, groupRef }: { clubId: string, groupRef: any }) {
+    const firestore = useFirestore();
+    const { user } = useUser();
+    const { toast } = useToast();
+    const [uidToSearch, setUidToSearch] = useState('');
+    const [searchedUid, setSearchedUid] = useState<string | null>(null);
+    const [searchError, setSearchError] = useState<string | null>(null);
+    const [isAddingMember, setIsAddingMember] = useState(false);
+
+    const searchedUserRef = useMemoFirebase(() => {
+        if (!firestore || !searchedUid) return null;
+        return doc(firestore, 'user_profiles', searchedUid);
+    }, [firestore, searchedUid]);
+
+    const { data: searchedUser, isLoading: isSearchingUser, error: searchHookError } = useDoc<UserProfile>(searchedUserRef);
+
+    useEffect(() => {
+        if (searchedUid && !isSearchingUser && !searchedUser && !searchHookError) {
+            setSearchError('User not found.');
+        } else {
+            setSearchError(null);
+        }
+    }, [searchedUid, isSearchingUser, searchedUser, searchHookError]);
+
+    const handleSearchUser = () => {
+        if (uidToSearch.trim()) {
+            setSearchedUid(uidToSearch.trim());
+        }
+    };
+
+    const handleAddMember = async () => {
+        if (!user || !firestore || !clubId || !searchedUid || !searchedUser) return;
+
+        setIsAddingMember(true);
+
+        const memberRef = doc(firestore, 'groups', clubId, 'members', searchedUid);
+        const memberData = {
+            userId: searchedUid,
+            joinedAt: serverTimestamp(),
+            role: 'member',
+            displayName: searchedUser.displayName,
+            photoURL: searchedUser.photoURL,
+        };
+
+        const userGroupMembershipRef = doc(firestore, 'users', searchedUid, 'groupMemberships', clubId);
+
+        try {
+            await setDoc(memberRef, memberData, { merge: false });
+            await setDoc(userGroupMembershipRef, { groupId: clubId }, { merge: false });
+            await updateDoc(groupRef, { memberCount: increment(1) });
+            
+            toast({
+                title: 'Member Added!',
+                description: `${searchedUser.displayName} has been added to the club.`,
+            });
+            setUidToSearch('');
+            setSearchedUid(null);
+
+        } catch (error: any) {
+             toast({
+                variant: 'destructive',
+                title: 'Error adding member',
+                description: error.message || 'Something went wrong. Please try again.',
+            });
+        } finally {
+            setIsAddingMember(false);
+        }
+    };
+
+    return (
+        <DialogContent>
+            <DialogHeader>
+                <DialogTitle>Add a New Member</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+                <div className="flex gap-2">
+                    <Input
+                        placeholder="Enter User ID"
+                        value={uidToSearch}
+                        onChange={(e) => setUidToSearch(e.target.value)}
+                    />
+                    <Button onClick={handleSearchUser} disabled={isSearchingUser}>
+                        {isSearchingUser ? <Loader2 className="animate-spin" /> : 'Search'}
+                    </Button>
+                </div>
+                {isSearchingUser && <div className="text-center p-4"><Loader2 className="animate-spin mx-auto"/></div>}
+                {searchError && <p className="text-sm text-destructive">{searchError}</p>}
+                {searchedUser && searchedUid && (
+                    <Card className="p-4 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <Avatar>
+                                <AvatarImage src={searchedUser.photoURL} alt={searchedUser.displayName} />
+                                <AvatarFallback>{searchedUser.displayName?.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <p className="font-semibold">{searchedUser.displayName}</p>
+                        </div>
+                        <Button onClick={handleAddMember} disabled={isAddingMember}>
+                            {isAddingMember ? <Loader2 className="animate-spin" /> : <UserPlus className="w-4 h-4 mr-2" />}
+                            Add
+                        </Button>
+                    </Card>
+                )}
+            </div>
+            <DialogFooter>
+                <DialogClose asChild>
+                    <Button variant="outline">Close</Button>
+                </DialogClose>
+            </DialogFooter>
+        </DialogContent>
+    );
+}
 
 export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
     const router = useRouter();
@@ -58,24 +173,21 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [customToolUrl, setCustomToolUrl] = useState('');
     const [isAddToolOpen, setIsAddToolOpen] = useState(false);
+    const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
     const [isSubmittingUrl, setIsSubmittingUrl] = useState(false);
 
-
-    // Fetch Group Data
     const groupRef = useMemoFirebase(() => {
         if (!firestore) return null;
         return doc(firestore, 'groups', clubId);
     }, [firestore, clubId]);
     const { data: clubData, isLoading: groupLoading } = useDoc<Group>(groupRef);
 
-    // Fetch Members
     const membersQuery = useMemoFirebase(() => {
         if (!firestore) return null;
         return query(collection(firestore, 'groups', clubId, 'members'), orderBy('role'));
     }, [firestore, clubId]);
     const { data: members, isLoading: membersLoading } = useCollection<GroupMember>(membersQuery);
 
-    // Fetch Tools
     const toolsRef = useMemoFirebase(() => {
         if (!firestore) return null;
         return collection(firestore, 'groups', clubId, 'tools');
@@ -85,7 +197,6 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
         return query(toolsRef, orderBy('addedAt', 'desc'));
     }, [toolsRef]);
     const { data: groupTools, isLoading: toolsLoading } = useCollection<GroupTool>(toolsQuery);
-
 
     const handleBack = () => {
         router.back();
@@ -187,23 +298,28 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                         <ArrowLeft />
                     </Button>
                     <div className="absolute top-4 right-4">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="w-12 h-12 rounded-full bg-black/20 text-white backdrop-blur-sm">
-                                    <MoreVertical />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuItem>
-                                    <Edit className="mr-2 h-4 w-4" />
-                                    <span>Edit Group</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <UserPlus className="mr-2 h-4 w-4" />
-                                    <span>Add Members</span>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <Dialog open={isAddMemberOpen} onOpenChange={setIsAddMemberOpen}>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" size="icon" className="w-12 h-12 rounded-full bg-black/20 text-white backdrop-blur-sm">
+                                        <MoreVertical />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuItem>
+                                        <Edit className="mr-2 h-4 w-4" />
+                                        <span>Edit Group</span>
+                                    </DropdownMenuItem>
+                                    <DialogTrigger asChild>
+                                        <DropdownMenuItem>
+                                            <UserPlus className="mr-2 h-4 w-4" />
+                                            <span>Add Members</span>
+                                        </DropdownMenuItem>
+                                    </DialogTrigger>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                            <AddMemberDialog clubId={clubId} groupRef={groupRef} />
+                        </Dialog>
                     </div>
                 </div>
                 <div className="p-4 bg-background rounded-t-3xl -mt-6 relative z-10">
