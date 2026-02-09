@@ -185,7 +185,7 @@ function HomePageContent() {
       title: "Boost Productivity",
       image: "https://picsum.photos/seed/slide3/800/600",
       dataAiHint: "data chart",
-      link: "/productivity-tools"
+      link: "/productivity"
     },
     { 
       title: "Explore AI Tools",
