@@ -17,43 +17,43 @@ import { cn } from '@/lib/utils';
 type Tool = Omit<BaseTool, 'description' | 'isNew'>;
 
 const textToVideoTools: Tool[] = [
-  { name: 'Runway', url: 'https://runwayml.com/', image: 'https://picsum.photos/seed/runway-pop/300/200', category: 'Video', dataAiHint: 'abstract animation', isTrending: true },
-  { name: 'Pika', url: 'https://pika.art/', image: 'https://picsum.photos/seed/pika-pop/300/200', category: 'Video', dataAiHint: 'cinematic video', isTrending: true },
-  { name: 'InVideo', url: 'https://invideo.io/', image: 'https://picsum.photos/seed/invideo-video/300/200', category: 'Video', dataAiHint: 'ai video editor', isTrending: true },
-  { name: 'Synthesia', url: 'https://www.synthesia.io/', image: 'https://picsum.photos/seed/synthesia-video/300/200', category: 'Video', dataAiHint: 'ai avatars', isTrending: true },
-  { name: 'HeyGen', url: 'https://www.heygen.com/', image: 'https://picsum.photos/seed/heygen-video/300/200', category: 'Video', dataAiHint: 'generative video', isTrending: true },
-  { name: 'Pictory', url: 'https://pictory.ai/', image: 'https://picsum.photos/seed/pictory-video/300/200', category: 'Video', dataAiHint: 'video from script', isTrending: true },
+  { name: 'Runway', url: 'https://runwayml.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=runwayml.com', category: 'Video', dataAiHint: 'abstract animation', isTrending: true },
+  { name: 'Pika', url: 'https://pika.art/', image: 'https://www.google.com/s2/favicons?sz=128&domain=pika.art', category: 'Video', dataAiHint: 'cinematic video', isTrending: true },
+  { name: 'InVideo', url: 'https://invideo.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=invideo.io', category: 'Video', dataAiHint: 'ai video editor', isTrending: true },
+  { name: 'Synthesia', url: 'https://www.synthesia.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=synthesia.io', category: 'Video', dataAiHint: 'ai avatars', isTrending: true },
+  { name: 'HeyGen', url: 'https://www.heygen.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=heygen.com', category: 'Video', dataAiHint: 'generative video', isTrending: true },
+  { name: 'Pictory', url: 'https://pictory.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=pictory.ai', category: 'Video', dataAiHint: 'video from script', isTrending: true },
 ];
 
 const textToImageTools: Tool[] = [
-    { name: 'Bing Image Creator', url: 'https://www.bing.com/images/create', image: 'https://picsum.photos/seed/bing-creator/300/200', category: 'Image', dataAiHint: 'dalle ai', isTrending: true },
-    { name: 'Adobe Firefly', url: 'https://firefly.adobe.com/', image: 'https://picsum.photos/seed/adobe-firefly/300/200', category: 'Image', dataAiHint: 'generative fill', isTrending: true },
-    { name: 'Canva AI', url: 'https://www.canva.com/ai-image-generator/', image: 'https://picsum.photos/seed/canva-ai/300/200', category: 'Image', dataAiHint: 'design tool', isTrending: true },
-    { name: 'Stable Diffusion Online', url: 'https://stablediffusionweb.com/', image: 'https://picsum.photos/seed/stable-diffusion/300/200', category: 'Image', dataAiHint: 'open source ai', isTrending: false },
-    { name: 'Leonardo AI', url: 'https://leonardo.ai/', image: 'https://picsum.photos/seed/leonardo-ai/300/200', category: 'Image', dataAiHint: 'game assets', isTrending: true },
+    { name: 'Bing Image Creator', url: 'https://www.bing.com/images/create', image: 'https://www.google.com/s2/favicons?sz=128&domain=bing.com', category: 'Image', dataAiHint: 'dalle ai', isTrending: true },
+    { name: 'Adobe Firefly', url: 'https://firefly.adobe.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=adobe.com', category: 'Image', dataAiHint: 'generative fill', isTrending: true },
+    { name: 'Canva AI', url: 'https://www.canva.com/ai-image-generator/', image: 'https://www.google.com/s2/favicons?sz=128&domain=canva.com', category: 'Image', dataAiHint: 'design tool', isTrending: true },
+    { name: 'Stable Diffusion Online', url: 'https://stablediffusionweb.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=stablediffusionweb.com', category: 'Image', dataAiHint: 'open source ai', isTrending: false },
+    { name: 'Leonardo AI', url: 'https://leonardo.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=leonardo.ai', category: 'Image', dataAiHint: 'game assets', isTrending: true },
 ];
 
 const imageToVideoTools: Tool[] = [
-    { name: 'Pika Labs', url: 'https://pika.art/', image: 'https://picsum.photos/seed/pika-labs/300/200', category: 'Video', dataAiHint: 'generative video', isTrending: true },
-    { name: 'Runway Gen-2', url: 'https://runwayml.com/', image: 'https://picsum.photos/seed/runway-gen2/300/200', category: 'Video', dataAiHint: 'ai magic tools', isTrending: true },
-    { name: 'Kaiber AI', url: 'https://www.kaiber.ai/', image: 'https://picsum.photos/seed/kaiber-ai/300/200', category: 'Video', dataAiHint: 'visual storytelling', isTrending: true },
-    { name: 'CapCut', url: 'https://www.capcut.com/', image: 'https://picsum.photos/seed/capcut-anim/300/200', category: 'Video', dataAiHint: 'image animation', isTrending: true },
-    { name: 'Animaker AI', description: 'AI-powered tool for creating animated videos.', url: 'https://www.animaker.com/', image: 'https://picsum.photos/seed/animaker-ai/300/200', dataAiHint: 'animation maker', pricing: 'Freemium' },
+    { name: 'Pika Labs', url: 'https://pika.art/', image: 'https://www.google.com/s2/favicons?sz=128&domain=pika.art', category: 'Video', dataAiHint: 'generative video', isTrending: true },
+    { name: 'Runway Gen-2', url: 'https://runwayml.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=runwayml.com', category: 'Video', dataAiHint: 'ai magic tools', isTrending: true },
+    { name: 'Kaiber AI', url: 'https://www.kaiber.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=kaiber.ai', category: 'Video', dataAiHint: 'visual storytelling', isTrending: true },
+    { name: 'CapCut', url: 'https://www.capcut.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=capcut.com', category: 'Video', dataAiHint: 'image animation', isTrending: true },
+    { name: 'Animaker AI', description: 'AI-powered tool for creating animated videos.', url: 'https://www.animaker.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=animaker.com', dataAiHint: 'animation maker', pricing: 'Freemium' },
 ];
 
 const textToSpeechTools: Tool[] = [
-    { name: 'ElevenLabs', url: 'https://elevenlabs.io/', image: 'https://picsum.photos/seed/elevenlabs-tts/300/200', category: 'Audio', dataAiHint: 'ai voice', isTrending: true },
-    { name: 'Voicemod', url: 'https://www.voicemod.net/', image: 'https://picsum.photos/seed/voicemod-tts/300/200', category: 'Audio', dataAiHint: 'voice changer', isTrending: true },
-    { name: 'Google TTS', url: 'https://cloud.google.com/text-to-speech', image: 'https://picsum.photos/seed/google-tts/300/200', category: 'Audio', dataAiHint: 'cloud voice', isTrending: false },
-    { name: 'Murf.ai', url: 'https://murf.ai/', image: 'https://picsum.photos/seed/murf-tts/300/200', category: 'Audio', dataAiHint: 'voiceover', isTrending: true },
-    { name: 'TTSMaker', url: 'https://ttsmaker.com/', image: 'https://picsum.photos/seed/ttsmaker-tts/300/200', category: 'Audio', dataAiHint: 'free tts', isTrending: false },
+    { name: 'ElevenLabs', url: 'https://elevenlabs.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=elevenlabs.io', category: 'Audio', dataAiHint: 'ai voice', isTrending: true },
+    { name: 'Voicemod', url: 'https://www.voicemod.net/', image: 'https://www.google.com/s2/favicons?sz=128&domain=voicemod.net', category: 'Audio', dataAiHint: 'voice changer', isTrending: true },
+    { name: 'Google TTS', url: 'https://cloud.google.com/text-to-speech', image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com', category: 'Audio', dataAiHint: 'cloud voice', isTrending: false },
+    { name: 'Murf.ai', url: 'https://murf.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=murf.ai', category: 'Audio', dataAiHint: 'voiceover', isTrending: true },
+    { name: 'TTSMaker', url: 'https://ttsmaker.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=ttsmaker.com', category: 'Audio', dataAiHint: 'free tts', isTrending: false },
 ];
 
 const voiceCloningTools: Tool[] = [
-    { name: 'ElevenLabs', url: 'https://elevenlabs.io/', image: 'https://picsum.photos/seed/elevenlabs-vc/300/200', category: 'Audio', dataAiHint: 'voice cloning', isTrending: true },
-    { name: 'Voicemod', url: 'https://www.voicemod.net/', image: 'https://picsum.photos/seed/voicemod-vc/300/200', category: 'Audio', dataAiHint: 'ai voice', isTrending: true },
-    { name: 'Resemble AI', description: 'Your complete generative voice AI toolkit.', url: 'https://www.resemble.ai/', image: 'https://picsum.photos/seed/resemble-vc/300/200', dataAiHint: 'custom voice', pricing: 'Paid' },
-    { name: 'Uberduck', description: 'Text-to-speech and voice cloning.', url: 'https://uberduck.ai/', image: 'https://picsum.photos/seed/uberduck-vc/300/200', dataAiHint: 'text to rap', pricing: 'Freemium' },
+    { name: 'ElevenLabs', url: 'https://elevenlabs.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=elevenlabs.io', category: 'Audio', dataAiHint: 'voice cloning', isTrending: true },
+    { name: 'Voicemod', url: 'https://www.voicemod.net/', image: 'https://www.google.com/s2/favicons?sz=128&domain=voicemod.net', category: 'Audio', dataAiHint: 'ai voice', isTrending: true },
+    { name: 'Resemble AI', description: 'Your complete generative voice AI toolkit.', url: 'https://www.resemble.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=resemble.ai', dataAiHint: 'custom voice', pricing: 'Paid' },
+    { name: 'Uberduck', description: 'Text-to-speech and voice cloning.', url: 'https://uberduck.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=uberduck.ai', dataAiHint: 'text to rap', pricing: 'Freemium' },
 ];
 
 const ToolCard = React.memo(({ tool, onShare, t, isClient }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, t: (key: string) => string, isClient: boolean }) => {
@@ -79,6 +79,7 @@ const ToolCard = React.memo(({ tool, onShare, t, isClient }: { tool: Tool, onSha
               height="90"
               className="w-full h-auto aspect-[4/3] object-cover"
               data-ai-hint={tool.dataAiHint}
+              unoptimized
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
