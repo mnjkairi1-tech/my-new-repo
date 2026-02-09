@@ -70,9 +70,9 @@ function CommunityPageContent() {
     const { pinnedGroups } = useUserPreferences();
 
     const publicGroupsQuery = useMemoFirebase(() => {
-        if (!firestore) return null;
+        if (!firestore || !user) return null;
         return query(collection(firestore, 'groups'), where('isPublic', '==', true));
-    }, [firestore]);
+    }, [firestore, user]);
 
     const { data: publicClubs, isLoading: publicClubsLoading } = useCollection<Group>(publicGroupsQuery);
     
@@ -146,7 +146,7 @@ function CommunityPageContent() {
         </div>
     );
     
-    const isLoading = isUserLoading || publicClubsLoading || membershipsLoading || privateClubsLoading;
+    const isLoading = isUserLoading || (user && (publicClubsLoading || membershipsLoading || privateClubsLoading));
 
     return (
         <div className="bg-background text-foreground min-h-screen font-body relative flex flex-col">
@@ -178,6 +178,13 @@ function CommunityPageContent() {
                         <div className="space-y-3">
                             {isLoading ? (
                                 <ClubListSkeleton />
+                            ) : !user ? (
+                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-2xl">
+                                    <p className="font-semibold">Sign in to discover public clubs.</p>
+                                    <Link href="/?tab=settings">
+                                        <Button className="mt-4">Sign In</Button>
+                                    </Link>
+                                </div>
                             ) : filteredPublicClubs.length > 0 ? (
                                 filteredPublicClubs.map((club) => (
                                     <ClubCard key={club.id} club={club} isMember={true} />
@@ -200,6 +207,9 @@ function CommunityPageContent() {
                             ) : !user ? (
                                 <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-2xl">
                                     <p className="font-semibold">Sign in to see your private clubs.</p>
+                                    <Link href="/?tab=settings">
+                                        <Button className="mt-4">Sign In</Button>
+                                    </Link>
                                 </div>
                             ) : filteredPrivateClubs.length > 0 ? (
                                 filteredPrivateClubs.map((club) => (
