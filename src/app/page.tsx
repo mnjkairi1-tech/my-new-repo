@@ -56,7 +56,7 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { SettingsPage } from '@/components/settings-page';
 import { cn } from '@/lib/utils';
-import { AuthGate } from '@/components/auth-gate';
+import { AuthScreen } from '@/components/auth-gate';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/lib/language';
@@ -101,10 +101,10 @@ function HomePageContent() {
   useCustomBack();
 
   const [activeTab, setActiveTab] = React.useState('home');
+  const { user } = useUser();
 
   const [toolClicks, setToolClicks] = React.useState<Record<string, number>>({});
   const { toast } = useToast();
-  const { user } = useUser();
   const { heartedTools, starredTools, handleHeartToggle, handleStarToggle, pinnedTools, handlePinToggle, recentTools, addRecentTool, comparisonList, clearComparison } = useUserPreferences();
   const [activeSavedTab, setActiveSavedTab] = useState('recent');
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
@@ -518,7 +518,7 @@ function HomePageContent() {
               </TabsContent>
 
               <TabsContent value="settings" className="flex-grow overflow-y-auto no-scrollbar mt-0 bg-secondary/30">
-                  <SettingsPage />
+                  {user ? <SettingsPage /> : <AuthScreen onUser={() => {}} />}
               </TabsContent>
           </Tabs>
         </main>
@@ -551,9 +551,7 @@ function HomePageContent() {
 
 export default function GalaxyApp() {
   return (
-    <AuthGate>
       <HomePageContent />
-    </AuthGate>
   );
 }
     

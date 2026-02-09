@@ -5,6 +5,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import type { Tool } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
+import { useUser } from '@/firebase';
+import { useRouter } from 'next/navigation';
 
 type UserPreferencesContextType = {
   theme: string;
@@ -38,6 +40,8 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   const [comparisonList, setComparisonList] = useState<Tool[]>([]);
   const { toast } = useToast();
   const [pinnedGroups, setPinnedGroups] = useState<Set<string>>(new Set());
+  const { user } = useUser();
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -71,6 +75,19 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     }
   }, []);
 
+  const requireAuth = (action: string): boolean => {
+    if (!user) {
+      toast({
+        variant: 'destructive',
+        title: 'Please sign in',
+        description: `You need to be logged in to ${action}.`,
+      });
+      router.push('/?tab=settings');
+      return false;
+    }
+    return true;
+  };
+
   const handleSetTheme = (newTheme: string) => {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
@@ -84,6 +101,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   };
 
   const handleHeartToggle = (tool: Tool) => {
+    if (!requireAuth('save tools')) return;
     setHeartedTools(prev => {
       const isHearted = prev.some(t => t.name === tool.name);
       const newHeartedTools = isHearted
@@ -95,6 +113,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   };
 
   const handleStarToggle = (tool: Tool) => {
+    if (!requireAuth('star tools')) return;
     setStarredTools(prev => {
       const isStarred = prev.some(t => t.name === tool.name);
       const newStarredTools = isStarred
@@ -106,6 +125,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   };
 
   const handlePinToggle = (toolName: string) => {
+    if (!requireAuth('pin tools')) return;
     const newPinnedTools = new Set(pinnedTools);
     if (newPinnedTools.has(toolName)) {
       newPinnedTools.delete(toolName);
@@ -148,6 +168,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   };
 
   const handlePinGroupToggle = (groupId: string) => {
+    if (!requireAuth('pin groups')) return;
     setPinnedGroups(prev => {
       const newPinned = new Set(prev);
       if (newPinned.has(groupId)) {

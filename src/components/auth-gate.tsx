@@ -212,7 +212,7 @@ function EmailAuth() {
 }
 
 
-function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
+export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   const auth = useAuth();
   const { toast } = useToast();
   const [isSigningIn, setIsSigningIn] = useState(false);
