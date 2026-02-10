@@ -51,6 +51,7 @@ interface GroupTool {
     toolName: string;
     toolUrl: string;
     toolDescription?: string;
+    toolImage?: string;
     addedBy: string;
     addedAt: Date;
     upvotes: number;
@@ -58,13 +59,14 @@ interface GroupTool {
 
 const ToolCard = ({ tool }: { tool: GroupTool }) => {
     const fullTool = useMemo(() => allToolsServer.find(t => t.name === tool.toolName), [tool.toolName]);
+    const imageUrl = tool.toolImage || fullTool?.image;
     
     return (
         <a href={tool.toolUrl} target="_blank" rel="noopener noreferrer">
             <Card className="p-2 w-28 h-28 flex flex-col items-center justify-center gap-2 shrink-0 group hover:bg-accent transition-colors">
                 <div className='w-12 h-12 bg-secondary rounded-2xl flex items-center justify-center overflow-hidden'>
-                    {fullTool?.image ? (
-                        <Image src={fullTool.image} alt={tool.toolName} width={32} height={32} className="object-contain" />
+                    {imageUrl ? (
+                        <Image src={imageUrl} alt={tool.toolName} width={32} height={32} className="object-contain" unoptimized />
                     ) : (
                         <Users className="w-6 h-6 text-primary"/>
                     )}
@@ -470,5 +472,3 @@ export default function ClubDetailsPageClient() {
     </div>
   );
 }
-
-    

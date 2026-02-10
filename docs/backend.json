@@ -98,6 +98,11 @@
         "toolDescription": {
           "type": "string"
         },
+        "toolImage": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL for the tool's icon."
+        },
         "addedBy": {
           "type": "string"
         },

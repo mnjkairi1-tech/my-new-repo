@@ -18,6 +18,7 @@ import { allToolsServer } from '@/lib/all-tools-server';
 import type { Tool } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking, setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 
 interface Group {
     id: string;
@@ -43,6 +44,7 @@ interface GroupTool {
     toolName: string;
     toolUrl: string;
     toolDescription?: string;
+    toolImage?: string;
     addedBy: string;
     addedAt: Timestamp;
     upvotes: number;
@@ -216,13 +218,14 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
             .slice(0, 50); // Limit results for performance
     }, [searchTerm]);
 
-    const handleAddTool = async (tool: Pick<Tool, 'name'|'url'|'description'>) => {
+    const handleAddTool = async (tool: Pick<Tool, 'name'|'url'|'description'|'image'>) => {
         if (!user || !firestore || !toolsRef) return;
 
         const newToolData = {
             toolName: tool.name,
             toolUrl: tool.url,
             toolDescription: tool.description || '',
+            toolImage: tool.image || '',
             addedBy: user.uid,
             addedAt: serverTimestamp(),
             upvotes: 0,
@@ -241,21 +244,35 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
             toast({ variant: 'destructive', title: 'Invalid URL', description: 'Please enter a valid URL.' });
             return;
         }
-
+    
         setIsSubmittingUrl(true);
         try {
-            const url = new URL(customToolUrl); // Basic URL validation
-            await handleAddTool({
-                name: url.hostname,
-                url: url.href,
-                description: 'User-added AI tool.',
-            });
-            setCustomToolUrl('');
-        } catch (error) {
+            // Basic client-side validation first
+            const url = new URL(customToolUrl);
+    
+            const validationResult = await validateAndGetToolInfo({ url: customToolUrl });
+    
+            if (validationResult.isAiTool && validationResult.isSafe) {
+                const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain=${url.hostname}`;
+                await handleAddTool({
+                    name: validationResult.toolName || url.hostname,
+                    url: customToolUrl,
+                    description: validationResult.toolDescription || 'User-added AI tool.',
+                    image: faviconUrl,
+                });
+                setCustomToolUrl(''); // Clear on success
+            } else {
+                toast({
+                    variant: 'destructive',
+                    title: 'Validation Failed',
+                    description: validationResult.reason || 'This does not appear to be a valid AI tool.',
+                });
+            }
+        } catch (error: any) {
              toast({
                 variant: 'destructive',
-                title: 'Invalid URL',
-                description: 'Please enter a valid URL format (e.g., https://example.com).',
+                title: 'Error',
+                description: error.message.includes('Invalid URL') ? 'Please enter a valid URL format (e.g., https://example.com).' : (error.message || 'An unexpected error occurred.'),
             });
         } finally {
             setIsSubmittingUrl(false);
@@ -394,7 +411,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                                 <div className="flex-grow">
                                                     <p className="font-semibold">{tool.name}</p>
                                                 </div>
-                                                <Button size="sm" onClick={() => handleAddTool(tool)}>Add</Button>
+                                                <Button size="sm" onClick={() => handleAddTool(tool as Tool)}>Add</Button>
                                             </div>
                                         ))}
                                     </div>
@@ -473,6 +490,7 @@ const MemberListSkeleton = () => (
         ))}
     </div>
 );
+
 
 
 
