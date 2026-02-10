@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -61,8 +62,8 @@ export const marketingSeoToolData: ToolCategory[] = [
             { name: 'BuzzSumo', description: 'Find what content is performing best.', url: 'https://buzzsumo.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=buzzsumo.com', dataAiHint: 'content analysis', pricing: 'Paid' },
             { name: 'Copy.ai', description: 'AI-powered copywriter for marketing.', url: 'https://www.copy.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=copy.ai', dataAiHint: 'marketing copy', pricing: 'Freemium' },
             { name: 'Jasper', description: 'AI content platform for teams.', url: 'https://www.jasper.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=jasper.ai', dataAiHint: 'ai writer', pricing: 'Paid' },
-            { name: 'Outranking', description: 'AI-powered content strategy and writing.', url: 'https://www.outranking.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=outranking.io', dataAiHint: 'content research', pricing: 'Paid' },
-            { name: 'Scalenut', description: 'AI-powered content research and writing.', url: 'https://www.scalenut.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=scalenut.com', dataAiHint: 'content creation', pricing: 'Paid' },
+            { name: 'Outranking', description: 'AI-powered content strategy and writing.', url: 'https://www.outranking.io/', image: 'https://www.google.com/s2/favicons?sz=128&domain=outranking.io', dataAiHint: 'content strategy', pricing: 'Paid' },
+            { name: 'Scalenut', description: 'AI-powered content research and writing platform.', url: 'https://www.scalenut.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=scalenut.com', dataAiHint: 'content creation', pricing: 'Paid' },
             { name: 'GrowthBar', description: 'AI for SEO.', url: 'https://www.growthbarseo.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=growthbarseo.com', dataAiHint: 'ai for seo', pricing: 'Freemium' },
             { name: 'NeuralText', description: 'AI-powered content marketing platform.', url: 'https://www.neuraltext.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=neuraltext.com', dataAiHint: 'content platform', pricing: 'Freemium' },
             { name: 'Topic', description: 'Content optimization tool.', url: 'https://www.usetopic.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=usetopic.com', dataAiHint: 'content brief', pricing: 'Paid' },
@@ -171,27 +172,12 @@ export const marketingSeoToolData: ToolCategory[] = [
     { title: "AI Market Research Tools", icon: <Search className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI Competitive Intelligence", icon: <Eye className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI Video Marketing Tools", icon: <Video className="w-5 h-5 text-primary" />, tools: [] },
-    { title: "AI Image &amp; Design for Marketing", icon: <ImageIcon className="w-5 h-5 text-primary" />, tools: [] },
+    { title: "AI Image & Design for Marketing", icon: <ImageIcon className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI Brand Reputation Management", icon: <Shield className="w-5 h-5 text-primary" />, tools: [] },
-    { title: "AI PR &amp; Media Outreach", icon: <Globe className="w-5 h-5 text-primary" />, tools: [] },
+    { title: "AI PR & Media Outreach", icon: <Globe className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI Local SEO Tools", icon: <Store className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI E-commerce Marketing Tools", icon: <ShoppingCart className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI Voice Search Optimization", icon: <Mic className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI Growth Hacking Tools", icon: <Rocket className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI Marketing Strategy Tools", icon: <GanttChartSquare className="w-5 h-5 text-primary" />, tools: [] }
 ];
-
-marketingSeoToolData.forEach(category => {
-    if (category.tools.length === 0) {
-        for (let i = 1; i <= 20; i++) {
-            category.tools.push({
-                name: `${category.title.replace(' Tools', '').trim()} Tool ${i}`,
-                description: `A sample tool for the ${category.title} category.`,
-                url: '#',
-                image: `https://www.google.com/s2/favicons?sz=128&domain=example.com`,
-                dataAiHint: 'marketing tool',
-                pricing: i % 3 === 0 ? 'Free' : (i % 2 === 0 ? 'Freemium' : 'Paid'),
-            });
-        }
-    }
-});

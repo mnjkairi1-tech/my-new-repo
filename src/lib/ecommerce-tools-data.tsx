@@ -234,19 +234,3 @@ export const eCommerceToolData: ToolCategory[] = [
         ]
     }
 ];
-
-eCommerceToolData.forEach(category => {
-    if (category.tools.length === 0) {
-        for (let i = 1; i <= 10; i++) {
-            const toolName = `${category.title.replace(' Tools', '').trim()} Tool ${i}`;
-            category.tools.push({
-                name: toolName,
-                description: `A sample tool for the ${category.title} category.`,
-                url: '#',
-                image: `https://www.google.com/s2/favicons?sz=128&domain=${toolName.toLowerCase().replace(/\s+/g, '-')}.com`,
-                dataAiHint: 'ecommerce tool',
-                pricing: i % 3 === 0 ? 'Free' : (i % 2 === 0 ? 'Freemium' : 'Paid'),
-            });
-        }
-    }
-});

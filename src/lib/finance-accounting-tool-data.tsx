@@ -20,7 +20,6 @@ import { aiGstVatComplianceTools } from './finance-accounting-data/ai-gst-vat-co
 import { aiFinancialReportingTools } from './finance-accounting-data/ai-financial-reporting-tools';
 import { aiAuditComplianceTools } from './finance-accounting-data/ai-audit-compliance-tools';
 
-
 export type Tool = {
     name: string;
     description: string;
@@ -91,8 +90,8 @@ export const financeAccountingToolData: ToolCategory[] = [
         title: "AI Budgeting & Planning Tools",
         icon: <Calculator className="w-5 h-5 text-primary"/>,
         tools: [
-             { name: 'Anaplan', description: 'Platform for connected planning.', url: 'https://www.anaplan.com/', image: 'https://picsum.photos/seed/anaplan-planning/600/400', dataAiHint: 'connected planning', pricing: 'Paid' },
-             { name: 'Cube', description: 'FP&A platform for modern finance teams.', url: 'https://www.cubesoftware.com/', image: 'https://picsum.photos/seed/cube-planning/600/400', dataAiHint: 'fp&a platform', pricing: 'Paid' },
+             { name: 'Anaplan', description: 'Platform for connected planning.', url: 'https://www.anaplan.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=anaplan.com', dataAiHint: 'connected planning', pricing: 'Paid' },
+             { name: 'Cube', description: 'FP&A platform for modern finance teams.', url: 'https://www.cubesoftware.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=cubesoftware.com', dataAiHint: 'fp&a platform', pricing: 'Paid' },
         ]
     },
     {
@@ -191,21 +190,3 @@ export const financeAccountingToolData: ToolCategory[] = [
         tools: [],
     }
 ];
-
-financeAccountingToolData.forEach(category => {
-    if (category.tools.length === 0) {
-        for (let i = 1; i <= 10; i++) {
-            category.tools.push({
-                name: `${category.title.replace(' Tools', '').trim()} Tool ${i}`,
-                description: `A sample tool for the ${category.title} category.`,
-                url: '#',
-                image: `https://picsum.photos/seed/${category.title.toLowerCase().replace(/\s+/g, '-')}-${i}/600/400`,
-                dataAiHint: 'finance tool',
-                pricing: i % 3 === 0 ? 'Free' : (i % 2 === 0 ? 'Freemium' : 'Paid'),
-            });
-        }
-    }
-});
-    
-
-    
