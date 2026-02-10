@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
@@ -205,7 +204,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
 
     const filteredTools = useMemo(() => {
         if (!searchTerm) {
-            return allToolsServer.slice(0, 20); // Show first 20 tools initially
+            return allToolsServer;
         }
         const lowerCaseSearchTerm = searchTerm.toLowerCase();
         return allToolsServer
@@ -474,6 +473,7 @@ const MemberListSkeleton = () => (
         ))}
     </div>
 );
+
 
 
 
