@@ -171,9 +171,9 @@ function HomePageContent() {
   const carouselSlides = [
     { 
       title: "Manga Reader",
-      image: "https://i.postimg.cc/DyfNCzpV/Screenshot-2025-12-16-12-47-43-00-965bbf4d18d205f782c6b8409c5773a4.jpg",
+      image: "https://i.postimg.cc/DyfNCzpV/Screenshot_2025-12-16-12-47-43-00-965bbf4d18d205f782c6b8409c5773a4.jpg",
       dataAiHint: "manga comic",
-      link: "/manga-reader"
+      link: "https://filmm.me/pzcMMikJ"
     },
     { 
       title: "AI for Students",
