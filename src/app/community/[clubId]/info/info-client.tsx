@@ -5,7 +5,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useFirestore, useDoc, useCollection, useUser, useMemoFirebase, updateDocumentNonBlocking } from '@/firebase';
-import { doc, collection, query, orderBy, Timestamp, addDoc, serverTimestamp, getDoc, setDoc, increment } from 'firebase/firestore';
+import { doc, collection, query, orderBy, Timestamp, addDoc, serverTimestamp, getDoc, setDoc, increment, updateDoc } from 'firebase/firestore';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, BadgeCheck, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2, User as UserIcon } from 'lucide-react';
@@ -205,7 +205,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
 
     const filteredTools = useMemo(() => {
         if (!searchTerm) {
-            return [];
+            return allToolsServer.slice(0, 20); // Show first 20 tools initially
         }
         const lowerCaseSearchTerm = searchTerm.toLowerCase();
         return allToolsServer
@@ -474,5 +474,6 @@ const MemberListSkeleton = () => (
         ))}
     </div>
 );
+
 
 
