@@ -21,7 +21,7 @@ export const ultraFreeToolData: ToolCategory[] = [
             { name: 'ChatGPT', description: 'Conversational AI by OpenAI.', url: 'https://chat.openai.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=openai.com', dataAiHint: 'openai chat', pricing: 'Freemium' },
             { name: 'Google Gemini', description: 'Google\'s creative and helpful AI collaborator.', url: 'https://gemini.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=gemini.google.com', dataAiHint: 'google ai', pricing: 'Free' },
             { name: 'DuckDuckGo', description: 'The search engine that doesn\'t track you.', url: 'https://duck.ai/?origin=funnel_home_website', image: 'https://www.google.com/s2/favicons?sz=128&domain=duck.ai', dataAiHint: 'search engine', pricing: 'Free' },
-            { name: 'Arena AI', description: 'A platform for AI models.', url: 'https://lmsys.org/', image: 'https://www.google.com/s2/favicons?sz=128&domain=lmsys.org', dataAiHint: 'ai arena', pricing: 'Free' },
+            { name: 'Arena AI', description: 'A platform for AI models.', url: 'https://arena.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=arena.ai', dataAiHint: 'ai arena', pricing: 'Free' },
         ]
     },
     {
