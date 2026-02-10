@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -6,7 +5,7 @@ import {
     Lightbulb, TrendingUp, Search, FileText, Bot, BookOpen, Code, Link as LinkIcon, ClipboardCheck, Zap,
     Globe, MessageSquare, Calendar, Users, Mail, Filter, Target, GitBranch, BarChart, Eye, ThumbsUp,
     Store, ShoppingCart, Mic, GanttChartSquare, Rocket, UserCheck, TestTube, UserSquare, Handshake, Shield,
-    PenTool, Video, ImageIcon, LineChart, UserCog, UserPlus
+    PenTool, Video, ImageIcon, LineChart, UserCog, UserPlus, MapPin
 } from 'lucide-react';
 import { aiAllInOneSeoTools } from './marketing-seo-data/ai-all-in-one-seo';
 import { aiContentMarketingSeoTools } from './marketing-seo-data/ai-content-marketing-seo';
