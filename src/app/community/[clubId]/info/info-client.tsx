@@ -15,7 +15,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { allTools, Tool } from '@/lib/tools-data';
+import { allToolsServer } from '@/lib/all-tools-server';
+import type { Tool } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking, setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
@@ -203,10 +204,20 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
     };
 
     const filteredTools = useMemo(() => {
-        return allTools.filter(tool => tool.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        if (!searchTerm) {
+            return [];
+        }
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        return allToolsServer
+            .filter(tool => 
+                tool.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+                (tool.description && tool.description.toLowerCase().includes(lowerCaseSearchTerm)) ||
+                (tool.category && tool.category.toLowerCase().includes(lowerCaseSearchTerm))
+            )
+            .slice(0, 50); // Limit results for performance
     }, [searchTerm]);
 
-    const handleAddTool = async (tool: { name: string; url: string; description?: string }) => {
+    const handleAddTool = async (tool: Pick<Tool, 'name'|'url'|'description'>) => {
         if (!user || !firestore || !toolsRef) return;
 
         const newToolData = {
@@ -380,7 +391,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                     <div className='space-y-2 py-4'>
                                         {filteredTools.map(tool => (
                                             <div key={tool.name} className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent">
-                                                <Image src={tool.image} alt={tool.name} width="40" height="40" className="rounded-md" />
+                                                <Image src={tool.image} alt={tool.name} width="40" height="40" className="rounded-md" unoptimized />
                                                 <div className="flex-grow">
                                                     <p className="font-semibold">{tool.name}</p>
                                                 </div>
@@ -463,3 +474,5 @@ const MemberListSkeleton = () => (
         ))}
     </div>
 );
+
+
