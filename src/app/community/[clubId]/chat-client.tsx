@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
 import { Button } from '@/components/ui/button';
-import { Send, Users, ShieldCheck, ArrowDown, MoreVertical, Phone, Search, ArrowLeft, ExternalLink, Loader2, ImageIcon, ChevronRight, MessageSquare } from 'lucide-react';
+import { Send, Users, ShieldCheck, ArrowDown, MoreVertical, Phone, Search, ArrowLeft, ExternalLink, Loader2, ChevronRight, MessageSquare } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { useUser, useFirestore, useMemoFirebase, useFirebaseApp } from '@/firebase';
@@ -20,7 +20,6 @@ import { collection, doc, query, orderBy, limit, addDoc, serverTimestamp, setDoc
 import { useCollection, useDoc } from '@/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking, setDocumentNonBlocking, updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 interface Message {
   id: string;
@@ -95,8 +94,6 @@ export default function ClubDetailsPageClient() {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [showScrollToBottom, setShowScrollToBottom] = useState(false);
   const [isJoining, setIsJoining] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
 
   // Firestore references
   const groupRef = useMemoFirebase(() => firestore && clubId ? doc(firestore, 'groups', clubId) : null, [firestore, clubId]);
@@ -137,71 +134,6 @@ export default function ClubDetailsPageClient() {
 
     addDocumentNonBlocking(messagesCollection, newMessageObj);
     setNewMessage('');
-  };
-
-  const handleImageUpload = async (file: File) => {
-    if (!user || !clubId || !firebaseApp) return;
-
-    setIsUploading(true);
-    toast({ title: "Uploading image..." });
-
-    try {
-        const storage = getStorage(firebaseApp);
-        const filePath = `chat-images/${clubId}/${user.uid}-${Date.now()}-${file.name}`;
-        const storageRef = ref(storage, filePath);
-        
-        await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(storageRef);
-
-        const messagesCollection = collection(firestore, 'groups', clubId, 'messages');
-        const newMessageObj = {
-            imageUrl: downloadURL,
-            userId: user.uid,
-            userName: user.displayName || 'Anonymous',
-            createdAt: serverTimestamp(),
-        };
-
-        addDocumentNonBlocking(messagesCollection, newMessageObj);
-        toast({ title: "Image sent!", });
-
-    } catch (error) {
-        console.error("Error uploading image:", error);
-        toast({ title: "Image upload failed", description: "Please try again.", variant: 'destructive' });
-    } finally {
-        setIsUploading(false);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(false);
-      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-          const file = e.dataTransfer.files[0];
-          if (file.type.startsWith('image/')) {
-              handleImageUpload(file);
-          } else {
-              toast({ title: "Only image files are allowed.", variant: 'destructive' });
-          }
-          e.dataTransfer.clearData();
-      }
-  };
-
-  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(false);
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
   };
   
   useEffect(() => {
@@ -315,13 +247,7 @@ export default function ClubDetailsPageClient() {
                     <div className={`p-3 rounded-2xl max-w-[70%] relative ${msg.userId === user?.uid ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-secondary rounded-bl-none'}`}>
                         {msg.userId !== user?.uid && <p className="font-semibold text-sm mb-1 text-primary">{msg.userName}</p>}
                         
-                        {msg.imageUrl ? (
-                            <a href={msg.imageUrl} target="_blank" rel="noopener noreferrer">
-                                 <Image src={msg.imageUrl} alt="Sent image" width="200" height="200" className="rounded-lg mt-2 max-w-full h-auto cursor-pointer" />
-                            </a>
-                        ) : (
-                            <p className="break-words">{msg.text}</p>
-                        )}
+                        {msg.text && <p className="break-words">{msg.text}</p>}
                         
                         <p className="text-xs opacity-70 mt-1 text-right">
                           {msg.createdAt?.toDate ? format(msg.createdAt.toDate(), 'p') : '...'}
@@ -402,16 +328,7 @@ export default function ClubDetailsPageClient() {
           <main 
             className='flex-1 min-h-0 overflow-y-auto no-scrollbar relative' 
             ref={chatContainerRef}
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
           >
-             {isDragging && (
-                <div className="absolute inset-0 bg-primary/20 border-4 border-dashed border-primary rounded-lg flex items-center justify-center z-30 pointer-events-none">
-                    <p className="text-primary font-bold text-lg">Drop image to send</p>
-                </div>
-            )}
             {renderContent()}
             {showScrollToBottom && (
               <div className="absolute bottom-4 right-6 z-20">
@@ -435,31 +352,11 @@ export default function ClubDetailsPageClient() {
                 <form onSubmit={handleSendMessage} className="relative">
                     <Input 
                         placeholder="Type a message..." 
-                        className="rounded-full h-12 pr-24 bg-background" 
+                        className="rounded-full h-12 pr-12 bg-background" 
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
-                        disabled={isUploading}
                     />
-                    <input
-                        type="file"
-                        id="image-upload"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => {
-                            if (e.target.files && e.target.files[0]) {
-                                handleImageUpload(e.target.files[0]);
-                            }
-                        }}
-                        disabled={isUploading}
-                    />
-                     <label htmlFor="image-upload" className="absolute right-12 top-1/2 -translate-y-1/2 cursor-pointer">
-                        <Button asChild type="button" size="icon" className="rounded-full w-9 h-9 bg-transparent text-muted-foreground hover:bg-secondary" disabled={isUploading}>
-                             <span>
-                                {isUploading ? <Loader2 className="w-5 h-5 animate-spin"/> : <ImageIcon className="w-5 h-5"/>}
-                            </span>
-                        </Button>
-                    </label>
-                    <Button type="submit" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-9 h-9" disabled={!newMessage.trim() || isUploading}>
+                    <Button type="submit" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-9 h-9" disabled={!newMessage.trim()}>
                         <Send className="w-5 h-5"/>
                     </Button>
                 </form>
