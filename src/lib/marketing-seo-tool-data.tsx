@@ -8,6 +8,13 @@ import {
     Store, ShoppingCart, Mic, GanttChartSquare, Rocket, UserCheck, TestTube, UserSquare, Handshake, Shield,
     PenTool, Video, ImageIcon, LineChart, UserCog, UserPlus
 } from 'lucide-react';
+import { aiPpcAdsOptimizationTools } from './marketing-seo-data/ai-ppc-ads-optimization';
+import { aiAdCopyGeneratorsTools } from './marketing-seo-data/ai-ad-copy-generators';
+import { aiLandingPageOptimizationTools } from './marketing-seo-data/ai-landing-page-optimization';
+import { aiConversionRateOptimizationTools } from './marketing-seo-data/ai-conversion-rate-optimization';
+import { aiAbTestingTools } from './marketing-seo-data/ai-ab-testing-tools';
+import { aiLeadGenerationTools } from './marketing-seo-data/ai-lead-generation-tools';
+
 
 export type Tool = {
     name: string;
@@ -155,13 +162,13 @@ export const marketingSeoToolData: ToolCategory[] = [
             { name: 'Pipedrive', description: 'Sales CRM and pipeline management tool.', url: 'https://www.pipedrive.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=pipedrive.com', dataAiHint: 'sales pipeline', pricing: 'Paid' },
         ]
     },
-    { title: "AI PPC & Ads Optimization", icon: <Lightbulb className="w-5 h-5 text-primary" />, tools: [] },
-    { title: "AI Ad Copy Generators", icon: <PenTool className="w-5 h-5 text-primary" />, tools: [] },
-    { title: "AI Landing Page Optimization", icon: <Target className="w-5 h-5 text-primary" />, tools: [] },
-    { title: "AI Conversion Rate Optimization (CRO)", icon: <TrendingUp className="w-5 h-5 text-primary" />, tools: [] },
-    { title: "AI A/B Testing Tools", icon: <TestTube className="w-5 h-5 text-primary" />, tools: [] },
+    { title: "AI PPC & Ads Optimization", icon: <Lightbulb className="w-5 h-5 text-primary" />, tools: aiPpcAdsOptimizationTools },
+    { title: "AI Ad Copy Generators", icon: <PenTool className="w-5 h-5 text-primary" />, tools: aiAdCopyGeneratorsTools },
+    { title: "AI Landing Page Optimization", icon: <Target className="w-5 h-5 text-primary" />, tools: aiLandingPageOptimizationTools },
+    { title: "AI Conversion Rate Optimization (CRO)", icon: <TrendingUp className="w-5 h-5 text-primary" />, tools: aiConversionRateOptimizationTools },
+    { title: "AI A/B Testing Tools", icon: <TestTube className="w-5 h-5 text-primary" />, tools: aiAbTestingTools },
     { title: "AI Affiliate Marketing Tools", icon: <Handshake className="w-5 h-5 text-primary" />, tools: [] },
-    { title: "AI Lead Generation Tools", icon: <UserPlus className="w-5 h-5 text-primary" />, tools: [] },
+    { title: "AI Lead Generation Tools", icon: <UserPlus className="w-5 h-5 text-primary" />, tools: aiLeadGenerationTools },
     { title: "AI Chatbots for Marketing", icon: <Bot className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI Personalization Engines", icon: <UserCog className="w-5 h-5 text-primary" />, tools: [] },
     { title: "AI Marketing Analytics", icon: <BarChart className="w-5 h-5 text-primary" />, tools: [] },
