@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -158,7 +157,7 @@ export default function UltraFreePage() {
             </Carousel>
             
             <h2 className="font-semibold text-2xl text-center text-foreground/80 tracking-wider pt-4">
-                Explore More Tools
+                Allrounder AI Tools
             </h2>
             
             <div className="grid grid-cols-2 gap-4 pb-8">
@@ -177,4 +176,3 @@ export default function UltraFreePage() {
     </div>
   );
 }
-
