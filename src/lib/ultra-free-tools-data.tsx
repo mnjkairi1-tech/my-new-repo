@@ -1,9 +1,8 @@
-
 'use client';
 
 import React from 'react';
 import { 
-    Star, Palette, Code
+    Star, Palette, Code, Bot
 } from 'lucide-react';
 import type { Tool } from '@/lib/types';
 
@@ -22,6 +21,13 @@ export const ultraFreeToolData: ToolCategory[] = [
             { name: 'Google Gemini', description: 'Google\'s creative and helpful AI collaborator.', url: 'https://gemini.google.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=gemini.google.com', dataAiHint: 'google ai', pricing: 'Free' },
             { name: 'DuckDuckGo', description: 'The search engine that doesn\'t track you.', url: 'https://duck.ai/?origin=funnel_home_website', image: 'https://www.google.com/s2/favicons?sz=128&domain=duck.ai', dataAiHint: 'search engine', pricing: 'Free' },
             { name: 'Arena AI', description: 'A platform for AI models.', url: 'https://arena.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=arena.ai', dataAiHint: 'ai arena', pricing: 'Free' },
+        ]
+    },
+    {
+        title: "Allrounder AI Tools",
+        icon: <Bot className="w-5 h-5 text-primary"/>,
+        tools: [
+            { name: 'Yupp.ai', description: 'Search less, know more.', url: 'https://yupp.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=yupp.ai', dataAiHint: 'ai search', pricing: 'Free' },
         ]
     }
 ];
