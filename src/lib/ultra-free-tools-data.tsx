@@ -28,6 +28,10 @@ export const ultraFreeToolData: ToolCategory[] = [
         icon: <Bot className="w-5 h-5 text-primary"/>,
         tools: [
             { name: 'Yupp.ai', description: 'Search less, know more.', url: 'https://yupp.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=yupp.ai', dataAiHint: 'ai search', pricing: 'Free' },
+            { name: 'Perchance', description: 'Create and share random text generators.', url: 'https://perchance.org/generators', image: 'https://www.google.com/s2/favicons?sz=128&domain=perchance.org', dataAiHint: 'random generator', pricing: 'Free' },
+            { name: 'Genspark', description: 'An AI-powered search engine.', url: 'https://www.genspark.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=genspark.ai', dataAiHint: 'ai search', pricing: 'Free' },
+            { name: 'ChatGPT Free', description: 'Free access to AI chat.', url: 'https://chatgptfree.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=chatgptfree.ai', dataAiHint: 'free chatgpt', pricing: 'Free' },
+            { name: 'Cursor', description: 'The AI-first code editor.', url: 'https://cursor.sh/', image: 'https://www.google.com/s2/favicons?sz=128&domain=cursor.sh', dataAiHint: 'ai code editor', pricing: 'Freemium' },
         ]
     }
 ];
