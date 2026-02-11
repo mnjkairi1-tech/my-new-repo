@@ -2,8 +2,8 @@
 'use client';
 
 import React, { Suspense, useState, useEffect } from 'react';
-import { useUser, useFirestore, useCollection, useMemoFirebase, doc, setDocumentNonBlocking, useDoc } from '@/firebase';
-import { collection, query, where, Timestamp } from 'firebase/firestore';
+import { useUser, useFirestore, useCollection, useMemoFirebase, setDocumentNonBlocking, useDoc } from '@/firebase';
+import { collection, query, where, Timestamp, doc } from 'firebase/firestore';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
@@ -357,6 +357,7 @@ export default function MyProfilePage() {
         </Suspense>
     )
 }
-
     
+    
+
 
