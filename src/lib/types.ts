@@ -10,4 +10,5 @@ export interface Tool {
   icon?: string;
   isNew?: boolean;
   pricing?: 'Free' | 'Paid' | 'Freemium';
+  features?: string[];
 }

@@ -4,7 +4,7 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Gift
+    ArrowLeft, ExternalLink, Star, Share2, Gift, CheckCircle2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
@@ -19,7 +19,7 @@ import Autoplay from "embla-carousel-autoplay";
 export default function UltraFreePage() {
     const { toast } = useToast();
     const [isClient, setIsClient] = useState(false);
-    const autoplayPlugin = React.useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
+    const autoplayPlugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
 
     useEffect(() => {
         setIsClient(true);
@@ -89,21 +89,48 @@ export default function UltraFreePage() {
             </Link>
         );
     }
+
+    const TopToolCard = ({ tool }: { tool: Tool }) => (
+      <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group h-full">
+          <Card className="bg-card/80 backdrop-blur-lg border border-border/20 rounded-3xl soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden h-full p-6 flex flex-col">
+              <div className="flex items-start gap-4">
+                  <div className='relative w-12 h-12 shrink-0'>
+                      <Image
+                          src={tool.image}
+                          alt={tool.name}
+                          fill
+                          className="object-contain rounded-xl"
+                          data-ai-hint={tool.dataAiHint}
+                      />
+                  </div>
+                  <div className="flex-grow">
+                      <CardTitle className="text-lg font-bold text-foreground">{tool.name}</CardTitle>
+                      <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{tool.description}</p>
+                  </div>
+              </div>
+              {tool.features && (
+                  <ul className="mt-4 space-y-2 text-sm text-foreground/80 pl-2">
+                      {tool.features.map((feature, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                              <CheckCircle2 className="w-4 h-4 text-primary/80 mt-1 shrink-0" />
+                              <span>{feature}</span>
+                          </li>
+                      ))}
+                  </ul>
+              )}
+          </Card>
+      </Link>
+  );
     
     const { topTools, otherTools } = useMemo(() => {
         const topToolsCategory = ultraFreeToolData.find(cat => cat.title === "Top Free AI Tools");
-        const carouselSlides = topToolsCategory ? topToolsCategory.tools.map(tool => ({
-            title: tool.name,
-            image: tool.image,
-            dataAiHint: tool.dataAiHint,
-            link: tool.url
-        })) : [];
+        const topTools = topToolsCategory ? topToolsCategory.tools : [];
     
         const allOtherTools = ultraFreeToolData
             .filter(cat => cat.title !== "Top Free AI Tools")
             .flatMap(category => category.tools);
             
-        return { topTools: carouselSlides, otherTools: allOtherTools };
+        return { topTools, otherTools };
     }, []);
 
 
@@ -139,18 +166,10 @@ export default function UltraFreePage() {
                 onMouseEnter={autoplayPlugin.current.stop}
                 onMouseLeave={autoplayPlugin.current.reset}
             >
-                <CarouselContent className="-ml-2">
-                    {topTools.map((slide, index) => (
-                         <CarouselItem key={index} className="pl-2">
-                            <Link href={slide.link} target="_blank" rel="noopener noreferrer">
-                                <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden soft-shadow">
-                                <Image src={slide.image} alt={slide.title} fill style={{objectFit: "cover"}} data-ai-hint={slide.dataAiHint} />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                <div className="absolute bottom-0 left-0 p-4">
-                                    <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
-                                </div>
-                                </div>
-                            </Link>
+                <CarouselContent className="-ml-4">
+                    {topTools.map((tool, index) => (
+                         <CarouselItem key={index} className="pl-4">
+                            <TopToolCard tool={tool} />
                         </CarouselItem>
                     ))}
                 </CarouselContent>
