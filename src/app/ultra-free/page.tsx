@@ -22,7 +22,6 @@ export default function UltraFreePage() {
     const [isClient, setIsClient] = useState(false);
     const autoplayPlugin = React.useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
 
-
     useEffect(() => {
         setIsClient(true);
     }, []);
@@ -63,54 +62,49 @@ export default function UltraFreePage() {
         };
 
         return (
-            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-24 shrink-0">
-            <Card 
-                className="bg-white/80 border-none rounded-3xl soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
-            >
-                <div className="relative">
-                    <Image
-                    src={tool.image}
-                    alt={tool.name || 'Tool Image'}
-                    width={120}
-                    height={90}
-                    className="w-full h-auto aspect-[4/3] object-cover"
-                    data-ai-hint={tool.dataAiHint}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ExternalLink className="w-3 h-3"/>
-                    </div>
-                </div>
-                <CardContent className='p-2 flex flex-col flex-grow'>
-                  <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow">{tool.name}</CardTitle>
-                  <div className="flex items-center justify-end gap-1 mt-1">
-                      <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={(e) => handleShareTool(e, tool)}>
-                          <Share2 className="w-3 h-3" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={handleStarClick}>
-                          <Star className={cn('w-3.5 h-3.5 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
-                      </Button>
-                  </div>
-                </CardContent>
-            </Card>
+             <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group">
+                <Card className="bg-card/60 backdrop-blur-lg border border-white/10 rounded-3xl soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden h-full">
+                    <CardContent className='p-4 text-center flex flex-col h-full'>
+                        <div className='relative w-16 h-16 mx-auto mb-4'>
+                            <Image
+                                src={tool.image}
+                                alt={tool.name}
+                                fill
+                                className="object-contain rounded-2xl"
+                                data-ai-hint={tool.dataAiHint}
+                            />
+                            <div className="absolute -inset-1 bg-primary/20 rounded-3xl blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                        <CardTitle className="text-base font-bold text-foreground flex-grow">{tool.name}</CardTitle>
+                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2 flex-grow">{tool.description}</p>
+                        <div className="flex items-center justify-center gap-2 mt-4">
+                            <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-foreground/80 bg-white/10 hover:bg-white/20" onClick={(e) => handleShareTool(e, tool)}>
+                                <Share2 className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-foreground/80 bg-white/10 hover:bg-white/20" onClick={handleStarClick}>
+                                <Star className={cn('w-4 h-4 transition-all', isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
             </Link>
         );
     }
     
-    const remainingToolData = useMemo(() => {
-        return ultraFreeToolData.slice(1);
-    }, []);
-
-    const carouselSlides = useMemo(() => {
+    const { topTools, otherTools } = useMemo(() => {
         const topToolsCategory = ultraFreeToolData.find(cat => cat.title === "Top Free AI Tools");
-        if (!topToolsCategory) return [];
-
-        return topToolsCategory.tools.map(tool => ({
+        const carouselSlides = topToolsCategory ? topToolsCategory.tools.map(tool => ({
             title: tool.name,
             image: tool.image,
             dataAiHint: tool.dataAiHint,
             link: tool.url
-        }));
+        })) : [];
+    
+        const allOtherTools = ultraFreeToolData
+            .filter(cat => cat.title !== "Top Free AI Tools")
+            .flatMap(category => category.tools);
+            
+        return { topTools: carouselSlides, otherTools: allOtherTools };
     }, []);
 
 
@@ -147,7 +141,7 @@ export default function UltraFreePage() {
                 onMouseLeave={autoplayPlugin.current.reset}
             >
                 <CarouselContent className="-ml-2">
-                    {carouselSlides.map((slide, index) => (
+                    {topTools.map((slide, index) => (
                          <CarouselItem key={index} className="pl-2">
                             <Link href={slide.link} target="_blank" rel="noopener noreferrer">
                                 <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden soft-shadow">
@@ -162,26 +156,25 @@ export default function UltraFreePage() {
                     ))}
                 </CarouselContent>
             </Carousel>
-            {remainingToolData.map((category, index) => {
-              if (category.tools.length === 0) return null;
+            
+            <h2 className="font-semibold text-2xl text-center text-foreground/80 tracking-wider pt-4">
+                Explore More Tools
+            </h2>
+            
+            <div className="grid grid-cols-2 gap-4 pb-8">
+              {otherTools.map((tool) => (
+                <ToolCard tool={tool} key={tool.name} />
+              ))}
+            </div>
 
-              return (
-              <section key={index}>
-                  <div className="flex justify-between items-center mb-3 px-2">
-                      <h2 className="font-semibold text-xl flex items-center gap-2">
-                          {category.icon}
-                          {category.title}
-                      </h2>
-                  </div>
-                  <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 horizontal-scroll-container">
-                      {category.tools.map((tool) => (
-                        <ToolCard tool={tool} key={tool.name} />
-                      ))}
-                  </div>
-              </section>
-            )})}
+            <footer className="text-center py-8 mt-8 border-t-2 border-primary/10">
+                <p className="text-sm text-muted-foreground tracking-widest uppercase">AI ATLAS 2099</p>
+                <p className="text-xs text-muted-foreground/70 mt-1">Discovering the Future of Intelligence</p>
+            </footer>
+
         </div>
       </main>
     </div>
   );
 }
+
