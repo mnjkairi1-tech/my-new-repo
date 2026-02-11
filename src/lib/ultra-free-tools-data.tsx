@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -32,6 +33,7 @@ export const ultraFreeToolData: ToolCategory[] = [
             { name: 'Genspark', description: 'An AI-powered search engine.', url: 'https://www.genspark.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=genspark.ai', dataAiHint: 'ai search', pricing: 'Free' },
             { name: 'ChatGPT Free', description: 'Free access to AI chat.', url: 'https://chatgptfree.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=chatgptfree.ai', dataAiHint: 'free chatgpt', pricing: 'Free' },
             { name: 'Cursor', description: 'The AI-first code editor.', url: 'https://cursor.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=cursor.com', dataAiHint: 'ai code editor', pricing: 'Freemium' },
+            { name: 'Poe', description: 'Fast, helpful AI chat.', url: 'https://poe.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=poe.com', dataAiHint: 'ai chat', pricing: 'Freemium' },
         ]
     }
 ];
