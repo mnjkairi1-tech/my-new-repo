@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -115,7 +116,7 @@ export default function BusinessToolsPage() {
         return (
             <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-24 shrink-0">
             <Card 
-                className="bg-white/80 border-none rounded-3xl soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
+                className="bg-white/80 border-none rounded-lg soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
             >
                 <div className="relative">
                     <Image
@@ -166,7 +167,7 @@ export default function BusinessToolsPage() {
                     <Skeleton className="h-8 w-1/2 mb-3" />
                     <div className="flex gap-4">
                         {[...Array(4)].map((_, j) => (
-                            <Skeleton key={j} className="h-32 w-24 rounded-3xl" />
+                            <Skeleton key={j} className="h-32 w-24 rounded-lg" />
                         ))}
                     </div>
                 </div>
@@ -240,3 +241,4 @@ export default function BusinessToolsPage() {
     </div>
   );
 }
+

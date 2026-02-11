@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -36,7 +37,7 @@ const textToImageTools: Tool[] = [
 const imageToVideoTools: Tool[] = [
     { name: 'Pika Labs', url: 'https://pika.art/', image: 'https://www.google.com/s2/favicons?sz=128&domain=pika.art', category: 'Video', dataAiHint: 'generative video', isTrending: true },
     { name: 'Runway Gen-2', url: 'https://runwayml.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=runwayml.com', category: 'Video', dataAiHint: 'ai magic tools', isTrending: true },
-    { name: 'Kaiber AI', url: 'https://www.kaiber.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=kaiber.ai', category: 'Video', dataAiHint: 'visual storytelling', isTrending: true },
+    { name: 'Kaiber AI', description: 'Visual storytelling platform.', url: 'https://www.kaiber.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=kaiber.ai', dataAiHint: 'visual storytelling', pricing: 'Paid' },
     { name: 'CapCut', url: 'https://www.capcut.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=capcut.com', category: 'Video', dataAiHint: 'image animation', isTrending: true },
     { name: 'Animaker AI', description: 'AI-powered tool for creating animated videos.', url: 'https://www.animaker.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=animaker.com', dataAiHint: 'animation maker', pricing: 'Freemium' },
 ];
@@ -69,7 +70,7 @@ const ToolCard = React.memo(({ tool, onShare, t, isClient }: { tool: Tool, onSha
   return (
     <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-28 shrink-0">
       <Card 
-        className="bg-white/80 border-none rounded-3xl soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
+        className="bg-white/80 border-none rounded-lg soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
       >
         <div className="relative">
             <Image

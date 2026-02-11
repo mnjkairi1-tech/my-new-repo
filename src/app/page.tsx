@@ -88,7 +88,7 @@ const ToolsLoadingSkeleton = () => (
         </div>
         <div className="grid grid-cols-2 gap-4">
             {[...Array(6)].map((_, i) => (
-                <Skeleton key={i} className="h-48 rounded-3xl" />
+                <Skeleton key={i} className="h-48 rounded-lg" />
             ))}
         </div>
     </div>
@@ -234,7 +234,7 @@ function HomePageContent() {
           {carouselSlides.map((slide, index) => (
              <CarouselItem key={index}>
               <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
-                <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden soft-shadow">
+                <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden soft-shadow">
                   <Image src={slide.image} alt={slide.title || 'Carousel image'} fill style={{objectFit: "cover"}} data-ai-hint={slide.dataAiHint} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-4">
@@ -257,7 +257,7 @@ function HomePageContent() {
           <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-6 px-6 horizontal-scroll-container">
               {popularTools.map(tool => (
                   <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 text-center cursor-pointer" onClick={() => handleToolClick(tool)}>
-                      <div className="w-16 h-16 rounded-3xl bg-secondary flex items-center justify-center p-2 text-primary soft-shadow overflow-hidden">
+                      <div className="w-16 h-16 rounded-lg bg-secondary flex items-center justify-center p-2 text-primary soft-shadow overflow-hidden">
                           <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain" />
                       </div>
                       <p className="text-sm font-medium text-center mt-2 text-muted-foreground">{tool.name}</p>
@@ -273,7 +273,7 @@ function HomePageContent() {
             const isPinned = pinnedTools.has(category.name);
             return (
             <Link href={category.url} key={category.name} className="block group">
-              <Card className="relative overflow-hidden rounded-3xl soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
+              <Card className="relative overflow-hidden rounded-lg soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
                  <Button
                     variant="ghost"
                     size="icon"
@@ -329,7 +329,7 @@ function HomePageContent() {
                     <div className="space-y-3">
                     {recentTools.map((tool, index) => (
                         <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
-                            <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
+                            <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-lg soft-shadow hover:bg-accent/50 transition-colors">
                                 {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
                                 <div className="flex-grow">
                                     <h5 className="font-semibold text-base">{tool.name}</h5>
@@ -358,7 +358,7 @@ function HomePageContent() {
                 <div className="space-y-3">
                 {heartedTools.map((tool, index) => (
                      <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
-                        <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
+                        <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-lg soft-shadow hover:bg-accent/50 transition-colors">
                             {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
                             <div className="flex-grow">
                                 <h5 className="font-semibold text-base">{tool.name}</h5>
@@ -387,7 +387,7 @@ function HomePageContent() {
                     <div className="space-y-3">
                     {starredTools.map((tool, index) => (
                         <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
-                            <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
+                            <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-lg soft-shadow hover:bg-accent/50 transition-colors">
                                 {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
                                 <div className="flex-grow">
                                     <h5 className="font-semibold text-base">{tool.name}</h5>
@@ -471,7 +471,7 @@ function HomePageContent() {
               <TabsContent value="trending" className="flex-grow overflow-y-auto no-scrollbar mt-4 px-6">
                   <div className="space-y-4">
                       <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" rel="noopener noreferrer" className="block group">
-                          <Card className="bg-card border-none rounded-3xl soft-shadow overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
+                          <Card className="bg-card border-none rounded-lg soft-shadow overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
                               <div className="relative">
                                   <Image 
                                       src={"https://picsum.photos/seed/trending-ai/600/300"}
@@ -493,7 +493,7 @@ function HomePageContent() {
                           </Card>
                       </Link>
                       <Link href="https://www.producthunt.com/" target="_blank" rel="noopener noreferrer" className="block group">
-                          <Card className="bg-card border-none rounded-3xl soft-shadow overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
+                          <Card className="bg-card border-none rounded-lg soft-shadow overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
                               <div className="relative">
                                   <Image 
                                       src={"https://picsum.photos/seed/new-ai/600/300"}
@@ -557,3 +557,4 @@ export default function GalaxyApp() {
     
 
     
+
