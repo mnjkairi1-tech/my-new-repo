@@ -34,6 +34,9 @@ export const ultraFreeToolData: ToolCategory[] = [
             { name: 'ChatGPT Free', description: 'Free access to AI chat.', url: 'https://chatgptfree.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=chatgptfree.ai', dataAiHint: 'free chatgpt', pricing: 'Free' },
             { name: 'Cursor', description: 'The AI-first code editor.', url: 'https://cursor.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=cursor.com', dataAiHint: 'ai code editor', pricing: 'Freemium' },
             { name: 'Poe', description: 'Fast, helpful AI chat.', url: 'https://poe.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=poe.com', dataAiHint: 'ai chat', pricing: 'Freemium' },
+            { name: 'Meta AI', description: 'Meta\'s conversational AI assistant.', url: 'https://www.meta.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=meta.ai', dataAiHint: 'meta ai', pricing: 'Free' },
+            { name: 'Hunyuan AI', description: 'A large language model from Tencent.', url: 'https://hunyuan.tencent.com/', image: 'https://www.google.com/s2/favicons?sz=128&domain=tencent.com', dataAiHint: 'tencent ai', pricing: 'Free' },
+            { name: 'Grok AI', description: 'AI by xAI, with real-time knowledge.', url: 'https://grok.x.ai/', image: 'https://www.google.com/s2/favicons?sz=128&domain=x.ai', dataAiHint: 'grok ai', pricing: 'Paid' },
         ]
     }
 ];
