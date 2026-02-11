@@ -62,17 +62,17 @@ export default function UltraFreePage() {
 
         return (
              <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group">
-                <Card className="bg-card/60 backdrop-blur-lg border border-white/10 rounded-3xl soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden">
-                    <CardContent className='p-4 text-center flex flex-col items-center justify-center gap-3'>
+                <Card className="bg-card/60 backdrop-blur-lg border border-white/10 rounded-lg soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden">
+                    <CardContent className='p-4 text-center flex flex-col items-center justify-center gap-2'>
                         <div className='relative w-14 h-14'>
                             <Image
                                 src={tool.image}
                                 alt={tool.name}
                                 fill
-                                className="object-contain rounded-2xl"
+                                className="object-contain rounded-md"
                                 data-ai-hint={tool.dataAiHint}
                             />
-                            <div className="absolute -inset-1 bg-primary/20 rounded-3xl blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div className="absolute -inset-1 bg-primary/20 rounded-lg blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
                         <CardTitle className="text-sm font-bold text-foreground">{tool.name}</CardTitle>
                         <div className="flex items-center justify-center gap-2 mt-1">
@@ -91,27 +91,28 @@ export default function UltraFreePage() {
 
     const TopToolCard = ({ tool }: { tool: Tool }) => (
       <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group h-full">
-          <Card className="bg-white/30 backdrop-blur-lg border border-white/40 rounded-3xl soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden h-full p-6 flex flex-col">
+          <Card className="bg-primary text-primary-foreground rounded-lg soft-shadow transition-all duration-300 hover:scale-[1.02] overflow-hidden h-full p-6 flex flex-col">
               <div className="flex items-start gap-4">
-                  <div className='relative w-12 h-12 shrink-0'>
+                  <div className='relative w-12 h-12 shrink-0 bg-white/20 p-2 rounded-md flex items-center justify-center'>
                       <Image
                           src={tool.image}
                           alt={tool.name}
-                          fill
-                          className="object-contain rounded-xl"
+                          width={32}
+                          height={32}
+                          className="object-contain"
                           data-ai-hint={tool.dataAiHint}
                       />
                   </div>
                   <div className="flex-grow">
-                      <CardTitle className="text-lg font-bold text-foreground">{tool.name}</CardTitle>
-                      <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{tool.description}</p>
+                      <CardTitle className="text-lg font-bold">{tool.name}</CardTitle>
+                      <p className="text-sm text-primary-foreground/80 mt-1 line-clamp-2">{tool.description}</p>
                   </div>
               </div>
               {tool.features && (
-                  <ul className="mt-4 space-y-2 text-sm text-foreground/80 pl-2">
+                  <ul className="mt-4 space-y-2 text-sm text-primary-foreground/90 pl-2">
                       {tool.features.map((feature, i) => (
                           <li key={i} className="flex items-start gap-2">
-                              <CheckCircle2 className="w-4 h-4 text-primary/80 mt-1 shrink-0" />
+                              <CheckCircle2 className="w-4 h-4 opacity-80 mt-1 shrink-0" />
                               <span>{feature}</span>
                           </li>
                       ))}
