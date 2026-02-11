@@ -75,7 +75,7 @@ export default function UltraFreePage() {
                             <div className="absolute -inset-1 bg-primary/20 rounded-3xl blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
                         <CardTitle className="text-base font-bold text-foreground flex-grow">{tool.name}</CardTitle>
-                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2 flex-grow">{tool.description}</p>
+                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{tool.description}</p>
                         <div className="flex items-center justify-center gap-2 mt-4">
                             <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-foreground/80 bg-white/10 hover:bg-white/20" onClick={(e) => handleShareTool(e, tool)}>
                                 <Share2 className="w-4 h-4" />
@@ -92,7 +92,7 @@ export default function UltraFreePage() {
 
     const TopToolCard = ({ tool }: { tool: Tool }) => (
       <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group h-full">
-          <Card className="bg-card/80 backdrop-blur-lg border border-border/20 rounded-3xl soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden h-full p-6 flex flex-col">
+          <Card className="bg-white/30 backdrop-blur-lg border border-white/40 rounded-3xl soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden h-full p-6 flex flex-col">
               <div className="flex items-start gap-4">
                   <div className='relative w-12 h-12 shrink-0'>
                       <Image
@@ -126,11 +126,11 @@ export default function UltraFreePage() {
         const topToolsCategory = ultraFreeToolData.find(cat => cat.title === "Top Free AI Tools");
         const topTools = topToolsCategory ? topToolsCategory.tools : [];
     
-        const otherTools = ultraFreeToolData
+        const otherToolsData = ultraFreeToolData
             .filter(cat => cat.title !== "Top Free AI Tools")
             .flatMap(category => category.tools);
             
-        return { topTools, otherTools };
+        return { topTools, otherTools: otherToolsData };
     }, []);
 
 
