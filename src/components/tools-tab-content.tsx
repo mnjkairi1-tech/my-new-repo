@@ -4,13 +4,13 @@
 import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/lib/language';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
-import { Share2, Heart, TrendingUp, Search, Filter, Scale, Check } from 'lucide-react';
+import { Share2, Star, TrendingUp, Search, Filter, Scale, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
@@ -24,18 +24,18 @@ import {
 import { allToolsServer } from '@/lib/all-tools-server';
 
 const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void, t: (key: string) => string }) => {
-    const { heartedTools, handleHeartToggle, comparisonList, selectForCompare } = useUserPreferences();
-    const isHearted = heartedTools.some(t => t.name === tool.name);
+    const { starredTools, handleStarToggle, comparisonList, selectForCompare } = useUserPreferences();
+    const isStarred = starredTools.some(t => t.name === tool.name);
     const isSelectedForCompare = comparisonList.some(t => t.name === tool.name);
 
     const handleCardClick = (e: React.MouseEvent) => {
         onClick(tool);
     };
 
-    const handleHeartClick = (e: React.MouseEvent) => {
+    const handleStarClick = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        handleHeartToggle(tool);
+        handleStarToggle(tool);
     }
     
     const handleCompareClick = (e: React.MouseEvent) => {
@@ -45,32 +45,33 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
     };
   
     return (
-      <a href={tool.url} target="_blank" rel="noopener noreferrer" onClick={handleCardClick}>
-        <Card className="relative overflow-hidden group cursor-pointer bg-card border-border rounded-lg h-full soft-shadow transition-transform hover:scale-105 duration-300">
-          {tool.image && <Image src={tool.image} alt={tool.name} width={300} height={200} className="w-full aspect-[4/3] object-cover" data-ai-hint={tool.dataAiHint} unoptimized />}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-          {tool.isTrending && (
-            <Badge className="absolute top-2 left-2 bg-purple-500/80 text-white backdrop-blur-sm text-xs rounded-full border-none shadow-lg">
-              <TrendingUp className="w-3 h-3 mr-1"/>
-              {t('tools.trendingBadge')}
-            </Badge>
-          )}
-           <Button variant="ghost" size="icon" className={cn("absolute top-2 right-2 w-8 h-8 rounded-full text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm", isSelectedForCompare && "bg-primary/80")} onClick={handleCompareClick}>
-                {isSelectedForCompare ? <Check /> : <Scale />}
-            </Button>
-          <div className="absolute bottom-0 left-0 right-0 p-3">
-            <div className="flex justify-between items-end">
-              <h5 className="font-semibold text-white text-base leading-tight line-clamp-2">{tool.name}</h5>
-              <div className="flex items-center gap-1">
-                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm" onClick={(e) => onShare(e, tool)}>
-                  <Share2 />
-                </Button>
-                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm" onClick={handleHeartClick}>
-                    <Heart className={cn('w-5 h-5 transition-all', isHearted ? 'fill-red-500 text-red-500' : 'text-white')} />
-                </Button>
-              </div>
+      <a href={tool.url} target="_blank" rel="noopener noreferrer" className="block group" onClick={handleCardClick}>
+        <Card className="bg-card/80 backdrop-blur-lg border-white/20 rounded-2xl soft-shadow transition-all duration-300 hover:scale-[1.02] overflow-hidden aspect-square flex flex-col p-4 justify-between">
+            <div className='text-center flex flex-col items-center justify-center gap-2 flex-grow'>
+                <div className='relative w-14 h-14'>
+                    <Image
+                        src={tool.image}
+                        alt={tool.name}
+                        fill
+                        className="object-contain rounded-md"
+                        data-ai-hint={tool.dataAiHint}
+                        unoptimized
+                    />
+                    <div className="absolute -inset-1 bg-primary/20 rounded-lg blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <h5 className="font-semibold text-foreground text-sm leading-tight line-clamp-2 mt-2">{tool.name}</h5>
             </div>
-          </div>
+            <div className="flex items-center justify-center gap-2 pt-2">
+                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-foreground/80 bg-white/10 hover:bg-white/20" onClick={(e) => onShare(e, tool)}>
+                    <Share2 className="w-4 h-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-foreground/80 bg-white/10 hover:bg-white/50" onClick={handleStarClick}>
+                    <Star className={cn('w-4 h-4 transition-all', isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
+                </Button>
+                <Button variant="ghost" size="icon" className={cn("w-8 h-8 rounded-full text-foreground/80 bg-white/10 hover:bg-white/50", isSelectedForCompare && "bg-primary/20")} onClick={handleCompareClick}>
+                    {isSelectedForCompare ? <Check className="w-4 h-4 text-primary" /> : <Scale className="w-4 h-4" />}
+                </Button>
+            </div>
         </Card>
       </a>
     );
