@@ -126,11 +126,11 @@ export default function UltraFreePage() {
         const topToolsCategory = ultraFreeToolData.find(cat => cat.title === "Top Free AI Tools");
         const topTools = topToolsCategory ? topToolsCategory.tools : [];
     
-        const otherToolsData = ultraFreeToolData
+        const otherTools = ultraFreeToolData
             .filter(cat => cat.title !== "Top Free AI Tools")
             .flatMap(category => category.tools);
             
-        return { topTools, otherTools: otherToolsData };
+        return { topTools, otherTools };
     }, []);
 
 
