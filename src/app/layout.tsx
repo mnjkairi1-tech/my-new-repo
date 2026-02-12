@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode, Suspense, useEffect } from 'react';
+import React, { ReactNode, Suspense } from 'react';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/lib/language';
@@ -26,18 +26,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  useEffect(() => {
-    if (
-      process.env.NODE_ENV === 'production' &&
-      typeof window !== 'undefined' &&
-      'serviceWorker' in navigator &&
-      // Don't register service worker in WebViews to avoid crashes
-      !/wv/.test(navigator.userAgent.toLowerCase())
-    ) {
-      navigator.serviceWorker.register('/sw.js');
-    }
-  }, []);
 
   return (
     <html lang="en" className="font-size-medium" suppressHydrationWarning>

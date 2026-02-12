@@ -4,9 +4,10 @@ import withPWA from '@ducanh2912/next-pwa';
 
 const pwaConfig = {
   dest: 'public',
-  register: false,
+  register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
+  runtimeCaching: require('next-pwa/cache'),
 };
 
 const nextConfig: NextConfig = {
