@@ -70,7 +70,7 @@ const ToolCard = React.memo(({ tool, onShare, t, isClient }: { tool: Tool, onSha
   return (
     <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-28 shrink-0">
       <Card 
-        className="bg-white/80 border-none rounded-lg soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
+        className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
       >
         <div className="relative">
             <Image

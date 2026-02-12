@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -62,7 +63,7 @@ export default function UltraFreePage() {
 
         return (
              <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group">
-                <Card className="bg-card/60 backdrop-blur-lg border border-white/10 rounded-lg soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden">
+                <Card className="bg-card/60 backdrop-blur-lg border border-white/10 soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden">
                     <CardContent className='p-4 text-center flex flex-col items-center justify-center gap-2'>
                         <div className='relative w-14 h-14'>
                             <Image
