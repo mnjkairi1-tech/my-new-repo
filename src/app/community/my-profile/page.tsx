@@ -49,7 +49,7 @@ const MyProfileSkeleton = () => (
         <Skeleton className="h-8 w-32 mt-8 mb-4" />
         <div className="space-y-3">
             {[...Array(3)].map((_, i) => (
-                <Card key={i} className="p-4 flex items-center gap-4">
+                <Card key={i} className="p-4 flex items-center gap-4 rounded-none">
                     <Skeleton className="h-14 w-14 rounded-full" />
                     <div className="flex-grow space-y-2">
                         <Skeleton className="h-4 w-3/4" />
@@ -103,7 +103,7 @@ function MyProfilePageContent() {
                     <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
                 </div>
                 <div className="relative z-10 w-full max-w-lg p-0 md:p-6 h-screen">
-                     <div className="bg-card/80 backdrop-blur-3xl md:rounded-[2.5rem] shadow-2xl flex flex-col h-full border-t-2 border-white/50 soft-shadow">
+                     <div className="bg-card/80 backdrop-blur-3xl md:rounded-none shadow-2xl flex flex-col h-full border-t-2 border-white/50 soft-shadow">
                         <div className="p-4 border-b">
                             <ClubHeader title="My Profile" showBackButton />
                         </div>
@@ -122,7 +122,7 @@ function MyProfilePageContent() {
                     <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
                 </div>
                 <div className="relative z-10 w-full max-w-lg p-0 md:p-6 h-screen">
-                    <div className="bg-card/80 backdrop-blur-3xl md:rounded-[2.5rem] shadow-2xl flex flex-col h-full border-t-2 border-white/50 soft-shadow">
+                    <div className="bg-card/80 backdrop-blur-3xl md:rounded-none shadow-2xl flex flex-col h-full border-t-2 border-white/50 soft-shadow">
                          <div className="p-4 border-b">
                             <ClubHeader title="My Profile" showBackButton />
                         </div>
@@ -146,7 +146,7 @@ function MyProfilePageContent() {
             </div>
 
             <div className="relative z-10 w-full max-w-lg p-0 md:p-6 h-screen">
-                <div className="bg-card/80 backdrop-blur-3xl md:rounded-[2.5rem] shadow-2xl flex flex-col h-full border-t-2 border-white/50 soft-shadow">
+                <div className="bg-card/80 backdrop-blur-3xl md:rounded-none shadow-2xl flex flex-col h-full border-t-2 border-white/50 soft-shadow">
                     <div className="p-4 border-b flex justify-between items-center">
                         <ClubHeader title="My Profile" showBackButton />
                          <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
@@ -227,8 +227,8 @@ function MyProfilePageContent() {
                                         <div className="space-y-3">
                                         {recentTools.map((tool, index) => (
                                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
-                                                <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
+                                                <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
+                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} />}
                                                     <div className="flex-grow">
                                                         <h5 className="font-semibold text-base">{tool.name}</h5>
                                                         <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -256,8 +256,8 @@ function MyProfilePageContent() {
                                     <div className="space-y-3">
                                     {heartedTools.map((tool, index) => (
                                          <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
-                                            <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
+                                            <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
+                                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} />}
                                                 <div className="flex-grow">
                                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -285,8 +285,8 @@ function MyProfilePageContent() {
                                         <div className="space-y-3">
                                         {starredTools.map((tool, index) => (
                                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
-                                                <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-3xl soft-shadow hover:bg-accent/50 transition-colors">
-                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-2xl" data-ai-hint={tool.dataAiHint} />}
+                                                <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
+                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} />}
                                                     <div className="flex-grow">
                                                         <h5 className="font-semibold text-base">{tool.name}</h5>
                                                         <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -316,7 +316,7 @@ function MyProfilePageContent() {
                             {ownedClubs && ownedClubs.length > 0 ? (
                                 ownedClubs.map((club) => (
                                     <Link href={`/community/${club.id}`} key={club.id} className="block group">
-                                        <Card className="p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors duration-200 soft-shadow">
+                                        <Card className="p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors duration-200 soft-shadow rounded-none">
                                             <Avatar className="h-14 w-14 border-2 border-white">
                                                 <AvatarImage src={`https://ui-avatars.com/api/?name=${encodeURIComponent(club.name)}&background=random&color=fff&size=128`} alt={club.name} />
                                                 <AvatarFallback>{club.name.charAt(0)}</AvatarFallback>
@@ -333,7 +333,7 @@ function MyProfilePageContent() {
                                     </Link>
                                 ))
                             ) : (
-                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-2xl">
+                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-none">
                                     <p className="font-semibold">You haven't created any groups yet.</p>
                                     <p className="text-sm mt-1">Why not start a new community?</p>
                                     <Link href="/community/create">
@@ -359,5 +359,6 @@ export default function MyProfilePage() {
 }
     
     
+
 
 

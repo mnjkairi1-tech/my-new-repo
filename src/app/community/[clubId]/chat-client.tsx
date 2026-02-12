@@ -62,7 +62,7 @@ const ToolCard = ({ tool }: { tool: GroupTool }) => {
     
     return (
         <a href={tool.toolUrl} target="_blank" rel="noopener noreferrer">
-            <Card className="p-2 w-28 h-28 flex flex-col items-center justify-center gap-2 shrink-0 group hover:bg-accent transition-colors">
+            <Card className="p-2 w-28 h-28 flex flex-col items-center justify-center gap-2 shrink-0 group hover:bg-accent transition-colors rounded-none">
                 <div className='w-12 h-12 bg-secondary rounded-2xl flex items-center justify-center overflow-hidden'>
                     {imageUrl ? (
                         <Image src={imageUrl} alt={tool.toolName} width={32} height={32} className="object-contain" unoptimized />
@@ -305,7 +305,7 @@ export default function ClubDetailsPageClient() {
                     <div className="relative">
                         <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 horizontal-scroll-container">
                             {toolsLoading ? (
-                                [...Array(3)].map((_, i) => <Skeleton key={i} className="w-28 h-28 rounded-xl" />)
+                                [...Array(3)].map((_, i) => <Skeleton key={i} className="w-28 h-28" />)
                             ) : groupTools && groupTools.length > 0 ? (
                                 groupTools.map((tool) => (
                                     <ToolCard key={tool.id} tool={tool} />

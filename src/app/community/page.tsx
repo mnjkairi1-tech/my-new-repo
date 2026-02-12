@@ -39,7 +39,7 @@ function ClubCard({ club, isMember }: { club: Group; isMember: boolean }) {
     
     return (
         <Link href={`/community/${club.id}`} key={club.id} className="block group">
-            <Card className="p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors duration-200 soft-shadow bg-card/80 backdrop-blur-sm">
+            <Card className="p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors duration-200 soft-shadow bg-card/80 backdrop-blur-sm rounded-none">
                 <Avatar className="h-14 w-14 border-2 border-background">
                     <AvatarImage src={`https://ui-avatars.com/api/?name=${encodeURIComponent(club.name)}&background=random&color=fff&size=128`} alt={club.name} />
                     <AvatarFallback>{club.name.charAt(0)}</AvatarFallback>
@@ -131,7 +131,7 @@ function CommunityPageContent() {
     const ClubListSkeleton = () => (
         <div className="space-y-3">
             {[...Array(5)].map((_, i) => (
-                <Card key={i} className="p-4 flex items-center gap-4 bg-card/80 backdrop-blur-sm soft-shadow">
+                <Card key={i} className="p-4 flex items-center gap-4 bg-card/80 backdrop-blur-sm soft-shadow rounded-none">
                     <Skeleton className="h-14 w-14 rounded-full" />
                     <div className="flex-grow space-y-2">
                         <Skeleton className="h-4 w-3/4" />
@@ -179,7 +179,7 @@ function CommunityPageContent() {
                             {isLoading ? (
                                 <ClubListSkeleton />
                             ) : !user ? (
-                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-2xl">
+                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-xl">
                                     <p className="font-semibold">Sign in to discover public clubs.</p>
                                     <Link href="/?tab=settings">
                                         <Button className="mt-4">Sign In</Button>
@@ -190,7 +190,7 @@ function CommunityPageContent() {
                                     <ClubCard key={club.id} club={club} isMember={true} />
                                 ))
                             ) : (
-                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-2xl">
+                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-xl">
                                     <p className="font-semibold">No public clubs found</p>
                                     <p className="text-sm mt-1">Try a different search or create a new club!</p>
                                     <Link href="/community/create">
@@ -205,7 +205,7 @@ function CommunityPageContent() {
                             {isLoading ? (
                                 <ClubListSkeleton />
                             ) : !user ? (
-                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-2xl">
+                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-xl">
                                     <p className="font-semibold">Sign in to see your private clubs.</p>
                                     <Link href="/?tab=settings">
                                         <Button className="mt-4">Sign In</Button>
@@ -216,7 +216,7 @@ function CommunityPageContent() {
                                     <ClubCard key={club.id} club={club} isMember={true} />
                                 ))
                             ) : (
-                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-2xl">
+                                <div className="text-center py-16 text-muted-foreground border-2 border-dashed rounded-xl">
                                     <p className="font-semibold">You are not a member of any private clubs.</p>
                                     <p className="text-sm mt-1">Join one or create your own!</p>
                                      <Link href="/community/create">

@@ -63,7 +63,7 @@ export default function UltraFreePage() {
 
         return (
              <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group">
-                <Card className="bg-card/60 backdrop-blur-lg border border-white/10 soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden">
+                <Card className="bg-card/60 backdrop-blur-lg border border-white/10 soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden rounded-none">
                     <CardContent className='p-4 text-center flex flex-col items-center justify-center gap-2'>
                         <div className='relative w-14 h-14'>
                             <Image
@@ -92,7 +92,7 @@ export default function UltraFreePage() {
 
     const TopToolCard = ({ tool }: { tool: Tool }) => (
       <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group h-full">
-          <Card className="bg-primary text-primary-foreground rounded-lg soft-shadow transition-all duration-300 hover:scale-[1.02] overflow-hidden h-full p-6 flex flex-col">
+          <Card className="bg-primary text-primary-foreground rounded-none soft-shadow transition-all duration-300 hover:scale-[1.02] overflow-hidden h-full p-6 flex flex-col">
               <div className="flex items-start gap-4">
                   <div className='relative w-12 h-12 shrink-0 bg-white/20 p-2 rounded-md flex items-center justify-center'>
                       <Image
@@ -127,11 +127,11 @@ export default function UltraFreePage() {
         const topToolsCategory = ultraFreeToolData.find(cat => cat.title === "Top Free AI Tools");
         const topTools = topToolsCategory ? topToolsCategory.tools : [];
     
-        const otherTools = ultraFreeToolData
+        const otherToolsData = ultraFreeToolData
             .filter(cat => cat.title !== "Top Free AI Tools")
             .flatMap(category => category.tools);
             
-        return { topTools, otherTools };
+        return { topTools, otherTools: otherToolsData };
     }, []);
 
 
