@@ -7,7 +7,7 @@ const pwaConfig = {
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
-  runtimeCaching: require('next-pwa/cache'),
+  runtimeCaching: require('@ducanh2912/next-pwa/cache'),
 };
 
 const nextConfig: NextConfig = {
