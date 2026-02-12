@@ -1,49 +1,19 @@
 
 import type {NextConfig} from 'next';
-import withPWA from '@ducanh2912/next-pwa';
+import withPWAInit from '@ducanh2912/next-pwa';
 
-const pwaConfig = {
+const withPWA = withPWAInit({
   dest: 'public',
   register: true,
   skipWaiting: true,
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
   disable: process.env.NODE_ENV === 'development',
-  runtimeCaching: [
-    {
-      urlPattern: ({ request }: any) => request.mode === 'navigate',
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'pages',
-        networkTimeoutSeconds: 10, // Fallback to cache if network is slow
-        expiration: {
-          maxEntries: 60,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
-        },
-      },
-    },
-    {
-      urlPattern: /\.(?:js|css|woff2?|ttf|eot)$/,
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'static-resources',
-        expiration: {
-            maxEntries: 100,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
-        }
-      },
-    },
-    {
-      urlPattern: /\.(?:png|jpg|jpeg|svg|gif|ico|webp|avif)$/,
-      handler: 'CacheFirst',
-      options: {
-        cacheName: 'images',
-        expiration: {
-          maxEntries: 200,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
-        },
-      },
-    },
-  ],
-};
+  workboxOptions: {
+    disableDevLogs: true,
+  },
+});
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -63,4 +33,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPWA(pwaConfig)(nextConfig);
+export default withPWA(nextConfig);
