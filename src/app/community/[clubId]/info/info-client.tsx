@@ -8,7 +8,7 @@ import { useFirestore, useDoc, useCollection, useUser, useMemoFirebase } from '@
 import { doc, collection, query, orderBy, Timestamp, addDoc, serverTimestamp, getDoc, setDoc, increment, updateDoc, deleteDoc } from 'firebase/firestore';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, BadgeCheck, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2, User as UserIcon, Trash2 } from 'lucide-react';
+import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, BadgeCheck, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2, User as UserIcon, Trash2, Share2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -210,6 +210,23 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
         router.back();
     };
 
+    const handleShareLink = () => {
+        const shareUrl = `${window.location.origin}/community/${clubId}`;
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            toast({
+                title: "Invite Link Copied!",
+                description: "Share this link to invite others to the club.",
+            });
+        }).catch(err => {
+            console.error('Failed to copy link: ', err);
+            toast({
+                variant: 'destructive',
+                title: 'Error',
+                description: 'Could not copy the invite link.',
+            });
+        });
+    };
+
     const handleDeleteGroup = async () => {
         if (!user || !clubData || user.uid !== clubData.ownerId || !groupRef) {
             toast({ variant: 'destructive', title: 'Permission Denied', description: 'Only the group owner can delete this group.' });
@@ -371,6 +388,10 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
+                                <DropdownMenuItem onSelect={handleShareLink}>
+                                    <Share2 className="mr-2 h-4 w-4" />
+                                    <span>Share Invite Link</span>
+                                </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <Edit className="mr-2 h-4 w-4" />
                                     <span>Edit Group</span>
@@ -558,5 +579,7 @@ const MemberListSkeleton = () => (
 
 
 
+
+    
 
     
