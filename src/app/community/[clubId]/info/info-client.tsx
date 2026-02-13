@@ -1,23 +1,26 @@
+
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useFirestore, useDoc, useCollection, useUser, useMemoFirebase, updateDocumentNonBlocking } from '@/firebase';
-import { doc, collection, query, orderBy, Timestamp, addDoc, serverTimestamp, getDoc, setDoc, increment, updateDoc } from 'firebase/firestore';
+import { useFirestore, useDoc, useCollection, useUser, useMemoFirebase } from '@/firebase';
+import { doc, collection, query, orderBy, Timestamp, addDoc, serverTimestamp, getDoc, setDoc, increment, updateDoc, deleteDoc } from 'firebase/firestore';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, BadgeCheck, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2, User as UserIcon } from 'lucide-react';
+import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, BadgeCheck, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2, User as UserIcon, Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+
 import { Input } from '@/components/ui/input';
 import { allToolsServer } from '@/lib/all-tools-server';
 import type { Tool } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
-import { addDocumentNonBlocking, setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { addDocumentNonBlocking, setDocumentNonBlocking, updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 
 interface Group {
@@ -177,6 +180,9 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
     const [isAddToolOpen, setIsAddToolOpen] = useState(false);
     const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
     const [isSubmittingUrl, setIsSubmittingUrl] = useState(false);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+
 
     const groupRef = useMemoFirebase(() => {
         if (!firestore) return null;
@@ -202,6 +208,28 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
 
     const handleBack = () => {
         router.back();
+    };
+
+    const handleDeleteGroup = async () => {
+        if (!user || !clubData || user.uid !== clubData.ownerId || !groupRef) {
+            toast({ variant: 'destructive', title: 'Permission Denied', description: 'Only the group owner can delete this group.' });
+            return;
+        }
+
+        setIsDeleting(true);
+        try {
+            await deleteDoc(groupRef);
+            toast({ title: 'Group Deleted', description: `"${clubData.name}" has been permanently deleted.` });
+            
+            setTimeout(() => {
+                router.push('/community');
+            }, 1000);
+
+        } catch (error: any) {
+            console.error("Error deleting group:", error);
+            toast({ variant: 'destructive', title: 'Error', description: 'Could not delete the group. Please try again.' });
+            setIsDeleting(false);
+        }
     };
 
     const filteredTools = useMemo(() => {
@@ -340,11 +368,46 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                     <UserPlus className="mr-2 h-4 w-4" />
                                     <span>Add Members</span>
                                 </DropdownMenuItem>
+                                {user?.uid === clubData?.ownerId && (
+                                    <>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem
+                                            onSelect={() => setIsDeleteDialogOpen(true)}
+                                            className="text-destructive focus:bg-destructive/10 focus:text-destructive"
+                                        >
+                                            <Trash2 className="mr-2 h-4 w-4" />
+                                            <span>Delete Group</span>
+                                        </DropdownMenuItem>
+                                    </>
+                                )}
                             </DropdownMenuContent>
                         </DropdownMenu>
+
                         <Dialog open={isAddMemberOpen} onOpenChange={setIsAddMemberOpen}>
                            <AddMemberDialog clubId={clubId} groupRef={groupRef} />
                         </Dialog>
+
+                        <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action cannot be undone. This will permanently delete the
+                                        "{clubData?.name}" group and all of its data.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction
+                                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                        onClick={handleDeleteGroup}
+                                        disabled={isDeleting}
+                                    >
+                                        {isDeleting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Deleting...</> : 'Delete'}
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
                     </div>
                 </div>
                 <div className="p-4 bg-background rounded-t-3xl -mt-6 relative z-10">
@@ -490,6 +553,7 @@ const MemberListSkeleton = () => (
         ))}
     </div>
 );
+
 
 
 
