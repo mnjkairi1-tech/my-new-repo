@@ -11,7 +11,6 @@ import { Search, Users, Star, Pin } from 'lucide-react';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { useCollection, useFirestore, useMemoFirebase, useUser } from '@/firebase';
 import { collection, query, where } from 'firebase/firestore';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -228,9 +227,6 @@ function CommunityPageContent() {
                     </TabsContent>
                 </Tabs>
             </div>
-            <Suspense fallback={null}>
-                <BottomNavBar activeTab="community"/>
-            </Suspense>
         </div>
     );
 }

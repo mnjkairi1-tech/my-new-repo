@@ -15,7 +15,6 @@ import { ClubHeader } from '@/components/club-header';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ProfileDetails } from '@/components/settings/profile-details';
-import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
 import type { Tool } from '@/lib/types';
@@ -110,7 +109,6 @@ function MyProfilePageContent() {
                         <MyProfileSkeleton />
                     </div>
                 </div>
-                 <BottomNavBar />
             </div>
         );
     }
@@ -132,7 +130,6 @@ function MyProfilePageContent() {
                                 <Button>Sign In</Button>
                             </Link>
                         </div>
-                         <BottomNavBar />
                     </div>
                 </div>
             </div>
@@ -344,7 +341,6 @@ function MyProfilePageContent() {
                         </div>
                     </main>
                 </div>
-                 <BottomNavBar />
             </div>
         </div>
     );
@@ -359,6 +355,7 @@ export default function MyProfilePage() {
 }
     
     
+
 
 
 
