@@ -342,7 +342,7 @@ export function SettingsPage() {
       };
 
   return (
-    <div className="p-4">
+    <div className="p-4 animate-fade-in-up">
        <div className="flex items-center gap-4 mb-8">
             <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
                 <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
@@ -492,6 +492,7 @@ const SettingItem = ({ option, onToggle, isChecked }: { option: any; onToggle?: 
     </div>
   );
     
+
 
 
 

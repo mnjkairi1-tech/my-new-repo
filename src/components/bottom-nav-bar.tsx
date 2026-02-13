@@ -32,7 +32,7 @@ export function BottomNavBar({ activeTab }: { activeTab: string }) {
 
     return (
         <Link href={href} onClick={(e) => handleNavigation(e, href)} className="flex flex-col items-center justify-center h-full rounded-none flex-1 group">
-            <div className={cn("p-3 rounded-full transition-all duration-300", isActive ? 'bg-primary/10' : 'group-hover:bg-primary/5')}>
+            <div className={cn("p-3 rounded-full transition-all duration-300", isActive ? 'bg-primary/10 scale-110' : 'group-hover:bg-primary/5')}>
                 <Icon className={cn("w-6 h-6 transition-colors", isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-primary')} />
             </div>
             <span className={cn("text-xs font-medium transition-colors", isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-primary')}>{label}</span>

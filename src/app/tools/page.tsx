@@ -120,7 +120,7 @@ export default function AllToolsPage() {
 
 
   return (
-    <div className="bg-background min-h-screen flex flex-col items-center justify-start font-body relative">
+    <div className="bg-background min-h-screen flex flex-col items-center justify-start font-body relative animate-fade-in-up">
       <div className="absolute inset-0 z-0 opacity-50">
         <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
       </div>

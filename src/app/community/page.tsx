@@ -149,7 +149,7 @@ function CommunityPageContent() {
     const isLoading = isUserLoading || (user && (publicClubsLoading || membershipsLoading || privateClubsLoading));
 
     return (
-        <div className="bg-background text-foreground min-h-screen font-body relative flex flex-col">
+        <div className="bg-background text-foreground min-h-screen font-body relative flex flex-col animate-fade-in-up">
             <div className="absolute inset-0 z-0 opacity-50" style={{ background: 'hsl(var(--background))' }}></div>
 
             <div className="relative z-10 w-full max-w-lg mx-auto flex flex-col flex-grow">

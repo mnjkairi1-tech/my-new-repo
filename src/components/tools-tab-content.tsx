@@ -46,7 +46,7 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
   
     return (
       <a href={tool.url} target="_blank" rel="noopener noreferrer" className="block group" onClick={handleCardClick}>
-        <Card className="bg-card/80 backdrop-blur-lg border-white/20 rounded-none soft-shadow transition-all duration-300 hover:scale-[1.02] overflow-hidden aspect-square flex flex-col p-4 justify-between">
+        <Card className="bg-card/80 backdrop-blur-lg border-white/20 rounded-none soft-shadow transition-all duration-300 hover:scale-[1.02] overflow-hidden aspect-square flex flex-col p-4 justify-between glow-shadow-on-hover">
             <div className='text-center flex flex-col items-center justify-center gap-2 flex-grow'>
                 <div className='relative w-14 h-14'>
                     <Image

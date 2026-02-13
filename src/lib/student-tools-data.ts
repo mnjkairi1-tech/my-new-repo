@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { PlaceHolderImages, getImage, getHint } from '@/lib/placeholder-images';
 import { 
     Youtube, MessageSquare, BookOpen, FileText, HelpCircle, Book, Zap, Calendar, Brain, Search, Type, Presentation, Wand2, Mic, File, GraduationCap, Scissors, Pen, Share2, Languages, Microscope, TestTube, Dna, FlaskConical, Globe, Calculator, Milestone, Code, Briefcase, Camera, Video, Palette, Music, Bot, Users, BookCopy, FileSearch, FileLock2, GitBranch, Settings, Network, Cpu
 } from 'lucide-react';
