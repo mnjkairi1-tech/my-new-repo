@@ -32,6 +32,7 @@ export default function RootLayout({
     <html lang="en" className="font-size-medium" suppressHydrationWarning>
       <head>
         <title>AI Atlas</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Your Cute Guide to Creative AI Tools" />
         <meta name="application-name" content="AI Atlas" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
