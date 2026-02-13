@@ -218,6 +218,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
 
         setIsDeleting(true);
         try {
+            // This needs to be a blocking operation as we navigate away on success.
             await deleteDoc(groupRef);
             toast({ title: 'Group Deleted', description: `"${clubData.name}" has been permanently deleted.` });
             
@@ -352,7 +353,17 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                     <Button variant="ghost" size="icon" className="absolute top-4 left-4 w-12 h-12 rounded-full bg-black/20 text-white backdrop-blur-sm" onClick={handleBack}>
                         <ArrowLeft />
                     </Button>
-                    <div className="absolute top-4 right-4">
+                    <div className="absolute top-4 right-4 flex items-center gap-2">
+                         {user?.uid === clubData?.ownerId && (
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="w-12 h-12 rounded-full bg-black/20 text-white backdrop-blur-sm text-red-400 hover:bg-destructive/20 hover:text-destructive"
+                                onClick={() => setIsDeleteDialogOpen(true)}
+                            >
+                                <Trash2 />
+                            </Button>
+                        )}
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" size="icon" className="w-12 h-12 rounded-full bg-black/20 text-white backdrop-blur-sm">
@@ -368,46 +379,8 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                     <UserPlus className="mr-2 h-4 w-4" />
                                     <span>Add Members</span>
                                 </DropdownMenuItem>
-                                {user?.uid === clubData?.ownerId && (
-                                    <>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem
-                                            onSelect={() => setIsDeleteDialogOpen(true)}
-                                            className="text-destructive focus:bg-destructive/10 focus:text-destructive"
-                                        >
-                                            <Trash2 className="mr-2 h-4 w-4" />
-                                            <span>Delete Group</span>
-                                        </DropdownMenuItem>
-                                    </>
-                                )}
                             </DropdownMenuContent>
                         </DropdownMenu>
-
-                        <Dialog open={isAddMemberOpen} onOpenChange={setIsAddMemberOpen}>
-                           <AddMemberDialog clubId={clubId} groupRef={groupRef} />
-                        </Dialog>
-
-                        <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        This action cannot be undone. This will permanently delete the
-                                        "{clubData?.name}" group and all of its data.
-                                    </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction
-                                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                                        onClick={handleDeleteGroup}
-                                        disabled={isDeleting}
-                                    >
-                                        {isDeleting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Deleting...</> : 'Delete'}
-                                    </AlertDialogAction>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
                     </div>
                 </div>
                 <div className="p-4 bg-background rounded-t-3xl -mt-6 relative z-10">
@@ -536,6 +509,31 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                     </div>
                 </div>
             </div>
+             <Dialog open={isAddMemberOpen} onOpenChange={setIsAddMemberOpen}>
+               <AddMemberDialog clubId={clubId} groupRef={groupRef} />
+            </Dialog>
+
+            <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete the
+                            "{clubData?.name}" group and all of its data.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            onClick={handleDeleteGroup}
+                            disabled={isDeleting}
+                        >
+                            {isDeleting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Deleting...</> : 'Delete'}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 }
@@ -559,3 +557,6 @@ const MemberListSkeleton = () => (
 
 
 
+
+
+    
