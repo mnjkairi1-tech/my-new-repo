@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Users, Star, MoreVertical, Edit, Heart, History, ChevronRight, Copy } from 'lucide-react';
+import { ArrowLeft, Users, Star, MoreVertical, Edit, Heart, History, ChevronRight, Copy, Loader2, PlusCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ClubHeader } from '@/components/club-header';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -20,6 +20,9 @@ import { cn } from '@/lib/utils';
 import type { Tool } from '@/lib/types';
 import { useLanguage } from '@/lib/language';
 import { useToast } from '@/hooks/use-toast';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 
 interface Group {
     id: string;
@@ -64,10 +67,13 @@ function MyProfilePageContent() {
     const { user, isUserLoading } = useUser();
     const firestore = useFirestore();
     const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false);
-    const { heartedTools, starredTools, recentTools, handleHeartToggle, handleStarToggle } = useUserPreferences();
+    const { heartedTools, starredTools, recentTools, handleHeartToggle } = useUserPreferences();
     const [activeSavedTab, setActiveSavedTab] = useState('recent');
     const { t } = useLanguage();
     const { toast } = useToast();
+
+    const [customToolUrl, setCustomToolUrl] = useState('');
+    const [isSubmittingUrl, setIsSubmittingUrl] = useState(false);
 
     const userProfileRef = useMemoFirebase(() => firestore && user ? doc(firestore, 'user_profiles', user.uid) : null, [firestore, user]);
     const { data: userProfileData, isLoading: isProfileLoading } = useDoc<UserProfile>(userProfileRef);
@@ -94,6 +100,54 @@ function MyProfilePageContent() {
     }, [groupsRef, user]);
 
     const { data: ownedClubs, isLoading: areClubsLoading } = useCollection<Group>(ownedGroupsQuery);
+
+    const handleAddCustomTool = async () => {
+        if (!customToolUrl.trim()) {
+            toast({ variant: 'destructive', title: 'Invalid URL', description: 'Please enter a valid URL.' });
+            return;
+        }
+
+        setIsSubmittingUrl(true);
+        try {
+            const url = new URL(customToolUrl);
+            const validationResult = await validateAndGetToolInfo({ url: customToolUrl });
+
+            if (validationResult.isAiTool && validationResult.isSafe) {
+                const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain=${url.hostname}`;
+                const newTool: Tool = {
+                    name: validationResult.toolName || url.hostname,
+                    url: customToolUrl,
+                    description: validationResult.toolDescription || 'User-added AI tool.',
+                    image: faviconUrl,
+                    dataAiHint: validationResult.toolName?.toLowerCase().split(' ').slice(0, 2).join(' ') || 'custom tool',
+                    pricing: 'Freemium', // Default value
+                    category: 'Custom', // Default value
+                };
+                
+                handleHeartToggle(newTool);
+                
+                toast({
+                    title: 'Tool Hearted!',
+                    description: `${newTool.name} has been added to your hearted list.`,
+                });
+                setCustomToolUrl('');
+            } else {
+                toast({
+                    variant: 'destructive',
+                    title: 'Validation Failed',
+                    description: validationResult.reason || 'This does not appear to be a valid AI tool.',
+                });
+            }
+        } catch (error: any) {
+             toast({
+                variant: 'destructive',
+                title: 'Error',
+                description: error.message.includes('Invalid URL') ? 'Please enter a valid URL format (e.g., https://example.com).' : (error.message || 'An unexpected error occurred.'),
+            });
+        } finally {
+            setIsSubmittingUrl(false);
+        }
+    };
 
     if (isUserLoading || areClubsLoading) {
         return (
@@ -199,6 +253,23 @@ function MyProfilePageContent() {
                                         <Copy className="w-4 h-4" />
                                     </Button>
                                 </div>
+                            </div>
+                        </div>
+
+                         <div className="my-6">
+                            <Label htmlFor="custom-tool-url" className="text-muted-foreground text-sm px-1">Have a favorite tool? Add it by link.</Label>
+                            <div className="flex gap-2 items-center mt-1">
+                                <Input 
+                                    id="custom-tool-url"
+                                    placeholder="Put link of an AI tool" 
+                                    value={customToolUrl}
+                                    onChange={(e) => setCustomToolUrl(e.target.value)}
+                                    className="h-12 bg-secondary rounded-xl"
+                                    disabled={isSubmittingUrl}
+                                />
+                                <Button onClick={handleAddCustomTool} className="h-12 w-12 flex-shrink-0 rounded-xl" size="icon" disabled={isSubmittingUrl}>
+                                    {isSubmittingUrl ? <Loader2 className="w-5 h-5 animate-spin"/> : <Heart className="w-5 h-5"/>}
+                                </Button>
                             </div>
                         </div>
 
@@ -360,3 +431,6 @@ export default function MyProfilePage() {
 
 
 
+
+
+    
