@@ -6,6 +6,8 @@ const withPWA = withPWAInit({
   dest: 'public',
   register: true,
   skipWaiting: true,
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
   runtimeCaching: [
     {
       // Match all navigation requests
@@ -21,17 +23,18 @@ const withPWA = withPWAInit({
       },
     },
     {
-      // Cache static assets (CSS, JS, etc.)
+      // Cache static assets (CSS, JS, fonts etc.)
       urlPattern: ({ request }) =>
         request.destination === "style" ||
         request.destination === "script" ||
-        request.destination === "worker",
+        request.destination === "worker" ||
+        request.destination === "font",
       handler: "StaleWhileRevalidate",
       options: {
-        cacheName: "static-resources",
+        cacheName: "static-assets",
         expiration: {
           maxEntries: 64,
-          maxAgeSeconds: 24 * 60 * 60, // 1 day
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
         },
       },
     },
@@ -42,23 +45,11 @@ const withPWA = withPWAInit({
       options: {
         cacheName: "images",
         expiration: {
-          maxEntries: 200,
+          maxEntries: 250,
           maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
         },
       },
     },
-    {
-        // Cache fonts
-        urlPattern: ({ request }) => request.destination === "font",
-        handler: "CacheFirst",
-        options: {
-          cacheName: "fonts",
-          expiration: {
-            maxEntries: 32,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
-          },
-        },
-      },
   ],
   disable: process.env.NODE_ENV === 'development',
   workboxOptions: {
