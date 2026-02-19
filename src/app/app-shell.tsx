@@ -86,10 +86,8 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-    // Removed the isUserLoading check here so the Shell (and Nav Bar) shows up instantly.
-    // Auth state is handled inside specific components that need it.
     return (
-      <Suspense fallback={<div className="relative flex flex-col min-h-screen">{children}</div>}>
+      <Suspense fallback={<div className="relative flex flex-col min-h-screen bg-background">{children}</div>}>
           <AppShellContent>{children}</AppShellContent>
       </Suspense>
     );

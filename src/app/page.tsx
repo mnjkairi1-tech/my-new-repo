@@ -233,7 +233,7 @@ function HomePageContent() {
              <CarouselItem key={index}>
               <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                 <div className="relative aspect-[16/9] w-full rounded-none overflow-hidden soft-shadow">
-                  <Image src={slide.image} alt={slide.title || 'Carousel image'} fill style={{objectFit: "cover"}} data-ai-hint={slide.dataAiHint} unoptimized />
+                  <Image src={slide.image} alt={slide.title || 'Carousel image'} fill style={{objectFit: "cover"}} data-ai-hint={slide.title} unoptimized />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-4">
                     <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
@@ -290,10 +290,10 @@ function HomePageContent() {
                 <Image
                   src={category.image}
                   alt={category.name}
-                  width="600"
-                  height="200"
+                  width={600}
+                  height={200}
                   className="w-full h-auto aspect-[3/1] object-cover"
-                  data-ai-hint={category.dataAiHint}
+                  data-ai-hint={category.name}
                   unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -329,7 +329,7 @@ function HomePageContent() {
                     {recentTools.map((tool, index) => (
                         <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
-                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} unoptimized />}
+                                {tool.image && <Image src={tool.image} alt={tool.name} width={56} height={56} className="rounded-none" data-ai-hint={tool.name} unoptimized />}
                                 <div className="flex-grow">
                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -358,7 +358,7 @@ function HomePageContent() {
                 {heartedTools.map((tool, index) => (
                      <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                         <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
-                            {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} unoptimized />}
+                            {tool.image && <Image src={tool.image} alt={tool.name} width={56} height={56} className="rounded-none" data-ai-hint={tool.name} unoptimized />}
                             <div className="flex-grow">
                                 <h5 className="font-semibold text-base">{tool.name}</h5>
                                 <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -387,7 +387,7 @@ function HomePageContent() {
                     {starredTools.map((tool, index) => (
                         <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
-                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} unoptimized />}
+                                {tool.image && <Image src={tool.image} alt={tool.name} width={56} height={56} className="rounded-none" data-ai-hint={tool.name} unoptimized />}
                                 <div className="flex-grow">
                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
@@ -475,8 +475,8 @@ function HomePageContent() {
                                   <Image 
                                       src={"https://picsum.photos/seed/trending-ai/600/300"}
                                       alt="Trending AI Tools"
-                                      width="600"
-                                      height="200"
+                                      width={600}
+                                      height={300}
                                       className="w-full h-auto aspect-[16/9] object-cover"
                                       data-ai-hint="data chart"
                                       unoptimized
@@ -498,8 +498,8 @@ function HomePageContent() {
                                   <Image 
                                       src={"https://picsum.photos/seed/new-ai/600/300"}
                                       alt="New AI Tools"
-                                      width="600"
-                                      height="200"
+                                      width={600}
+                                      height={300}
                                       className="w-full h-auto aspect-[16/9] object-cover"
                                       data-ai-hint="rocket launch"
                                       unoptimized
@@ -552,6 +552,8 @@ function HomePageContent() {
 
 export default function GalaxyApp() {
   return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-background"><Loader2 className="animate-spin text-primary w-10 h-10" /></div>}>
       <HomePageContent />
+    </Suspense>
   );
 }
