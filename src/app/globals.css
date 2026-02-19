@@ -32,7 +32,7 @@
     --input: 255 100% 90%;
 
     --ring: 258 100% 70%;
-    --radius: 1.5rem;
+    --radius: 0rem;
 
     --baby-pink: 340 100% 96%;
     --soft-blue: 198 100% 94%;
@@ -59,7 +59,7 @@
     --border: 210 40% 88% / 0.5;
     --input: 210 40% 92% / 0.7;
     --ring: 220 100% 65%;
-    --radius: 1.5rem;
+    --radius: 0rem;
   }
   
   html[data-theme="black-vision"] {
@@ -82,7 +82,7 @@
     --border: 0 0% 20%;
     --input: 0 0% 15%;
     --ring: 0 0% 83%;
-    --radius: 1rem;
+    --radius: 0rem;
   }
 
   html[data-theme="cyberwave"] {
@@ -105,7 +105,7 @@
     --border: 180 100% 25%;
     --input: 225 20% 20%;
     --ring: 180 100% 50%;
-    --radius: 1rem;
+    --radius: 0rem;
   }
 
   html[data-theme="minimal-white"] {
@@ -128,7 +128,7 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
+    --radius: 0rem;
   }
 
   html[data-theme="claymorphic"] {
@@ -151,7 +151,7 @@
     --border: 25 80% 90%;
     --input: 25 80% 90%;
     --ring: 15 85% 60%;
-    --radius: 1rem;
+    --radius: 0rem;
   }
 
   html[data-theme="winter-glassmorphism"] {
@@ -174,7 +174,7 @@
     --border: 210 30% 85% / 0.2;
     --input: 210 30% 85% / 0.15;
     --ring: 198 90% 60%;
-    --radius: 1.5rem;
+    --radius: 0rem;
   }
 
   .dark, html[data-theme="dark"] {
@@ -197,7 +197,7 @@
     --border: 217 33% 18%;
     --input: 217 33% 18%;
     --ring: 217 91% 60%;
-    --radius: 1.5rem;
+    --radius: 0rem;
   }
 }
 

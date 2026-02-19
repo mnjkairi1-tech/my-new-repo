@@ -33,7 +33,6 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
     };
 
     const isSwipeablePage = () => {
-        // Only allow swiping on the exact top-level pages
         const swipeablePaths = ['/', '/community', '/community/my-profile'];
         return swipeablePaths.includes(pathname);
     };
@@ -41,7 +40,6 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
     const activeTabId = getActiveTab();
     const currentIndex = useMemo(() => navItems.findIndex(item => item.id === activeTabId), [navItems, activeTabId]);
 
-    // Prefetch next and previous routes to make swiping faster
     useEffect(() => {
         if (currentIndex !== -1) {
             if (currentIndex > 0) {
@@ -79,7 +77,7 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
 
     return (
         <div className="relative flex flex-col min-h-screen">
-            <main className="flex-grow pb-32 md:pb-0" {...swipeWrapperProps}>{children}</main>
+            <main className="flex-grow pb-24 md:pb-0" {...swipeWrapperProps}>{children}</main>
             <BottomNavBar activeTab={activeTabId} />
         </div>
     );
