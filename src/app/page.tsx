@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import React, { useCallback, useMemo, useState, useRef, useEffect, Suspense, lazy } from 'react';
@@ -83,8 +81,8 @@ const ToolsTabContent = lazy(() => import('@/components/tools-tab-content'));
 const ToolsLoadingSkeleton = () => (
     <div className="p-4 space-y-4">
         <div className="flex gap-2 items-center">
-            <Skeleton className="h-12 flex-grow rounded-full" />
-            <Skeleton className="h-12 w-12 rounded-full" />
+            <Skeleton className="h-12 flex-grow rounded-none" />
+            <Skeleton className="h-12 w-12 rounded-none" />
         </div>
         <div className="grid grid-cols-2 gap-4">
             {[...Array(6)].map((_, i) => (
@@ -119,10 +117,10 @@ function HomePageContent() {
           <Input
               readOnly
               placeholder="Chat with AI Atlas..."
-              className="bg-background rounded-full h-14 text-base pl-5 pr-14 border-2 border-primary/20 shadow-lg cursor-pointer"
+              className="bg-background rounded-none h-14 text-base pl-5 pr-14 border-2 border-primary/20 shadow-lg cursor-pointer"
           />
           <div
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 bg-primary text-primary-foreground glow-shadow flex items-center justify-center"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-none w-10 h-10 bg-primary text-primary-foreground glow-shadow flex items-center justify-center"
           >
               <Send className="w-5 h-5"/>
           </div>
@@ -235,7 +233,7 @@ function HomePageContent() {
              <CarouselItem key={index}>
               <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                 <div className="relative aspect-[16/9] w-full rounded-none overflow-hidden soft-shadow">
-                  <Image src={slide.image} alt={slide.title || 'Carousel image'} fill style={{objectFit: "cover"}} data-ai-hint={slide.dataAiHint} />
+                  <Image src={slide.image} alt={slide.title || 'Carousel image'} fill style={{objectFit: "cover"}} data-ai-hint={slide.dataAiHint} unoptimized />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-4">
                     <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
@@ -257,8 +255,8 @@ function HomePageContent() {
           <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-6 px-6 horizontal-scroll-container">
               {popularTools.map(tool => (
                   <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 text-center cursor-pointer" onClick={() => handleToolClick(tool)}>
-                      <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center p-2 text-primary soft-shadow overflow-hidden">
-                          <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain" />
+                      <div className="w-16 h-16 rounded-none bg-secondary flex items-center justify-center p-2 text-primary soft-shadow overflow-hidden">
+                          <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain" unoptimized />
                       </div>
                       <p className="text-sm font-medium text-center mt-2 text-muted-foreground">{tool.name}</p>
                   </a>
@@ -278,7 +276,7 @@ function HomePageContent() {
                     variant="ghost"
                     size="icon"
                     className={cn(
-                        "absolute top-2 right-2 z-10 w-10 h-10 rounded-full text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
+                        "absolute top-2 right-2 z-10 w-10 h-10 rounded-none text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
                         isPinned ? 'text-primary' : 'opacity-0 group-hover:opacity-100'
                     )}
                     onClick={(e) => {
@@ -296,6 +294,7 @@ function HomePageContent() {
                   height="200"
                   className="w-full h-auto aspect-[3/1] object-cover"
                   data-ai-hint={category.dataAiHint}
+                  unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-4">
@@ -310,15 +309,15 @@ function HomePageContent() {
       <section className="mt-6 mb-16">
         <div className="flex justify-center items-center gap-8 my-4">
             <div className="flex flex-col items-center gap-2">
-                <Button variant={activeSavedTab === 'heart' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('heart')} className="w-20 h-16 rounded-2xl bg-pink-100/50 text-pink-500 shadow-lg soft-shadow"><Heart className="w-7 h-7"/></Button>
+                <Button variant={activeSavedTab === 'heart' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('heart')} className="w-20 h-16 rounded-none bg-pink-100/50 text-pink-500 shadow-lg soft-shadow"><Heart className="w-7 h-7"/></Button>
                 <span className="text-sm font-medium text-muted-foreground">Hearted</span>
             </div>
             <div className="flex flex-col items-center gap-2">
-                <Button variant={activeSavedTab === 'recent' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('recent')} className="w-24 h-20 rounded-2xl bg-blue-100/50 text-blue-500 shadow-lg soft-shadow"><History className="w-9 h-9"/></Button>
+                <Button variant={activeSavedTab === 'recent' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('recent')} className="w-24 h-20 rounded-none bg-blue-100/50 text-blue-500 shadow-lg soft-shadow"><History className="w-9 h-9"/></Button>
                 <span className="text-sm font-medium text-muted-foreground">Recent</span>
             </div>
             <div className="flex flex-col items-center gap-2">
-                <Button variant={activeSavedTab === 'star' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('star')} className="w-20 h-16 rounded-2xl bg-yellow-100/50 text-yellow-500 shadow-lg soft-shadow"><Star className="w-7 h-7"/></Button>
+                <Button variant={activeSavedTab === 'star' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('star')} className="w-20 h-16 rounded-none bg-yellow-100/50 text-yellow-500 shadow-lg soft-shadow"><Star className="w-7 h-7"/></Button>
                 <span className="text-sm font-medium text-muted-foreground">Starred</span>
             </div>
         </div>
@@ -330,12 +329,12 @@ function HomePageContent() {
                     {recentTools.map((tool, index) => (
                         <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
-                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} />}
+                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} unoptimized />}
                                 <div className="flex-grow">
                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
                                 </div>
-                                <Button variant="ghost" size="icon" className="text-muted-foreground rounded-full w-10 h-10">
+                                <Button variant="ghost" size="icon" className="text-muted-foreground rounded-none w-10 h-10">
                                     <ChevronRight />
                                 </Button>
                             </Card>
@@ -359,12 +358,12 @@ function HomePageContent() {
                 {heartedTools.map((tool, index) => (
                      <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                         <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
-                            {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} />}
+                            {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} unoptimized />}
                             <div className="flex-grow">
                                 <h5 className="font-semibold text-base">{tool.name}</h5>
                                 <p className="text-sm text-muted-foreground">{tool.category}</p>
                             </div>
-                            <Button variant="ghost" size="icon" className="text-red-500 rounded-full w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleHeartToggle(tool as Tool); }}>
+                            <Button variant="ghost" size="icon" className="text-red-500 rounded-none w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleHeartToggle(tool as Tool); }}>
                                 <Heart className="fill-current"/>
                             </Button>
                         </Card>
@@ -388,12 +387,12 @@ function HomePageContent() {
                     {starredTools.map((tool, index) => (
                         <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
-                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} />}
+                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} unoptimized />}
                                 <div className="flex-grow">
                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
                                 </div>
-                                <Button variant="ghost" size="icon" className="text-yellow-400 rounded-full w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleStarToggle(tool as Tool); }}>
+                                <Button variant="ghost" size="icon" className="text-yellow-400 rounded-none w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleStarToggle(tool as Tool); }}>
                                     <Star className="fill-current"/>
                                 </Button>
                             </Card>
@@ -427,7 +426,7 @@ function HomePageContent() {
               <div className='flex items-center gap-2'>
                   <div className="flex flex-col items-center gap-1">
                   <Link href="/ultra-free" passHref>
-                      <Button variant="ghost" size="icon" className="rounded-full w-10 h-10 bg-secondary">
+                      <Button variant="ghost" size="icon" className="rounded-none w-10 h-10 bg-secondary">
                       <Gift className="w-5 h-5 text-primary"/>
                       </Button>
                   </Link>
@@ -435,7 +434,7 @@ function HomePageContent() {
                   </div>
                   <div className="flex flex-col items-center gap-1">
                   <Link href="/mode" passHref>
-                      <Button variant="ghost" size="icon" className="rounded-full w-10 h-10 bg-secondary">
+                      <Button variant="ghost" size="icon" className="rounded-none w-10 h-10 bg-secondary">
                       <Wand2 className="w-5 h-5 text-primary"/>
                       </Button>
                   </Link>
@@ -480,9 +479,10 @@ function HomePageContent() {
                                       height="200"
                                       className="w-full h-auto aspect-[16/9] object-cover"
                                       data-ai-hint="data chart"
+                                      unoptimized
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                                  <div className="absolute top-4 right-4 bg-primary/80 text-primary-foreground rounded-full p-2 backdrop-blur-sm">
+                                  <div className="absolute top-4 right-4 bg-primary/80 text-primary-foreground rounded-none p-2 backdrop-blur-sm">
                                       <ExternalLink className="w-5 h-5"/>
                                   </div>
                               </div>
@@ -502,9 +502,10 @@ function HomePageContent() {
                                       height="200"
                                       className="w-full h-auto aspect-[16/9] object-cover"
                                       data-ai-hint="rocket launch"
+                                      unoptimized
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                                  <div className="absolute top-4 right-4 bg-primary/80 text-primary-foreground rounded-full p-2 backdrop-blur-sm">
+                                  <div className="absolute top-4 right-4 bg-primary/80 text-primary-foreground rounded-none p-2 backdrop-blur-sm">
                                       <ExternalLink className="w-5 h-5"/>
                                   </div>
                               </div>
@@ -525,10 +526,10 @@ function HomePageContent() {
         
         {activeTab === 'tools' && comparisonList.length > 0 && (
           <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 animate-fade-in-up w-[90%] max-w-sm">
-            <Card className="p-2 rounded-full flex items-center gap-2 soft-shadow bg-card/90 backdrop-blur-xl">
+            <Card className="p-2 rounded-none flex items-center gap-2 soft-shadow bg-card/90 backdrop-blur-xl">
               {comparisonList.length === 2 ? (
                 <Link href="/compare-tools" className="flex-grow">
-                  <Button size="lg" className="w-full rounded-full glow-shadow font-bold text-base">
+                  <Button size="lg" className="w-full rounded-none glow-shadow font-bold text-base">
                     <Scale className="mr-2 h-5 w-5" />
                     Compare ({comparisonList.length})
                   </Button>
@@ -539,7 +540,7 @@ function HomePageContent() {
                   <span className='text-muted-foreground text-sm truncate'>selected</span>
                 </div>
               )}
-              <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0" onClick={clearComparison}>
+              <Button variant="ghost" size="icon" className="rounded-none flex-shrink-0" onClick={clearComparison}>
                 <X className="w-5 h-5"/>
               </Button>
             </Card>
@@ -554,11 +555,3 @@ export default function GalaxyApp() {
       <HomePageContent />
   );
 }
-    
-
-    
-
-
-
-
-

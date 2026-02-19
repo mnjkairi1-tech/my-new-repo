@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { Suspense, useState, useEffect } from 'react';
@@ -42,7 +41,7 @@ interface UserProfile {
 const MyProfileSkeleton = () => (
     <div className="p-6">
         <div className="flex items-center gap-4">
-            <Skeleton className="h-20 w-20 rounded-full" />
+            <Skeleton className="h-20 w-20 rounded-none" />
             <div className="space-y-2">
                 <Skeleton className="h-6 w-48" />
                 <Skeleton className="h-4 w-64" />
@@ -52,7 +51,7 @@ const MyProfileSkeleton = () => (
         <div className="space-y-3">
             {[...Array(3)].map((_, i) => (
                 <Card key={i} className="p-4 flex items-center gap-4 rounded-none">
-                    <Skeleton className="h-14 w-14 rounded-full" />
+                    <Skeleton className="h-14 w-14 rounded-none" />
                     <div className="flex-grow space-y-2">
                         <Skeleton className="h-4 w-3/4" />
                         <Skeleton className="h-4 w-1/2" />
@@ -67,7 +66,7 @@ function MyProfilePageContent() {
     const { user, isUserLoading } = useUser();
     const firestore = useFirestore();
     const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false);
-    const { heartedTools, starredTools, recentTools, handleHeartToggle } = useUserPreferences();
+    const { heartedTools, starredTools, recentTools, handleHeartToggle, handleStarToggle } = useUserPreferences();
     const [activeSavedTab, setActiveSavedTab] = useState('recent');
     const { t } = useLanguage();
     const { toast } = useToast();
@@ -181,7 +180,7 @@ function MyProfilePageContent() {
                         <div className="flex flex-col items-center justify-center flex-grow text-center p-6">
                             <h2 className="text-xl font-semibold">Please sign in to view your profile.</h2>
                             <Link href="/?tab=settings" className='mt-4'>
-                                <Button>Sign In</Button>
+                                <Button className="rounded-none">Sign In</Button>
                             </Link>
                         </div>
                     </div>
@@ -203,7 +202,7 @@ function MyProfilePageContent() {
                          <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="rounded-full h-12 w-12">
+                                    <Button variant="ghost" size="icon" className="rounded-none h-12 w-12">
                                         <MoreVertical className="w-6 h-6"/>
                                     </Button>
                                 </DropdownMenuTrigger>
@@ -216,7 +215,7 @@ function MyProfilePageContent() {
                                     </DialogTrigger>
                                 </DropdownMenuContent>
                             </DropdownMenu>
-                            <DialogContent>
+                            <DialogContent className="rounded-none">
                                 <DialogHeader>
                                 <DialogTitle>Edit Profile</DialogTitle>
                                 </DialogHeader>
@@ -227,16 +226,16 @@ function MyProfilePageContent() {
 
                     <main className="flex-grow overflow-y-auto no-scrollbar p-6 pb-24">
                         <div className="flex items-center gap-4 mb-8">
-                            <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
-                                <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
-                                <AvatarFallback>{(user.displayName || user.email || 'U').charAt(0).toUpperCase()}</AvatarFallback>
+                            <Avatar className="h-20 w-20 border-4 border-white shadow-lg rounded-none">
+                                <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} className="rounded-none" />
+                                <AvatarFallback className="rounded-none">{(user.displayName || user.email || 'U').charAt(0).toUpperCase()}</AvatarFallback>
                             </Avatar>
                             <div>
                                 <h1 className="text-2xl font-bold">{user.displayName || 'Community Member'}</h1>
                                 <div className="flex items-center gap-2 mt-1">
                                     <p className="text-muted-foreground">{user.email}</p>
                                     <Link href="/avatar-editor">
-                                        <Button variant="outline" size="sm" className="text-xs h-7">Change Avatar</Button>
+                                        <Button variant="outline" size="sm" className="text-xs h-7 rounded-none">Change Avatar</Button>
                                     </Link>
                                 </div>
                                 <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
@@ -244,7 +243,7 @@ function MyProfilePageContent() {
                                     <Button
                                         variant="ghost"
                                         size="icon"
-                                        className="w-6 h-6"
+                                        className="w-6 h-6 rounded-none"
                                         onClick={() => {
                                             navigator.clipboard.writeText(user.uid);
                                             toast({ title: 'User ID Copied!' });
@@ -264,10 +263,10 @@ function MyProfilePageContent() {
                                     placeholder="Put link of an AI tool" 
                                     value={customToolUrl}
                                     onChange={(e) => setCustomToolUrl(e.target.value)}
-                                    className="h-12 bg-secondary rounded-xl"
+                                    className="h-12 bg-secondary rounded-none"
                                     disabled={isSubmittingUrl}
                                 />
-                                <Button onClick={handleAddCustomTool} className="h-12 w-12 flex-shrink-0 rounded-xl" size="icon" disabled={isSubmittingUrl}>
+                                <Button onClick={handleAddCustomTool} className="h-12 w-12 flex-shrink-0 rounded-none" size="icon" disabled={isSubmittingUrl}>
                                     {isSubmittingUrl ? <Loader2 className="w-5 h-5 animate-spin"/> : <Heart className="w-5 h-5"/>}
                                 </Button>
                             </div>
@@ -276,15 +275,15 @@ function MyProfilePageContent() {
                         <section className="mt-6 mb-8">
                             <div className="flex justify-center items-center gap-8 my-4">
                                 <div className="flex flex-col items-center gap-2">
-                                    <Button variant={activeSavedTab === 'heart' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('heart')} className="w-20 h-16 rounded-2xl bg-pink-100/50 text-pink-500 shadow-lg soft-shadow"><Heart className="w-7 h-7"/></Button>
+                                    <Button variant={activeSavedTab === 'heart' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('heart')} className="w-20 h-16 rounded-none bg-pink-100/50 text-pink-500 shadow-lg soft-shadow"><Heart className="w-7 h-7"/></Button>
                                     <span className="text-sm font-medium text-muted-foreground">Hearted</span>
                                 </div>
                                 <div className="flex flex-col items-center gap-2">
-                                    <Button variant={activeSavedTab === 'recent' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('recent')} className="w-24 h-20 rounded-2xl bg-blue-100/50 text-blue-500 shadow-lg soft-shadow"><History className="w-9 h-9"/></Button>
+                                    <Button variant={activeSavedTab === 'recent' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('recent')} className="w-24 h-20 rounded-none bg-blue-100/50 text-blue-500 shadow-lg soft-shadow"><History className="w-9 h-9"/></Button>
                                     <span className="text-sm font-medium text-muted-foreground">Recent</span>
                                 </div>
                                 <div className="flex flex-col items-center gap-2">
-                                    <Button variant={activeSavedTab === 'star' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('star')} className="w-20 h-16 rounded-2xl bg-yellow-100/50 text-yellow-500 shadow-lg soft-shadow"><Star className="w-7 h-7"/></Button>
+                                    <Button variant={activeSavedTab === 'star' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('star')} className="w-20 h-16 rounded-none bg-yellow-100/50 text-yellow-500 shadow-lg soft-shadow"><Star className="w-7 h-7"/></Button>
                                     <span className="text-sm font-medium text-muted-foreground">Starred</span>
                                 </div>
                             </div>
@@ -296,12 +295,12 @@ function MyProfilePageContent() {
                                         {recentTools.map((tool, index) => (
                                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                                 <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
-                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} />}
+                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} unoptimized />}
                                                     <div className="flex-grow">
                                                         <h5 className="font-semibold text-base">{tool.name}</h5>
                                                         <p className="text-sm text-muted-foreground">{tool.category}</p>
                                                     </div>
-                                                    <Button variant="ghost" size="icon" className="text-muted-foreground rounded-full w-10 h-10">
+                                                    <Button variant="ghost" size="icon" className="text-muted-foreground rounded-none w-10 h-10">
                                                         <ChevronRight />
                                                     </Button>
                                                 </Card>
@@ -325,12 +324,12 @@ function MyProfilePageContent() {
                                     {heartedTools.map((tool, index) => (
                                          <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                             <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
-                                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} />}
+                                                {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} unoptimized />}
                                                 <div className="flex-grow">
                                                     <h5 className="font-semibold text-base">{tool.name}</h5>
                                                     <p className="text-sm text-muted-foreground">{tool.category}</p>
                                                 </div>
-                                                <Button variant="ghost" size="icon" className="text-red-500 rounded-full w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleHeartToggle(tool as Tool); }}>
+                                                <Button variant="ghost" size="icon" className="text-red-500 rounded-none w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleHeartToggle(tool as Tool); }}>
                                                     <Heart className="fill-current"/>
                                                 </Button>
                                             </Card>
@@ -354,12 +353,12 @@ function MyProfilePageContent() {
                                         {starredTools.map((tool, index) => (
                                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                                 <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
-                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} />}
+                                                    {tool.image && <Image src={tool.image} alt={tool.name} width="56" height="56" className="rounded-none" data-ai-hint={tool.dataAiHint} unoptimized />}
                                                     <div className="flex-grow">
                                                         <h5 className="font-semibold text-base">{tool.name}</h5>
                                                         <p className="text-sm text-muted-foreground">{tool.category}</p>
                                                     </div>
-                                                    <Button variant="ghost" size="icon" className="text-yellow-400 rounded-full w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleStarToggle(tool as Tool); }}>
+                                                    <Button variant="ghost" size="icon" className="text-yellow-400 rounded-none w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleStarToggle(tool as Tool); }}>
                                                         <Star className="fill-current"/>
                                                     </Button>
                                                 </Card>
@@ -385,9 +384,9 @@ function MyProfilePageContent() {
                                 ownedClubs.map((club) => (
                                     <Link href={`/community/${club.id}`} key={club.id} className="block group">
                                         <Card className="p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors duration-200 soft-shadow rounded-none">
-                                            <Avatar className="h-14 w-14 border-2 border-white">
-                                                <AvatarImage src={`https://ui-avatars.com/api/?name=${encodeURIComponent(club.name)}&background=random&color=fff&size=128`} alt={club.name} />
-                                                <AvatarFallback>{club.name.charAt(0)}</AvatarFallback>
+                                            <Avatar className="h-14 w-14 border-2 border-white rounded-none">
+                                                <AvatarImage src={`https://ui-avatars.com/api/?name=${encodeURIComponent(club.name)}&background=random&color=fff&size=128`} alt={club.name} className="rounded-none" />
+                                                <AvatarFallback className="rounded-none">{club.name.charAt(0)}</AvatarFallback>
                                             </Avatar>
                                             <div className="flex-grow overflow-hidden">
                                                 <h3 className="font-semibold truncate text-lg">{club.name}</h3>
@@ -405,7 +404,7 @@ function MyProfilePageContent() {
                                     <p className="font-semibold">You haven't created any groups yet.</p>
                                     <p className="text-sm mt-1">Why not start a new community?</p>
                                     <Link href="/community/create">
-                                        <Button className="mt-4">Create a Group</Button>
+                                        <Button className="mt-4 rounded-none">Create a Group</Button>
                                     </Link>
                                 </div>
                             )}
@@ -424,13 +423,3 @@ export default function MyProfilePage() {
         </Suspense>
     )
 }
-    
-    
-
-
-
-
-
-
-
-    

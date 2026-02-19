@@ -32,7 +32,7 @@ export function BottomNavBar({ activeTab }: { activeTab: string }) {
 
     return (
         <Link href={href} onClick={(e) => handleNavigation(e, href)} className="flex flex-col items-center justify-center h-full rounded-none flex-1 group">
-            <div className={cn("p-3 rounded-full transition-all duration-300", isActive ? 'bg-primary/10 scale-110' : 'group-hover:bg-primary/5')}>
+            <div className={cn("p-3 rounded-none transition-all duration-300", isActive ? 'bg-primary/10 scale-110' : 'group-hover:bg-primary/5')}>
                 <Icon className={cn("w-6 h-6 transition-colors", isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-primary')} />
             </div>
             <span className={cn("text-xs font-medium transition-colors", isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-primary')}>{label}</span>
@@ -45,8 +45,8 @@ export function BottomNavBar({ activeTab }: { activeTab: string }) {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 h-20 w-auto max-w-md mx-auto z-50 md:hidden">
-        <div className="relative h-full bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg rounded-full">
+    <div className="fixed bottom-0 left-0 right-0 h-20 w-full z-50 md:hidden">
+        <div className="relative h-full bg-card/80 backdrop-blur-xl border-t border-border/50 shadow-lg rounded-none">
           <div className="flex justify-around items-center h-full">
             <NavItem href="/?tab=home" path="home" icon={Home} label="Home" currentActiveTab={activeTab} />
             <NavItem href="/?tab=tools" path="tools" icon={LayoutGrid} label="Tools" currentActiveTab={activeTab} />

@@ -1,6 +1,5 @@
 'use client';
 
-import { useUser } from '@/firebase';
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { useSwipeable, type SwipeEventData } from 'react-swipeable';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
@@ -87,18 +86,10 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-    const { isUserLoading } = useUser();
-
-    if (isUserLoading) {
-      return (
-        <Suspense>
-            <div className="relative flex flex-col min-h-screen">{children}</div>
-        </Suspense>
-      );
-    }
-
+    // Removed the isUserLoading check here so the Shell (and Nav Bar) shows up instantly.
+    // Auth state is handled inside specific components that need it.
     return (
-      <Suspense>
+      <Suspense fallback={<div className="relative flex flex-col min-h-screen">{children}</div>}>
           <AppShellContent>{children}</AppShellContent>
       </Suspense>
     );
