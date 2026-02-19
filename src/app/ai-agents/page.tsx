@@ -48,7 +48,7 @@ const iconMap: { [key: string]: React.ReactNode } = {
     Shield: <Shield className="w-5 h-5 text-primary"/>,
 };
 
-export default function AIAgentsPage() {
+export default function AIAdgentsPage() {
     const { toast } = useToast();
     const [priceFilter, setPriceFilter] = useState('All');
     const [open, setOpen] = useState(false);
@@ -106,6 +106,7 @@ export default function AIAgentsPage() {
                     height={90}
                     className="w-full h-auto aspect-[4/3] object-cover"
                     data-ai-hint={tool.dataAiHint}
+                    unoptimized
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">

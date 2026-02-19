@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -126,6 +125,7 @@ export default function BusinessToolsPage() {
                     height={90}
                     className="w-full h-auto aspect-[4/3] object-cover"
                     data-ai-hint={tool.dataAiHint}
+                    unoptimized
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">

@@ -63,7 +63,7 @@ export default function VoiceAudioAiToolsPage() {
         return (
             <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-24 shrink-0">
             <Card 
-                className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col"
+                className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-none"
             >
                 <div className="relative">
                     <Image
@@ -73,6 +73,7 @@ export default function VoiceAudioAiToolsPage() {
                     height={90}
                     className="w-full h-auto aspect-[4/3] object-cover"
                     data-ai-hint={tool.dataAiHint}
+                    unoptimized
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">

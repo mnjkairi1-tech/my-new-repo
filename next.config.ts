@@ -26,11 +26,11 @@ const withPWA = withPWAInit({
       },
     },
     {
-      // Aggressively cache ALL images from any source
-      urlPattern: ({ request }) => request.destination === "image",
+      // Specific rule for Google Favicons (The tool icons)
+      urlPattern: /^https:\/\/www\.google\.com\/s2\/favicons.*/i,
       handler: "CacheFirst",
       options: {
-        cacheName: "all-images-cache",
+        cacheName: "tool-icons-cache",
         expiration: {
           maxEntries: 2000,
           maxAgeSeconds: 60 * 24 * 60 * 60, // 60 days
@@ -41,14 +41,29 @@ const withPWA = withPWAInit({
       },
     },
     {
-      // Specific rule for Google Favicons (The tool icons)
-      urlPattern: /^https:\/\/www\.google\.com\/s2\/favicons.*/i,
+      // Cache images from external sources like Unsplash and Picsum
+      urlPattern: /^https:\/\/(images\.unsplash\.com|picsum\.photos|i\.postimg\.cc).*/i,
       handler: "CacheFirst",
       options: {
-        cacheName: "tool-icons-cache",
+        cacheName: "external-images-cache",
+        expiration: {
+          maxEntries: 500,
+          maxAgeSeconds: 60 * 24 * 60 * 60,
+        },
+        cacheableResponse: {
+          statuses: [0, 200],
+        },
+      },
+    },
+    {
+      // Cache Next.js optimized images
+      urlPattern: /\/_next\/image\?.*/i,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "next-image-cache",
         expiration: {
           maxEntries: 1000,
-          maxAgeSeconds: 60 * 24 * 60 * 60, // 60 days
+          maxAgeSeconds: 60 * 24 * 60 * 60,
         },
         cacheableResponse: {
           statuses: [0, 200],
