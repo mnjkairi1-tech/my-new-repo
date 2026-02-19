@@ -8,16 +8,61 @@ const withPWA = withPWAInit({
   skipWaiting: true,
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  swmin: true,
+  disable: process.env.NODE_ENV === 'development',
   runtimeCaching: [
     {
-      // Match all navigation requests
+      // Cache all page navigations
       urlPattern: ({ request }) => request.mode === "navigate",
       handler: "NetworkFirst",
       options: {
-        cacheName: "pages",
+        cacheName: "pages-cache",
         networkTimeoutSeconds: 10,
         expiration: {
-          maxEntries: 64,
+          maxEntries: 100,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+        },
+      },
+    },
+    {
+      // Cache Google Favicons (The tool icons)
+      urlPattern: /^https:\/\/www\.google\.com\/s2\/favicons.*/i,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "tool-icons-cache",
+        expiration: {
+          maxEntries: 1000, // Large limit for many tools
+          maxAgeSeconds: 60 * 24 * 60 * 60, // 60 days
+        },
+        cacheableResponse: {
+          statuses: [0, 200],
+        },
+      },
+    },
+    {
+      // Cache Unsplash and Picsum images (The category banners)
+      urlPattern: /https:\/\/(images\.unsplash\.com|picsum\.photos|i\.postimg\.cc)\/.*/i,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "external-images-cache",
+        expiration: {
+          maxEntries: 500,
+          maxAgeSeconds: 60 * 24 * 60 * 60, // 60 days
+        },
+        cacheableResponse: {
+          statuses: [0, 200],
+        },
+      },
+    },
+    {
+      // General Image Caching
+      urlPattern: ({ request }) => request.destination === "image",
+      handler: "CacheFirst",
+      options: {
+        cacheName: "general-images-cache",
+        expiration: {
+          maxEntries: 200,
           maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
         },
       },
@@ -31,30 +76,14 @@ const withPWA = withPWAInit({
         request.destination === "font",
       handler: "StaleWhileRevalidate",
       options: {
-        cacheName: "static-assets",
+        cacheName: "static-assets-cache",
         expiration: {
-          maxEntries: 64,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
-        },
-      },
-    },
-    {
-      // Cache images
-      urlPattern: ({ request }) => request.destination === "image",
-      handler: "CacheFirst",
-      options: {
-        cacheName: "images",
-        expiration: {
-          maxEntries: 250,
+          maxEntries: 100,
           maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
         },
       },
     },
   ],
-  disable: process.env.NODE_ENV === 'development',
-  workboxOptions: {
-    disableDevLogs: true,
-  },
 });
 
 const nextConfig: NextConfig = {
