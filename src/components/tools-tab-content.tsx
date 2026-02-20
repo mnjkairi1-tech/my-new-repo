@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useMemo, useState } from 'react';
@@ -28,10 +27,6 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
     const isStarred = starredTools.some(t => t.name === tool.name);
     const isSelectedForCompare = comparisonList.some(t => t.name === tool.name);
 
-    const handleCardClick = (e: React.MouseEvent) => {
-        onClick(tool);
-    };
-
     const handleStarClick = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
@@ -45,8 +40,8 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
     };
   
     return (
-      <a href={tool.url} target="_blank" rel="noopener noreferrer" className="block group" onClick={handleCardClick}>
-        <Card className="bg-card/80 backdrop-blur-lg border-white/20 rounded-none soft-shadow transition-all duration-300 hover:scale-[1.02] overflow-hidden aspect-square flex flex-col p-4 justify-between glow-shadow-on-hover">
+      <a href={tool.url} target="_blank" rel="noopener noreferrer" className="block group" onClick={() => onClick(tool)}>
+        <Card className="bg-card/80 backdrop-blur-lg border-white/20 rounded-2xl soft-shadow transition-all duration-300 hover:scale-[1.02] overflow-hidden aspect-square flex flex-col p-4 justify-between">
             <div className='text-center flex flex-col items-center justify-center gap-2 flex-grow'>
                 <div className='relative w-14 h-14'>
                     <Image
@@ -57,7 +52,6 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
                         data-ai-hint={tool.dataAiHint}
                         unoptimized
                     />
-                    <div className="absolute -inset-1 bg-primary/20 rounded-lg blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <h5 className="font-semibold text-foreground text-sm leading-tight line-clamp-2 mt-2">{tool.name}</h5>
             </div>
@@ -109,7 +103,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     };
 
     return (
-        <>
+        <div className="flex flex-col h-full">
             <div className="px-4 pb-2">
                 <div className="flex gap-2 items-center">
                     <div className="relative flex-grow">
@@ -120,7 +114,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                             value={searchTerm}
                             onChange={(e) => {
                                 setSearchTerm(e.target.value);
-                                setVisibleCount(20); // Reset count on new search
+                                setVisibleCount(20);
                             }}
                         />
                     </div>
@@ -133,10 +127,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                         <DropdownMenuContent className="w-56">
                             <DropdownMenuLabel>Sort by Price</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuRadioGroup value={priceFilter} onValueChange={(value) => {
-                                setPriceFilter(value);
-                                setVisibleCount(20); // Reset count on filter change
-                            }}>
+                            <DropdownMenuRadioGroup value={priceFilter} onValueChange={setPriceFilter}>
                                 <DropdownMenuRadioItem value="All">All</DropdownMenuRadioItem>
                                 <DropdownMenuRadioItem value="Free">Free & Freemium</DropdownMenuRadioItem>
                             </DropdownMenuRadioGroup>
@@ -147,7 +138,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     {`${tools.length} Tools`}
                 </div>
             </div>
-            <div className="flex-grow overflow-y-auto px-4 no-scrollbar pt-2 pb-4">
+            <div className="flex-1 overflow-y-auto px-4 no-scrollbar pt-2 pb-20">
                  <div className="grid grid-cols-2 gap-4">
                     {tools.slice(0, visibleCount).map(tool => (
                         <ToolCard
@@ -165,6 +156,6 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     </div>
                 )}
             </div>
-        </>
+        </div>
     );
 }

@@ -2,21 +2,17 @@
 
 import { useUser } from '@/firebase';
 import { BottomNavBar } from '@/components/bottom-nav-bar';
-import { useSwipeable, type SwipeEventData } from 'react-swipeable';
+import { useSwipeable } from 'react-swipeable';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useMemo } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 
-function AppShellContent({ children }: { children: React.ReactNode }) {
-    const router = useRouter();
+/**
+ * Handles the navigation state and bottom bar logic.
+ * Wrapped in Suspense because it uses useSearchParams.
+ */
+function AppShellNav() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
-
-    const navItems = useMemo(() => [
-        { id: 'home', route: '/?tab=home' },
-        { id: 'tools', route: '/?tab=tools' },
-        { id: 'community', route: '/community' },
-        { id: 'profile', route: '/community/my-profile' },
-    ], []);
 
     const getActiveTab = () => {
         const tab = searchParams.get('tab');
@@ -30,45 +26,44 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
         if (pathname === '/community/my-profile') return 'profile';
         if (pathname.startsWith('/community')) return 'community';
 
-        return ''; // No active tab on sub-pages
+        return '';
     };
 
+    const activeTabId = getActiveTab();
+
+    return <BottomNavBar activeTab={activeTabId} />;
+}
+
+function AppShellContent({ children }: { children: React.ReactNode }) {
+    const router = useRouter();
+    const pathname = usePathname();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const navItems = useMemo(() => [
+        { id: 'home', route: '/?tab=home' },
+        { id: 'tools', route: '/?tab=tools' },
+        { id: 'community', route: '/community' },
+        { id: 'profile', route: '/community/my-profile' },
+    ], []);
+
     const isSwipeablePage = () => {
-        // Only allow swiping on the exact top-level pages
         const swipeablePaths = ['/', '/community', '/community/my-profile'];
         return swipeablePaths.includes(pathname);
     };
 
-    const activeTabId = getActiveTab();
-    const currentIndex = useMemo(() => navItems.findIndex(item => item.id === activeTabId), [navItems, activeTabId]);
-
-    // Prefetch next and previous routes to make swiping faster
-    useEffect(() => {
-        if (currentIndex !== -1) {
-            if (currentIndex > 0) {
-                router.prefetch(navItems[currentIndex - 1].route);
-            }
-            if (currentIndex < navItems.length - 1) {
-                router.prefetch(navItems[currentIndex + 1].route);
-            }
-        }
-    }, [currentIndex, router, navItems]);
-
     const swipeHandlers = useSwipeable({
-        onSwipedLeft: (eventData: SwipeEventData) => {
-            const target = eventData.event.target as HTMLElement;
-            if (target.closest('.horizontal-scroll-container, [aria-roledescription="carousel"]')) {
-                return;
-            }
+        onSwipedLeft: () => {
+            const currentIndex = navItems.findIndex(item => item.route.split('?')[0] === pathname);
             if (isSwipeablePage() && currentIndex !== -1 && currentIndex < navItems.length - 1) {
                 router.push(navItems[currentIndex + 1].route);
             }
         },
-        onSwipedRight: (eventData: SwipeEventData) => {
-            const target = eventData.event.target as HTMLElement;
-             if (target.closest('.horizontal-scroll-container, [aria-roledescription="carousel"]')) {
-                return;
-            }
+        onSwipedRight: () => {
+            const currentIndex = navItems.findIndex(item => item.route.split('?')[0] === pathname);
             if (isSwipeablePage() && currentIndex > 0) {
                 router.push(navItems[currentIndex - 1].route);
             }
@@ -76,30 +71,23 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
         trackMouse: true,
     });
     
-    const swipeWrapperProps = isSwipeablePage() ? swipeHandlers : {};
+    // Defer swipe handlers until after hydration to prevent HTML mismatch
+    const swipeWrapperProps = (mounted && isSwipeablePage()) ? swipeHandlers : {};
 
     return (
-        <div className="relative flex flex-col min-h-screen">
-            <main className="flex-grow pb-32 md:pb-0" {...swipeWrapperProps}>{children}</main>
-            <BottomNavBar activeTab={activeTabId} />
+        <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-md mx-auto overflow-hidden">
+            <main className="flex-grow pb-24 md:pb-0 h-full" {...swipeWrapperProps}>
+                {children}
+            </main>
+            <Suspense fallback={<div className="fixed bottom-4 left-4 right-4 h-20 bg-card/80 rounded-full animate-pulse" />}>
+                <AppShellNav />
+            </Suspense>
         </div>
     );
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-    const { isUserLoading } = useUser();
-
-    if (isUserLoading) {
-      return (
-        <Suspense>
-            <div className="relative flex flex-col min-h-screen">{children}</div>
-        </Suspense>
-      );
-    }
-
     return (
-      <Suspense>
-          <AppShellContent>{children}</AppShellContent>
-      </Suspense>
+        <AppShellContent>{children}</AppShellContent>
     );
 }
