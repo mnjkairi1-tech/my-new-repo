@@ -56,12 +56,7 @@ const ToolsLoadingSkeleton = () => (
 
 function HomePageContent() {
   const { t } = useLanguage();
-  const searchParams = useSearchParams();
   const router = useRouter();
-  useCustomBack();
-
-  const activeTab = searchParams.get('tab') || 'home';
-  const { user } = useUser();
   const { pinnedTools, handlePinToggle, addRecentTool } = useUserPreferences();
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
 
@@ -100,6 +95,109 @@ function HomePageContent() {
     addRecentTool(tool);
   }, [addRecentTool]);
 
+  return (
+    <div className="space-y-8 pb-10">
+        <div className="my-4">
+            <label className="block text-center text-muted-foreground text-sm mb-2">Ask what AI you want</label>
+            <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
+                <div className="relative cursor-pointer">
+                    <Input
+                        readOnly
+                        placeholder="Chat with AI Atlas..."
+                        className="bg-background rounded-3xl h-14 text-base pl-5 pr-14 border-2 border-primary/20 shadow-lg cursor-pointer"
+                    />
+                    <div className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center">
+                        <Send className="w-5 h-5"/>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]} className="my-4">
+            <CarouselContent>
+                {carouselSlides.map((slide, index) => (
+                    <CarouselItem key={index}>
+                        <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
+                            <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden shadow-xl">
+                                <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.dataAiHint} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <div className="absolute bottom-0 left-0 p-4">
+                                    <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
+                                </div>
+                            </div>
+                        </Link>
+                    </CarouselItem>
+                ))}
+            </CarouselContent>
+        </Carousel>
+
+        <section>
+            <div className="flex justify-between items-center mb-3">
+                <h4 className="font-semibold text-xl">{t('home.popularTools.title')}</h4>
+                <Link href="/popular-tools">
+                    <Button variant="link" className="text-primary p-0 h-auto font-semibold">{t('home.seeAll')}</Button>
+                </Link>
+            </div>
+            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-6 px-6">
+                {popularTools.map(tool => (
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 text-center" onClick={() => handleToolClick(tool)}>
+                        <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center p-2 text-primary shadow-md overflow-hidden">
+                            <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain" unoptimized />
+                        </div>
+                        <p className="text-sm font-medium text-center mt-2 text-muted-foreground truncate w-full">{tool.name}</p>
+                    </a>
+                ))}
+            </div>
+        </section>
+
+        <section>
+            <h4 className="font-semibold text-xl mb-4">{t('home.quickTools.title')}</h4>
+            <div className="grid grid-cols-1 gap-4">
+                {sortedQuickToolCategories.map((category) => {
+                    const isPinned = pinnedTools.has(category.name);
+                    return (
+                        <Link href={category.url} key={category.name} className="block group">
+                            <Card className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none">
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className={cn(
+                                        "absolute top-2 right-2 z-10 w-10 h-10 rounded-full text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
+                                        isPinned ? 'text-primary' : 'opacity-0 group-hover:opacity-100'
+                                    )}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        handlePinToggle(category.name);
+                                    }}
+                                >
+                                    <Pin className={cn("w-5 h-5", isPinned && "fill-current")} />
+                                </Button>
+                                <Image src={category.image} alt={category.name} width={600} height={200} className="w-full h-auto aspect-[3/1] object-cover" data-ai-hint={category.dataAiHint} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                <div className="absolute bottom-0 left-0 p-4">
+                                    <h5 className="text-white font-bold text-xl">{t(`home.quickTools.categories.${category.translationKey}`)}</h5>
+                                </div>
+                            </Card>
+                        </Link>
+                    )
+                })}
+            </div>
+        </section>
+    </div>
+  );
+}
+
+export default function GalaxyApp() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const activeTab = searchParams.get('tab') || 'home';
+  const { user } = useUser();
+  const { t } = useLanguage();
+  const { addRecentTool } = useUserPreferences();
+  
+  useCustomBack();
+
   const handleShareTool = (e: React.MouseEvent, tool: Tool) => {
     e.preventDefault();
     e.stopPropagation();
@@ -109,163 +207,64 @@ function HomePageContent() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-        <header className="px-6 pt-6 flex-shrink-0">
-            <div className="flex justify-between items-center py-2">
-                <div className="flex items-center gap-2">
-                    <GalaxyLogo className="w-8 h-8" />
-                    <span className="text-2xl font-bold text-foreground">AI Atlas</span>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <Link href="/ultra-free">
-                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Gift className="w-5 h-5 text-primary"/></Button>
-                    </Link>
-                    <Link href="/mode">
-                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Wand2 className="w-5 h-5 text-primary"/></Button>
-                    </Link>
-                </div>
-            </div>
-            
-            <TabsList className="grid w-full grid-cols-4 bg-transparent p-0 mt-4 border-b">
-                <TabsTrigger value="home" onClick={() => router.push('/?tab=home')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.home')}</TabsTrigger>
-                <TabsTrigger value="tools" onClick={() => router.push('/?tab=tools')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.tools')}</TabsTrigger>
-                <TabsTrigger value="trending" onClick={() => router.push('/?tab=trending')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.trending')}</TabsTrigger>
-                <TabsTrigger value="settings" onClick={() => router.push('/?tab=settings')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.settings')}</TabsTrigger>
-            </TabsList>
-        </header>
-        
-        <main className="flex-1 overflow-y-auto no-scrollbar">
-            <TabsContent value="home" className="px-6 mt-0 animate-fade-in-up">
-                <div className="space-y-8 pb-10">
-                    <div className="my-4">
-                        <label className="block text-center text-muted-foreground text-sm mb-2">Ask what AI you want</label>
-                        <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
-                            <div className="relative cursor-pointer">
-                                <Input
-                                    readOnly
-                                    placeholder="Chat with AI Atlas..."
-                                    className="bg-background rounded-3xl h-14 text-base pl-5 pr-14 border-2 border-primary/20 shadow-lg cursor-pointer"
-                                />
-                                <div className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center">
-                                    <Send className="w-5 h-5"/>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]} className="my-4">
-                        <CarouselContent>
-                            {carouselSlides.map((slide, index) => (
-                                <CarouselItem key={index}>
-                                    <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
-                                        <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden shadow-xl">
-                                            <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.dataAiHint} />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                            <div className="absolute bottom-0 left-0 p-4">
-                                                <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                    </Carousel>
-
-                    <section>
-                        <div className="flex justify-between items-center mb-3">
-                            <h4 className="font-semibold text-xl">{t('home.popularTools.title')}</h4>
-                            <Link href="/popular-tools">
-                                <Button variant="link" className="text-primary p-0 h-auto font-semibold">{t('home.seeAll')}</Button>
-                            </Link>
-                        </div>
-                        <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-6 px-6">
-                            {popularTools.map(tool => (
-                                <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 text-center" onClick={() => handleToolClick(tool)}>
-                                    <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center p-2 text-primary shadow-md overflow-hidden">
-                                        <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain" unoptimized />
-                                    </div>
-                                    <p className="text-sm font-medium text-center mt-2 text-muted-foreground truncate w-full">{tool.name}</p>
-                                </a>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section>
-                        <h4 className="font-semibold text-xl mb-4">{t('home.quickTools.title')}</h4>
-                        <div className="grid grid-cols-1 gap-4">
-                            {sortedQuickToolCategories.map((category) => {
-                                const isPinned = pinnedTools.has(category.name);
-                                return (
-                                    <Link href={category.url} key={category.name} className="block group">
-                                        <Card className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none">
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                className={cn(
-                                                    "absolute top-2 right-2 z-10 w-10 h-10 rounded-full text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
-                                                    isPinned ? 'text-primary' : 'opacity-0 group-hover:opacity-100'
-                                                )}
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-                                                    handlePinToggle(category.name);
-                                                }}
-                                            >
-                                                <Pin className={cn("w-5 h-5", isPinned && "fill-current")} />
-                                            </Button>
-                                            <Image src={category.image} alt={category.name} width={600} height={200} className="w-full h-auto aspect-[3/1] object-cover" data-ai-hint={category.dataAiHint} />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                                            <div className="absolute bottom-0 left-0 p-4">
-                                                <h5 className="text-white font-bold text-xl">{t(`home.quickTools.categories.${category.translationKey}`)}</h5>
-                                            </div>
-                                        </Card>
-                                    </Link>
-                                )
-                            })}
-                        </div>
-                    </section>
-                </div>
-            </TabsContent>
-            
-            <TabsContent value="tools" className="mt-0 h-full animate-fade-in-up">
-                <Suspense fallback={<ToolsLoadingSkeleton />}>
-                    <ToolsTabContent onShare={handleShareTool} onClick={handleToolClick} />
-                </Suspense>
-            </TabsContent>
-            
-            <TabsContent value="trending" className="px-6 mt-4 animate-fade-in-up">
-                <div className="space-y-4">
-                    <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" className="block group">
-                        <Card className="bg-card border-none rounded-2xl shadow-lg overflow-hidden">
-                            <div className="relative aspect-video">
-                                <Image src={"https://picsum.photos/seed/trending-ai/600/300"} alt="Trending" fill className="object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                            </div>
-                            <div className="p-4">
-                                <h3 className="font-bold text-lg">Trending AI Tools</h3>
-                                <p className="text-muted-foreground text-sm mt-1">Discover the fastest-growing AI tools.</p>
-                            </div>
-                        </Card>
-                    </Link>
-                </div>
-            </TabsContent>
-            
-            <TabsContent value="settings" className="bg-secondary/30 mt-0 min-h-full animate-fade-in-up">
-                {user ? <SettingsPage /> : <AuthScreen onUser={() => {}} />}
-            </TabsContent>
-        </main>
-    </div>
-  );
-}
-
-export default function GalaxyApp() {
-  const searchParams = useSearchParams();
-  const activeTab = searchParams.get('tab') || 'home';
-
-  return (
     <div className="bg-background min-h-screen">
         <Tabs value={activeTab} className="h-full flex flex-col">
-            <HomePageContent />
+            <header className="px-6 pt-6 flex-shrink-0">
+                <div className="flex justify-between items-center py-2">
+                    <div className="flex items-center gap-2">
+                        <GalaxyLogo className="w-8 h-8" />
+                        <span className="text-2xl font-bold text-foreground">AI Atlas</span>
+                    </div>
+                    <div className='flex items-center gap-2'>
+                        <Link href="/ultra-free">
+                            <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Gift className="w-5 h-5 text-primary"/></Button>
+                        </Link>
+                        <Link href="/mode">
+                            <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Wand2 className="w-5 h-5 text-primary"/></Button>
+                        </Link>
+                    </div>
+                </div>
+                
+                <TabsList className="grid w-full grid-cols-4 bg-transparent p-0 mt-4 border-b">
+                    <TabsTrigger value="home" onClick={() => router.push('/?tab=home')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.home')}</TabsTrigger>
+                    <TabsTrigger value="tools" onClick={() => router.push('/?tab=tools')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.tools')}</TabsTrigger>
+                    <TabsTrigger value="trending" onClick={() => router.push('/?tab=trending')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.trending')}</TabsTrigger>
+                    <TabsTrigger value="settings" onClick={() => router.push('/?tab=settings')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.settings')}</TabsTrigger>
+                </TabsList>
+            </header>
+            
+            <main className="flex-1 overflow-y-auto no-scrollbar">
+                <TabsContent value="home" className="px-6 mt-0 animate-fade-in-up">
+                    <HomePageContent />
+                </TabsContent>
+                
+                <TabsContent value="tools" className="mt-0 h-full animate-fade-in-up">
+                    <Suspense fallback={<ToolsLoadingSkeleton />}>
+                        <ToolsTabContent onShare={handleShareTool} onClick={addRecentTool} />
+                    </Suspense>
+                </TabsContent>
+                
+                <TabsContent value="trending" className="px-6 mt-4 animate-fade-in-up">
+                    <div className="space-y-4">
+                        <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" className="block group">
+                            <Card className="bg-card border-none rounded-2xl shadow-lg overflow-hidden">
+                                <div className="relative aspect-video">
+                                    <Image src={"https://picsum.photos/seed/trending-ai/600/300"} alt="Trending" fill className="object-cover" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                </div>
+                                <div className="p-4">
+                                    <h3 className="font-bold text-lg">Trending AI Tools</h3>
+                                    <p className="text-muted-foreground text-sm mt-1">Discover the fastest-growing AI tools.</p>
+                                </div>
+                            </Card>
+                        </Link>
+                    </div>
+                </TabsContent>
+                
+                <TabsContent value="settings" className="bg-secondary/30 mt-0 min-h-full animate-fade-in-up">
+                    {user ? <SettingsPage /> : <AuthScreen onUser={() => {}} />}
+                </TabsContent>
+            </main>
         </Tabs>
     </div>
   );

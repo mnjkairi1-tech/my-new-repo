@@ -3,13 +3,12 @@
 import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/lib/language';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
-import { Share2, Star, TrendingUp, Search, Filter, Scale, Check } from 'lucide-react';
+import { Share2, Star, Search, Filter, Scale, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,

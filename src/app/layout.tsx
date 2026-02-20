@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode, Suspense } from 'react';
+import React, { ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
@@ -9,13 +9,15 @@ import { UserPreferencesProvider } from '@/context/user-preferences-context';
 import { ThemeProvider } from '@/context/theme-provider';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
-// Loading AppShell with SSR disabled is the most reliable way to prevent 
-// hydration mismatches when dealing with complex client-side state like Firebase and swipe handlers.
+// Disabling SSR for the main shell is the definitive way to fix hydration errors 
+// when using client-side libraries like swipeable and Firebase auth state.
 const AppShell = dynamic(() => import('./app-shell').then(mod => mod.AppShell), {
   ssr: false,
-  fallback: <div className="min-h-screen bg-background flex flex-col items-center justify-center">
-    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-  </div>
+  fallback: (
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center">
+      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+  )
 });
 
 function GlobalProviders({ children }: { children: ReactNode }) {
@@ -35,7 +37,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en" className="font-size-medium" suppressHydrationWarning>
       <head>

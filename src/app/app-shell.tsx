@@ -1,20 +1,27 @@
 'use client';
 
-import { useUser } from '@/firebase';
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { useSwipeable } from 'react-swipeable';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 /**
- * AppShellNav handles the navigation and search params.
- * It's isolated to keep the main shell stable.
+ * AppShell manages the core application structure and global UI elements like 
+ * the bottom navigation and swipe gestures.
  */
-function AppShellNav() {
+export function AppShell({ children }: { children: React.ReactNode }) {
+    const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const getActiveTab = () => {
+    const navItems = useMemo(() => [
+        { id: 'home', route: '/?tab=home' },
+        { id: 'tools', route: '/?tab=tools' },
+        { id: 'community', route: '/community' },
+        { id: 'profile', route: '/community/my-profile' },
+    ], []);
+
+    const activeTabId = useMemo(() => {
         const tab = searchParams.get('tab');
         
         if (pathname === '/') {
@@ -27,23 +34,7 @@ function AppShellNav() {
         if (pathname.startsWith('/community')) return 'community';
 
         return '';
-    };
-
-    const activeTabId = getActiveTab();
-
-    return <BottomNavBar activeTab={activeTabId} />;
-}
-
-function AppShellContent({ children }: { children: React.ReactNode }) {
-    const router = useRouter();
-    const pathname = usePathname();
-
-    const navItems = useMemo(() => [
-        { id: 'home', route: '/?tab=home' },
-        { id: 'tools', route: '/?tab=tools' },
-        { id: 'community', route: '/community' },
-        { id: 'profile', route: '/community/my-profile' },
-    ], []);
+    }, [pathname, searchParams]);
 
     const isSwipeablePage = () => {
         const swipeablePaths = ['/', '/community', '/community/my-profile'];
@@ -52,19 +43,19 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
 
     const swipeHandlers = useSwipeable({
         onSwipedLeft: () => {
-            const currentRoute = pathname === '/' ? `/?tab=${new URLSearchParams(window.location.search).get('tab') || 'home'}` : pathname;
-            const currentIndex = navItems.findIndex(item => item.route.split('?')[0] === pathname);
+            const currentIndex = navItems.findIndex(item => item.id === activeTabId);
             if (isSwipeablePage() && currentIndex !== -1 && currentIndex < navItems.length - 1) {
                 router.push(navItems[currentIndex + 1].route);
             }
         },
         onSwipedRight: () => {
-            const currentIndex = navItems.findIndex(item => item.route.split('?')[0] === pathname);
+            const currentIndex = navItems.findIndex(item => item.id === activeTabId);
             if (isSwipeablePage() && currentIndex > 0) {
                 router.push(navItems[currentIndex - 1].route);
             }
         },
         trackMouse: true,
+        preventScrollOnSwipe: true,
     });
 
     return (
@@ -75,15 +66,7 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
             >
                 {children}
             </main>
-            <Suspense fallback={<div className="fixed bottom-4 left-4 right-4 h-20 bg-card/80 rounded-full animate-pulse" />}>
-                <AppShellNav />
-            </Suspense>
+            <BottomNavBar activeTab={activeTabId} />
         </div>
-    );
-}
-
-export function AppShell({ children }: { children: React.ReactNode }) {
-    return (
-        <AppShellContent>{children}</AppShellContent>
     );
 }
