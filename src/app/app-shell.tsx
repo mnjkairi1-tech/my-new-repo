@@ -6,8 +6,7 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useMemo, useEffect, useState, Suspense } from 'react';
 
 /**
- * AppShell manages the core application structure and global UI elements like 
- * the bottom navigation and swipe gestures.
+ * AppShell manages the core application structure and global UI elements.
  */
 function AppShellContent({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -63,11 +62,14 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
         preventScrollOnSwipe: true,
     });
 
+    // To prevent hydration mismatch, we don't apply handlers until mounted
+    const swipeProps = mounted && isSwipeablePage() ? swipeHandlers : {};
+
     return (
-        <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-md mx-auto">
+        <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-md mx-auto overflow-x-hidden">
             <main 
-                className="flex-grow pb-24 md:pb-0 h-full overflow-x-hidden" 
-                {...(mounted && isSwipeablePage() ? swipeHandlers : {})}
+                className="flex-grow pb-24 h-full" 
+                {...swipeProps}
             >
                 {children}
             </main>
@@ -78,7 +80,7 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
     return (
-        <Suspense fallback={<div className="min-h-screen bg-background" />}>
+        <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
             <AppShellContent>{children}</AppShellContent>
         </Suspense>
     );

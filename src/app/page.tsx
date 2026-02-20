@@ -89,7 +89,7 @@ function HomePageContent() {
   }, [addRecentTool]);
 
   return (
-    <div className="space-y-8 pb-10">
+    <div className="space-y-8 pb-10 animate-fade-in-up">
         <div className="my-4">
             <label className="block text-center text-muted-foreground text-sm mb-2">Ask what AI you want</label>
             <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
@@ -137,7 +137,7 @@ function HomePageContent() {
                         <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center p-2 text-primary shadow-md overflow-hidden">
                             <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain" unoptimized />
                         </div>
-                        <p className="text-sm font-medium text-center mt-2 text-muted-foreground truncate w-full">{tool.name}</p>
+                        <p className="text-xs font-medium text-center mt-2 text-muted-foreground truncate w-full">{tool.name}</p>
                     </a>
                 ))}
             </div>
@@ -225,18 +225,18 @@ function GalaxyAppMain() {
             </TabsList>
         </header>
         
-        <main className="flex-1 overflow-y-auto no-scrollbar">
-            <TabsContent value="home" className="px-6 mt-0 animate-fade-in-up">
+        <div className="flex-1 overflow-y-auto no-scrollbar">
+            <TabsContent value="home" className="px-6 mt-0">
                 <HomePageContent />
             </TabsContent>
             
-            <TabsContent value="tools" className="mt-0 h-full animate-fade-in-up">
+            <TabsContent value="tools" className="mt-0 h-full">
                 <Suspense fallback={<ToolsLoadingSkeleton />}>
                     <ToolsTabContent onShare={handleShareTool} onClick={addRecentTool} />
                 </Suspense>
             </TabsContent>
             
-            <TabsContent value="trending" className="px-6 mt-4 animate-fade-in-up">
+            <TabsContent value="trending" className="px-6 mt-4">
                 <div className="space-y-4">
                     <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" className="block group">
                         <Card className="bg-card border-none rounded-2xl shadow-lg overflow-hidden">
@@ -253,20 +253,18 @@ function GalaxyAppMain() {
                 </div>
             </TabsContent>
             
-            <TabsContent value="settings" className="bg-secondary/30 mt-0 min-h-full animate-fade-in-up">
+            <TabsContent value="settings" className="bg-secondary/30 mt-0 min-h-full">
                 {user ? <SettingsPage /> : <AuthScreen onUser={() => {}} />}
             </TabsContent>
-        </main>
+        </div>
     </Tabs>
   );
 }
 
 export default function GalaxyApp() {
   return (
-    <div className="bg-background min-h-screen">
-        <Suspense fallback={<div className="flex items-center justify-center h-screen"><Skeleton className="w-10 h-10 rounded-full" /></div>}>
-            <GalaxyAppMain />
-        </Suspense>
-    </div>
+    <Suspense fallback={<div className="flex items-center justify-center h-screen"><div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
+        <GalaxyAppMain />
+    </Suspense>
   );
 }

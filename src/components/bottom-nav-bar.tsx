@@ -2,40 +2,39 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { Button } from '@/components/ui/button';
 import { Home, LayoutGrid, Users, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
 export function BottomNavBar({ activeTab }: { activeTab: string }) {
-  const router = useRouter();
   const pathname = usePathname();
   const [isNavBarHidden, setIsNavBarHidden] = useState(false);
 
   useEffect(() => {
     const hiddenPaths = [
-      /^\/community\/(?!my-profile)[^/]+$/, // Matches /community/[clubId] but NOT /community/my-profile
+      /^\/community\/(?!my-profile)[^/]+$/, 
       /^\/community\/create$/,
-      /^\/community\/.*\/info$/, // Matches /community/[clubId]/info
+      /^\/community\/.*\/info$/, 
     ];
     const shouldHide = hiddenPaths.some(p => p.test(pathname));
     setIsNavBarHidden(shouldHide);
   }, [pathname]);
-  
-  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
-    e.preventDefault();
-    router.push(path);
-  };
 
   const NavItem = ({ href, path, icon: Icon, label, currentActiveTab }: { href: string, path: string, icon: React.ElementType, label: string, currentActiveTab: string }) => {
     const isActive = currentActiveTab === path;
 
     return (
-        <Link href={href} onClick={(e) => handleNavigation(e, href)} className="flex flex-col items-center justify-center h-full rounded-none flex-1 group">
-            <div className={cn("p-3 rounded-full transition-all duration-300", isActive ? 'bg-primary/10 scale-110' : 'group-hover:bg-primary/5')}>
+        <Link href={href} className="flex flex-col items-center justify-center h-full flex-1 group">
+            <div className={cn(
+                "p-2.5 rounded-full transition-all duration-300", 
+                isActive ? 'bg-primary/10 scale-110' : 'group-hover:bg-primary/5'
+            )}>
                 <Icon className={cn("w-6 h-6 transition-colors", isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-primary')} />
             </div>
-            <span className={cn("text-xs font-medium transition-colors", isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-primary')}>{label}</span>
+            <span className={cn(
+                "text-[10px] uppercase tracking-wider font-bold mt-1 transition-colors", 
+                isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-primary'
+            )}>{label}</span>
         </Link>
     );
   };
@@ -45,9 +44,9 @@ export function BottomNavBar({ activeTab }: { activeTab: string }) {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 h-20 w-auto max-w-md mx-auto z-50 md:hidden">
-        <div className="relative h-full bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg rounded-full">
-          <div className="flex justify-around items-center h-full">
+    <div className="fixed bottom-6 left-6 right-6 h-16 w-auto max-w-[calc(100%-3rem)] mx-auto z-50 md:hidden">
+        <div className="h-full bg-card/90 backdrop-blur-xl border border-white/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-3xl overflow-hidden">
+          <div className="flex justify-around items-center h-full px-2">
             <NavItem href="/?tab=home" path="home" icon={Home} label="Home" currentActiveTab={activeTab} />
             <NavItem href="/?tab=tools" path="tools" icon={LayoutGrid} label="Tools" currentActiveTab={activeTab} />
             <NavItem href="/community" path="community" icon={Users} label="Community" currentActiveTab={activeTab} />
