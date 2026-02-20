@@ -208,21 +208,24 @@ function GalaxyAppMain() {
                     <GalaxyLogo className="w-8 h-8" />
                     <span className="text-2xl font-bold text-foreground">AI Atlas</span>
                 </div>
-                <div className='flex items-center gap-1.5'>
-                    <Link href="/ultra-free">
-                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10" title="Ultra Free">
+                <div className='flex items-start gap-3'>
+                    <Link href="/ultra-free" className="flex flex-col items-center gap-1 group">
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10 transition-transform group-hover:scale-110">
                             <Sparkles className="w-5 h-5 text-primary" />
                         </Button>
+                        <span className="text-[9px] font-black text-primary/80 uppercase tracking-tighter text-center leading-none">Ultra<br/>Free</span>
                     </Link>
-                    <Link href="/max-free">
-                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10" title="Max Free">
+                    <Link href="/max-free" className="flex flex-col items-center gap-1 group">
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10 transition-transform group-hover:scale-110">
                             <Gift className="w-5 h-5 text-primary" />
                         </Button>
+                        <span className="text-[9px] font-black text-primary/80 uppercase tracking-tighter text-center leading-none">Max<br/>Free</span>
                     </Link>
-                    <Link href="/mode">
-                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10" title="Modes">
+                    <Link href="/mode" className="flex flex-col items-center gap-1 group">
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10 transition-transform group-hover:scale-110">
                             <Wand2 className="w-5 h-5 text-primary" />
                         </Button>
+                        <span className="text-[9px] font-black text-primary/80 uppercase tracking-tighter text-center leading-none">Modes</span>
                     </Link>
                 </div>
             </div>
