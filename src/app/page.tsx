@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useCallback, useRef, Suspense, lazy } from 'react';
@@ -113,7 +114,7 @@ function HomePageContent() {
                     <CarouselItem key={index}>
                         <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                             <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden shadow-xl">
-                                <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.dataAiHint} unoptimized />
+                                <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                 <div className="absolute bottom-0 left-0 p-4">
                                     <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
@@ -167,7 +168,7 @@ function HomePageContent() {
                                 >
                                     <Pin className={cn("w-5 h-5", isPinned && "fill-current")} />
                                 </Button>
-                                <Image src={category.image} alt={category.name} width={600} height={200} className="w-full h-auto aspect-[3/1] object-cover" data-ai-hint={category.dataAiHint} unoptimized />
+                                <Image src={category.image} alt={category.name} width={600} height={200} className="w-full h-auto aspect-[3/1] object-cover" data-ai-hint={category.name} unoptimized />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                                 <div className="absolute bottom-0 left-0 p-4">
                                     <h5 className="text-white font-bold text-xl">{t(`home.quickTools.categories.${category.translationKey}`)}</h5>
@@ -213,19 +214,19 @@ function GalaxyAppMain() {
                         <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10 transition-transform group-hover:scale-110">
                             <Sparkles className="w-5 h-5 text-primary" />
                         </Button>
-                        <span className="text-[9px] font-black text-primary/80 uppercase tracking-tighter text-center leading-none">Ultra<br/>Free</span>
+                        <span className="text-[10px] font-black text-primary/80 uppercase tracking-tighter text-center leading-none">Ultra</span>
                     </Link>
                     <Link href="/max-free" className="flex flex-col items-center gap-1 group">
                         <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10 transition-transform group-hover:scale-110">
                             <Gift className="w-5 h-5 text-primary" />
                         </Button>
-                        <span className="text-[9px] font-black text-primary/80 uppercase tracking-tighter text-center leading-none">Max<br/>Free</span>
+                        <span className="text-[10px] font-black text-primary/80 uppercase tracking-tighter text-center leading-none">Max</span>
                     </Link>
                     <Link href="/mode" className="flex flex-col items-center gap-1 group">
                         <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10 transition-transform group-hover:scale-110">
                             <Wand2 className="w-5 h-5 text-primary" />
                         </Button>
-                        <span className="text-[9px] font-black text-primary/80 uppercase tracking-tighter text-center leading-none">Modes</span>
+                        <span className="text-[10px] font-black text-primary/80 uppercase tracking-tighter text-center leading-none">Modes</span>
                     </Link>
                 </div>
             </div>

@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useCallback, useState, useEffect } from 'react';
@@ -100,7 +101,7 @@ export default function MaxFreePage() {
                 <div className='flex items-center gap-2'>
                     <Zap className="w-6 h-6 text-foreground" />
                     <h1 className="text-2xl font-bold text-foreground">
-                        Max Free Tools
+                        Max Tools
                     </h1>
                 </div>
             </div>

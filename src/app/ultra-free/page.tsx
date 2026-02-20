@@ -71,7 +71,7 @@ export default function UltraFreePage() {
                                 alt={tool.name}
                                 fill
                                 className="object-contain rounded-md"
-                                data-ai-hint={tool.dataAiHint}
+                                data-ai-hint={tool.name}
                             />
                             <div className="absolute -inset-1 bg-primary/20 rounded-lg blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
@@ -101,7 +101,7 @@ export default function UltraFreePage() {
                           width={32}
                           height={32}
                           className="object-contain"
-                          data-ai-hint={tool.dataAiHint}
+                          data-ai-hint={tool.name}
                       />
                   </div>
                   <div className="flex-grow">
@@ -151,7 +151,7 @@ export default function UltraFreePage() {
                 <div className='flex items-center gap-2'>
                     <Gift className="w-6 h-6 text-foreground" />
                     <h1 className="text-2xl font-bold text-foreground">
-                        Ultra Free Tools
+                        Ultra Tools
                     </h1>
                 </div>
             </div>
