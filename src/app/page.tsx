@@ -1,15 +1,9 @@
 'use client';
 
-import React, { useCallback, useMemo, useRef, Suspense, lazy } from 'react';
+import React, { useCallback, useRef, Suspense, lazy } from 'react';
 import Image from 'next/image';
 import {
-  Video,
-  Clapperboard,
-  Mic,
-  Bot,
   Wand2,
-  Search,
-  LayoutGrid,
   Send,
   Gift,
   Pin,
@@ -56,7 +50,6 @@ const ToolsLoadingSkeleton = () => (
 
 function HomePageContent() {
   const { t } = useLanguage();
-  const router = useRouter();
   const { pinnedTools, handlePinToggle, addRecentTool } = useUserPreferences();
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
 
@@ -81,7 +74,7 @@ function HomePageContent() {
     },
   ];
 
-  const sortedQuickToolCategories = useMemo(() => {
+  const sortedQuickToolCategories = React.useMemo(() => {
     return [...quickToolCategories].sort((a, b) => {
       const aIsPinned = pinnedTools.has(a.name);
       const bIsPinned = pinnedTools.has(b.name);
@@ -119,7 +112,7 @@ function HomePageContent() {
                     <CarouselItem key={index}>
                         <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                             <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden shadow-xl">
-                                <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.dataAiHint} />
+                                <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.dataAiHint} unoptimized />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                 <div className="absolute bottom-0 left-0 p-4">
                                     <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
@@ -173,7 +166,7 @@ function HomePageContent() {
                                 >
                                     <Pin className={cn("w-5 h-5", isPinned && "fill-current")} />
                                 </Button>
-                                <Image src={category.image} alt={category.name} width={600} height={200} className="w-full h-auto aspect-[3/1] object-cover" data-ai-hint={category.dataAiHint} />
+                                <Image src={category.image} alt={category.name} width={600} height={200} className="w-full h-auto aspect-[3/1] object-cover" data-ai-hint={category.dataAiHint} unoptimized />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                                 <div className="absolute bottom-0 left-0 p-4">
                                     <h5 className="text-white font-bold text-xl">{t(`home.quickTools.categories.${category.translationKey}`)}</h5>
@@ -188,7 +181,7 @@ function HomePageContent() {
   );
 }
 
-export default function GalaxyApp() {
+function GalaxyAppMain() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const activeTab = searchParams.get('tab') || 'home';
@@ -207,65 +200,73 @@ export default function GalaxyApp() {
   };
 
   return (
-    <div className="bg-background min-h-screen">
-        <Tabs value={activeTab} className="h-full flex flex-col">
-            <header className="px-6 pt-6 flex-shrink-0">
-                <div className="flex justify-between items-center py-2">
-                    <div className="flex items-center gap-2">
-                        <GalaxyLogo className="w-8 h-8" />
-                        <span className="text-2xl font-bold text-foreground">AI Atlas</span>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                        <Link href="/ultra-free">
-                            <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Gift className="w-5 h-5 text-primary"/></Button>
-                        </Link>
-                        <Link href="/mode">
-                            <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Wand2 className="w-5 h-5 text-primary"/></Button>
-                        </Link>
-                    </div>
+    <Tabs value={activeTab} className="h-full flex flex-col">
+        <header className="px-6 pt-6 flex-shrink-0">
+            <div className="flex justify-between items-center py-2">
+                <div className="flex items-center gap-2">
+                    <GalaxyLogo className="w-8 h-8" />
+                    <span className="text-2xl font-bold text-foreground">AI Atlas</span>
                 </div>
-                
-                <TabsList className="grid w-full grid-cols-4 bg-transparent p-0 mt-4 border-b">
-                    <TabsTrigger value="home" onClick={() => router.push('/?tab=home')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.home')}</TabsTrigger>
-                    <TabsTrigger value="tools" onClick={() => router.push('/?tab=tools')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.tools')}</TabsTrigger>
-                    <TabsTrigger value="trending" onClick={() => router.push('/?tab=trending')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.trending')}</TabsTrigger>
-                    <TabsTrigger value="settings" onClick={() => router.push('/?tab=settings')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.settings')}</TabsTrigger>
-                </TabsList>
-            </header>
+                <div className='flex items-center gap-2'>
+                    <Link href="/ultra-free">
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Gift className="w-5 h-5 text-primary"/></Button>
+                    </Link>
+                    <Link href="/mode">
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Wand2 className="w-5 h-5 text-primary"/></Button>
+                    </Link>
+                </div>
+            </div>
             
-            <main className="flex-1 overflow-y-auto no-scrollbar">
-                <TabsContent value="home" className="px-6 mt-0 animate-fade-in-up">
-                    <HomePageContent />
-                </TabsContent>
-                
-                <TabsContent value="tools" className="mt-0 h-full animate-fade-in-up">
-                    <Suspense fallback={<ToolsLoadingSkeleton />}>
-                        <ToolsTabContent onShare={handleShareTool} onClick={addRecentTool} />
-                    </Suspense>
-                </TabsContent>
-                
-                <TabsContent value="trending" className="px-6 mt-4 animate-fade-in-up">
-                    <div className="space-y-4">
-                        <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" className="block group">
-                            <Card className="bg-card border-none rounded-2xl shadow-lg overflow-hidden">
-                                <div className="relative aspect-video">
-                                    <Image src={"https://picsum.photos/seed/trending-ai/600/300"} alt="Trending" fill className="object-cover" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                                </div>
-                                <div className="p-4">
-                                    <h3 className="font-bold text-lg">Trending AI Tools</h3>
-                                    <p className="text-muted-foreground text-sm mt-1">Discover the fastest-growing AI tools.</p>
-                                </div>
-                            </Card>
-                        </Link>
-                    </div>
-                </TabsContent>
-                
-                <TabsContent value="settings" className="bg-secondary/30 mt-0 min-h-full animate-fade-in-up">
-                    {user ? <SettingsPage /> : <AuthScreen onUser={() => {}} />}
-                </TabsContent>
-            </main>
-        </Tabs>
+            <TabsList className="grid w-full grid-cols-4 bg-transparent p-0 mt-4 border-b">
+                <TabsTrigger value="home" onClick={() => router.push('/?tab=home')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.home')}</TabsTrigger>
+                <TabsTrigger value="tools" onClick={() => router.push('/?tab=tools')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.tools')}</TabsTrigger>
+                <TabsTrigger value="trending" onClick={() => router.push('/?tab=trending')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.trending')}</TabsTrigger>
+                <TabsTrigger value="settings" onClick={() => router.push('/?tab=settings')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.settings')}</TabsTrigger>
+            </TabsList>
+        </header>
+        
+        <main className="flex-1 overflow-y-auto no-scrollbar">
+            <TabsContent value="home" className="px-6 mt-0 animate-fade-in-up">
+                <HomePageContent />
+            </TabsContent>
+            
+            <TabsContent value="tools" className="mt-0 h-full animate-fade-in-up">
+                <Suspense fallback={<ToolsLoadingSkeleton />}>
+                    <ToolsTabContent onShare={handleShareTool} onClick={addRecentTool} />
+                </Suspense>
+            </TabsContent>
+            
+            <TabsContent value="trending" className="px-6 mt-4 animate-fade-in-up">
+                <div className="space-y-4">
+                    <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" className="block group">
+                        <Card className="bg-card border-none rounded-2xl shadow-lg overflow-hidden">
+                            <div className="relative aspect-video">
+                                <Image src={"https://picsum.photos/seed/trending-ai/600/300"} alt="Trending" fill className="object-cover" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                            </div>
+                            <div className="p-4">
+                                <h3 className="font-bold text-lg">Trending AI Tools</h3>
+                                <p className="text-muted-foreground text-sm mt-1">Discover the fastest-growing AI tools.</p>
+                            </div>
+                        </Card>
+                    </Link>
+                </div>
+            </TabsContent>
+            
+            <TabsContent value="settings" className="bg-secondary/30 mt-0 min-h-full animate-fade-in-up">
+                {user ? <SettingsPage /> : <AuthScreen onUser={() => {}} />}
+            </TabsContent>
+        </main>
+    </Tabs>
+  );
+}
+
+export default function GalaxyApp() {
+  return (
+    <div className="bg-background min-h-screen">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen"><Skeleton className="w-10 h-10 rounded-full" /></div>}>
+            <GalaxyAppMain />
+        </Suspense>
     </div>
   );
 }

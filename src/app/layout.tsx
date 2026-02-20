@@ -9,13 +9,13 @@ import { UserPreferencesProvider } from '@/context/user-preferences-context';
 import { ThemeProvider } from '@/context/theme-provider';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
-// Disabling SSR for the main shell is the definitive way to fix hydration errors 
-// when using client-side libraries like swipeable and Firebase auth state.
+// SSR disabled for the main shell to prevent all hydration mismatches
+// and ensure instant UI rendering for client-side features.
 const AppShell = dynamic(() => import('./app-shell').then(mod => mod.AppShell), {
   ssr: false,
-  fallback: (
+  loading: () => (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center">
-      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
     </div>
   )
 });
@@ -51,7 +51,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased overflow-x-hidden">
+      <body className="font-body antialiased">
         <LanguageProvider>
            <GlobalProviders>
               <AppShell>
