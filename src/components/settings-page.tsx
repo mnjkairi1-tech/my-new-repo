@@ -61,7 +61,6 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog"
 import { DataPermissions } from "./settings/data-permissions"
-import { TwoFactorAuth } from "./settings/two-factor-auth"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { Label } from "./ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
