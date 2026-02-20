@@ -1,3 +1,4 @@
+
 'use client';
 import { useAuth } from '@/firebase';
 import {
@@ -66,7 +67,7 @@ function GoogleSignInButton({
 
 const authSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
-  password: z.string().optional(), // Password is optional for reset mode
+  password: z.string().optional(),
 });
 
 function PostSignUpMessage({ email, setAuthMode }: { email: string; setAuthMode: (mode: 'signIn' | 'signUp' | 'forgotPassword') => void; }) {
@@ -139,14 +140,10 @@ function EmailAuth() {
         setSignUpState('pendingVerification');
       } catch (error: any) {
         console.error(`Sign Up error:`, error);
-        let description = error.message;
-        if (error.code === 'auth/email-already-in-use') {
-          description = 'This email is already in use. Please sign in instead.';
-        }
         toast({
           variant: 'destructive',
           title: `Sign Up Failed`,
-          description: description,
+          description: error.message,
         });
       } finally {
         setIsSubmitting(false);
@@ -156,14 +153,10 @@ function EmailAuth() {
         await signInWithEmailAndPassword(auth, data.email, data.password!);
       } catch (error: any) {
         console.error(`Sign In error:`, error);
-        let description = 'Invalid email or password.';
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-          description = 'Invalid email or password.';
-        }
         toast({
           variant: 'destructive',
           title: `Sign In Failed`,
-          description: description,
+          description: 'Invalid email or password.',
         });
       } finally {
         setIsSubmitting(false);
@@ -281,16 +274,10 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
         onUser(result.user);
     } catch (error: any) {
         console.error("Google Sign-In Error:", error);
-        let description = 'Could not complete the sign-in process.';
-        if (error.code === 'auth/popup-closed-by-user') {
-            description = 'The sign-in window was closed before completion.';
-        } else if (error.code === 'auth/popup-blocked') {
-            description = 'The sign-in pop-up was blocked by your browser. Please allow pop-ups for this site.';
-        }
         toast({
             variant: 'destructive',
             title: 'Google Sign-In Failed',
-            description,
+            description: error.message || 'Could not complete the sign-in process.',
         });
     } finally {
         setIsSigningIn(false);
@@ -301,21 +288,13 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
     if (!auth) return;
   
     (window as any).handleCustomTokenSignIn = async (token: string) => {
-      if (!token) {
-        toast({ variant: 'destructive', title: 'Sign-In Failed', description: 'Received an empty token from native app.' });
-        return;
-      }
+      if (!token) return;
       try {
         setIsSigningIn(true);
         const userCredential = await signInWithCustomToken(auth, token);
         onUser(userCredential.user);
       } catch (error) {
         console.error("Custom Token Sign-In Error:", error);
-        toast({
-          variant: 'destructive',
-          title: 'Sign-In Failed',
-          description: 'Failed to sign in with custom token.',
-        });
       } finally {
         setIsSigningIn(false);
       }
@@ -369,70 +348,6 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   );
 }
 
-function VerifyEmailScreen() {
-    const auth = useAuth();
-    const { toast } = useToast();
-    const [isSending, setIsSending] = useState(false);
-    const user = auth.currentUser;
-
-    const handleResend = async () => {
-        if (!user) return;
-        setIsSending(true);
-        try {
-            await sendEmailVerification(user);
-            toast({
-                title: 'Verification Email Sent!',
-                description: "A new verification link has been sent to your inbox.",
-            });
-        } catch (error: any) {
-            console.error("Resend Verification Error:", error);
-            let description = error.message;
-            if (error.code === 'auth/too-many-requests') {
-                description = 'You have requested a verification email too many times. Please try again later.'
-            }
-            toast({ variant: 'destructive', title: 'Error', description });
-        } finally {
-            setIsSending(false);
-        }
-    };
-
-    const handleSignOutAndBack = async () => {
-        await signOut(auth);
-    };
-    
-    const handleRefresh = () => {
-        window.location.reload();
-    };
-
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 font-body">
-            <div className="w-full max-w-sm text-center">
-                <div className="flex justify-center mb-6">
-                    <MailCheck className="w-20 h-20 text-primary" />
-                </div>
-                <h1 className="text-3xl font-bold text-foreground mb-2">Verify Your Email</h1>
-                <p className="text-lg text-muted-foreground mb-6">
-                    We've sent a verification link to <span className="font-semibold text-foreground">{user?.email}</span>. Please check your inbox and click the link to continue.
-                </p>
-                <div className="space-y-4">
-                     <Button onClick={handleRefresh} className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/20">
-                        I've Verified, Continue
-                    </Button>
-                    <Button onClick={handleResend} disabled={isSending} className="w-full h-12 rounded-xl" variant="secondary">
-                        {isSending ? 'Sending...' : 'Resend Verification Email'}
-                    </Button>
-                    <Button variant="link" onClick={handleSignOutAndBack} className="w-full font-bold">
-                        Back to Sign In
-                    </Button>
-                </div>
-                <p className="text-xs text-muted-foreground mt-8 opacity-60">
-                    Can't find the email? Check your spam folder.
-                </p>
-            </div>
-        </div>
-    );
-}
-
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
@@ -458,7 +373,22 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   if (user) {
     const isPasswordProvider = user.providerData.some(p => p.providerId === 'password');
     if (isPasswordProvider && !user.emailVerified) {
-      return <VerifyEmailScreen />;
+      return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 text-center">
+            <MailCheck className="w-20 h-20 text-primary mb-6" />
+            <h1 className="text-3xl font-bold mb-4">Check Your Inbox</h1>
+            <p className="text-lg text-muted-foreground mb-8">
+                We've sent a verification email to <strong>{user.email}</strong>. 
+                Please verify your email to access the full features of AI Atlas.
+            </p>
+            <Button onClick={() => window.location.reload()} className="rounded-full h-12 px-8">
+                I've Verified, Continue
+            </Button>
+            <Button variant="link" onClick={() => signOut(auth)} className="mt-4 font-bold">
+                Back to Sign In
+            </Button>
+        </div>
+      );
     }
     return <>{children}</>;
   }

@@ -13,6 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
 import { allToolsServer } from '@/lib/all-tools-server';
 import { useToast } from '@/hooks/use-toast';
+import { formatDistanceToNow } from 'date-fns';
 
 interface Group {
     id: string;
@@ -27,7 +28,7 @@ interface GroupTool {
     toolDescription?: string;
     toolImage?: string;
     addedBy: string;
-    addedAt: Timestamp;
+    addedAt: any;
     upvotes: number;
 }
 
@@ -70,7 +71,9 @@ const ToolGridCard = ({ tool }: { tool: GroupTool }) => {
                         </p>
                     </div>
                     <div className="mt-3 flex items-center justify-between">
-                        <span className="text-[9px] font-bold text-primary uppercase tracking-tighter">Shared {tool.addedAt?.toDate ? formatDistanceToNow(tool.addedAt.toDate()) : 'Recently'} ago</span>
+                        <span className="text-[9px] font-bold text-primary uppercase tracking-tighter">
+                            Shared {tool.addedAt?.toDate ? formatDistanceToNow(tool.addedAt.toDate(), { addSuffix: true }) : 'Recently'}
+                        </span>
                         <ExternalLink className="w-3 h-3 text-muted-foreground opacity-50" />
                     </div>
                 </CardContent>
@@ -78,15 +81,6 @@ const ToolGridCard = ({ tool }: { tool: GroupTool }) => {
         </a>
     );
 };
-
-// Helper for relative time
-function formatDistanceToNow(date: Date) {
-    const diff = Math.floor((new Date().getTime() - date.getTime()) / 1000);
-    if (diff < 60) return `${diff}s`;
-    if (diff < 3600) return `${Math.floor(diff / 60)}m`;
-    if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
-    return `${Math.floor(diff / 86400)}d`;
-}
 
 export default function GroupToolsPageClient({ clubId }: { clubId: string }) {
     const router = useRouter();
@@ -136,13 +130,13 @@ export default function GroupToolsPageClient({ clubId }: { clubId: string }) {
                 </div>
             </header>
 
-            <main className="flex-grow p-4 bg-secondary/10">
+            <main className="flex-grow p-4 bg-secondary/10 pb-24">
                 {toolsLoading ? (
                     <div className="grid grid-cols-2 gap-4">
                         {[...Array(6)].map((_, i) => <Skeleton key={i} className="aspect-[4/5] rounded-2xl" />)}
                     </div>
                 ) : filteredTools.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pb-20">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                         {filteredTools.map(tool => <ToolGridCard key={tool.id} tool={tool} />)}
                     </div>
                 ) : (

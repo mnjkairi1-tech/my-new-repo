@@ -51,7 +51,7 @@ interface GroupTool {
     toolDescription?: string;
     toolImage?: string;
     addedBy: string;
-    addedAt: Date;
+    addedAt: any;
     upvotes: number;
 }
 
@@ -61,7 +61,7 @@ const ToolCard = ({ tool }: { tool: GroupTool }) => {
     
     return (
         <a href={tool.toolUrl} target="_blank" rel="noopener noreferrer">
-            <Card className="p-2 w-28 h-28 flex flex-col items-center justify-center gap-2 shrink-0 group hover:bg-accent transition-colors rounded-2xl border-white/20 shadow-sm">
+            <Card className="p-2 w-28 h-28 flex flex-col items-center justify-center gap-2 shrink-0 group hover:bg-accent transition-colors rounded-2xl border-white/20 shadow-sm relative overflow-hidden">
                 <div className='w-12 h-12 bg-secondary rounded-xl flex items-center justify-center overflow-hidden'>
                     {imageUrl ? (
                         <Image src={imageUrl} alt={tool.toolName} width={32} height={32} className="object-contain" unoptimized />
@@ -142,8 +142,6 @@ export default function ClubDetailsPageClient() {
             setShowScrollToBottom(!isScrolledToBottom);
         };
         chatEl.addEventListener('scroll', handleScroll);
-        // Initial check
-        handleScroll();
         return () => chatEl.removeEventListener('scroll', handleScroll);
     }
   }, [messages]);
@@ -276,7 +274,7 @@ export default function ClubDetailsPageClient() {
                     </Button>
                     <Link href={`/community/${clubId}/info`} className="flex items-center gap-3">
                         <Avatar className='h-10 w-10 border-2 border-white/50 shadow-sm'>
-                            <AvatarImage src={clubData?.name ? `https://ui-avatars.com/api/?name=${encodeURIComponent(clubData.name)}&background=random&color=fff&size=128` : ''} alt={clubData?.name} />
+                            <AvatarImage src={clubData?.avatar} alt={clubData?.name} />
                             <AvatarFallback>{clubData?.name?.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>
@@ -296,9 +294,9 @@ export default function ClubDetailsPageClient() {
                     <div className="flex justify-between items-center mb-2">
                         <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Shared Tools</h3>
                         <Link href={`/community/${clubId}/tools`}>
-                            <Button variant="link" size="sm" className="h-auto p-0 text-primary font-bold text-xs">
+                            <Button variant="link" size="sm" className="h-auto p-0 text-primary font-bold text-xs flex items-center gap-1">
                                 See all
-                                <ChevronRight className="w-3 h-3 ml-0.5" />
+                                <ChevronRight className="w-3 h-3" />
                             </Button>
                         </Link>
                     </div>

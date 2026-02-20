@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -63,7 +64,6 @@ export default function SubscriptionPlansPage() {
               </CardHeader>
               <CardContent className="flex-grow text-center text-muted-foreground px-6">
                 <p>{plan.description}</p>
-                {/* Features will be added here later */}
                 <div className="mt-6 space-y-3">
                     <div className="h-4 bg-secondary/50 rounded-full w-3/4 mx-auto animate-pulse"></div>
                     <div className="h-4 bg-secondary/50 rounded-full w-1/2 mx-auto animate-pulse"></div>

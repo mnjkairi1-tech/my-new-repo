@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState, useEffect } from "react"
@@ -127,15 +128,6 @@ const FontSizeSelector = () => {
     )
 }
 
-interface BeforeInstallPromptEvent extends Event {
-  readonly platforms: string[];
-  readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed';
-    platform: string;
-  }>;
-  prompt(): Promise<void>;
-}
-
 export function SettingsPage() {
     const { t } = useLanguage();
     const auth = useAuth();
@@ -144,36 +136,6 @@ export function SettingsPage() {
     const [pushEnabled, setPushEnabled] = React.useState(false);
     const [emailEnabled, setEmailEnabled] = React.useState(true);
     const [muteAll, setMuteAll] = React.useState(false);
-    const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-
-
-    useEffect(() => {
-        const handleBeforeInstallPrompt = (e: Event) => {
-          e.preventDefault();
-          setInstallPrompt(e as BeforeInstallPromptEvent);
-        };
-    
-        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    
-        return () => {
-          window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-        };
-      }, []);
-    
-      const handleInstallClick = () => {
-        if (!installPrompt) {
-          return;
-        }
-        installPrompt.prompt();
-        installPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-          } else {
-            console.log('User dismissed the install prompt');
-          }
-          setInstallPrompt(null);
-        });
-      };
 
     const handleSignOut = () => {
         signOut(auth);
@@ -317,15 +279,12 @@ export function SettingsPage() {
         switch (label) {
             case t('settings.privacy.analytics'):
               setAnalyticsEnabled(checked);
-              console.log(`App analytics ${checked ? 'enabled' : 'disabled'}`);
               break;
             case t('settings.notifications.push'):
               setPushEnabled(checked);
-              console.log(`Push notifications ${checked ? 'enabled' : 'disabled'}`);
               break;
             case t('settings.notifications.email'):
               setEmailEnabled(checked);
-              console.log(`Email alerts ${checked ? 'enabled' : 'disabled'}`);
               break;
             case t('settings.notifications.mute'):
               setMuteAll(checked);
@@ -333,7 +292,6 @@ export function SettingsPage() {
                 setPushEnabled(false);
                 setEmailEnabled(false);
               }
-              console.log(`Mute all ${checked ? 'enabled' : 'disabled'}`);
               break;
             default:
               break;
@@ -341,7 +299,7 @@ export function SettingsPage() {
       };
 
   return (
-    <div className="p-4 animate-fade-in-up">
+    <div className="p-4 animate-fade-in-up pb-24">
        <div className="flex items-center gap-4 mb-8">
             <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
                 <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
@@ -402,14 +360,6 @@ export function SettingsPage() {
                     />
                 );
 
-                const itemWrapper = (children: React.ReactNode) => (
-                    option.customOnClick ? (
-                        <button className="w-full text-left" onClick={option.customOnClick} disabled={!installPrompt}>
-                            {children}
-                        </button>
-                    ) : children
-                );
-
                 if (option.href) {
                   return (
                     <div key={i}>
@@ -454,7 +404,7 @@ export function SettingsPage() {
                         </Accordion>
                     ) : (
                         <>
-                         {itemWrapper(itemContent)}
+                        {itemContent}
                         {i < category.options.length - 1 && <Separator className="bg-border/50"/>}
                         </>
                     )}
