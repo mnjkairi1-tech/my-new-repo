@@ -9,6 +9,7 @@ import {
   sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,7 +22,7 @@ import { Input } from './ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { AuthLoader } from './auth-loader';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
-import { MailCheck } from 'lucide-react';
+import { MailCheck, KeyRound } from 'lucide-react';
 
 function GoogleSignInButton({
   onClick,
@@ -63,18 +64,12 @@ function GoogleSignInButton({
   );
 }
 
-const signUpSchema = z.object({
+const authSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
+  password: z.string().optional(), // Password is optional for reset mode
 });
 
-const signInSchema = z.object({
-  email: z.string().email({ message: "Invalid email address." }),
-  password: z.string().min(1, { message: "Password is required." }),
-});
-
-
-function PostSignUpMessage({ email, setAuthMode }: { email: string; setAuthMode: (mode: 'signIn' | 'signUp') => void; }) {
+function PostSignUpMessage({ email, setAuthMode }: { email: string; setAuthMode: (mode: 'signIn' | 'signUp' | 'forgotPassword') => void; }) {
   return (
     <div className="rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6 text-center">
         <MailCheck className="w-16 h-16 text-green-500 mx-auto mb-4" />
@@ -85,7 +80,7 @@ function PostSignUpMessage({ email, setAuthMode }: { email: string; setAuthMode:
         <p className="text-muted-foreground">
             Please check your inbox and click the link to finish creating your account.
         </p>
-        <Button className="w-full mt-6" onClick={() => setAuthMode('signIn')}>
+        <Button className="w-full mt-6 rounded-xl" onClick={() => setAuthMode('signIn')}>
             Back to Sign In
         </Button>
     </div>
@@ -93,7 +88,7 @@ function PostSignUpMessage({ email, setAuthMode }: { email: string; setAuthMode:
 }
 
 function EmailAuth() {
-  const [authMode, setAuthMode] = useState<'signIn' | 'signUp'>('signUp');
+  const [authMode, setAuthMode] = useState<'signIn' | 'signUp' | 'forgotPassword'>('signUp');
   const [signUpState, setSignUpState] = useState<'form' | 'pendingVerification'>('form');
   const [emailForVerification, setEmailForVerification] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -101,18 +96,40 @@ function EmailAuth() {
   const { toast } = useToast();
 
   const form = useForm({
-    resolver: zodResolver(authMode === 'signUp' ? signUpSchema : signInSchema),
+    resolver: zodResolver(authSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
+  const onSubmit = async (data: z.infer<typeof authSchema>) => {
     setIsSubmitting(true);
+    
+    if (authMode === 'forgotPassword') {
+        try {
+            await sendPasswordResetEmail(auth, data.email);
+            toast({
+                title: "Reset Link Sent!",
+                description: `Check your email ${data.email} to reset your password.`,
+            });
+            setAuthMode('signIn');
+        } catch (error: any) {
+            console.error("Reset Email Error:", error);
+            toast({
+                variant: 'destructive',
+                title: "Error",
+                description: error.message,
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+        return;
+    }
+
     if (authMode === 'signUp') {
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+        const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password!);
         await sendEmailVerification(userCredential.user);
         toast({
           title: "Verification Email Sent!",
@@ -136,8 +153,7 @@ function EmailAuth() {
       }
     } else { // Sign In logic
       try {
-        await signInWithEmailAndPassword(auth, data.email, data.password);
-        // The AuthGate will handle the redirect on successful sign-in
+        await signInWithEmailAndPassword(auth, data.email, data.password!);
       } catch (error: any) {
         console.error(`Sign In error:`, error);
         let description = 'Invalid email or password.';
@@ -157,7 +173,7 @@ function EmailAuth() {
 
   useEffect(() => {
     form.reset();
-    setSignUpState('form'); // Reset signup state when mode changes
+    setSignUpState('form');
   }, [authMode, form]);
 
   if (signUpState === 'pendingVerification' && authMode === 'signUp') {
@@ -167,8 +183,15 @@ function EmailAuth() {
   return (
     <div className="rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6">
       <h2 className="text-2xl font-bold mb-4 text-center">
-        {authMode === 'signUp' ? 'Create an Account' : 'Sign In'}
+        {authMode === 'signUp' ? 'Create an Account' : (authMode === 'signIn' ? 'Sign In' : 'Reset Password')}
       </h2>
+      
+      {authMode === 'forgotPassword' && (
+          <p className="text-sm text-muted-foreground mb-4 text-center">
+              Don't worry! Enter your email below and we'll send you a password reset link.
+          </p>
+      )}
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -184,28 +207,51 @@ function EmailAuth() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" disabled={isSubmitting} className="w-full h-12 rounded-xl text-base">
-            {isSubmitting ? 'Submitting...' : (authMode === 'signUp' ? 'Create Account' : 'Sign In')}
+          
+          {authMode !== 'forgotPassword' && (
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                        <FormLabel>Password</FormLabel>
+                        {authMode === 'signIn' && (
+                            <Button 
+                                variant="link" 
+                                className="h-auto p-0 text-xs text-primary font-bold"
+                                type="button"
+                                onClick={() => setAuthMode('forgotPassword')}
+                            >
+                                Forgot password?
+                            </Button>
+                        )}
+                    </div>
+                    <FormControl>
+                      <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+          )}
+
+          <Button type="submit" disabled={isSubmitting} className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/20">
+            {isSubmitting ? 'Processing...' : (authMode === 'signUp' ? 'Create Account' : (authMode === 'signIn' ? 'Sign In' : 'Send Reset Link'))}
           </Button>
         </form>
       </Form>
+      
       <div className="mt-4 text-center">
-        <Button variant="link" onClick={() => setAuthMode(authMode === 'signUp' ? 'signIn' : 'signUp')}>
-          {authMode === 'signUp' ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
-        </Button>
+        {authMode === 'forgotPassword' ? (
+            <Button variant="link" className="font-bold text-sm" onClick={() => setAuthMode('signIn')}>
+                Wait, I remember it! Back to Sign In
+            </Button>
+        ) : (
+            <Button variant="link" className="font-bold text-sm" onClick={() => setAuthMode(authMode === 'signUp' ? 'signIn' : 'signUp')}>
+              {authMode === 'signUp' ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+            </Button>
+        )}
       </div>
     </div>
   );
@@ -288,7 +334,7 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
             <h1 className="text-3xl font-bold text-foreground">
             Welcome to AI Atlas
             </h1>
-            <p className="mt-2 text-md text-muted-foreground">
+            <p className="mt-2 text-md text-muted-foreground text-center">
             Sign in or create an account to get started.
             </p>
         </div>
@@ -315,7 +361,7 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
             />
         </div>
 
-        <p className="text-xs text-muted-foreground max-w-sm mt-8 text-center">
+        <p className="text-xs text-muted-foreground max-w-sm mt-8 text-center opacity-60">
             By signing in, you agree to our Terms of Service and Privacy Policy.
         </p>
       </div>
@@ -354,7 +400,6 @@ function VerifyEmailScreen() {
         await signOut(auth);
     };
     
-    // This button is mostly for user feedback, as the check is now automatic.
     const handleRefresh = () => {
         window.location.reload();
     };
@@ -370,17 +415,17 @@ function VerifyEmailScreen() {
                     We've sent a verification link to <span className="font-semibold text-foreground">{user?.email}</span>. Please check your inbox and click the link to continue.
                 </p>
                 <div className="space-y-4">
-                     <Button onClick={handleRefresh} className="w-full">
+                     <Button onClick={handleRefresh} className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/20">
                         I've Verified, Continue
                     </Button>
-                    <Button onClick={handleResend} disabled={isSending} className="w-full" variant="secondary">
+                    <Button onClick={handleResend} disabled={isSending} className="w-full h-12 rounded-xl" variant="secondary">
                         {isSending ? 'Sending...' : 'Resend Verification Email'}
                     </Button>
-                    <Button variant="link" onClick={handleSignOutAndBack} className="w-full">
+                    <Button variant="link" onClick={handleSignOutAndBack} className="w-full font-bold">
                         Back to Sign In
                     </Button>
                 </div>
-                <p className="text-xs text-muted-foreground mt-8">
+                <p className="text-xs text-muted-foreground mt-8 opacity-60">
                     Can't find the email? Check your spam folder.
                 </p>
             </div>
@@ -392,20 +437,17 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
   
-  // This effect will run on the client side and check for verification status periodically.
   useEffect(() => {
     if (user && !user.emailVerified && user.providerData.some(p => p.providerId === 'password')) {
         const intervalId = setInterval(async () => {
-            // It's important to reload the user object to get the latest state
             await user.reload();
             if (auth.currentUser?.emailVerified) {
                 clearInterval(intervalId);
-                // Reload the entire page to force a state update in the AuthGate
                 window.location.reload(); 
             }
-        }, 3000); // Check every 3 seconds
+        }, 3000);
 
-        return () => clearInterval(intervalId); // Cleanup on component unmount
+        return () => clearInterval(intervalId);
     }
   }, [user, auth]);
 
@@ -423,7 +465,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthScreen
-      onUser={(newUser) => { /* The useUser hook will update automatically */ }}
+      onUser={(newUser) => { }}
     />
   );
 }
