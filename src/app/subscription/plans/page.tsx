@@ -80,7 +80,8 @@ export default function SubscriptionPlansPage() {
         'mod apps',
         'ultra free tools',
         'get daily new tools add automatically',
-        'get community primum blue ticks'
+        'get community primum blue ticks',
+        'get new features early'
       ]
     },
   };
