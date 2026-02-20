@@ -8,6 +8,7 @@ import {
   Gift,
   Pin,
   TrendingUp,
+  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -207,12 +208,21 @@ function GalaxyAppMain() {
                     <GalaxyLogo className="w-8 h-8" />
                     <span className="text-2xl font-bold text-foreground">AI Atlas</span>
                 </div>
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-1.5'>
                     <Link href="/ultra-free">
-                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10"><Gift className="w-5 h-5 text-primary"/></Button>
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10" title="Ultra Free">
+                            <Sparkles className="w-5 h-5 text-primary" />
+                        </Button>
+                    </Link>
+                    <Link href="/max-free">
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10" title="Max Free">
+                            <Gift className="w-5 h-5 text-primary" />
+                        </Button>
                     </Link>
                     <Link href="/mode">
-                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10"><Wand2 className="w-5 h-5 text-primary"/></Button>
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10" title="Modes">
+                            <Wand2 className="w-5 h-5 text-primary" />
+                        </Button>
                     </Link>
                 </div>
             </div>
