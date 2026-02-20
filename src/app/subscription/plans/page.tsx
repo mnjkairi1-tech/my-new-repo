@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 type PlanType = 'basic' | 'standard' | 'pro';
 
 export default function SubscriptionPlansPage() {
-  const [activePlan, setActivePlan] = useState<PlanType>('standard');
+  const [activePlan, setActivePlan] = useState<PlanType>('basic');
 
   const plans = {
     basic: {
@@ -22,7 +22,17 @@ export default function SubscriptionPlansPage() {
       buttonText: 'Current Plan',
       buttonVariant: 'outline' as const,
       icon: <Zap className="w-10 h-10 text-blue-400" />,
-      features: ['Browse all tools', 'Save up to 5 favorites', 'Community access']
+      features: [
+        'Get access to 1 million tools',
+        'Community Access',
+        '5 UI Themes',
+        'Compare Tools',
+        'Tools addition in groups',
+        '20 Favourite Tools',
+        'Free Popular Tools',
+        'Quick Tools access',
+        'Recent usage tool'
+      ]
     },
     standard: {
       name: 'Standard',
@@ -33,7 +43,14 @@ export default function SubscriptionPlansPage() {
       buttonVariant: 'default' as const,
       popular: true,
       icon: <Star className="w-10 h-10 text-yellow-400" />,
-      features: ['Priority support', 'Unlimited favorites', 'Early access to new tools', 'Ad-free experience']
+      features: [
+        'Everything in Basic',
+        'Priority support',
+        'Unlimited favorites',
+        'Early access to new tools',
+        'Ad-free experience',
+        'Unlimited UI Themes'
+      ]
     },
     pro: {
       name: 'Pro',
@@ -43,7 +60,14 @@ export default function SubscriptionPlansPage() {
       buttonText: 'Go Pro',
       buttonVariant: 'default' as const,
       icon: <Crown className="w-10 h-10 text-primary" />,
-      features: ['Exclusive Pro tools', 'Advanced AI insights', 'Personalized recommendations', 'Dedicated manager']
+      features: [
+        'Everything in Standard',
+        'Exclusive Pro tools',
+        'Advanced AI insights',
+        'Personalized recommendations',
+        'Dedicated account manager',
+        'API Access for tools'
+      ]
     },
   };
 
@@ -56,10 +80,12 @@ export default function SubscriptionPlansPage() {
       </div>
       
       <div className="relative z-10 w-full max-w-lg p-6">
-        <ClubHeader title="Subscription Plans" showBackButton />
+        <div className="mb-6">
+            <ClubHeader title="Subscription Plans" showBackButton />
+        </div>
         
         {/* Tab Switcher */}
-        <div className="mt-8 flex bg-white/40 backdrop-blur-md p-1.5 rounded-2xl shadow-inner border border-white/20">
+        <div className="mt-4 flex bg-white/40 backdrop-blur-md p-1.5 rounded-2xl shadow-inner border border-white/20">
             {(['basic', 'standard', 'pro'] as PlanType[]).map((p) => (
                 <button
                     key={p}
@@ -124,7 +150,7 @@ export default function SubscriptionPlansPage() {
                     variant={currentPlan.buttonVariant} 
                     className={cn(
                         "w-full h-14 rounded-2xl font-black text-lg shadow-xl transition-transform active:scale-95",
-                        activePlan === 'basic' ? 'bg-secondary text-primary' : 'bg-primary text-white shadow-primary/20'
+                        activePlan === 'basic' ? "bg-secondary text-primary hover:bg-secondary/80" : "bg-primary text-white shadow-primary/20 hover:bg-primary/90"
                     )}
                     disabled={activePlan === 'basic'}
                 >
