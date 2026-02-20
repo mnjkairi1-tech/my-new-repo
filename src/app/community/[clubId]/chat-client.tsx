@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
 import { Button } from '@/components/ui/button';
-import { Send, Users, ShieldCheck, ArrowDown, MoreVertical, Phone, Search, ArrowLeft, ExternalLink, Loader2, ChevronRight, MessageSquare } from 'lucide-react';
+import { Send, Users, ShieldCheck, ArrowDown, MoreVertical, Phone, Search, ArrowLeft, ExternalLink, Loader2, ChevronRight, MessageSquare, LayoutGrid } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { useUser, useFirestore, useMemoFirebase, useFirebaseApp } from '@/firebase';
@@ -15,7 +15,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter, useParams } from 'next/navigation';
 import { Card } from '@/components/ui/card';
 import { allToolsServer } from '@/lib/all-tools-server';
-import { ToolIcon } from '@/lib/tool-icons';
 import { collection, doc, query, orderBy, limit, addDoc, serverTimestamp, setDoc, updateDoc, increment } from 'firebase/firestore';
 import { useCollection, useDoc } from '@/firebase';
 import { useToast } from '@/hooks/use-toast';
@@ -62,15 +61,15 @@ const ToolCard = ({ tool }: { tool: GroupTool }) => {
     
     return (
         <a href={tool.toolUrl} target="_blank" rel="noopener noreferrer">
-            <Card className="p-2 w-28 h-28 flex flex-col items-center justify-center gap-2 shrink-0 group hover:bg-accent transition-colors rounded-none">
-                <div className='w-12 h-12 bg-secondary rounded-2xl flex items-center justify-center overflow-hidden'>
+            <Card className="p-2 w-28 h-28 flex flex-col items-center justify-center gap-2 shrink-0 group hover:bg-accent transition-colors rounded-2xl border-white/20 shadow-sm">
+                <div className='w-12 h-12 bg-secondary rounded-xl flex items-center justify-center overflow-hidden'>
                     {imageUrl ? (
                         <Image src={imageUrl} alt={tool.toolName} width={32} height={32} className="object-contain" unoptimized />
                     ) : (
                         <Users className="w-6 h-6 text-primary"/>
                     )}
                 </div>
-                <p className="text-xs font-semibold text-center line-clamp-2">{tool.toolName}</p>
+                <p className="text-[10px] font-bold text-center line-clamp-2 px-1">{tool.toolName}</p>
                 <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <ExternalLink className="w-3 h-3 text-muted-foreground" />
                 </div>
@@ -87,8 +86,6 @@ export default function ClubDetailsPageClient() {
   const { user, isUserLoading } = useUser();
   const firestore = useFirestore();
   const { toast } = useToast();
-  const firebaseApp = useFirebaseApp();
-
 
   const [newMessage, setNewMessage] = useState('');
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -149,7 +146,7 @@ export default function ClubDetailsPageClient() {
         handleScroll();
         return () => chatEl.removeEventListener('scroll', handleScroll);
     }
-  }, [messages]); // Re-evaluate when messages change
+  }, [messages]);
   
   const scrollToBottom = () => {
     chatContainerRef.current?.scrollTo({ top: chatContainerRef.current.scrollHeight, behavior: 'smooth' });
@@ -157,7 +154,6 @@ export default function ClubDetailsPageClient() {
 
   useEffect(() => {
     if (chatContainerRef.current && !messagesLoading) {
-      // Unconditionally scroll to bottom once messages are loaded
       setTimeout(() => {
         if(chatContainerRef.current) {
           chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -183,7 +179,6 @@ export default function ClubDetailsPageClient() {
     setDocumentNonBlocking(memberRef, memberData, { merge: false });
     updateDocumentNonBlocking(groupRef, { memberCount: increment(1) });
     
-    // Add group membership to user's subcollection for easy querying
     const userGroupMembershipRef = doc(firestore, 'users', user.uid, 'groupMemberships', clubId);
     setDocumentNonBlocking(userGroupMembershipRef, { groupId: clubId }, { merge: false });
 
@@ -210,11 +205,7 @@ export default function ClubDetailsPageClient() {
   );
 
   const handleBack = () => {
-    if (window.history.length > 1) {
-      router.back();
-    } else {
-      router.push('/community');
-    }
+    router.push('/community');
   };
 
   const renderContent = () => {
@@ -233,7 +224,7 @@ export default function ClubDetailsPageClient() {
             <div className="text-center text-muted-foreground p-8 flex flex-col items-center gap-4">
                 <p className='text-lg font-medium'>Please sign in to view the club.</p>
                 <Link href="/?tab=settings" className='mt-4'>
-                    <Button>Sign In</Button>
+                    <Button className="rounded-full">Sign In</Button>
                 </Link>
             </div>
         )
@@ -243,13 +234,13 @@ export default function ClubDetailsPageClient() {
          <div className="p-4 space-y-1 flex-grow">
             {messagesLoading ? <ChatSkeleton /> : (
                  messages?.map((msg) => (
-                  <div key={msg.id} className={`flex items-end gap-2 ${msg.userId === user?.uid ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`p-3 rounded-2xl max-w-[70%] relative ${msg.userId === user?.uid ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-secondary rounded-bl-none'}`}>
-                        {msg.userId !== user?.uid && <p className="font-semibold text-sm mb-1 text-primary">{msg.userName}</p>}
+                  <div key={msg.id} className={`flex items-end gap-2 mb-2 ${msg.userId === user?.uid ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`p-3 rounded-2xl max-w-[70%] shadow-sm ${msg.userId === user?.uid ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-card text-foreground rounded-bl-none'}`}>
+                        {msg.userId !== user?.uid && <p className="font-bold text-xs mb-1 text-primary">{msg.userName}</p>}
                         
-                        {msg.text && <p className="break-words">{msg.text}</p>}
+                        {msg.text && <p className="text-sm leading-relaxed">{msg.text}</p>}
                         
-                        <p className="text-xs opacity-70 mt-1 text-right">
+                        <p className="text-[9px] opacity-60 mt-1 text-right font-medium">
                           {msg.createdAt?.toDate ? format(msg.createdAt.toDate(), 'p') : '...'}
                         </p>
                     </div>
@@ -258,9 +249,9 @@ export default function ClubDetailsPageClient() {
             )}
             {messages?.length === 0 && !messagesLoading && (
                 <div className="text-center text-muted-foreground py-10">
-                    <MessageSquare className="mx-auto w-10 h-10" />
-                    <p className="mt-4 text-base">No messages yet.</p>
-                    <p className="text-sm">Be the first to say something!</p>
+                    <MessageSquare className="mx-auto w-10 h-10 opacity-20" />
+                    <p className="mt-4 text-base font-medium">No messages yet.</p>
+                    <p className="text-sm opacity-60">Be the first to say something!</p>
                 </div>
             )}
         </div>
@@ -270,55 +261,59 @@ export default function ClubDetailsPageClient() {
   if (!clubId) {
     return (
         <div className="min-h-screen flex flex-col bg-background font-body items-center justify-center">
-            <p>Loading club...</p>
+            <Loader2 className="animate-spin text-primary w-8 h-8" />
         </div>
     );
   }
 
   return (
-    <div className="h-[100dvh] bg-background font-body w-full max-w-lg mx-auto flex flex-col">
-          <header className="flex-shrink-0 bg-card/80 backdrop-blur-3xl z-10">
-            <div className="flex justify-between items-center p-2 border-b">
+    <div className="h-[100dvh] bg-background font-body w-full max-w-lg mx-auto flex flex-col overflow-hidden">
+          <header className="flex-shrink-0 bg-card/80 backdrop-blur-3xl z-10 border-b border-white/20">
+            <div className="flex justify-between items-center p-2">
                 <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="w-12 h-12 rounded-full" onClick={handleBack}>
-                        <ArrowLeft />
+                    <Button variant="ghost" size="icon" className="w-10 h-10 rounded-full" onClick={handleBack}>
+                        <ArrowLeft className="w-6 h-6" />
                     </Button>
                     <Link href={`/community/${clubId}/info`} className="flex items-center gap-3">
-                        <Avatar className='h-10 w-10'>
+                        <Avatar className='h-10 w-10 border-2 border-white/50 shadow-sm'>
                             <AvatarImage src={clubData?.name ? `https://ui-avatars.com/api/?name=${encodeURIComponent(clubData.name)}&background=random&color=fff&size=128` : ''} alt={clubData?.name} />
                             <AvatarFallback>{clubData?.name?.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>
-                            <h1 className="font-semibold text-lg line-clamp-1">{clubData?.name || <Skeleton className="h-5 w-32" />}</h1>
-                            <div className='text-sm text-muted-foreground'>{groupLoading ? <Skeleton className="h-4 w-24" /> : `${clubData?.memberCount || '...'} members`}</div>
+                            <h1 className="font-bold text-base line-clamp-1">{clubData?.name || <Skeleton className="h-5 w-32" />}</h1>
+                            <div className='text-[10px] font-bold text-muted-foreground uppercase tracking-wider'>{groupLoading ? <Skeleton className="h-3 w-20" /> : `${clubData?.memberCount || '...'} members`}</div>
                         </div>
                     </Link>
                 </div>
                 <div className="flex items-center">
-                    <Button variant="ghost" size="icon" className="rounded-full"><Search /></Button>
-                    <Button variant="ghost" size="icon" className="rounded-full"><MoreVertical /></Button>
+                    <Button variant="ghost" size="icon" className="rounded-full w-10 h-10"><Search className="w-5 h-5"/></Button>
+                    <Button variant="ghost" size="icon" className="rounded-full w-10 h-10"><MoreVertical className="w-5 h-5"/></Button>
                 </div>
             </div>
 
             {user && (
-                <div className="p-4 border-b">
+                <div className="px-4 pb-4">
+                    <div className="flex justify-between items-center mb-2">
+                        <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Shared Tools</h3>
+                        <Link href={`/community/${clubId}/tools`}>
+                            <Button variant="link" size="sm" className="h-auto p-0 text-primary font-bold text-xs">
+                                See all
+                                <ChevronRight className="w-3 h-3 ml-0.5" />
+                            </Button>
+                        </Link>
+                    </div>
                     <div className="relative">
-                        <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 horizontal-scroll-container">
+                        <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1 -mx-4 px-4 horizontal-scroll-container">
                             {toolsLoading ? (
-                                [...Array(3)].map((_, i) => <Skeleton key={i} className="w-28 h-28" />)
+                                [...Array(3)].map((_, i) => <Skeleton key={i} className="w-28 h-28 rounded-2xl" />)
                             ) : groupTools && groupTools.length > 0 ? (
                                 groupTools.map((tool) => (
                                     <ToolCard key={tool.id} tool={tool} />
                                 ))
                             ) : (
-                            <div className="text-center text-muted-foreground w-full py-4">No tools added yet.</div>
+                            <div className="text-center text-muted-foreground w-full py-4 text-xs italic">No tools shared yet.</div>
                             )}
                         </div>
-                        {groupTools && groupTools.length > 3 && (
-                            <div className="absolute top-0 right-0 h-full flex items-center bg-gradient-to-l from-card to-transparent pr-2 pointer-events-none">
-                                <ChevronRight className="w-6 h-6 text-muted-foreground animate-bounce-horizontal" />
-                            </div>
-                        )}
                     </div>
                 </div>
             )}
@@ -326,42 +321,40 @@ export default function ClubDetailsPageClient() {
           </header>
           
           <main 
-            className='flex-1 min-h-0 overflow-y-auto no-scrollbar relative' 
+            className='flex-1 min-h-0 overflow-y-auto no-scrollbar relative bg-secondary/10' 
             ref={chatContainerRef}
           >
             {renderContent()}
             {showScrollToBottom && (
               <div className="absolute bottom-4 right-6 z-20">
-                <Button size="icon" className="rounded-full shadow-lg" onClick={scrollToBottom}>
+                <Button size="icon" className="rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:scale-110" onClick={scrollToBottom}>
                   <ArrowDown className="w-5 h-5"/>
                 </Button>
               </div>
             )}
           </main>
           
-            
-          {/* Chat Input */}
-          <div className="p-4 bg-background/50 border-t flex-shrink-0">
+          <div className="p-4 bg-card/80 backdrop-blur-3xl border-t border-white/20 flex-shrink-0">
             {isUserLoading || memberLoading ? (
                 <Skeleton className="h-12 w-full rounded-full" />
             ) : !user ? (
                 <Link href="/?tab=settings">
-                    <Button className="w-full h-12 text-base">Sign In to Chat</Button>
+                    <Button className="w-full h-12 text-base rounded-full font-bold">Sign In to Chat</Button>
                 </Link>
             ) : isMember ? (
-                <form onSubmit={handleSendMessage} className="relative">
+                <form onSubmit={handleSendMessage} className="relative flex items-center gap-2">
                     <Input 
                         placeholder="Type a message..." 
-                        className="rounded-full h-12 pr-12 bg-background" 
+                        className="rounded-full h-12 pr-12 bg-secondary/50 border-none shadow-inner focus-visible:ring-primary/30" 
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
                     />
-                    <Button type="submit" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-9 h-9" disabled={!newMessage.trim()}>
-                        <Send className="w-5 h-5"/>
+                    <Button type="submit" size="icon" className="rounded-full w-12 h-12 shadow-md hover:scale-105 transition-transform" disabled={!newMessage.trim()}>
+                        <Send className="w-5 h-5 ml-0.5"/>
                     </Button>
                 </form>
             ) : (
-                <Button onClick={handleJoinClub} disabled={isJoining} className="w-full h-12 text-base">
+                <Button onClick={handleJoinClub} disabled={isJoining} className="w-full h-12 text-base rounded-full font-bold shadow-lg shadow-primary/20">
                   {isJoining ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Joining...</> : 'Join Club to Chat'}
                 </Button>
             )}
