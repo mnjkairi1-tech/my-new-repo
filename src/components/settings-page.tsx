@@ -231,8 +231,7 @@ export function SettingsPage() {
         title: t('settings.billing.title'),
         icon: CreditCard,
         options: [
-          { label: t('settings.billing.status'), icon: Star, value: "Pro" },
-          { label: t('settings.billing.plans'), icon: TrendingUp },
+          { label: t('settings.billing.plans'), icon: TrendingUp, href: '/subscription/plans' },
           { label: t('settings.billing.history'), icon: History },
         ],
       },
@@ -491,13 +490,3 @@ const SettingItem = ({ option, onToggle, isChecked }: { option: any; onToggle?: 
       </div>
     </div>
   );
-    
-
-
-
-
-
-
-
-
-
