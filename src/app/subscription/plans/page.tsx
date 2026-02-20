@@ -44,12 +44,17 @@ export default function SubscriptionPlansPage() {
       popular: true,
       icon: <Star className="w-10 h-10 text-yellow-400" />,
       features: [
-        'Everything in Basic',
-        'Priority support',
-        'Unlimited favorites',
-        'Early access to new tools',
-        'Ad-free experience',
-        'Unlimited UI Themes'
+        'Get access to 1 million + tools',
+        'Community Access',
+        '35 UI Themes',
+        'Compare Tools',
+        'Tools addition in groups',
+        '50 Favourite Tools',
+        'Free Popular Tools',
+        'Quick Tools access',
+        'Recent usage tool',
+        'Max free tools',
+        'Get tools which is free for some time'
       ]
     },
     pro: {
