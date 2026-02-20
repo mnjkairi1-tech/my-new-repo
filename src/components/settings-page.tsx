@@ -46,6 +46,9 @@ import {
   TrendingUp,
   History,
   Bug,
+  ShieldAlert,
+  LayoutDashboard,
+  Crown,
 } from "lucide-react"
 import { Switch } from "./ui/switch"
 import { Separator } from "./ui/separator"
@@ -71,6 +74,7 @@ import { signOut } from "firebase/auth"
 import { Button } from "./ui/button"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Badge } from "./ui/badge"
 
 const LanguageSelector = () => {
     const { language, setLanguage } = useLanguage();
@@ -137,11 +141,13 @@ export function SettingsPage() {
     const [emailEnabled, setEmailEnabled] = React.useState(true);
     const [muteAll, setMuteAll] = React.useState(false);
 
+    const isOwner = user?.email === 'mnjkairi1@gmail.com';
+
     const handleSignOut = () => {
         signOut(auth);
     };
 
-    const settingsConfig = [
+    const baseConfig = [
       {
         title: t('settings.account.title'),
         icon: User,
@@ -273,7 +279,19 @@ export function SettingsPage() {
            )},
         ],
       },
-    ]
+    ];
+
+    const ownerConfig = isOwner ? [
+        {
+            title: "Owner Portal",
+            icon: ShieldAlert,
+            options: [
+                { label: "Admin Dashboard", icon: LayoutDashboard, color: "text-primary font-bold" },
+            ]
+        }
+    ] : [];
+
+    const settingsConfig = [...ownerConfig, ...baseConfig];
 
     const handleToggle = (label: string, checked: boolean) => {
         switch (label) {
@@ -301,12 +319,22 @@ export function SettingsPage() {
   return (
     <div className="p-4 animate-fade-in-up pb-24">
        <div className="flex items-center gap-4 mb-8">
-            <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
-                <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
-                <AvatarFallback>{user?.displayName?.charAt(0) || user?.email?.charAt(0)}</AvatarFallback>
-            </Avatar>
+            <div className="relative">
+                <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
+                    <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
+                    <AvatarFallback>{user?.displayName?.charAt(0) || user?.email?.charAt(0)}</AvatarFallback>
+                </Avatar>
+                {isOwner && (
+                    <div className="absolute -top-2 -right-2 bg-yellow-400 text-white rounded-full p-1 shadow-md border-2 border-white">
+                        <Crown className="w-4 h-4 fill-current" />
+                    </div>
+                )}
+            </div>
             <div>
-                <h1 className="text-2xl font-bold">{user?.displayName || 'Community Member'}</h1>
+                <div className="flex items-center gap-2">
+                    <h1 className="text-2xl font-bold">{user?.displayName || 'Community Member'}</h1>
+                    {isOwner && <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] h-5 px-1.5 uppercase font-black">Owner</Badge>}
+                </div>
                 <p className="text-muted-foreground">{user?.email}</p>
             </div>
         </div>
@@ -315,8 +343,8 @@ export function SettingsPage() {
           <AccordionItem value={`item-${index}`} key={index} className="border-b-0 mb-3 bg-card/80 backdrop-blur-sm rounded-3xl px-4 soft-shadow">
             <AccordionTrigger className="py-4 hover:no-underline">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-lavender to-soft-blue flex items-center justify-center">
-                    <category.icon className="w-7 h-7 text-primary" />
+                <div className={`w-12 h-12 rounded-2xl ${isOwner && index === 0 ? 'bg-primary/10' : 'bg-gradient-to-br from-lavender to-soft-blue'} flex items-center justify-center`}>
+                    <category.icon className={`w-7 h-7 ${isOwner && index === 0 ? 'text-primary' : 'text-primary'}`} />
                 </div>
                 <span className="font-semibold text-lg text-foreground">{category.title}</span>
               </div>
