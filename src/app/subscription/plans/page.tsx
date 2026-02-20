@@ -64,10 +64,10 @@ export default function SubscriptionPlansPage() {
               </CardHeader>
               <CardContent className="flex-grow text-center text-muted-foreground px-6">
                 <p>{plan.description}</p>
-                <div className="mt-6 space-y-3">
-                    <div className="h-4 bg-secondary/50 rounded-full w-3/4 mx-auto animate-pulse"></div>
-                    <div className="h-4 bg-secondary/50 rounded-full w-1/2 mx-auto animate-pulse"></div>
-                    <div className="h-4 bg-secondary/50 rounded-full w-2/3 mx-auto animate-pulse"></div>
+                <div className="mt-6 space-y-3 opacity-20">
+                    <div className="h-4 bg-secondary rounded-full w-3/4 mx-auto"></div>
+                    <div className="h-4 bg-secondary rounded-full w-1/2 mx-auto"></div>
+                    <div className="h-4 bg-secondary rounded-full w-2/3 mx-auto"></div>
                 </div>
               </CardContent>
               <CardFooter className="pb-8 px-6">
