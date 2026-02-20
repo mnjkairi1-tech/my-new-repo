@@ -45,6 +45,7 @@ import {
   FileText,
   TrendingUp,
   History,
+  Bug,
 } from "lucide-react"
 import { Switch } from "./ui/switch"
 import { Separator } from "./ui/separator"
@@ -200,8 +201,8 @@ export function SettingsPage() {
         title: t('settings.support.title'),
         icon: HelpCircle,
         options: [
-          { label: t('settings.support.contact'), icon: MessageSquare },
-          { label: t('settings.support.report'), icon: Info },
+          { label: t('settings.support.contact'), icon: MessageSquare, href: '/support/contact' },
+          { label: t('settings.support.report'), icon: Bug, href: '/support/report-bug' },
         ],
       },
       {
