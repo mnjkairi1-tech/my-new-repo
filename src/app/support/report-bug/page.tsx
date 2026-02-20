@@ -54,7 +54,7 @@ export default function ReportBugPage() {
                                 <Bug className="w-8 h-8 text-destructive" />
                             </div>
                             <CardTitle className="text-2xl font-bold">Bug Report</CardTitle>
-                            <p className="text-sm text-muted-foreground">Found a glitch? Let us fix it!</p special-instruction="Do not override colors from Tailwind.">
+                            <p className="text-sm text-muted-foreground">Found a glitch? Let us fix it!</p>
                         </CardHeader>
                         <CardContent className="p-6 space-y-5">
                             <div className="space-y-2">
