@@ -3,20 +3,12 @@
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { useSwipeable } from 'react-swipeable';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { useMemo, useEffect, useState, Suspense } from 'react';
+import { useMemo, Suspense } from 'react';
 
-/**
- * AppShell manages the core application structure and global UI elements.
- */
 function AppShellContent({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     const navItems = useMemo(() => [
         { id: 'home', route: '/?tab=home' },
@@ -62,14 +54,11 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
         preventScrollOnSwipe: true,
     });
 
-    // To prevent hydration mismatch, we don't apply handlers until mounted
-    const swipeProps = mounted && isSwipeablePage() ? swipeHandlers : {};
-
     return (
         <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-md mx-auto overflow-x-hidden">
             <main 
                 className="flex-grow pb-24 h-full" 
-                {...swipeProps}
+                {...(isSwipeablePage() ? swipeHandlers : {})}
             >
                 {children}
             </main>

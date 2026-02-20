@@ -76,8 +76,8 @@ function HomePageContent() {
 
   const sortedQuickToolCategories = React.useMemo(() => {
     return [...quickToolCategories].sort((a, b) => {
-      const aIsPinned = pinnedTools.has(a.name);
-      const bIsPinned = pinnedTools.has(b.name);
+      const aIsPinned = pinnedTools?.has(a.name);
+      const bIsPinned = pinnedTools?.has(b.name);
       if (aIsPinned && !bIsPinned) return -1;
       if (!aIsPinned && bIsPinned) return 1;
       return 0;
@@ -97,7 +97,7 @@ function HomePageContent() {
                     <Input
                         readOnly
                         placeholder="Chat with AI Atlas..."
-                        className="bg-background rounded-3xl h-14 text-base pl-5 pr-14 border-2 border-primary/20 shadow-lg cursor-pointer"
+                        className="bg-background rounded-full h-14 text-base pl-6 pr-14 border-2 border-primary/20 shadow-lg cursor-pointer"
                     />
                     <div className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center">
                         <Send className="w-5 h-5"/>
@@ -111,7 +111,7 @@ function HomePageContent() {
                 {carouselSlides.map((slide, index) => (
                     <CarouselItem key={index}>
                         <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
-                            <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden shadow-xl">
+                            <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden shadow-xl">
                                 <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.dataAiHint} unoptimized />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                 <div className="absolute bottom-0 left-0 p-4">
@@ -147,10 +147,10 @@ function HomePageContent() {
             <h4 className="font-semibold text-xl mb-4">{t('home.quickTools.title')}</h4>
             <div className="grid grid-cols-1 gap-4">
                 {sortedQuickToolCategories.map((category) => {
-                    const isPinned = pinnedTools.has(category.name);
+                    const isPinned = pinnedTools?.has(category.name);
                     return (
                         <Link href={category.url} key={category.name} className="block group">
-                            <Card className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none">
+                            <Card className="relative overflow-hidden rounded-3xl shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none">
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -209,19 +209,19 @@ function GalaxyAppMain() {
                 </div>
                 <div className='flex items-center gap-2'>
                     <Link href="/ultra-free">
-                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Gift className="w-5 h-5 text-primary"/></Button>
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10"><Gift className="w-5 h-5 text-primary"/></Button>
                     </Link>
                     <Link href="/mode">
-                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary"><Wand2 className="w-5 h-5 text-primary"/></Button>
+                        <Button variant="ghost" size="icon" className="rounded-full bg-secondary w-10 h-10"><Wand2 className="w-5 h-5 text-primary"/></Button>
                     </Link>
                 </div>
             </div>
             
             <TabsList className="grid w-full grid-cols-4 bg-transparent p-0 mt-4 border-b">
-                <TabsTrigger value="home" onClick={() => router.push('/?tab=home')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.home')}</TabsTrigger>
-                <TabsTrigger value="tools" onClick={() => router.push('/?tab=tools')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.tools')}</TabsTrigger>
-                <TabsTrigger value="trending" onClick={() => router.push('/?tab=trending')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.trending')}</TabsTrigger>
-                <TabsTrigger value="settings" onClick={() => router.push('/?tab=settings')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-base font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.settings')}</TabsTrigger>
+                <TabsTrigger value="home" onClick={() => router.push('/?tab=home')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-sm font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.home')}</TabsTrigger>
+                <TabsTrigger value="tools" onClick={() => router.push('/?tab=tools')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-sm font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.tools')}</TabsTrigger>
+                <TabsTrigger value="trending" onClick={() => router.push('/?tab=trending')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-sm font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.trending')}</TabsTrigger>
+                <TabsTrigger value="settings" onClick={() => router.push('/?tab=settings')} className="data-[state=active]:border-primary data-[state=active]:text-primary text-sm font-semibold border-b-4 border-transparent rounded-none pb-2 bg-transparent shadow-none">{t('tabs.settings')}</TabsTrigger>
             </TabsList>
         </header>
         
@@ -239,7 +239,7 @@ function GalaxyAppMain() {
             <TabsContent value="trending" className="px-6 mt-4">
                 <div className="space-y-4">
                     <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" className="block group">
-                        <Card className="bg-card border-none rounded-2xl shadow-lg overflow-hidden">
+                        <Card className="bg-card border-none rounded-3xl shadow-lg overflow-hidden">
                             <div className="relative aspect-video">
                                 <Image src={"https://picsum.photos/seed/trending-ai/600/300"} alt="Trending" fill className="object-cover" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

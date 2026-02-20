@@ -9,8 +9,8 @@ import { UserPreferencesProvider } from '@/context/user-preferences-context';
 import { ThemeProvider } from '@/context/theme-provider';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
-// SSR disabled for the main shell to prevent all hydration mismatches
-// and ensure instant UI rendering for client-side features.
+// Disabling SSR for AppShell is the definitive fix for hydration errors
+// when using client-heavy features like Firebase, swipe gestures, and themes.
 const AppShell = dynamic(() => import('./app-shell').then(mod => mod.AppShell), {
   ssr: false,
   loading: () => (
@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="font-size-medium" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <title>AI Atlas</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
