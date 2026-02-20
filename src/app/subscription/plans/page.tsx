@@ -66,12 +66,21 @@ export default function SubscriptionPlansPage() {
       buttonVariant: 'default' as const,
       icon: <Crown className="w-10 h-10 text-primary" />,
       features: [
-        'Everything in Standard',
-        'Exclusive Pro tools',
-        'Advanced AI insights',
-        'Personalized recommendations',
-        'Dedicated account manager',
-        'API Access for tools'
+        'Get access to 1 million + tools',
+        'Community Access',
+        'all UI Themes',
+        'Compare Tools',
+        'Tools addition in groups',
+        'unlimited Favourite Tools',
+        'Free Popular Tools',
+        'Quick Tools access',
+        'Recent usage tool',
+        'Max free tools',
+        'Get tools which is free for some time',
+        'mod apps',
+        'ultra free tools',
+        'get daily new tools add automatically',
+        'get community primum blue ticks'
       ]
     },
   };
