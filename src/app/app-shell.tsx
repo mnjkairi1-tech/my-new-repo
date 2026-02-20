@@ -7,8 +7,8 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
 
 /**
- * Handles the navigation state and bottom bar logic.
- * Wrapped in Suspense because it uses useSearchParams.
+ * AppShellNav handles the navigation and search params.
+ * It's isolated to keep the main shell stable.
  */
 function AppShellNav() {
     const pathname = usePathname();
@@ -37,11 +37,6 @@ function AppShellNav() {
 function AppShellContent({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     const navItems = useMemo(() => [
         { id: 'home', route: '/?tab=home' },
@@ -57,6 +52,7 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
 
     const swipeHandlers = useSwipeable({
         onSwipedLeft: () => {
+            const currentRoute = pathname === '/' ? `/?tab=${new URLSearchParams(window.location.search).get('tab') || 'home'}` : pathname;
             const currentIndex = navItems.findIndex(item => item.route.split('?')[0] === pathname);
             if (isSwipeablePage() && currentIndex !== -1 && currentIndex < navItems.length - 1) {
                 router.push(navItems[currentIndex + 1].route);
@@ -70,13 +66,13 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
         },
         trackMouse: true,
     });
-    
-    // Defer swipe handlers until after hydration to prevent HTML mismatch
-    const swipeWrapperProps = (mounted && isSwipeablePage()) ? swipeHandlers : {};
 
     return (
-        <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-md mx-auto overflow-hidden">
-            <main className="flex-grow pb-24 md:pb-0 h-full" {...swipeWrapperProps}>
+        <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-md mx-auto">
+            <main 
+                className="flex-grow pb-24 md:pb-0 h-full overflow-x-hidden" 
+                {...swipeHandlers}
+            >
                 {children}
             </main>
             <Suspense fallback={<div className="fixed bottom-4 left-4 right-4 h-20 bg-card/80 rounded-full animate-pulse" />}>

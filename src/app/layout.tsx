@@ -1,14 +1,22 @@
-
 'use client';
 
 import React, { ReactNode, Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/lib/language';
 import { UserPreferencesProvider } from '@/context/user-preferences-context';
 import { ThemeProvider } from '@/context/theme-provider';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
-import { AppShell } from './app-shell';
+
+// Loading AppShell with SSR disabled is the most reliable way to prevent 
+// hydration mismatches when dealing with complex client-side state like Firebase and swipe handlers.
+const AppShell = dynamic(() => import('./app-shell').then(mod => mod.AppShell), {
+  ssr: false,
+  fallback: <div className="min-h-screen bg-background flex flex-col items-center justify-center">
+    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+});
 
 function GlobalProviders({ children }: { children: ReactNode }) {
   return (
@@ -34,17 +42,6 @@ export default function RootLayout({
         <title>AI Atlas</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Your Cute Guide to Creative AI Tools" />
-        <meta name="application-name" content="AI Atlas" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="AI Atlas" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="msapplication-config" content="/browserconfig.xml" />
-        <meta name="msapplication-TileColor" content="#8A2BE2" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="theme-color" content="#FFFFFF" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -53,14 +50,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased">
+      <body className="font-body antialiased overflow-x-hidden">
         <LanguageProvider>
            <GlobalProviders>
-              <Suspense fallback={<main className="flex-grow">{children}</main>}>
-                <AppShell>
-                  {children}
-                </AppShell>
-              </Suspense>
+              <AppShell>
+                {children}
+              </AppShell>
             </GlobalProviders>
         </LanguageProvider>
         <Toaster />
