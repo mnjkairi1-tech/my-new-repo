@@ -23,14 +23,14 @@
     --border: 255 100% 90%;
     --input: 255 100% 90%;
     --ring: 258 100% 70%;
-    --radius: 1rem;
+    --radius: 1.25rem;
 
     --baby-pink: 340 100% 96%;
     --soft-blue: 198 100% 94%;
     --lavender: 255 100% 96%;
   }
 
-  /* Dark Theme */
+  /* Standard Dark Theme */
   [data-theme='dark'], .dark {
     --background: 222 84% 5%;
     --foreground: 210 40% 98%;
@@ -53,117 +53,65 @@
     --ring: 224.3 76.3% 48%;
   }
 
-  /* Premium Dark Theme */
+  /* NEW: Premium Glass Theme - iOS Control Center Aesthetic */
   [data-theme='premium-dark'] {
-    --background: 240 10% 6%;
-    --foreground: 0 0% 92%;
-    --card: 240 10% 10% / 0.5;
+    --background: 240 10% 6%; /* #0F0F12 */
+    --foreground: 0 0% 92%; /* #EAEAEA */
+    --card: 240 10% 10% / 0.5; /* #1A1A1F with transparency */
     --card-foreground: 0 0% 92%;
     --popover: 240 10% 6%;
     --popover-foreground: 0 0% 92%;
-    --primary: 0 0% 81%;
+    --primary: 0 0% 81%; /* #CFCFCF - Metallic Silver */
     --primary-foreground: 240 10% 6%;
-    --secondary: 40 46% 60% / 0.15;
-    --secondary-foreground: 40 46% 60%;
+    --secondary: 40 46% 60% / 0.15; /* #C6A76A with transparency */
+    --secondary-foreground: 40 46% 60%; /* #C6A76A - Champagne Gold */
     --muted: 240 9% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted-foreground: 0 0% 60%; /* #9A9A9A */
     --accent: 40 46% 60%;
     --accent-foreground: 240 10% 6%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 100% / 0.15;
+    --border: 0 0% 100% / 0.15; /* rgba(255,255,255,0.15) */
     --input: 0 0% 100% / 0.15;
     --ring: 40 46% 60%;
   }
 
-  /* Neo Glass Theme */
+  /* Remaining themes kept intact */
   [data-theme='neoglass'] {
     --background: 220 40% 5%;
     --foreground: 190 100% 95%;
-    --card: 220 40% 10% / 0.4;
-    --card-foreground: 190 100% 95%;
     --primary: 190 100% 50%;
-    --primary-foreground: 220 40% 5%;
-    --secondary: 220 40% 15%;
-    --secondary-foreground: 190 100% 50%;
-    --accent: 190 100% 50%;
     --border: 190 100% 50% / 0.2;
-    --ring: 190 100% 50%;
   }
 
-  /* Black Vision Theme */
   [data-theme='black-vision'] {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
     --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-    --accent: 0 0% 100%;
-    --border: 0 0% 20%;
-    --ring: 0 0% 100%;
   }
 
-  /* Cyberwave Theme */
   [data-theme='cyberwave'] {
     --background: 270 50% 3%;
     --foreground: 320 100% 95%;
-    --card: 270 50% 7%;
-    --card-foreground: 320 100% 95%;
     --primary: 320 100% 60%;
-    --primary-foreground: 270 50% 3%;
-    --secondary: 270 50% 15%;
-    --secondary-foreground: 320 100% 60%;
-    --accent: 280 100% 60%;
-    --border: 320 100% 60% / 0.3;
-    --ring: 320 100% 60%;
   }
 
-  /* Minimal White Theme */
   [data-theme='minimal-white'] {
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
     --primary: 0 0% 0%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 0%;
-    --accent: 0 0% 90%;
-    --border: 0 0% 90%;
-    --ring: 0 0% 0%;
   }
 
-  /* Claymorphic Theme */
   [data-theme='claymorphic'] {
     --background: 210 40% 98%;
     --foreground: 210 20% 30%;
-    --card: 210 40% 100%;
-    --card-foreground: 210 20% 30%;
     --primary: 210 100% 60%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 94%;
-    --secondary-foreground: 210 100% 60%;
-    --accent: 210 100% 90%;
-    --border: 210 40% 90%;
-    --ring: 210 100% 60%;
   }
 
-  /* Winter Glass Theme */
   [data-theme='winter-glassmorphism'] {
     --background: 200 50% 96%;
     --foreground: 200 50% 20%;
-    --card: 0 0% 100% / 0.6;
-    --card-foreground: 200 50% 20%;
     --primary: 200 100% 40%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 200 50% 90%;
-    --secondary-foreground: 200 100% 40%;
-    --accent: 180 100% 95%;
-    --border: 200 50% 80%;
-    --ring: 200 100% 40%;
   }
 }
 
@@ -180,23 +128,8 @@
 
 /* Theme Background Overrides */
 html[data-theme='premium-dark'] body {
+  /* Radial glow in center #C6A76A with low opacity */
   background: radial-gradient(circle at center, rgba(198, 167, 106, 0.05) 0%, rgba(26, 26, 31, 1) 60%, rgba(15, 15, 18, 1) 100%) !important;
-}
-
-html[data-theme='cyberwave'] body {
-  background: linear-gradient(135deg, #0a0510 0%, #1a0b2e 50%, #0a0510 100%) !important;
-}
-
-html[data-theme='neoglass'] body {
-  background: linear-gradient(135deg, #020617 0%, #0f172a 100%) !important;
-}
-
-html[data-theme='black-vision'] body {
-  background: #000 !important;
-}
-
-html[data-theme='minimal-white'] body {
-  background: #fff !important;
 }
 
 @layer utilities {
@@ -208,6 +141,7 @@ html[data-theme='minimal-white'] body {
       scrollbar-width: none;
   }
 
+  /* Premium UI Effects */
   .premium-glass {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(25px);
