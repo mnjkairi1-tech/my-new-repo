@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -53,10 +51,8 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     const storedRecentTools = localStorage.getItem('recentTools');
     const storedPinnedGroups = localStorage.getItem('pinnedGroups');
 
-    setTheme(storedTheme);
-    setFontSize(storedFontSize);
-    document.documentElement.className = storedFontSize;
-    document.documentElement.setAttribute('data-theme', storedTheme);
+    handleSetTheme(storedTheme);
+    handleSetFontSize(storedFontSize);
 
     if (storedHeartedTools) {
       setHeartedTools(JSON.parse(storedHeartedTools));
@@ -91,13 +87,26 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   const handleSetTheme = (newTheme: string) => {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
+    const root = document.documentElement;
+    root.setAttribute('data-theme', newTheme);
+    
+    // Manage Tailwind 'dark' class
+    const darkThemes = ['dark', 'premium-dark', 'neoglass', 'black-vision', 'cyberwave', 'winter-glassmorphism'];
+    if (darkThemes.includes(newTheme)) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
   };
 
   const handleSetFontSize = (newSize: string) => {
     setFontSize(newSize);
     localStorage.setItem('fontSize', newSize);
-    document.documentElement.className = newSize;
+    const root = document.documentElement;
+    // Remove all possible font size classes
+    root.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+    // Add the new one
+    root.classList.add(newSize);
   };
 
   const handleHeartToggle = (tool: Tool) => {
