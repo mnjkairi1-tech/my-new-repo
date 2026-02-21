@@ -53,65 +53,110 @@
     --ring: 224.3 76.3% 48%;
   }
 
-  /* NEW: Premium Glass Theme - iOS Control Center Aesthetic */
+  /* Premium Glass Theme - Luxury iOS Style */
   [data-theme='premium-dark'] {
-    --background: 240 10% 6%; /* #0F0F12 */
-    --foreground: 0 0% 92%; /* #EAEAEA */
-    --card: 240 10% 10% / 0.5; /* #1A1A1F with transparency */
+    --background: 240 10% 6%;
+    --foreground: 0 0% 92%;
+    --card: 240 10% 10% / 0.5;
     --card-foreground: 0 0% 92%;
     --popover: 240 10% 6%;
     --popover-foreground: 0 0% 92%;
-    --primary: 0 0% 81%; /* #CFCFCF - Metallic Silver */
+    --primary: 0 0% 81%;
     --primary-foreground: 240 10% 6%;
-    --secondary: 40 46% 60% / 0.15; /* #C6A76A with transparency */
-    --secondary-foreground: 40 46% 60%; /* #C6A76A - Champagne Gold */
+    --secondary: 40 46% 60% / 0.15;
+    --secondary-foreground: 40 46% 60%;
     --muted: 240 9% 15%;
-    --muted-foreground: 0 0% 60%; /* #9A9A9A */
+    --muted-foreground: 0 0% 60%;
     --accent: 40 46% 60%;
     --accent-foreground: 240 10% 6%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 100% / 0.15; /* rgba(255,255,255,0.15) */
+    --border: 0 0% 100% / 0.15;
     --input: 0 0% 100% / 0.15;
     --ring: 40 46% 60%;
   }
 
-  /* Remaining themes kept intact */
+  /* Neo Glass - Deep Blue Theme */
   [data-theme='neoglass'] {
-    --background: 220 40% 5%;
+    --background: 230 50% 5%;
     --foreground: 190 100% 95%;
+    --card: 230 50% 10% / 0.6;
+    --card-foreground: 190 100% 95%;
     --primary: 190 100% 50%;
+    --primary-foreground: 230 50% 5%;
+    --secondary: 190 100% 50% / 0.1;
+    --secondary-foreground: 190 100% 50%;
     --border: 190 100% 50% / 0.2;
+    --ring: 190 100% 50%;
   }
 
+  /* Black Vision - Pure OLED Black */
   [data-theme='black-vision'] {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
     --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --ring: 0 0% 100%;
   }
 
+  /* Cyberwave - Neon Vibes */
   [data-theme='cyberwave'] {
-    --background: 270 50% 3%;
+    --background: 280 50% 3%;
     --foreground: 320 100% 95%;
+    --card: 280 50% 7%;
+    --card-foreground: 320 100% 95%;
     --primary: 320 100% 60%;
+    --primary-foreground: 280 50% 3%;
+    --secondary: 180 100% 50% / 0.1;
+    --secondary-foreground: 180 100% 50%;
+    --accent: 180 100% 50%;
+    --border: 320 100% 60% / 0.3;
+    --ring: 320 100% 60%;
   }
 
+  /* Minimal White */
   [data-theme='minimal-white'] {
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 0%;
     --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 0%;
+    --border: 0 0% 90%;
+    --ring: 0 0% 0%;
   }
 
+  /* Claymorphic - Playful 3D */
   [data-theme='claymorphic'] {
     --background: 210 40% 98%;
     --foreground: 210 20% 30%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 30%;
     --primary: 210 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 100% 95%;
+    --secondary-foreground: 210 100% 60%;
+    --border: 210 100% 90%;
+    --ring: 210 100% 60%;
   }
 
+  /* Winter Glass - Cool & Frosted */
   [data-theme='winter-glassmorphism'] {
     --background: 200 50% 96%;
     --foreground: 200 50% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 200 50% 20%;
     --primary: 200 100% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 200 100% 90%;
+    --secondary-foreground: 200 100% 40%;
+    --border: 200 100% 85%;
+    --ring: 200 100% 40%;
   }
 }
 
@@ -128,8 +173,27 @@
 
 /* Theme Background Overrides */
 html[data-theme='premium-dark'] body {
-  /* Radial glow in center #C6A76A with low opacity */
   background: radial-gradient(circle at center, rgba(198, 167, 106, 0.05) 0%, rgba(26, 26, 31, 1) 60%, rgba(15, 15, 18, 1) 100%) !important;
+}
+
+html[data-theme='neoglass'] body {
+  background: linear-gradient(135deg, #0a0b1e 0%, #1a1c3a 100%) !important;
+}
+
+html[data-theme='black-vision'] body {
+  background: #000000 !important;
+}
+
+html[data-theme='cyberwave'] body {
+  background: linear-gradient(180deg, #05010a 0%, #150225 100%) !important;
+}
+
+html[data-theme='winter-glassmorphism'] body {
+  background: linear-gradient(135deg, #e0f2f1 0%, #ffffff 100%) !important;
+}
+
+html[data-theme='claymorphic'] body {
+  background: #f0f4f8 !important;
 }
 
 @layer utilities {

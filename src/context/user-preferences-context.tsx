@@ -90,7 +90,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     const root = document.documentElement;
     root.setAttribute('data-theme', newTheme);
     
-    // Manage Tailwind 'dark' class
+    // Manage Tailwind 'dark' class for automatic dark mode support
     const darkThemes = ['dark', 'premium-dark', 'neoglass', 'black-vision', 'cyberwave', 'winter-glassmorphism'];
     if (darkThemes.includes(newTheme)) {
       root.classList.add('dark');
@@ -103,9 +103,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     setFontSize(newSize);
     localStorage.setItem('fontSize', newSize);
     const root = document.documentElement;
-    // Remove all possible font size classes
     root.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
-    // Add the new one
     root.classList.add(newSize);
   };
 
