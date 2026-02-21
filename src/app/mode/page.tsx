@@ -1,18 +1,31 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Users, Palette, X, PlusCircle, Scale, Gift } from 'lucide-react';
+import { Users, Palette, X, PlusCircle, Scale, Gift, ShieldAlert } from 'lucide-react';
 import { useUserPreferences } from '@/context/user-preferences-context';
+import { useUser } from '@/firebase';
 
 export default function ModePage() {
   const { clearComparison } = useUserPreferences();
+  const { user } = useUser();
   
+  const isOwner = user?.email === 'mnjkairi1@gmail.com';
+
   const modes = [
     { href: '/community', icon: <Users className="h-10 w-10 text-primary" />, label: 'Community' },
     { href: '/ui-themes', icon: <Palette className="h-10 w-10 text-primary" />, label: 'UI Themes' },
     { href: '/?tab=tools', icon: <Scale className="h-10 w-10 text-primary" />, label: 'Compare', onClick: clearComparison },
     { href: 'https://modyolo.com/apps/productivity', icon: <Gift className="h-10 w-10 text-primary" />, label: 'Mod Apps', isExternal: true },
   ];
+
+  // Add Admin mode only for the specific owner
+  if (isOwner) {
+    modes.push({
+        href: '/?tab=settings', // For now, directing back to settings where the portal is
+        icon: <ShieldAlert className="h-10 w-10 text-destructive" />,
+        label: 'Admin'
+    });
+  }
 
   return (
     <div className="min-h-screen w-full bg-background p-4 relative flex flex-col">
