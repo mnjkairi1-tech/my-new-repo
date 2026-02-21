@@ -12,6 +12,7 @@ import { Bug, User, Clock, Loader2, Trash2, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
+import { addDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 interface BugReport {
     id: string;
@@ -44,39 +45,33 @@ export default function AdminBugsPage() {
 
     const { data: bugs, isLoading: bugsLoading } = useCollection<BugReport>(bugsQuery);
 
-    const handleDelete = async (bugId: string) => {
+    const handleDelete = (bugId: string) => {
         if (!firestore) return;
         setIsDeleting(bugId);
-        try {
-            await deleteDoc(doc(firestore, 'bugReports', bugId));
-            toast({ title: "Deleted", description: "Bug report removed successfully." });
-        } catch (error) {
-            console.error(error);
-            toast({ variant: "destructive", title: "Error", description: "Failed to delete." });
-        } finally {
-            setIsDeleting(null);
-        }
+        
+        const docRef = doc(firestore, 'bugReports', bugId);
+        deleteDocumentNonBlocking(docRef);
+        
+        toast({ title: "Deleted", description: "Bug report removed successfully." });
+        setIsDeleting(null);
     };
 
-    const handleAcknowledge = async (bug: BugReport) => {
+    const handleAcknowledge = (bug: BugReport) => {
         if (!firestore) return;
         setIsAcknowledging(bug.id);
-        try {
-            await addDoc(collection(firestore, 'notifications'), {
-                userId: bug.userId,
-                title: "Bug Report Update",
-                message: `We've acknowledged your bug report: "${bug.title}". Our team is fixing it!`,
-                createdAt: serverTimestamp(),
-                read: false,
-                type: 'bug'
-            });
-            toast({ title: "Acknowledged", description: "User has been notified." });
-        } catch (error) {
-            console.error(error);
-            toast({ variant: "destructive", title: "Error", description: "Failed to notify user." });
-        } finally {
-            setIsAcknowledging(null);
-        }
+        
+        const notificationsCol = collection(firestore, 'notifications');
+        addDocumentNonBlocking(notificationsCol, {
+            userId: bug.userId,
+            title: "Bug Report Update",
+            message: `We've acknowledged your bug report: "${bug.title}". Our team is fixing it!`,
+            createdAt: serverTimestamp(),
+            read: false,
+            type: 'bug'
+        });
+        
+        toast({ title: "Acknowledged", description: "User has been notified." });
+        setIsAcknowledging(null);
     };
 
     if (isUserLoading) return null;

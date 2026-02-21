@@ -12,6 +12,7 @@ import { MessageSquare, User, Clock, Loader2, Trash2, CheckCircle } from 'lucide
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
+import { addDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 interface SupportRequest {
     id: string;
@@ -43,39 +44,33 @@ export default function AdminSupportPage() {
 
     const { data: requests, isLoading: requestsLoading } = useCollection<SupportRequest>(supportQuery);
 
-    const handleDelete = async (requestId: string) => {
+    const handleDelete = (requestId: string) => {
         if (!firestore) return;
         setIsDeleting(requestId);
-        try {
-            await deleteDoc(doc(firestore, 'supportRequests', requestId));
-            toast({ title: "Deleted", description: "Message removed successfully." });
-        } catch (error) {
-            console.error(error);
-            toast({ variant: "destructive", title: "Error", description: "Failed to delete." });
-        } finally {
-            setIsDeleting(null);
-        }
+        
+        const docRef = doc(firestore, 'supportRequests', requestId);
+        deleteDocumentNonBlocking(docRef);
+        
+        toast({ title: "Deleted", description: "Message removed successfully." });
+        setIsDeleting(null);
     };
 
-    const handleAcknowledge = async (request: SupportRequest) => {
+    const handleAcknowledge = (request: SupportRequest) => {
         if (!firestore) return;
         setIsAcknowledging(request.id);
-        try {
-            await addDoc(collection(firestore, 'notifications'), {
-                userId: request.userId,
-                title: "Support Update",
-                message: "A developer has read your support request. We are looking into it!",
-                createdAt: serverTimestamp(),
-                read: false,
-                type: 'support'
-            });
-            toast({ title: "Acknowledged", description: "User has been notified." });
-        } catch (error) {
-            console.error(error);
-            toast({ variant: "destructive", title: "Error", description: "Failed to notify user." });
-        } finally {
-            setIsAcknowledging(null);
-        }
+        
+        const notificationsCol = collection(firestore, 'notifications');
+        addDocumentNonBlocking(notificationsCol, {
+            userId: request.userId,
+            title: "Support Update",
+            message: "A developer has read your support request. We are looking into it!",
+            createdAt: serverTimestamp(),
+            read: false,
+            type: 'support'
+        });
+        
+        toast({ title: "Acknowledged", description: "User has been notified." });
+        setIsAcknowledging(null);
     };
 
     if (isUserLoading) return null;
