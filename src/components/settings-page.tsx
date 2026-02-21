@@ -78,6 +78,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Badge } from "./ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { collection, query, where, orderBy, doc, deleteDoc, updateDoc } from 'firebase/firestore'
+import { Card } from "./ui/card"
 import { format } from "date-fns"
 
 interface AppNotification {
