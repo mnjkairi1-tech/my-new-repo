@@ -1,79 +1,103 @@
-
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper Functions
+    /**
+     * AI Atlas Security Rules
+     *
+     * Core Philosophy:
+     * This ruleset implements a strict user-ownership model combined with a Database-Backed Access Control (DBAC) 
+     * system for administrative staff. Users have full control over the support requests and bug reports they 
+     * create, while designated support staff have global read and write access to manage these issues.
+     *
+     * Data Structure:
+     * - /supportRequests/{id}: User-submitted support tickets.
+     * - /bugReports/{id}: User-submitted technical issues.
+     * - /supportStaff/{userId}: A role-based collection where the existence of a document grants admin privileges.
+     *
+     * Key Security Decisions:
+     * - Authorization Independence: Every request/report contains a denormalized 'userId'. This allows rules 
+     *   to verify ownership instantly without fetching additional user profile documents.
+     * - DBAC for Roles: Administrative access is determined by the existence of a UID in the /supportStaff 
+     *   collection. This avoids hardcoding UIDs or relying on complex custom claims during the prototype phase.
+     * - Relational Integrity: The rules strictly enforce that the 'userId' field in any document matches 
+     *   the UID of the authenticated creator, and that this field remains immutable after creation.
+     */
+
+    // --- Helper Functions ---
+
+    /** Checks if the request is from an authenticated user. */
     function isSignedIn() {
       return request.auth != null;
     }
 
-    function isGroupMember(groupId) {
-      return exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid));
+    /** Checks if the authenticated user's UID matches the provided userId. */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
     }
 
-    function isGroupOwner(groupId) {
-      return request.auth.uid == get(/databases/$(database)/documents/groups/$(groupId)).data.ownerId;
+    /** Checks if the document exists and the authenticated user is the owner. */
+    function isExistingOwner(userId) {
+      return resource != null && isOwner(userId);
     }
 
-    // Allow users to read/write their own data, including group memberships
-    match /users/{userId} {
-      allow read, write, delete: if request.auth != null && request.auth.uid == userId;
+    /** 
+     * Checks if the user is a member of the support staff.
+     * This uses the DBAC pattern by checking for document existence in the /supportStaff collection.
+     */
+    function isSupportStaff() {
+      return isSignedIn() && exists(/databases/$(database)/documents/supportStaff/$(request.auth.uid));
+    }
+
+    // --- Collection Rules ---
+
+    /**
+     * @description Rules for the supportStaff collection. Primarily used for role lookup.
+     * @path /supportStaff/{userId}
+     * @allow get: if signed in (to verify own or others' staff status).
+     * @deny list, create, update, delete: if not a system administrator (restricted in prototype).
+     * @principle Role-based access control via document existence.
+     */
+    match /supportStaff/{userId} {
+      allow get: if isSignedIn();
+      allow list: if isSupportStaff();
+      allow create, update, delete: if false; // Managed via Firebase Console or Admin SDK in prototyping.
+    }
+
+    /**
+     * @description Rules for user-submitted support requests.
+     * @path /supportRequests/{supportRequestId}
+     * @allow create: if user is authenticated and sets themselves as the owner.
+     * @allow update, delete: if the user owns the document or is support staff.
+     * @allow read: if the user owns the document or is support staff.
+     * @principle Ownership-based access with administrative override and field immutability.
+     */
+    match /supportRequests/{supportRequestId} {
+      allow get, list: if isSignedIn() && (isSupportStaff() || resource.data.userId == request.auth.uid);
       
-      match /groupMemberships/{groupId} {
-          allow read, list: if request.auth != null && request.auth.uid == userId;
-          allow create, delete: if request.auth != null && request.auth.uid == userId;
-      }
-    }
-    
-    match /user_profiles/{userId} {
-        allow get: if isSignedIn();
-        allow write: if request.auth.uid == userId;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      
+      allow update: if (isExistingOwner(resource.data.userId) || isSupportStaff()) && request.resource.data.userId == resource.data.userId;
+      
+      allow delete: if isExistingOwner(resource.data.userId) || isSupportStaff();
     }
 
-    match /groups/{groupId} {
-      // Group document rules
-      // Allow public read for public groups, or member read for private groups
-      allow get: if resource.data.isPublic == true || isGroupMember(groupId);
+    /**
+     * @description Rules for user-submitted bug reports.
+     * @path /bugReports/{bugReportId}
+     * @allow create: if user is authenticated and sets themselves as the owner.
+     * @allow update, delete: if the user owns the document or is support staff.
+     * @allow read: if the user owns the document or is support staff.
+     * @principle Ownership-based access with administrative override and field immutability.
+     */
+    match /bugReports/{bugReportId} {
+      allow get, list: if isSignedIn() && (isSupportStaff() || resource.data.userId == request.auth.uid);
       
-      // Allow list queries for any authenticated user.
-      // The 'get' rule above will ensure they can only read documents they have access to.
-      allow list: if request.auth != null;
-
-      allow create: if isSignedIn();
-      allow update: if isSignedIn() && (
-        isGroupOwner(groupId) ||
-        (
-          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['memberCount']) &&
-          (request.resource.data.memberCount == resource.data.memberCount + 1 ||
-           request.resource.data.memberCount == resource.data.memberCount - 1)
-        )
-      );
-      allow delete: if isSignedIn() && isGroupOwner(groupId);
-
-      // Rules for subcollections of a group
-      match /members/{memberId} {
-        allow list, read: if isSignedIn();
-        allow create: if isSignedIn() && (request.auth.uid == memberId || (isGroupMember(groupId) && get(/databases/$(database)/documents/groups/$(groupId)).data.allowMembersToAddMembers == true));
-        allow update: if isSignedIn() && request.auth.uid == memberId;
-        allow delete: if isSignedIn() && (request.auth.uid == memberId || isGroupOwner(groupId));
-      }
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
       
-      match /tools/{toolId} {
-        allow read, list: if isSignedIn();
-        allow create: if isGroupMember(groupId) && get(/databases/$(database)/documents/groups/$(groupId)).data.allowMembersToAddTools == true;
-        allow update, delete: if isGroupMember(groupId) && (request.auth.uid == resource.data.addedBy || get(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid)).data.role == 'admin');
-      }
-
-      match /messages/{messageId} {
-        // Allow any signed-in user to read/list messages
-        allow read, list: if isSignedIn();
-        // Only group members can create messages
-        allow create: if isGroupMember(groupId) && request.auth.uid == request.resource.data.userId;
-        // Messages are immutable
-        allow update, delete: if false;
-      }
+      allow update: if (isExistingOwner(resource.data.userId) || isSupportStaff()) && request.resource.data.userId == resource.data.userId;
+      
+      allow delete: if isExistingOwner(resource.data.userId) || isSupportStaff();
     }
   }
 }

@@ -1,221 +1,174 @@
 {
   "entities": {
-    "Group": {
+    "SupportRequest": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Group",
+      "title": "SupportRequest",
       "type": "object",
-      "description": "Represents a user-created group or community.",
+      "description": "Represents a user's request for support or general inquiry within the AI Atlas application.",
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier for the group."
+          "description": "Unique identifier for the SupportRequest entity."
         },
-        "name": {
+        "userId": {
           "type": "string",
-          "description": "The name of the group."
+          "description": "Reference to the unique identifier of the user who submitted the support request. (Relationship: User 1:N SupportRequest)"
+        },
+        "userName": {
+          "type": "string",
+          "description": "The name of the user who submitted the support request, for display and identification in an administrative view."
+        },
+        "subject": {
+          "type": "string",
+          "description": "A brief subject or title that summarizes the nature of the support request."
+        },
+        "message": {
+          "type": "string",
+          "description": "The detailed message from the user describing their problem, question, or inquiry."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current processing status of the support request (e.g., 'new', 'open', 'in progress', 'resolved', 'closed')."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the support request was originally created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating the last time the support request was modified or updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "userName",
+        "subject",
+        "message",
+        "status",
+        "createdAt"
+      ]
+    },
+    "BugReport": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "BugReport",
+      "type": "object",
+      "description": "Represents a user's report of a bug or technical issue encountered within the AI Atlas application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the BugReport entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the unique identifier of the user who submitted the bug report. (Relationship: User 1:N BugReport)"
+        },
+        "userName": {
+          "type": "string",
+          "description": "The name of the user who submitted the bug report, for display and identification in an administrative view."
+        },
+        "title": {
+          "type": "string",
+          "description": "A brief, concise title or summary of the reported bug."
         },
         "description": {
           "type": "string",
-          "description": "A brief description of the group."
+          "description": "A detailed explanation of the bug, including unexpected behavior and observed symptoms."
         },
-        "avatar": {
+        "reproductionSteps": {
           "type": "string",
-          "description": "URL of the group's avatar image.",
-          "format": "uri"
+          "description": "Clear and sequential steps that can be followed to reproduce the reported bug."
         },
-        "isPublic": {
-          "type": "boolean",
-          "description": "Indicates if the group is public or private."
-        },
-        "ownerId": {
+        "environmentInfo": {
           "type": "string",
-          "description": "The user ID of the group's owner."
+          "description": "Information about the user's operating environment when the bug occurred (e.g., browser type and version, operating system, device)."
         },
-        "memberCount": {
-          "type": "number",
-          "description": "The total number of members in the group."
+        "status": {
+          "type": "string",
+          "description": "The current processing status of the bug report (e.g., 'new', 'triaged', 'in progress', 'resolved', 'closed', 'wont-fix')."
         },
         "createdAt": {
           "type": "string",
-          "format": "date-time",
-          "description": "The timestamp when the group was created."
-        },
-        "allowMembersToAddTools": {
-          "type": "boolean",
-          "description": "Indicates if members can add new tools to the group."
-        },
-        "allowMembersToAddMembers": {
-          "type": "boolean",
-          "description": "Indicates if members can add other members to the group."
-        }
-      },
-      "required": ["id", "name", "description", "avatar", "isPublic", "ownerId", "memberCount", "createdAt"]
-    },
-    "GroupMember": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "GroupMember",
-      "type": "object",
-      "description": "Represents a member of a group.",
-      "properties": {
-        "userId": {
-          "type": "string",
-          "description": "The user ID of the member."
-        },
-        "joinedAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The timestamp when the member joined."
-        },
-        "role": {
-          "type": "string",
-          "enum": ["member", "admin", "owner"],
-          "description": "The role of the member within the group."
-        },
-        "displayName": {
-          "type": "string",
-          "description": "The display name of the user."
-        },
-        "photoURL": {
-            "type": "string",
-            "description": "The photo URL of the user's avatar."
-        }
-      },
-      "required": ["userId", "joinedAt", "role"]
-    },
-    "GroupTool": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "GroupTool",
-      "type": "object",
-      "description": "Represents an AI tool shared within a group.",
-      "properties": {
-        "toolName": {
-          "type": "string"
-        },
-        "toolUrl": {
-          "type": "string",
-          "format": "uri"
-        },
-        "toolDescription": {
-          "type": "string"
-        },
-        "toolImage": {
-          "type": "string",
-          "format": "uri",
-          "description": "URL for the tool's icon."
-        },
-        "addedBy": {
-          "type": "string"
-        },
-        "addedAt": {
-          "type": "string",
+          "description": "Timestamp indicating when the bug report was originally submitted.",
           "format": "date-time"
         },
-        "upvotes": {
-          "type": "number"
-        }
-      },
-      "required": ["toolName", "toolUrl", "addedBy", "addedAt", "upvotes"]
-    },
-    "Message": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Message",
-      "type": "object",
-      "description": "Represents a chat message within a group.",
-      "properties": {
-        "text": {
-          "type": "string"
-        },
-        "imageUrl": {
+        "updatedAt": {
           "type": "string",
-          "format": "uri",
-          "description": "URL of an image sent in the chat."
-        },
-        "userId": {
-          "type": "string"
-        },
-        "userName": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
+          "description": "Timestamp indicating the last time the bug report was modified or updated.",
           "format": "date-time"
         }
       },
-      "required": ["userId", "userName", "createdAt"]
-    },
-    "UserProfile": {
-      "title": "User Profile",
-      "type": "object",
-      "description": "Publicly readable user profile information.",
-      "properties": {
-        "displayName": {
-          "type": "string",
-          "description": "The display name of the user."
-        },
-        "photoURL": {
-          "type": "string",
-          "description": "URL of the user's avatar.",
-          "format": "uri"
-        }
-      },
-      "required": ["displayName"]
+      "required": [
+        "id",
+        "userId",
+        "userName",
+        "title",
+        "description",
+        "reproductionSteps",
+        "status",
+        "createdAt"
+      ]
     }
   },
   "auth": {
-    "providers": ["password", "anonymous", "google.com"]
+    "providers": [
+      "password",
+      "anonymous"
+    ]
   },
   "firestore": {
     "structure": [
       {
-        "path": "/groups/{groupId}",
+        "path": "/supportRequests/{supportRequestId}",
         "definition": {
-          "entityName": "Group",
+          "entityName": "SupportRequest",
           "schema": {
-            "$ref": "#/entities/Group"
+            "$ref": "#/backend/entities/SupportRequest"
           },
-          "description": "Stores information about each community group."
+          "description": "A top-level collection for all user-submitted support requests. Each document includes denormalized 'userId' and 'userName' for authorization independence and efficient querying. Regular users can only access their own requests, while support staff can access all. QAPs are supported for both user-specific and admin-wide listings.",
+          "params": [
+            {
+              "name": "supportRequestId",
+              "description": "The unique identifier for a specific support request."
+            }
+          ]
         }
       },
       {
-        "path": "/groups/{groupId}/members/{memberId}",
+        "path": "/bugReports/{bugReportId}",
         "definition": {
-          "entityName": "GroupMember",
+          "entityName": "BugReport",
           "schema": {
-            "$ref": "#/entities/GroupMember"
+            "$ref": "#/backend/entities/BugReport"
           },
-          "description": "Stores information about the members of a group."
+          "description": "A top-level collection for all user-submitted bug reports. Each document includes denormalized 'userId' and 'userName' for authorization independence and efficient querying. Regular users can only access their own reports, while support staff can access all. QAPs are supported for both user-specific and admin-wide listings.",
+          "params": [
+            {
+              "name": "bugReportId",
+              "description": "The unique identifier for a specific bug report."
+            }
+          ]
         }
       },
       {
-        "path": "/groups/{groupId}/tools/{toolId}",
+        "path": "/supportStaff/{userId}",
         "definition": {
-          "entityName": "GroupTool",
+          "entityName": "SupportStaffUser",
           "schema": {
-            "$ref": "#/entities/GroupTool"
+            "$ref": "#/backend/entities/SupportStaffUser"
           },
-          "description": "Stores the AI tools shared within a group."
-        }
-      },
-      {
-        "path": "/groups/{groupId}/messages/{messageId}",
-        "definition": {
-          "entityName": "Message",
-          "schema": {
-            "$ref": "#/entities/Message"
-          },
-          "description": "Stores chat messages for each group."
-        }
-      },
-      {
-        "path": "/user_profiles/{userId}",
-        "definition": {
-          "entityName": "UserProfile",
-          "schema": {
-            "$ref": "#/entities/UserProfile"
-          },
-          "description": "Stores public user profile information, keyed by user ID."
+          "description": "A collection containing documents where the document ID is the UID of a user designated as support staff. The mere existence of a document in this collection grants administrative read/write access to support requests and bug reports. This implements a Database-Backed Access Control (DBAC) model for roles.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier (UID) of the user who is a support staff member."
+            }
+          ]
         }
       }
-    ]
+    ],
+    "reasoning": "The Firestore structure is designed to provide clear separation of concerns, robust security, and efficient querying for both regular users and administrative staff, following the core design principles. \n\n**Authorization Independence:**\n1.  **Support Requests and Bug Reports:** Each `SupportRequest` and `BugReport` document includes `userId` and `userName`. This denormalization means that security rules do not need to perform `get()` operations on a separate `users` collection to verify ownership or display user information in an admin view. An authenticated user (`request.auth.uid`) can directly check if their UID matches `resource.data.userId` for ownership-based access. This enables atomic creation and updates.\n2.  **Admin Roles:** Support staff authorization is managed via a dedicated top-level collection, `/supportStaff/{userId}`. The existence of a document at this path signifies that the `userId` associated with the path is a support administrator. Security rules can atomically check `exists(/databases/$(database)/documents/supportStaff/$(request.auth.uid))` without relying on hierarchical dependencies or complex lookups within the data being accessed. This keeps security rules simple and performant.\n\n**QAPs (Query as a Principal):**\n1.  **User Access:** Regular users can securely list their own `SupportRequest` and `BugReport` documents by performing a query like `firestore.collection('supportRequests').where('userId', '==', currentUser.uid)`. This query is efficient, relies on `userId` within the document (Authorization Independence), and ensures users only retrieve data they are authorized to see. Similarly for bug reports.\n2.  **Admin Access:** Support staff can efficiently list *all* `SupportRequest` and `BugReport` documents from their respective top-level collections (`/supportRequests` and `/bugReports`). The security rules will grant `read` access to the entire collection if `request.auth.uid` is present in the `/supportStaff` collection. This allows a clear, unfiltered view for administrative purposes without violating security, as the authorization check is performed at the collection level based on the staff role.\n\n**Structural Segregation:**\n*   `supportRequests` and `bugReports` are distinct top-level collections. This ensures that all documents within each collection share the same security posture (user-owned, support-staff accessible). There is no mixing of public/private or different access levels within the same collection, simplifying rule writing.\n*   `supportStaff` is a separate collection specifically for managing roles, further segregating concerns.\n\n**Access Modeling:**\n*   **Private Data (User-Owned):** `SupportRequest` and `BugReport` documents are inherently user-owned, with `userId` clearly defining ownership within the document itself.\n*   **Global Roles (DBAC):** The `/supportStaff/{userId}` collection implements DBAC, where the role is determined by document existence in the database, not custom claims.\n\n**Data Clarity and Predictability:**\n*   Entities use explicit `status` fields (e.g., 'new', 'open') for clear state modeling.\n*   Consistent naming conventions are used: `userId`, `supportRequestId`, `bugReportId`, `createdAt`, `updatedAt`."
   }
 }
