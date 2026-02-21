@@ -14,17 +14,19 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
+    // Main Owner Check
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.email == 'mnjkairi1@gmail.com';
+    }
+
     function isSupportStaff() {
-      return isSignedIn() && (
-        exists(/databases/$(database)/documents/supportStaff/$(request.auth.uid)) ||
-        request.auth.token.email == 'mnjkairi1@gmail.com'
-      );
+      return isAdmin() || (isSignedIn() && exists(/databases/$(database)/documents/supportStaff/$(request.auth.uid)));
     }
 
     match /supportStaff/{userId} {
       allow get: if isSignedIn();
       allow list: if isSupportStaff();
-      allow create, update, delete: if request.auth.token.email == 'mnjkairi1@gmail.com';
+      allow create, update, delete: if isAdmin();
     }
 
     match /supportRequests/{supportRequestId} {
@@ -40,8 +42,10 @@ service cloud.firestore {
     }
     
     match /notifications/{notificationId} {
-      allow read, update, delete: if isSignedIn() && (isSupportStaff() || resource.data.userId == request.auth.uid);
-      allow create: if isSupportStaff();
+      // Admin can do everything
+      allow read, write: if isSupportStaff();
+      // Users can only read and manage their own notifications
+      allow read, update, delete: if isSignedIn() && (resource == null || resource.data.userId == request.auth.uid);
     }
 
     match /user_profiles/{userId} {

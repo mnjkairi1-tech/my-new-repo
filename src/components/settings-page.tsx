@@ -161,6 +161,8 @@ export function SettingsPage() {
 
     const notificationsQuery = useMemoFirebase(() => {
         if (!firestore || !user) return null;
+        // Normal users see only their own notifications.
+        // Even for admin, we show their personal notifications here for consistency.
         return query(
             collection(firestore, 'notifications'), 
             where('userId', '==', user.uid),
