@@ -53,6 +53,9 @@ export default {
         'lavender': 'hsl(var(--lavender))',
         'mint': 'hsl(var(--mint))',
         'cute-purple': 'hsl(var(--cute-purple))',
+        'premium-gold': '#C6A76A',
+        'premium-silver': '#CFCFCF',
+        'premium-dark': '#0F0F12',
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',

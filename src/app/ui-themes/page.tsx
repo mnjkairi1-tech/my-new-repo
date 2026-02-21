@@ -5,6 +5,7 @@ import {
   Palette,
   Sun,
   Moon,
+  Crown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -23,6 +24,7 @@ export default function UiThemesPage() {
   const themes = [
     { name: 'default', label: 'Default', icon: Sun },
     { name: 'dark', label: 'Dark', icon: Moon },
+    { name: 'premium-dark', label: 'Premium Glass', icon: Crown },
     { name: 'neoglass', label: 'Neo Glass', icon: Palette },
     { name: 'black-vision', label: 'Black Vision', icon: Palette },
     { name: 'cyberwave', label: 'Cyberwave', icon: Palette },
@@ -45,7 +47,7 @@ export default function UiThemesPage() {
               onClick={() => setTheme(t.name)}
               className={cn(
                 'cursor-pointer transition-all duration-300 bg-card/80 backdrop-blur-sm',
-                isClient && theme === t.name ? 'border-primary border-2 glow-shadow' : 'soft-shadow'
+                isClient && theme === t.name ? 'border-primary border-2 glow-shadow shadow-[0_0_15px_rgba(var(--primary),0.3)]' : 'soft-shadow'
               )}
             >
               <CardContent className="p-4 flex flex-col items-center justify-center gap-3 aspect-square">
