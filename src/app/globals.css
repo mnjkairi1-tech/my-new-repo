@@ -55,19 +55,19 @@
 
   /* Premium Glass Theme - Luxury iOS Style */
   [data-theme='premium-dark'] {
-    --background: 240 10% 6%;
-    --foreground: 0 0% 92%;
-    --card: 240 10% 10% / 0.5;
+    --background: 240 10% 6%; /* #0F0F12 */
+    --foreground: 0 0% 92%;    /* #EAEAEA */
+    --card: 240 10% 10% / 0.5; /* #1A1A1F with transparency */
     --card-foreground: 0 0% 92%;
     --popover: 240 10% 6%;
     --popover-foreground: 0 0% 92%;
-    --primary: 0 0% 81%;
+    --primary: 40 46% 60%;     /* #C6A76A - Champagne Gold */
     --primary-foreground: 240 10% 6%;
-    --secondary: 40 46% 60% / 0.15;
-    --secondary-foreground: 40 46% 60%;
+    --secondary: 0 0% 81% / 0.15; /* #CFCFCF with transparency */
+    --secondary-foreground: 0 0% 81%;
     --muted: 240 9% 15%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 40 46% 60%;
+    --muted-foreground: 0 0% 60%; /* #9A9A9A */
+    --accent: 0 0% 81%;           /* #CFCFCF - Metallic Silver */
     --accent-foreground: 240 10% 6%;
     --border: 0 0% 100% / 0.15;
     --input: 0 0% 100% / 0.15;
