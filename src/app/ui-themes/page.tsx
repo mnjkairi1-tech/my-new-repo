@@ -10,7 +10,8 @@ import {
   Snowflake,
   Type,
   Ghost,
-  Shield
+  Shield,
+  Gamepad2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -30,6 +31,7 @@ export default function UiThemesPage() {
     { name: 'default', label: 'Default Light', icon: Sun, color: 'bg-orange-100 text-orange-600' },
     { name: 'dark', label: 'Classic Dark', icon: Moon, color: 'bg-slate-800 text-slate-100' },
     { name: 'premium-dark', label: 'Premium Glass', icon: Crown, color: 'bg-zinc-900 text-yellow-500' },
+    { name: 'neon-phantom', label: 'Neon Phantom X', icon: Gamepad2, color: 'bg-blue-900 text-cyan-400' },
     { name: 'neoglass', label: 'Neo Glass', icon: Palette, color: 'bg-blue-900 text-cyan-400' },
     { name: 'black-vision', label: 'Black Vision', icon: Shield, color: 'bg-black text-white' },
     { name: 'cyberwave', label: 'Cyberwave', icon: Zap, color: 'bg-purple-900 text-pink-500' },
