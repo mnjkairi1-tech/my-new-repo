@@ -1,17 +1,17 @@
-
 'use client';
 
 import React, { useState } from 'react';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import { collection, query, orderBy, Timestamp } from 'firebase/firestore';
+import { collection, query, orderBy, doc, deleteDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { ClubHeader } from '@/components/club-header';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, User, Clock, Loader2 } from 'lucide-react';
+import { MessageSquare, User, Clock, Loader2, Trash2, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 interface SupportRequest {
     id: string;
@@ -26,7 +26,9 @@ export default function AdminSupportPage() {
     const { user, isUserLoading } = useUser();
     const firestore = useFirestore();
     const router = useRouter();
-    const [selectedRequest, setSelectedRequest] = useState<SupportRequest | null>(null);
+    const { toast } = useToast();
+    const [isDeleting, setIsDeleting] = useState<string | null>(null);
+    const [isAcknowledging, setIsAcknowledging] = useState<string | null>(null);
 
     React.useEffect(() => {
         if (!isUserLoading && (!user || user.email !== 'mnjkairi1@gmail.com')) {
@@ -40,6 +42,41 @@ export default function AdminSupportPage() {
     }, [firestore]);
 
     const { data: requests, isLoading: requestsLoading } = useCollection<SupportRequest>(supportQuery);
+
+    const handleDelete = async (requestId: string) => {
+        if (!firestore) return;
+        setIsDeleting(requestId);
+        try {
+            await deleteDoc(doc(firestore, 'supportRequests', requestId));
+            toast({ title: "Deleted", description: "Message removed successfully." });
+        } catch (error) {
+            console.error(error);
+            toast({ variant: "destructive", title: "Error", description: "Failed to delete." });
+        } finally {
+            setIsDeleting(null);
+        }
+    };
+
+    const handleAcknowledge = async (request: SupportRequest) => {
+        if (!firestore) return;
+        setIsAcknowledging(request.id);
+        try {
+            await addDoc(collection(firestore, 'notifications'), {
+                userId: request.userId,
+                title: "Support Update",
+                message: "A developer has read your support request. We are looking into it!",
+                createdAt: serverTimestamp(),
+                read: false,
+                type: 'support'
+            });
+            toast({ title: "Acknowledged", description: "User has been notified." });
+        } catch (error) {
+            console.error(error);
+            toast({ variant: "destructive", title: "Error", description: "Failed to notify user." });
+        } finally {
+            setIsAcknowledging(null);
+        }
+    };
 
     if (isUserLoading) return null;
 
@@ -62,10 +99,9 @@ export default function AdminSupportPage() {
                                 <DialogTrigger asChild>
                                     <Card 
                                         className="bg-card/80 backdrop-blur-xl border-none shadow-md hover:bg-accent/50 transition-colors cursor-pointer rounded-2xl"
-                                        onClick={() => setSelectedRequest(req)}
                                     >
                                         <CardContent className="p-4 flex items-center gap-4">
-                                            <Avatar className="h-12 w-12 border-2 border-white shadow-sm">
+                                            <Avatar className="h-12 w-12 border-2 border-white shadow-sm text-sm">
                                                 <AvatarFallback className="bg-primary/10 text-primary uppercase">{req.userName?.charAt(0)}</AvatarFallback>
                                             </Avatar>
                                             <div className="flex-grow overflow-hidden">
@@ -80,9 +116,31 @@ export default function AdminSupportPage() {
                                 </DialogTrigger>
                                 <DialogContent className="max-w-sm rounded-3xl">
                                     <DialogHeader>
-                                        <DialogTitle className="flex items-center gap-2">
-                                            <MessageSquare className="w-5 h-5 text-primary" />
-                                            Support Request
+                                        <DialogTitle className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <MessageSquare className="w-5 h-5 text-primary" />
+                                                Support Detail
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <Button 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="text-green-500 hover:bg-green-50"
+                                                    onClick={() => handleAcknowledge(req)}
+                                                    disabled={isAcknowledging === req.id}
+                                                >
+                                                    {isAcknowledging === req.id ? <Loader2 className="animate-spin w-4 h-4"/> : <CheckCircle className="w-5 h-5" />}
+                                                </Button>
+                                                <Button 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="text-destructive hover:bg-destructive/10"
+                                                    onClick={() => handleDelete(req.id)}
+                                                    disabled={isDeleting === req.id}
+                                                >
+                                                    {isDeleting === req.id ? <Loader2 className="animate-spin w-4 h-4"/> : <Trash2 className="w-5 h-5" />}
+                                                </Button>
+                                            </div>
                                         </DialogTitle>
                                     </DialogHeader>
                                     <div className="space-y-4 py-4">

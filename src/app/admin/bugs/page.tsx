@@ -1,17 +1,17 @@
-
 'use client';
 
 import React, { useState } from 'react';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import { collection, query, orderBy, Timestamp } from 'firebase/firestore';
+import { collection, query, orderBy, doc, deleteDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { ClubHeader } from '@/components/club-header';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Bug, User, Clock, Loader2, AlertCircle } from 'lucide-react';
+import { Bug, User, Clock, Loader2, Trash2, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 interface BugReport {
     id: string;
@@ -27,6 +27,9 @@ export default function AdminBugsPage() {
     const { user, isUserLoading } = useUser();
     const firestore = useFirestore();
     const router = useRouter();
+    const { toast } = useToast();
+    const [isDeleting, setIsDeleting] = useState<string | null>(null);
+    const [isAcknowledging, setIsAcknowledging] = useState<string | null>(null);
 
     React.useEffect(() => {
         if (!isUserLoading && (!user || user.email !== 'mnjkairi1@gmail.com')) {
@@ -40,6 +43,41 @@ export default function AdminBugsPage() {
     }, [firestore]);
 
     const { data: bugs, isLoading: bugsLoading } = useCollection<BugReport>(bugsQuery);
+
+    const handleDelete = async (bugId: string) => {
+        if (!firestore) return;
+        setIsDeleting(bugId);
+        try {
+            await deleteDoc(doc(firestore, 'bugReports', bugId));
+            toast({ title: "Deleted", description: "Bug report removed successfully." });
+        } catch (error) {
+            console.error(error);
+            toast({ variant: "destructive", title: "Error", description: "Failed to delete." });
+        } finally {
+            setIsDeleting(null);
+        }
+    };
+
+    const handleAcknowledge = async (bug: BugReport) => {
+        if (!firestore) return;
+        setIsAcknowledging(bug.id);
+        try {
+            await addDoc(collection(firestore, 'notifications'), {
+                userId: bug.userId,
+                title: "Bug Report Update",
+                message: `We've acknowledged your bug report: "${bug.title}". Our team is fixing it!`,
+                createdAt: serverTimestamp(),
+                read: false,
+                type: 'bug'
+            });
+            toast({ title: "Acknowledged", description: "User has been notified." });
+        } catch (error) {
+            console.error(error);
+            toast({ variant: "destructive", title: "Error", description: "Failed to notify user." });
+        } finally {
+            setIsAcknowledging(null);
+        }
+    };
 
     if (isUserLoading) return null;
 
@@ -64,7 +102,7 @@ export default function AdminBugsPage() {
                                         className="bg-card/80 backdrop-blur-xl border-none shadow-md hover:bg-accent/50 transition-colors cursor-pointer rounded-2xl border-l-4 border-l-destructive"
                                     >
                                         <CardContent className="p-4 flex items-center gap-4">
-                                            <Avatar className="h-12 w-12 border-2 border-white shadow-sm">
+                                            <Avatar className="h-12 w-12 border-2 border-white shadow-sm text-sm">
                                                 <AvatarFallback className="bg-destructive/10 text-destructive uppercase">{bug.userName?.charAt(0)}</AvatarFallback>
                                             </Avatar>
                                             <div className="flex-grow overflow-hidden">
@@ -80,9 +118,31 @@ export default function AdminBugsPage() {
                                 </DialogTrigger>
                                 <DialogContent className="max-w-sm rounded-3xl">
                                     <DialogHeader>
-                                        <DialogTitle className="flex items-center gap-2">
-                                            <Bug className="w-5 h-5 text-destructive" />
-                                            Bug Detail
+                                        <DialogTitle className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <Bug className="w-5 h-5 text-destructive" />
+                                                Bug Detail
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <Button 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="text-green-500 hover:bg-green-50"
+                                                    onClick={() => handleAcknowledge(bug)}
+                                                    disabled={isAcknowledging === bug.id}
+                                                >
+                                                    {isAcknowledging === bug.id ? <Loader2 className="animate-spin w-4 h-4"/> : <CheckCircle className="w-5 h-5" />}
+                                                </Button>
+                                                <Button 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="text-destructive hover:bg-destructive/10"
+                                                    onClick={() => handleDelete(bug.id)}
+                                                    disabled={isDeleting === bug.id}
+                                                >
+                                                    {isDeleting === bug.id ? <Loader2 className="animate-spin w-4 h-4"/> : <Trash2 className="w-5 h-5" />}
+                                                </Button>
+                                            </div>
                                         </DialogTitle>
                                     </DialogHeader>
                                     <div className="space-y-4 py-4">

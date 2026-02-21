@@ -4,37 +4,16 @@ service cloud.firestore {
 
     /**
      * AI Atlas Security Rules
-     *
-     * Core Philosophy:
-     * This ruleset implements a strict user-ownership model combined with a Database-Backed Access Control (DBAC) 
-     * system for administrative staff. Users have full control over the support requests and bug reports they 
-     * create, while designated support staff have global read and write access to manage these issues.
-     *
-     * Key Security Decisions:
-     * - Owner Access: The user with email 'mnjkairi1@gmail.com' is treated as a global admin.
-     * - DBAC for Roles: Administrative access is also determined by the existence of a UID in the /supportStaff collection.
      */
 
-    // --- Helper Functions ---
-
-    /** Checks if the request is from an authenticated user. */
     function isSignedIn() {
       return request.auth != null;
     }
 
-    /** Checks if the authenticated user's UID matches the provided userId. */
     function isOwner(userId) {
       return isSignedIn() && request.auth.uid == userId;
     }
 
-    /** Checks if the document exists and the authenticated user is the owner. */
-    function isExistingOwner(userId) {
-      return resource != null && isOwner(userId);
-    }
-
-    /** 
-     * Checks if the user is a member of the support staff or the main owner.
-     */
     function isSupportStaff() {
       return isSignedIn() && (
         exists(/databases/$(database)/documents/supportStaff/$(request.auth.uid)) ||
@@ -42,46 +21,31 @@ service cloud.firestore {
       );
     }
 
-    // --- Collection Rules ---
-
-    /**
-     * Rules for the supportStaff collection.
-     */
     match /supportStaff/{userId} {
       allow get: if isSignedIn();
       allow list: if isSupportStaff();
       allow create, update, delete: if request.auth.token.email == 'mnjkairi1@gmail.com';
     }
 
-    /**
-     * Rules for user-submitted support requests.
-     */
     match /supportRequests/{supportRequestId} {
       allow get, list: if isSignedIn() && (isSupportStaff() || resource.data.userId == request.auth.uid);
-      
       allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
-      
-      allow update: if (isExistingOwner(resource.data.userId) || isSupportStaff()) && request.resource.data.userId == resource.data.userId;
-      
-      allow delete: if isExistingOwner(resource.data.userId) || isSupportStaff();
+      allow update, delete: if isSupportStaff() || (resource != null && resource.data.userId == request.auth.uid);
     }
 
-    /**
-     * Rules for user-submitted bug reports.
-     */
     match /bugReports/{bugReportId} {
       allow get, list: if isSignedIn() && (isSupportStaff() || resource.data.userId == request.auth.uid);
-      
       allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
-      
-      allow update: if (isExistingOwner(resource.data.userId) || isSupportStaff()) && request.resource.data.userId == resource.data.userId;
-      
-      allow delete: if isExistingOwner(resource.data.userId) || isSupportStaff();
+      allow update, delete: if isSupportStaff() || (resource != null && resource.data.userId == request.auth.uid);
     }
     
-    /**
-     * User profiles and group memberships.
-     */
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSupportStaff();
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
     match /user_profiles/{userId} {
       allow read: if isSignedIn();
       allow write: if isOwner(userId);
