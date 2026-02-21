@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React from "react"
 import {
   Accordion,
   AccordionContent,
@@ -20,22 +20,11 @@ import {
   ChevronRight,
   KeyRound,
   Trash2,
-  FileClock,
-  BarChart3,
-  Fingerprint,
   Mail,
-  ListFilter,
   BellOff,
-  Sun,
-  Laptop,
   Type,
-  Moon,
   Globe,
-  Star,
   RefreshCw,
-  Download,
-  Cloud,
-  Upload,
   MessageSquare,
   LogOut,
   UserCircle,
@@ -47,9 +36,7 @@ import {
   Bug,
   ShieldAlert,
   LayoutDashboard,
-  Crown,
-  X,
-  CheckCircle
+  Crown
 } from "lucide-react"
 import { Switch } from "./ui/switch"
 import { Separator } from "./ui/separator"
@@ -70,26 +57,12 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { Label } from "./ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { useLanguage } from "@/lib/language"
-import { useAuth, useUser, useFirestore, useCollection, useMemoFirebase } from "@/firebase"
+import { useAuth, useUser } from "@/firebase"
 import { signOut } from "firebase/auth"
 import { Button } from "./ui/button"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Badge } from "./ui/badge"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
-import { collection, query, where, orderBy, doc, deleteDoc, updateDoc } from 'firebase/firestore'
-import { Card } from "./ui/card"
-import { format } from "date-fns"
-
-interface AppNotification {
-    id: string;
-    userId: string;
-    title: string;
-    message: string;
-    createdAt: any;
-    read: boolean;
-    type: 'support' | 'bug' | 'general';
-}
 
 const LanguageSelector = () => {
     const { language, setLanguage } = useLanguage();
@@ -151,7 +124,6 @@ export function SettingsPage() {
     const { t } = useLanguage();
     const auth = useAuth();
     const { user } = useUser();
-    const firestore = useFirestore();
     const [analyticsEnabled, setAnalyticsEnabled] = React.useState(false);
     const [pushEnabled, setPushEnabled] = React.useState(false);
     const [emailEnabled, setEmailEnabled] = React.useState(true);
@@ -159,31 +131,8 @@ export function SettingsPage() {
 
     const isOwner = user?.email === 'mnjkairi1@gmail.com';
 
-    const notificationsQuery = useMemoFirebase(() => {
-        if (!firestore || !user) return null;
-        // Specifically query notifications for THIS user to comply with basic security rules
-        return query(
-            collection(firestore, 'notifications'), 
-            where('userId', '==', user.uid),
-            orderBy('createdAt', 'desc')
-        );
-    }, [firestore, user]);
-
-    const { data: notifications } = useCollection<AppNotification>(notificationsQuery);
-    const unreadCount = notifications?.filter(n => !n.read).length || 0;
-
     const handleSignOut = () => {
         signOut(auth);
-    };
-
-    const markAsRead = async (id: string) => {
-        if (!firestore) return;
-        await updateDoc(doc(firestore, 'notifications', id), { read: true });
-    };
-
-    const deleteNotification = async (id: string) => {
-        if (!firestore) return;
-        await deleteDoc(doc(firestore, 'notifications', id));
     };
 
     const baseConfig = [
@@ -377,56 +326,6 @@ export function SettingsPage() {
                     </div>
                     <p className="text-muted-foreground">{user?.email}</p>
                 </div>
-            </div>
-            
-            <div className="relative">
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button variant="ghost" size="icon" className="rounded-full w-12 h-12 bg-white/50 backdrop-blur-sm shadow-sm transition-transform active:scale-95">
-                            <Bell className="w-6 h-6 text-foreground" />
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-sm rounded-3xl h-[70vh] flex flex-col">
-                        <DialogHeader>
-                            <DialogTitle>Notifications</DialogTitle>
-                        </DialogHeader>
-                        <div className="flex-grow overflow-y-auto space-y-3 py-2">
-                            {!notifications || notifications.length === 0 ? (
-                                <div className="text-center py-12 text-muted-foreground">
-                                    <Bell className="w-12 h-12 mx-auto mb-4 opacity-20" />
-                                    <p>No notifications yet.</p>
-                                </div>
-                            ) : (
-                                notifications.map((n) => (
-                                    <Card key={n.id} className={`p-4 rounded-2xl border-none shadow-sm relative group ${!n.read ? 'bg-primary/5' : 'bg-secondary/20'}`}>
-                                        <div className="flex justify-between items-start mb-1">
-                                            <h4 className={`font-bold text-sm ${!n.read ? 'text-primary' : 'text-foreground'}`}>{n.title}</h4>
-                                            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                {!n.read && (
-                                                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => markAsRead(n.id)}>
-                                                        <CheckCircle className="w-4 h-4 text-green-500" />
-                                                    </Button>
-                                                )}
-                                                <button onClick={() => deleteNotification(n.id)} className="text-muted-foreground hover:text-destructive">
-                                                    <X className="w-4 h-4" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <p className="text-xs leading-relaxed text-muted-foreground">{n.message}</p>
-                                        <p className="text-[9px] text-muted-foreground/60 mt-2 font-medium">
-                                            {n.createdAt?.toDate ? format(n.createdAt.toDate(), 'MMM d, p') : 'Just now'}
-                                        </p>
-                                    </Card>
-                                ))
-                            )}
-                        </div>
-                    </DialogContent>
-                </Dialog>
-                {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground border-2 border-white shadow-sm animate-in zoom-in-50 duration-300 pointer-events-none">
-                        {unreadCount}
-                    </span>
-                )}
             </div>
         </div>
       <Accordion type="single" collapsible className="w-full" defaultValue="item-0">

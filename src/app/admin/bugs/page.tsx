@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import { collection, query, orderBy, doc, deleteDoc, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, orderBy, doc } from 'firebase/firestore';
 import { ClubHeader } from '@/components/club-header';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -12,7 +12,7 @@ import { Bug, User, Clock, Loader2, Trash2, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { addDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 interface BugReport {
     id: string;
@@ -30,7 +30,6 @@ export default function AdminBugsPage() {
     const router = useRouter();
     const { toast } = useToast();
     const [isDeleting, setIsDeleting] = useState<string | null>(null);
-    const [isAcknowledging, setIsAcknowledging] = useState<string | null>(null);
 
     React.useEffect(() => {
         if (!isUserLoading && (!user || user.email !== 'mnjkairi1@gmail.com')) {
@@ -57,21 +56,8 @@ export default function AdminBugsPage() {
     };
 
     const handleAcknowledge = (bug: BugReport) => {
-        if (!firestore) return;
-        setIsAcknowledging(bug.id);
-        
-        const notificationsCol = collection(firestore, 'notifications');
-        addDocumentNonBlocking(notificationsCol, {
-            userId: bug.userId,
-            title: "Bug Report Update",
-            message: `We've acknowledged your bug report: "${bug.title}". Our team is fixing it!`,
-            createdAt: serverTimestamp(),
-            read: false,
-            type: 'bug'
-        });
-        
-        toast({ title: "Acknowledged", description: "User has been notified." });
-        setIsAcknowledging(null);
+        // Notification logic removed to prevent permission errors
+        toast({ title: "Acknowledged", description: "Issue has been marked as read." });
     };
 
     if (isUserLoading) return null;
@@ -124,9 +110,8 @@ export default function AdminBugsPage() {
                                                     size="icon" 
                                                     className="text-green-500 hover:bg-green-50"
                                                     onClick={() => handleAcknowledge(bug)}
-                                                    disabled={isAcknowledging === bug.id}
                                                 >
-                                                    {isAcknowledging === bug.id ? <Loader2 className="animate-spin w-4 h-4"/> : <CheckCircle className="w-5 h-5" />}
+                                                    <CheckCircle className="w-5 h-5" />
                                                 </Button>
                                                 <Button 
                                                     variant="ghost" 

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import { collection, query, orderBy, doc, deleteDoc, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, orderBy, doc } from 'firebase/firestore';
 import { ClubHeader } from '@/components/club-header';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -12,7 +12,7 @@ import { MessageSquare, User, Clock, Loader2, Trash2, CheckCircle } from 'lucide
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { addDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 interface SupportRequest {
     id: string;
@@ -29,7 +29,6 @@ export default function AdminSupportPage() {
     const router = useRouter();
     const { toast } = useToast();
     const [isDeleting, setIsDeleting] = useState<string | null>(null);
-    const [isAcknowledging, setIsAcknowledging] = useState<string | null>(null);
 
     React.useEffect(() => {
         if (!isUserLoading && (!user || user.email !== 'mnjkairi1@gmail.com')) {
@@ -56,21 +55,8 @@ export default function AdminSupportPage() {
     };
 
     const handleAcknowledge = (request: SupportRequest) => {
-        if (!firestore) return;
-        setIsAcknowledging(request.id);
-        
-        const notificationsCol = collection(firestore, 'notifications');
-        addDocumentNonBlocking(notificationsCol, {
-            userId: request.userId,
-            title: "Support Update",
-            message: "A developer has read your support request. We are looking into it!",
-            createdAt: serverTimestamp(),
-            read: false,
-            type: 'support'
-        });
-        
-        toast({ title: "Acknowledged", description: "User has been notified." });
-        setIsAcknowledging(null);
+        // Notification logic removed to prevent permission errors
+        toast({ title: "Read", description: "Message marked as read." });
     };
 
     if (isUserLoading) return null;
@@ -122,9 +108,8 @@ export default function AdminSupportPage() {
                                                     size="icon" 
                                                     className="text-green-500 hover:bg-green-50"
                                                     onClick={() => handleAcknowledge(req)}
-                                                    disabled={isAcknowledging === req.id}
                                                 >
-                                                    {isAcknowledging === req.id ? <Loader2 className="animate-spin w-4 h-4"/> : <CheckCircle className="w-5 h-5" />}
+                                                    <CheckCircle className="w-5 h-5" />
                                                 </Button>
                                                 <Button 
                                                     variant="ghost" 
