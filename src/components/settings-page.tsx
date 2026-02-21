@@ -161,8 +161,7 @@ export function SettingsPage() {
 
     const notificationsQuery = useMemoFirebase(() => {
         if (!firestore || !user) return null;
-        // Normal users see only their own notifications.
-        // Even for admin, we show their personal notifications here for consistency.
+        // Specifically query notifications for THIS user to comply with basic security rules
         return query(
             collection(firestore, 'notifications'), 
             where('userId', '==', user.uid),
@@ -392,13 +391,13 @@ export function SettingsPage() {
                             <DialogTitle>Notifications</DialogTitle>
                         </DialogHeader>
                         <div className="flex-grow overflow-y-auto space-y-3 py-2">
-                            {notifications?.length === 0 ? (
+                            {!notifications || notifications.length === 0 ? (
                                 <div className="text-center py-12 text-muted-foreground">
                                     <Bell className="w-12 h-12 mx-auto mb-4 opacity-20" />
                                     <p>No notifications yet.</p>
                                 </div>
                             ) : (
-                                notifications?.map((n) => (
+                                notifications.map((n) => (
                                     <Card key={n.id} className={`p-4 rounded-2xl border-none shadow-sm relative group ${!n.read ? 'bg-primary/5' : 'bg-secondary/20'}`}>
                                         <div className="flex justify-between items-start mb-1">
                                             <h4 className={`font-bold text-sm ${!n.read ? 'text-primary' : 'text-foreground'}`}>{n.title}</h4>
@@ -436,7 +435,7 @@ export function SettingsPage() {
             <AccordionTrigger className="py-4 hover:no-underline">
               <div className="flex items-center gap-4">
                 <div className={`w-12 h-12 rounded-2xl ${isOwner && index === 0 ? 'bg-primary/10' : 'bg-gradient-to-br from-lavender to-soft-blue'} flex items-center justify-center`}>
-                    <category.icon className={`w-7 h-7 ${isOwner && index === 0 ? 'text-primary' : 'text-primary'}`} />
+                    <category.icon className={`w-7 h-7 text-primary`} />
                 </div>
                 <span className="font-semibold text-lg text-foreground">{category.title}</span>
               </div>
@@ -452,7 +451,7 @@ export function SettingsPage() {
                     componentToRender = option.component;
                 }
 
-                const isSwitch = option.control === 'switch';
+                const isSwitch = option.control === "switch";
                 let isChecked;
                 switch (option.label) {
                     case t('settings.privacy.analytics'):
@@ -553,7 +552,7 @@ const SettingItem = ({ option, onToggle, isChecked }: { option: any; onToggle?: 
       <div className="flex items-center gap-3">
         {option.value && <span className="text-base text-muted-foreground">{option.value}</span>}
         {option.control === "switch" ? (
-          <Switch defaultChecked={option.checked} onCheckedChange={onToggle} checked={isChecked} />
+          <Switch onCheckedChange={onToggle} checked={isChecked} />
         ) : (
            (option.isDialog || option.component || option.href) && <ChevronRight className="w-5 h-5 text-muted-foreground" />
         )}

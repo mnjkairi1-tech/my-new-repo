@@ -14,7 +14,7 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
-    // Main Owner Check
+    // Main Owner Check - Grants full access to mnjkairi1@gmail.com
     function isAdmin() {
       return isSignedIn() && request.auth.token.email == 'mnjkairi1@gmail.com';
     }
@@ -42,10 +42,12 @@ service cloud.firestore {
     }
     
     match /notifications/{notificationId} {
-      // Consolidated rule for notifications
-      allow get, list: if isSupportStaff() || (isSignedIn() && resource.data.userId == request.auth.uid);
-      allow create: if isSupportStaff() || (isSignedIn() && request.resource.data.userId == request.auth.uid);
-      allow update, delete: if isSupportStaff() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      // Admin can see and manage all notifications
+      // Users can only see and manage their own
+      allow read, write: if isAdmin();
+      allow get, list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isSignedIn() && resource.data.userId == request.auth.uid;
     }
 
     match /user_profiles/{userId} {
