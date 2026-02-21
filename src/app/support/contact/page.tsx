@@ -10,20 +10,37 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { MessageCircle, Send, Loader2 } from 'lucide-react';
+import { useFirestore, useUser } from '@/firebase';
+import { collection, serverTimestamp } from 'firebase/firestore';
+import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 export default function ContactSupportPage() {
     const { toast } = useToast();
+    const { user } = useUser();
+    const firestore = useFirestore();
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSendMessage = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!email || !message) return;
+        if (!email || !message || !firestore || !user) return;
 
         setIsSubmitting(true);
         
-        // Simulating message sent
+        const supportCollection = collection(firestore, 'supportRequests');
+        const data = {
+            userId: user.uid,
+            userName: user.displayName || user.email?.split('@')[0] || 'Anonymous',
+            email: email,
+            message: message,
+            status: 'new',
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+        };
+
+        addDocumentNonBlocking(supportCollection, data);
+
         setTimeout(() => {
             toast({
                 title: 'Message Sent!',
@@ -32,7 +49,7 @@ export default function ContactSupportPage() {
             setEmail('');
             setMessage('');
             setIsSubmitting(false);
-        }, 1500);
+        }, 1000);
     };
 
     return (
@@ -83,7 +100,7 @@ export default function ContactSupportPage() {
                                 disabled={isSubmitting} 
                                 className="w-full h-14 rounded-2xl font-black text-lg shadow-lg shadow-primary/20 mt-4 transition-all active:scale-95"
                             >
-                                {isSubmitting ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Sending...</> : <><Send className="mr-2 h-5 w-5" /> Send Message</>}
+                                {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...</> : <><Send className="mr-2 h-5 w-5" /> Send Message</>}
                             </Button>
                         </CardContent>
                     </Card>

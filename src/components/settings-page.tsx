@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState, useEffect } from "react"
@@ -285,7 +286,7 @@ export function SettingsPage() {
             title: "Owner Portal",
             icon: ShieldAlert,
             options: [
-                { label: "Admin Dashboard", icon: LayoutDashboard, color: "text-primary font-bold" },
+                { label: "Admin Dashboard", icon: LayoutDashboard, color: "text-primary font-bold", href: "/admin" },
             ]
         }
     ] : [];

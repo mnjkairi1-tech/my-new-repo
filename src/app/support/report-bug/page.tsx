@@ -10,20 +10,37 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Bug, Send, Loader2 } from 'lucide-react';
+import { useFirestore, useUser } from '@/firebase';
+import { collection, serverTimestamp } from 'firebase/firestore';
+import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 export default function ReportBugPage() {
     const { toast } = useToast();
+    const { user } = useUser();
+    const firestore = useFirestore();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSendMessage = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!title || !description) return;
+        if (!title || !description || !firestore || !user) return;
 
         setIsSubmitting(true);
         
-        // Simulating message being sent
+        const bugsCollection = collection(firestore, 'bugReports');
+        const data = {
+            userId: user.uid,
+            userName: user.displayName || user.email?.split('@')[0] || 'Anonymous',
+            title: title,
+            description: description,
+            status: 'new',
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+        };
+
+        addDocumentNonBlocking(bugsCollection, data);
+
         setTimeout(() => {
             toast({
                 title: 'Message Sent!',
@@ -32,7 +49,7 @@ export default function ReportBugPage() {
             setTitle('');
             setDescription('');
             setIsSubmitting(false);
-        }, 1500);
+        }, 1000);
     };
 
     return (
@@ -82,7 +99,7 @@ export default function ReportBugPage() {
                                 disabled={isSubmitting} 
                                 className="w-full h-14 rounded-2xl font-black text-lg bg-destructive text-white shadow-lg shadow-destructive/20 mt-4 hover:bg-destructive/90 transition-all active:scale-95"
                             >
-                                {isSubmitting ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Sending...</> : <><Send className="mr-2 h-5 w-5" /> Send Message</>}
+                                {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...</> : <><Send className="mr-2 h-5 w-5" /> Send Message</>}
                             </Button>
                         </CardContent>
                     </Card>
