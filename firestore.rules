@@ -10,18 +10,9 @@ service cloud.firestore {
      * system for administrative staff. Users have full control over the support requests and bug reports they 
      * create, while designated support staff have global read and write access to manage these issues.
      *
-     * Data Structure:
-     * - /supportRequests/{id}: User-submitted support tickets.
-     * - /bugReports/{id}: User-submitted technical issues.
-     * - /supportStaff/{userId}: A role-based collection where the existence of a document grants admin privileges.
-     *
      * Key Security Decisions:
-     * - Authorization Independence: Every request/report contains a denormalized 'userId'. This allows rules 
-     *   to verify ownership instantly without fetching additional user profile documents.
-     * - DBAC for Roles: Administrative access is determined by the existence of a UID in the /supportStaff 
-     *   collection. This avoids hardcoding UIDs or relying on complex custom claims during the prototype phase.
-     * - Relational Integrity: The rules strictly enforce that the 'userId' field in any document matches 
-     *   the UID of the authenticated creator, and that this field remains immutable after creation.
+     * - Owner Access: The user with email 'mnjkairi1@gmail.com' is treated as a global admin.
+     * - DBAC for Roles: Administrative access is also determined by the existence of a UID in the /supportStaff collection.
      */
 
     // --- Helper Functions ---
@@ -42,35 +33,28 @@ service cloud.firestore {
     }
 
     /** 
-     * Checks if the user is a member of the support staff.
-     * This uses the DBAC pattern by checking for document existence in the /supportStaff collection.
+     * Checks if the user is a member of the support staff or the main owner.
      */
     function isSupportStaff() {
-      return isSignedIn() && exists(/databases/$(database)/documents/supportStaff/$(request.auth.uid));
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/supportStaff/$(request.auth.uid)) ||
+        request.auth.token.email == 'mnjkairi1@gmail.com'
+      );
     }
 
     // --- Collection Rules ---
 
     /**
-     * @description Rules for the supportStaff collection. Primarily used for role lookup.
-     * @path /supportStaff/{userId}
-     * @allow get: if signed in (to verify own or others' staff status).
-     * @deny list, create, update, delete: if not a system administrator (restricted in prototype).
-     * @principle Role-based access control via document existence.
+     * Rules for the supportStaff collection.
      */
     match /supportStaff/{userId} {
       allow get: if isSignedIn();
       allow list: if isSupportStaff();
-      allow create, update, delete: if false; // Managed via Firebase Console or Admin SDK in prototyping.
+      allow create, update, delete: if request.auth.token.email == 'mnjkairi1@gmail.com';
     }
 
     /**
-     * @description Rules for user-submitted support requests.
-     * @path /supportRequests/{supportRequestId}
-     * @allow create: if user is authenticated and sets themselves as the owner.
-     * @allow update, delete: if the user owns the document or is support staff.
-     * @allow read: if the user owns the document or is support staff.
-     * @principle Ownership-based access with administrative override and field immutability.
+     * Rules for user-submitted support requests.
      */
     match /supportRequests/{supportRequestId} {
       allow get, list: if isSignedIn() && (isSupportStaff() || resource.data.userId == request.auth.uid);
@@ -83,12 +67,7 @@ service cloud.firestore {
     }
 
     /**
-     * @description Rules for user-submitted bug reports.
-     * @path /bugReports/{bugReportId}
-     * @allow create: if user is authenticated and sets themselves as the owner.
-     * @allow update, delete: if the user owns the document or is support staff.
-     * @allow read: if the user owns the document or is support staff.
-     * @principle Ownership-based access with administrative override and field immutability.
+     * Rules for user-submitted bug reports.
      */
     match /bugReports/{bugReportId} {
       allow get, list: if isSignedIn() && (isSupportStaff() || resource.data.userId == request.auth.uid);
@@ -98,6 +77,40 @@ service cloud.firestore {
       allow update: if (isExistingOwner(resource.data.userId) || isSupportStaff()) && request.resource.data.userId == resource.data.userId;
       
       allow delete: if isExistingOwner(resource.data.userId) || isSupportStaff();
+    }
+    
+    /**
+     * User profiles and group memberships.
+     */
+    match /user_profiles/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(userId);
+    }
+    
+    match /users/{userId}/groupMemberships/{groupId} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    match /groups/{groupId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn() && (resource.data.ownerId == request.auth.uid || isSupportStaff());
+      
+      match /members/{memberId} {
+        allow read: if isSignedIn();
+        allow write: if isSignedIn();
+      }
+      
+      match /messages/{messageId} {
+        allow read: if isSignedIn();
+        allow create: if isSignedIn();
+        allow delete: if isSignedIn() && (resource.data.userId == request.auth.uid || isSupportStaff());
+      }
+      
+      match /tools/{toolId} {
+        allow read: if isSignedIn();
+        allow write: if isSignedIn();
+      }
     }
   }
 }
