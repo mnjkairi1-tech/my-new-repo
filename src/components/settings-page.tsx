@@ -318,24 +318,35 @@ export function SettingsPage() {
 
   return (
     <div className="p-4 animate-fade-in-up pb-24">
-       <div className="flex items-center gap-4 mb-8">
-            <div className="relative">
-                <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
-                    <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
-                    <AvatarFallback>{user?.displayName?.charAt(0) || user?.email?.charAt(0)}</AvatarFallback>
-                </Avatar>
-                {isOwner && (
-                    <div className="absolute -top-2 -right-2 bg-yellow-400 text-white rounded-full p-1 shadow-md border-2 border-white">
-                        <Crown className="w-4 h-4 fill-current" />
-                    </div>
-                )}
-            </div>
-            <div>
-                <div className="flex items-center gap-2">
-                    <h1 className="text-2xl font-bold">{user?.displayName || 'Community Member'}</h1>
-                    {isOwner && <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] h-5 px-1.5 uppercase font-black">Owner</Badge>}
+       <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+                <div className="relative">
+                    <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
+                        <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
+                        <AvatarFallback>{user?.displayName?.charAt(0) || user?.email?.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    {isOwner && (
+                        <div className="absolute -top-2 -right-2 bg-yellow-400 text-white rounded-full p-1 shadow-md border-2 border-white">
+                            <Crown className="w-4 h-4 fill-current" />
+                        </div>
+                    )}
                 </div>
-                <p className="text-muted-foreground">{user?.email}</p>
+                <div>
+                    <div className="flex items-center gap-2">
+                        <h1 className="text-2xl font-bold">{user?.displayName || 'Community Member'}</h1>
+                        {isOwner && <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] h-5 px-1.5 uppercase font-black">Owner</Badge>}
+                    </div>
+                    <p className="text-muted-foreground">{user?.email}</p>
+                </div>
+            </div>
+            
+            <div className="relative">
+                <Button variant="ghost" size="icon" className="rounded-full w-12 h-12 bg-white/50 backdrop-blur-sm shadow-sm transition-transform active:scale-95">
+                    <Bell className="w-6 h-6 text-foreground" />
+                </Button>
+                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground border-2 border-white shadow-sm animate-in zoom-in-50 duration-300">
+                    3
+                </span>
             </div>
         </div>
       <Accordion type="single" collapsible className="w-full" defaultValue="item-0">
