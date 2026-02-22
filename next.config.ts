@@ -26,13 +26,14 @@ const withPWA = withPWAInit({
       },
     },
     {
-      // Specific rule for Google Favicons (The tool icons)
-      urlPattern: /^https:\/\/www\.google\.com\/s2\/favicons.*/i,
+      // Broad rule for all images (Remote and Next.js optimized)
+      // This covers unsplash, picsum, google favicons, ui-avatars, etc.
+      urlPattern: /.*\.(?:png|jpg|jpeg|svg|gif|webp|avif).*/i,
       handler: "CacheFirst",
       options: {
-        cacheName: "tool-icons-cache",
+        cacheName: "images-cache",
         expiration: {
-          maxEntries: 5000, // Large number for many tools
+          maxEntries: 5000,
           maxAgeSeconds: 60 * 24 * 60 * 60, // 60 days
         },
         cacheableResponse: {
@@ -41,28 +42,13 @@ const withPWA = withPWAInit({
       },
     },
     {
-      // Cache images from external sources like Unsplash, Picsum, and Postimg
-      urlPattern: /^https:\/\/(images\.unsplash\.com|picsum\.photos|i\.postimg\.cc).*/i,
+      // Explicitly catch Google Favicon service and other external APIs that return images
+      urlPattern: /^https:\/\/(?:www\.google\.com\/s2\/favicons|ui-avatars\.com\/api|images\.unsplash\.com|picsum\.photos|i\.postimg\.cc).*/i,
       handler: "CacheFirst",
       options: {
-        cacheName: "external-images-cache",
+        cacheName: "external-assets-cache",
         expiration: {
-          maxEntries: 1000,
-          maxAgeSeconds: 60 * 24 * 60 * 60,
-        },
-        cacheableResponse: {
-          statuses: [0, 200],
-        },
-      },
-    },
-    {
-      // Cache Next.js optimized images
-      urlPattern: /\/_next\/image\?.*/i,
-      handler: "CacheFirst",
-      options: {
-        cacheName: "next-image-cache",
-        expiration: {
-          maxEntries: 2000,
+          maxEntries: 5000,
           maxAgeSeconds: 60 * 24 * 60 * 60,
         },
         cacheableResponse: {
