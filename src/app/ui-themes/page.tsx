@@ -22,7 +22,8 @@ import {
   Droplets,
   Trees,
   Terminal,
-  Star
+  Star,
+  Leaf
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -47,16 +48,19 @@ export default function UiThemesPage() {
     { name: 'emerald-night', label: 'Emerald Night', icon: Mountain, color: 'bg-green-950 text-emerald-400' },
     { name: 'lavender-mist', label: 'Lavender Mist', icon: Flower2, color: 'bg-purple-50 text-purple-600' },
     
-    /* NEW MINIMAL THEMES */
+    /* MINIMAL THEMES */
     { name: 'minimal-obsidian', label: 'Obsidian', icon: Terminal, color: 'bg-zinc-900 text-zinc-100' },
     { name: 'minimal-snow', label: 'Arctic Snow', icon: Snowflake, color: 'bg-zinc-50 text-zinc-900 border' },
     { name: 'minimal-forest', label: 'Deep Forest', icon: Trees, color: 'bg-emerald-950 text-emerald-400' },
     { name: 'minimal-sand', label: 'Warm Sand', icon: Wind, color: 'bg-amber-50 text-amber-900' },
     { name: 'minimal-ocean', label: 'Midnight Sea', icon: Droplets, color: 'bg-blue-950 text-cyan-400' },
 
-    /* PREMIUM & GAMING AT THE END */
+    /* PREMIUM & GAMING */
     { name: 'premium-glass', label: 'Premium Glass', icon: Gem, color: 'bg-zinc-900 text-amber-400 border-amber-500/30' },
     { name: 'esports-pro', label: 'Esports Elite', icon: Trophy, color: 'bg-blue-950 text-cyan-400 border-cyan-500/50 shadow-[0_0_10px_rgba(0,229,255,0.3)]' },
+    
+    /* NEW CUTE THEMES */
+    { name: 'cute-mint-glass', label: 'Minty Marshmallow', icon: Leaf, color: 'bg-emerald-50 text-emerald-500 shadow-[0_4px_10px_rgba(16,185,129,0.15)]' },
   ];
 
   return (
@@ -74,7 +78,7 @@ export default function UiThemesPage() {
               key={t.name}
               onClick={() => setTheme(t.name)}
               className={cn(
-                'cursor-pointer transition-all duration-300 bg-card/80 backdrop-blur-sm border-2 overflow-hidden rounded-[2rem]',
+                'cursor-pointer transition-all duration-300 bg-card/80 backdrop-blur-sm border-2 overflow-hidden rounded-[2.5rem]',
                 isClient && theme === t.name ? 'border-primary ring-4 ring-primary/10 shadow-2xl scale-105' : 'border-transparent hover:border-primary/20 soft-shadow'
               )}
             >
