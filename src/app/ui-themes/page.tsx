@@ -16,7 +16,13 @@ import {
   Ghost,
   Compass,
   Mountain,
-  Flower2
+  Flower2,
+  Gem,
+  Wind,
+  Droplets,
+  Trees,
+  Terminal,
+  Star
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -40,15 +46,17 @@ export default function UiThemesPage() {
     { name: 'desert-sand', label: 'Desert Sand', icon: Compass, color: 'bg-orange-50 text-orange-800' },
     { name: 'emerald-night', label: 'Emerald Night', icon: Mountain, color: 'bg-green-950 text-emerald-400' },
     { name: 'lavender-mist', label: 'Lavender Mist', icon: Flower2, color: 'bg-purple-50 text-purple-600' },
-    { name: 'esports-elite', label: 'Esports Elite', icon: Trophy, color: 'bg-black text-cyan-400 border border-cyan-500/50' },
-    { name: 'premium-dark', label: 'Premium Glass', icon: Crown, color: 'bg-zinc-900 text-yellow-500' },
-    { name: 'neon-phantom', label: 'Neon Phantom X', icon: Gamepad2, color: 'bg-blue-900 text-cyan-400' },
-    { name: 'neoglass', label: 'Neo Glass', icon: Palette, color: 'bg-blue-900 text-cyan-400' },
-    { name: 'black-vision', label: 'Black Vision', icon: Shield, color: 'bg-black text-white' },
-    { name: 'cyberwave', label: 'Cyberwave', icon: Zap, color: 'bg-purple-900 text-pink-500' },
-    { name: 'minimal-white', label: 'Minimal White', icon: Type, color: 'bg-white text-black' },
-    { name: 'claymorphic', label: 'Claymorphic', icon: Palette, color: 'bg-blue-50 text-blue-500' },
-    { name: 'winter-glassmorphism', label: 'Winter Glass', icon: Snowflake, color: 'bg-cyan-50 text-cyan-600' },
+    
+    /* NEW MINIMAL THEMES */
+    { name: 'minimal-obsidian', label: 'Obsidian', icon: Terminal, color: 'bg-zinc-900 text-zinc-100' },
+    { name: 'minimal-snow', label: 'Arctic Snow', icon: Snowflake, color: 'bg-zinc-50 text-zinc-900 border' },
+    { name: 'minimal-forest', label: 'Deep Forest', icon: Trees, color: 'bg-emerald-950 text-emerald-400' },
+    { name: 'minimal-sand', label: 'Warm Sand', icon: Wind, color: 'bg-amber-50 text-amber-900' },
+    { name: 'minimal-ocean', label: 'Midnight Sea', icon: Droplets, color: 'bg-blue-950 text-cyan-400' },
+
+    /* PREMIUM & GAMING AT THE END */
+    { name: 'premium-glass', label: 'Premium Glass', icon: Gem, color: 'bg-zinc-900 text-amber-400 border-amber-500/30' },
+    { name: 'esports-pro', label: 'Esports Elite', icon: Trophy, color: 'bg-blue-950 text-cyan-400 border-cyan-500/50 shadow-[0_0_10px_rgba(0,229,255,0.3)]' },
   ];
 
   return (
@@ -60,7 +68,7 @@ export default function UiThemesPage() {
         <ClubHeader title="UI Themes" showBackButton />
         <p className="text-muted-foreground mt-2 text-sm">Choose a theme that fits your mood. From minimal to electric.</p>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 mt-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8">
           {themes.map((t) => (
             <Card
               key={t.name}

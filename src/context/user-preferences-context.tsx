@@ -100,7 +100,12 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
       'winter-glassmorphism', 
       'neon-phantom',
       'oled-stealth',
-      'emerald-night'
+      'emerald-night',
+      'minimal-obsidian',
+      'minimal-forest',
+      'minimal-ocean',
+      'premium-glass',
+      'esports-pro'
     ];
     if (darkThemes.includes(newTheme)) {
       root.classList.add('dark');
