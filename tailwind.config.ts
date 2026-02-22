@@ -13,6 +13,8 @@ export default {
         body: ['Inter', 'sans-serif'],
         headline: ['Inter', 'sans-serif'],
         code: ['monospace'],
+        orbitron: ['Orbitron', 'sans-serif'],
+        rajdhani: ['Rajdhani', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -56,6 +58,10 @@ export default {
         'premium-gold': '#C6A76A',
         'premium-silver': '#CFCFCF',
         'premium-dark': '#0F0F12',
+        'neon-blue': '#00F5FF',
+        'neon-purple': '#A855F7',
+        'gaming-red': '#FF004D',
+        'toxic-green': '#00FF88',
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',
@@ -78,6 +84,11 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 4px)',
         sm: 'calc(var(--radius) - 8px)',
+      },
+      boxShadow: {
+        'neon-blue': '0 0 10px #00F5FF, 0 0 30px rgba(0, 245, 255, 0.3)',
+        'neon-purple': '0 0 10px #A855F7, 0 0 30px rgba(168, 85, 247, 0.3)',
+        'premium-soft': '0 10px 40px -10px rgba(0, 0, 0, 0.5)',
       },
       keyframes: {
         'accordion-down': {
@@ -106,14 +117,6 @@ export default {
                 transform: 'translateY(0)'
             }
         },
-        'bounce-horizontal': {
-          '0%, 100%': { transform: 'translateX(0)' },
-          '50%': { transform: 'translateX(5px)' },
-        },
-        'spin-slow': {
-          from: { transform: 'rotate(0deg)' },
-          to: { transform: 'rotate(360deg)' },
-        },
         'float': {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-20px)' },
@@ -123,8 +126,6 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
-        'bounce-horizontal': 'bounce-horizontal 2s infinite',
-        'spin-slow': 'spin-slow 10s linear infinite',
         'float': 'float 6s ease-in-out infinite',
       },
     },
