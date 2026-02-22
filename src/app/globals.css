@@ -63,16 +63,17 @@
     --radius: 0.75rem;
   }
 
+  /* OLED STEALTH - TRUE DARK BLACK */
   [data-theme='oled-stealth'] {
     --background: 0 0% 0%;
-    --foreground: 0 0% 95%;
-    --card: 0 0% 5%;
+    --foreground: 0 0% 90%;
+    --card: 0 0% 3%;
     --primary: 0 0% 100%;
     --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 10%;
-    --accent: 0 0% 20%;
-    --border: 0 0% 15%;
-    --radius: 0.5rem;
+    --secondary: 0 0% 8%;
+    --accent: 0 0% 12%;
+    --border: 0 0% 10%;
+    --radius: 0.75rem;
   }
 
   [data-theme='desert-sand'] {
@@ -108,33 +109,34 @@
     --radius: 2rem;
   }
 
+  /* OBSIDIAN - DEEP MATTE CHARCOAL */
   [data-theme='minimal-obsidian'] {
-    --background: 240 10% 4%;
+    --background: 240 6% 10%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 6%;
+    --card: 240 6% 13%;
     --primary: 0 0% 100%;
-    --secondary: 240 10% 15%;
-    --border: 240 10% 12%;
-    --radius: 0.25rem;
+    --secondary: 240 6% 18%;
+    --border: 240 6% 22%;
+    --radius: 0.4rem;
   }
 
-  /* Arctic Snow - RESTORED TO MINIMAL BLACK */
+  /* ARCTIC SNOW - MINIMAL BLACK & WHITE (High Contrast) */
   [data-theme='minimal-snow'] {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 5%;
+    --card: 0 0% 0%;
     --card-foreground: 0 0% 100%;
     --primary: 0 0% 100%;
     --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 12%;
+    --secondary: 0 0% 100% / 0.1;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 0 0% 15%;
-    --border: 0 0% 20%;
-    --input: 0 0% 15%;
+    --muted: 0 0% 100% / 0.05;
+    --muted-foreground: 0 0% 75%;
+    --accent: 0 0% 100% / 0.2;
+    --border: 0 0% 100% / 0.3;
+    --input: 0 0% 10%;
     --ring: 0 0% 100%;
-    --radius: 0.5rem;
+    --radius: 0rem;
   }
 
   [data-theme='minimal-forest'] {
