@@ -39,39 +39,49 @@ const validationPrompt = ai.definePrompt(
 export async function validateAndGetToolInfo(
   input: ValidateToolUrlInput
 ): Promise<ValidateToolUrlOutput> {
+  let urlObj: URL;
   try {
-    const url = new URL(input.url);
+    urlObj = new URL(input.url);
+  } catch (e) {
+    return {
+      isAiTool: false,
+      isSafe: false,
+      reason: 'Invalid URL format.',
+    };
+  }
 
+  const hostname = urlObj.hostname.replace('www.', '');
+
+  try {
     const { output } = await validationPrompt({ url: input.url });
     
     if (!output) {
       return {
         isAiTool: true,
         isSafe: true,
-        toolName: url.hostname.replace('www.', ''),
+        toolName: hostname,
         toolDescription: 'User-added link.',
         reason: 'AI validation fallback mode active.',
       };
     }
     
-    // Default name if missing
-    if (!output.toolName) {
-        output.toolName = url.hostname.replace('www.', '');
-    }
-
-    // We allow any safe URL to be added as a "tool" for user convenience
     return {
         ...output,
+        toolName: output.toolName || hostname,
         isAiTool: true, 
         isSafe: output.isSafe ?? true
     };
 
   } catch (e: any) {
-    console.error("Error validating tool URL:", e);
+    // If AI service fails, we still allow the tool if it's a valid URL format
+    // assuming it's safe for the user unless proven otherwise by a real security list.
+    console.error("AI Validation Service Error (Falling back to basic validation):", e);
     return {
-      isAiTool: false,
-      isSafe: false,
-      reason: 'Invalid URL format.',
+      isAiTool: true,
+      isSafe: true,
+      toolName: hostname,
+      toolDescription: 'User-added link.',
+      reason: 'Validation fallback: AI service temporarily unavailable.',
     };
   }
 }

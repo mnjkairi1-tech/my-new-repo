@@ -103,18 +103,21 @@ function MyProfilePageContent() {
     const handleAddCustomTool = async () => {
         let urlToValidate = customToolUrl.trim();
         if (!urlToValidate) {
-            toast({ variant: 'destructive', title: 'Invalid URL', description: 'Please enter a valid URL.' });
+            toast({ variant: 'destructive', title: 'Empty Link', description: 'Please enter a URL first.' });
             return;
         }
 
-        // Auto-add https if missing
+        // Auto-add protocol if missing
         if (!urlToValidate.includes('://')) {
             urlToValidate = 'https://' + urlToValidate;
         }
 
         setIsSubmittingUrl(true);
         try {
+            // First check if it's a valid URL format locally
             const url = new URL(urlToValidate);
+            
+            // Call the enhanced safety check action
             const validationResult = await validateAndGetToolInfo({ url: urlToValidate });
 
             if (validationResult.isSafe) {

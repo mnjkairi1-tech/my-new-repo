@@ -298,9 +298,10 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
     
         setIsSubmittingUrl(true);
         try {
-            // Basic client-side validation
+            // Local parsing check
             const url = new URL(urlToValidate);
     
+            // Remote safety check
             const validationResult = await validateAndGetToolInfo({ url: urlToValidate });
     
             if (validationResult.isSafe) {
@@ -565,7 +566,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
 }
 
 const MemberListSkeleton = () => (
-    <div className='space-y-4'>
+    <div className='bg-background p-4 space-y-4'>
         {[...Array(3)].map((_, i) => (
             <div key={i} className="flex items-center gap-4">
                 <Skeleton className="h-12 w-12 rounded-full" />
