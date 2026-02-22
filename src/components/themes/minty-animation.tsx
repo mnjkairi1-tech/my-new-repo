@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Leaf } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 /**
  * MintyAnimation Component
@@ -11,13 +12,13 @@ export function MintyAnimation() {
   const [leaves, setLeaves] = useState<{ id: number; left: number; delay: number; duration: number; size: number; rotation: number }[]>([]);
   
   // Bird State
-  const [birdPos, setBirdPos] = useState({ x: 10, y: 10 });
+  const [birdPos, setBirdPos] = useState({ x: 15, y: 8 });
   const [isFlying, setIsFlying] = useState(false);
   const [targetIndex, setBirdTargetIndex] = useState(0);
   const [facingLeft, setFacingLeft] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
-  // Specified spots based on your red marks
+  // Specified spots based on user markers
   const spots = [
     { x: 15, y: 8 },   // Near Home Tab
     { x: 50, y: 15 },  // Near Search Label
@@ -46,17 +47,19 @@ export function MintyAnimation() {
       setBirdTargetIndex(nextIndex);
       
       const target = spots[nextIndex];
-      setFacingLeft(target.x < birdPos.x);
       
+      // Update position and direction after a small delay to simulate taking off
       setTimeout(() => {
+        setFacingLeft(target.x < birdPos.x);
         setBirdPos(target);
         setIsFlying(false);
-        // Random chirp
+        
+        // Random chirp when landing
         if (Math.random() > 0.6) {
           setMessage("Chirp! ✨");
           setTimeout(() => setMessage(null), 3000);
         }
-      }, 3000); // 3 seconds to "fly" across
+      }, 500); 
     }, 12000);
 
     return () => clearInterval(moveInterval);
