@@ -107,7 +107,8 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
       'premium-glass',
       'esports-pro',
       'velvet-sunset',
-      'cosmic-neon'
+      'cosmic-neon',
+      'neon-volt'
     ];
     if (darkThemes.includes(newTheme)) {
       root.classList.add('dark');

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Palette, Sun, Moon, Cloud, Ghost, Compass, Mountain, Flower2, 
-  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf, Maximize, Sunset, Sparkles
+  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf, Maximize, Sunset, Sparkles, Zap
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
@@ -49,6 +49,9 @@ export default function UiThemesPage() {
 
     /* COSMIC NEON THEME BASED ON NEW IMAGE */
     { name: 'cosmic-neon', label: 'Cosmic Neon', icon: Sparkles, color: 'bg-[#05050a] text-[#8E54E9] border-[#00F5FF]/20' },
+
+    /* NEON VOLT THEME BASED ON DASHBOARD IMAGE */
+    { name: 'neon-volt', label: 'Neon Volt', icon: Zap, color: 'bg-[#0D0D0D] text-[#A3FF47] border-[#A3FF47]/20' },
   ];
 
   return (
