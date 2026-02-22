@@ -101,47 +101,53 @@ function MyProfilePageContent() {
     const { data: ownedClubs, isLoading: areClubsLoading } = useCollection<Group>(ownedGroupsQuery);
 
     const handleAddCustomTool = async () => {
-        if (!customToolUrl.trim()) {
+        let urlToValidate = customToolUrl.trim();
+        if (!urlToValidate) {
             toast({ variant: 'destructive', title: 'Invalid URL', description: 'Please enter a valid URL.' });
             return;
         }
 
+        // Auto-add https if missing
+        if (!urlToValidate.startsWith('http://') && !urlToValidate.startsWith('https://')) {
+            urlToValidate = 'https://' + urlToValidate;
+        }
+
         setIsSubmittingUrl(true);
         try {
-            const url = new URL(customToolUrl);
-            const validationResult = await validateAndGetToolInfo({ url: customToolUrl });
+            const url = new URL(urlToValidate);
+            const validationResult = await validateAndGetToolInfo({ url: urlToValidate });
 
-            if (validationResult.isAiTool && validationResult.isSafe) {
+            if (validationResult.isSafe) {
                 const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain=${url.hostname}`;
                 const newTool: Tool = {
                     name: validationResult.toolName || url.hostname,
-                    url: customToolUrl,
-                    description: validationResult.toolDescription || 'User-added AI tool.',
+                    url: urlToValidate,
+                    description: validationResult.toolDescription || 'User-added tool.',
                     image: faviconUrl,
                     dataAiHint: validationResult.toolName?.toLowerCase().split(' ').slice(0, 2).join(' ') || 'custom tool',
-                    pricing: 'Freemium', // Default value
-                    category: 'Custom', // Default value
+                    pricing: 'Freemium', 
+                    category: 'Custom',
                 };
                 
                 handleHeartToggle(newTool);
                 
                 toast({
-                    title: 'Tool Hearted!',
-                    description: `${newTool.name} has been added to your hearted list.`,
+                    title: 'Tool Added!',
+                    description: `${newTool.name} has been added to your list.`,
                 });
                 setCustomToolUrl('');
             } else {
                 toast({
                     variant: 'destructive',
-                    title: 'Validation Failed',
-                    description: validationResult.reason || 'This does not appear to be a valid AI tool.',
+                    title: 'Error',
+                    description: validationResult.reason || 'This URL could not be validated.',
                 });
             }
         } catch (error: any) {
              toast({
                 variant: 'destructive',
-                title: 'Error',
-                description: error.message.includes('Invalid URL') ? 'Please enter a valid URL format (e.g., https://example.com).' : (error.message || 'An unexpected error occurred.'),
+                title: 'Invalid URL',
+                description: 'Please enter a valid web address (e.g., example.com).',
             });
         } finally {
             setIsSubmittingUrl(false);
