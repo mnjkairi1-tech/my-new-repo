@@ -108,7 +108,7 @@ function MyProfilePageContent() {
         }
 
         // Auto-add https if missing
-        if (!urlToValidate.startsWith('http://') && !urlToValidate.startsWith('https://')) {
+        if (!urlToValidate.includes('://')) {
             urlToValidate = 'https://' + urlToValidate;
         }
 
@@ -122,9 +122,9 @@ function MyProfilePageContent() {
                 const newTool: Tool = {
                     name: validationResult.toolName || url.hostname,
                     url: urlToValidate,
-                    description: validationResult.toolDescription || 'User-added tool.',
+                    description: validationResult.toolDescription || 'User-added link.',
                     image: faviconUrl,
-                    dataAiHint: validationResult.toolName?.toLowerCase().split(' ').slice(0, 2).join(' ') || 'custom tool',
+                    dataAiHint: (validationResult.toolName || url.hostname).toLowerCase().split(' ').slice(0, 2).join(' '),
                     pricing: 'Freemium', 
                     category: 'Custom',
                 };
@@ -132,15 +132,15 @@ function MyProfilePageContent() {
                 handleHeartToggle(newTool);
                 
                 toast({
-                    title: 'Tool Added!',
-                    description: `${newTool.name} has been added to your list.`,
+                    title: 'Link Added!',
+                    description: `${newTool.name} has been added to your favorites.`,
                 });
                 setCustomToolUrl('');
             } else {
                 toast({
                     variant: 'destructive',
-                    title: 'Error',
-                    description: validationResult.reason || 'This URL could not be validated.',
+                    title: 'Security Alert',
+                    description: validationResult.reason || 'This URL is potentially unsafe.',
                 });
             }
         } catch (error: any) {
@@ -266,7 +266,7 @@ function MyProfilePageContent() {
                             <div className="flex gap-2 items-center mt-1">
                                 <Input 
                                     id="custom-tool-url"
-                                    placeholder="Put link of an AI tool" 
+                                    placeholder="Paste link here..." 
                                     value={customToolUrl}
                                     onChange={(e) => setCustomToolUrl(e.target.value)}
                                     className="h-12 bg-secondary rounded-none"

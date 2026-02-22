@@ -291,14 +291,14 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
             return;
         }
 
-        // Auto-add https if missing
-        if (!urlToValidate.startsWith('http://') && !urlToValidate.startsWith('https://')) {
+        // Auto-add protocol if missing
+        if (!urlToValidate.includes('://')) {
             urlToValidate = 'https://' + urlToValidate;
         }
     
         setIsSubmittingUrl(true);
         try {
-            // Basic client-side validation first
+            // Basic client-side validation
             const url = new URL(urlToValidate);
     
             const validationResult = await validateAndGetToolInfo({ url: urlToValidate });
@@ -308,15 +308,15 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                 await handleAddTool({
                     name: validationResult.toolName || url.hostname,
                     url: urlToValidate,
-                    description: validationResult.toolDescription || 'User-added tool.',
+                    description: validationResult.toolDescription || 'User-added link.',
                     image: faviconUrl,
                 });
                 setCustomToolUrl(''); // Clear on success
             } else {
                 toast({
                     variant: 'destructive',
-                    title: 'Validation Failed',
-                    description: validationResult.reason || 'This URL could not be validated.',
+                    title: 'Security Alert',
+                    description: validationResult.reason || 'This URL is potentially unsafe.',
                 });
             }
         } catch (error: any) {
@@ -437,21 +437,21 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                         <Dialog open={isAddToolOpen} onOpenChange={setIsAddToolOpen}>
                             <DialogTrigger asChild>
                                 <Card className="p-4 rounded-2xl bg-card/80 cursor-pointer hover:bg-accent/50">
-                                    <h3 className="text-muted-foreground font-semibold mb-2">Add AI Tools</h3>
-                                    <p className="text-sm text-muted-foreground mb-4">Share your favorite AI tools with the community.</p>
+                                    <h3 className="text-muted-foreground font-semibold mb-2">Share Links</h3>
+                                    <p className="text-sm text-muted-foreground mb-4">Add your favorite links or discover from our catalog.</p>
                                     <Button className="w-full">
                                         <Plus className="mr-2 h-4 w-4"/>
-                                        Add Tool
+                                        Add Link
                                     </Button>
                                 </Card>
                             </DialogTrigger>
                             <DialogContent className="max-w-sm h-[80vh] flex flex-col">
                                 <DialogHeader>
-                                    <DialogTitle>Add a Tool</DialogTitle>
+                                    <DialogTitle>Add a Link</DialogTitle>
                                 </DialogHeader>
                                 <div className="flex gap-2 items-center border-b pb-4">
                                     <Input 
-                                        placeholder="Put your AI web link" 
+                                        placeholder="Paste any link here..." 
                                         value={customToolUrl}
                                         onChange={(e) => setCustomToolUrl(e.target.value)}
                                         className="h-10"
@@ -463,7 +463,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                 </div>
                                 <div className="relative mt-4">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground"/>
-                                    <Input placeholder="Search tools..." className="pl-10" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
+                                    <Input placeholder="Search catalog..." className="pl-10" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
                                 </div>
                                 <div className="flex-grow overflow-y-auto -mx-6 px-6">
                                     <div className='space-y-2 py-4'>

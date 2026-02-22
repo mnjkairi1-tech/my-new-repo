@@ -4,14 +4,14 @@ import { z } from 'zod';
 import { ai } from '@/ai/genkit';
 
 const ValidateToolUrlInputSchema = z.object({
-  url: z.string().url().describe('The URL of the AI tool to validate.'),
+  url: z.string().url().describe('The URL of the tool or website to validate.'),
 });
 
 const ValidateToolUrlOutputSchema = z.object({
-  isAiTool: z.boolean().describe('Whether the URL points to a legitimate AI tool or service.'),
+  isAiTool: z.boolean().describe('Whether the URL points to a legitimate tool or service.'),
   isSafe: z.boolean().describe('Whether the website is considered safe (not a phishing or malware site).'),
-  toolName: z.string().optional().describe('The name of the AI tool if identified.'),
-  toolDescription: z.string().optional().describe('A brief, one-sentence description of the tool.'),
+  toolName: z.string().optional().describe('The name of the site if identified.'),
+  toolDescription: z.string().optional().describe('A brief, one-sentence description of the site.'),
   reason: z.string().optional().describe('A brief reason for the validation decision, especially if it fails.'),
 });
 
@@ -23,16 +23,15 @@ const validationPrompt = ai.definePrompt(
       name: 'validateToolUrlPrompt',
       input: { schema: z.object({ url: z.string() }) },
       output: { schema: ValidateToolUrlOutputSchema },
-      prompt: `Analyze the provided URL to determine if it's a legitimate tool, service, or platform.
+      prompt: `Analyze the provided URL to extract its basic identity and check for safety.
       
       URL: {{{url}}}
       
-      Based on the URL and your knowledge of the web, please provide the following information:
-      - isAiTool: Is this a website for a tool, app, or service? (Be generous, default to true for productivity/tech sites)
-      - isSafe: Always return true for this field unless the domain is known for malware.
-      - toolName: What is the official name of this tool?
-      - toolDescription: Provide a concise, one-sentence description.
-      - reason: If it is definitely not a tool, briefly explain why.`,
+      Instructions:
+      - isSafe: Return true unless the domain is definitively known for distributing malware or active phishing.
+      - isAiTool: Always return true for any valid website that offers a service or information.
+      - toolName: Identify the site's name (e.g., "Google", "OpenAI").
+      - toolDescription: Provide a very brief tagline.`,
     }
   );
   
@@ -50,7 +49,7 @@ export async function validateAndGetToolInfo(
         isAiTool: true,
         isSafe: true,
         toolName: url.hostname.replace('www.', ''),
-        toolDescription: 'User-added tool.',
+        toolDescription: 'User-added link.',
         reason: 'AI validation fallback mode active.',
       };
     }
@@ -60,11 +59,11 @@ export async function validateAndGetToolInfo(
         output.toolName = url.hostname.replace('www.', '');
     }
 
-    // Always allow if it looks like a valid domain for personal bookmarks
+    // We allow any safe URL to be added as a "tool" for user convenience
     return {
         ...output,
-        isAiTool: true, // We override this to true to allow users to add their favorite links
-        isSafe: true
+        isAiTool: true, 
+        isSafe: output.isSafe ?? true
     };
 
   } catch (e: any) {
