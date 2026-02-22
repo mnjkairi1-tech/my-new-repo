@@ -2,30 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  Palette,
-  Sun,
-  Moon,
-  Crown,
-  Zap,
-  Snowflake,
-  Type,
-  Shield,
-  Gamepad2,
-  Trophy,
-  Cloud,
-  Ghost,
-  Compass,
-  Mountain,
-  Flower2,
-  Gem,
-  Wind,
-  Droplets,
-  Trees,
-  Terminal,
-  Star,
-  Leaf
+  Palette, Sun, Moon, Cloud, Ghost, Compass, Mountain, Flower2, 
+  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
 import { ClubHeader } from '@/components/club-header';
@@ -50,17 +29,17 @@ export default function UiThemesPage() {
     
     /* MINIMAL THEMES */
     { name: 'minimal-obsidian', label: 'Obsidian', icon: Terminal, color: 'bg-zinc-900 text-zinc-100' },
-    { name: 'minimal-snow', label: 'Arctic Snow', icon: Snowflake, color: 'bg-zinc-50 text-zinc-900 border' },
+    { name: 'minimal-snow', label: 'Arctic Snow', icon: Snowflake, color: 'bg-black text-white border-white/20' },
     { name: 'minimal-forest', label: 'Deep Forest', icon: Trees, color: 'bg-emerald-950 text-emerald-400' },
     { name: 'minimal-sand', label: 'Warm Sand', icon: Wind, color: 'bg-amber-50 text-amber-900' },
     { name: 'minimal-ocean', label: 'Midnight Sea', icon: Droplets, color: 'bg-blue-950 text-cyan-400' },
 
     /* PREMIUM & GAMING */
     { name: 'premium-glass', label: 'Premium Glass', icon: Gem, color: 'bg-zinc-900 text-amber-400 border-amber-500/30' },
-    { name: 'esports-pro', label: 'Esports Elite', icon: Trophy, color: 'bg-blue-950 text-cyan-400 border-cyan-500/50 shadow-[0_0_10px_rgba(0,229,255,0.3)]' },
+    { name: 'esports-pro', label: 'Esports Elite', icon: Trophy, color: 'bg-blue-950 text-cyan-400 border-cyan-500/50' },
     
-    /* NEW CUTE THEMES */
-    { name: 'cute-mint-glass', label: 'Minty Marshmallow', icon: Leaf, color: 'bg-emerald-50 text-emerald-500 shadow-[0_4px_10px_rgba(16,185,129,0.15)]' },
+    /* CUTE THEME */
+    { name: 'cute-mint-glass', label: 'Minty Marshmallow', icon: Leaf, color: 'bg-emerald-50 text-emerald-500' },
   ];
 
   return (
@@ -68,9 +47,9 @@ export default function UiThemesPage() {
       <div className="absolute inset-0 z-0 opacity-50">
         <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
       </div>
-      <div className="relative z-10 w-full max-w-2xl p-6">
+      <div className="relative z-10 w-full max-w-2xl p-6 pb-24">
         <ClubHeader title="UI Themes" showBackButton />
-        <p className="text-muted-foreground mt-2 text-sm">Choose a theme that fits your mood. From minimal to electric.</p>
+        <p className="text-muted-foreground mt-2 text-sm">Choose a theme that fits your mood. Each theme is now unique.</p>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8">
           {themes.map((t) => (
