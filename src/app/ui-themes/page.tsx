@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Palette, Sun, Moon, Cloud, Ghost, Compass, Mountain, Flower2, 
-  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf
+  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf, Maximize
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
@@ -40,6 +40,9 @@ export default function UiThemesPage() {
     
     /* CUTE THEME */
     { name: 'cute-mint-glass', label: 'Minty Marshmallow', icon: Leaf, color: 'bg-emerald-50 text-emerald-500' },
+
+    /* NEW MONO THEME BASED ON IMAGE */
+    { name: 'mono-clean', label: 'Mono Clean', icon: Maximize, color: 'bg-white text-black border-black/10' },
   ];
 
   return (
@@ -57,8 +60,8 @@ export default function UiThemesPage() {
               key={t.name}
               onClick={() => setTheme(t.name)}
               className={cn(
-                'cursor-pointer transition-all duration-300 bg-card/80 backdrop-blur-sm border-2 overflow-hidden rounded-[2.5rem]',
-                isClient && theme === t.name ? 'border-primary ring-4 ring-primary/10 shadow-2xl scale-105' : 'border-transparent hover:border-primary/20 soft-shadow'
+                'cursor-pointer transition-all duration-300 bg-card/80 backdrop-blur-sm border-2 overflow-hidden rounded-[var(--radius)] shadow-sm',
+                isClient && theme === t.name ? 'border-primary ring-4 ring-primary/10 shadow-2xl scale-105' : 'border-transparent hover:border-primary/20'
               )}
             >
               <CardContent className="p-0 flex flex-col items-center justify-center aspect-[4/5]">

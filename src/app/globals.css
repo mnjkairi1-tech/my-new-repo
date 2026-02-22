@@ -120,7 +120,7 @@
     --radius: 0.4rem;
   }
 
-  /* ARCTIC SNOW - MINIMAL BLACK & WHITE (High Contrast) */
+  /* ARCTIC SNOW - MINIMAL BLACK & WHITE (High Contrast Dark) */
   [data-theme='minimal-snow'] {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
@@ -206,6 +206,30 @@
     --accent-foreground: 155 100% 25%;
     --border: 155 100% 85%;
     --ring: 155 100% 40%;
+    --radius: 2rem;
+  }
+
+  /* MONO CLEAN - HIGH CONTRAST B&W INSPIRED BY IMAGE */
+  [data-theme='mono-clean'] {
+    --background: 0 0% 97%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 85%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 80%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 0%;
     --radius: 2rem;
   }
 }
