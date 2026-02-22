@@ -53,45 +53,115 @@
     --ring: 224.3 76.3% 48%;
   }
 
+  /* Nordic Lite - Ultra Clean Light */
+  [data-theme='nordic-lite'] {
+    --background: 210 20% 98%;
+    --foreground: 210 40% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 40% 15%;
+    --primary: 210 80% 45%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 210 30% 94%;
+    --secondary-foreground: 210 80% 45%;
+    --border: 210 30% 90%;
+    --ring: 210 80% 45%;
+  }
+
+  /* OLED Stealth - Sharp Dark */
+  [data-theme='oled-stealth'] {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 90%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 90%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 100%;
+    --border: 0 0% 15%;
+    --ring: 0 0% 80%;
+  }
+
+  /* Desert Sand - Warm Minimal */
+  [data-theme='desert-sand'] {
+    --background: 36 40% 95%;
+    --foreground: 25 30% 20%;
+    --card: 36 40% 98%;
+    --card-foreground: 25 30% 20%;
+    --primary: 25 70% 45%;
+    --primary-foreground: 36 40% 98%;
+    --secondary: 25 30% 90%;
+    --secondary-foreground: 25 70% 45%;
+    --border: 25 30% 85%;
+    --ring: 25 70% 45%;
+  }
+
+  /* Emerald Night - Deep Green Dark */
+  [data-theme='emerald-night'] {
+    --background: 160 50% 4%;
+    --foreground: 160 20% 95%;
+    --card: 160 50% 7%;
+    --card-foreground: 160 20% 95%;
+    --primary: 160 80% 50%;
+    --primary-foreground: 160 50% 4%;
+    --secondary: 160 50% 15%;
+    --secondary-foreground: 160 80% 50%;
+    --border: 160 50% 12%;
+    --ring: 160 80% 50%;
+  }
+
+  /* Lavender Mist - Modern Pastel */
+  [data-theme='lavender-mist'] {
+    --background: 270 40% 97%;
+    --foreground: 270 40% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 270 40% 20%;
+    --primary: 270 60% 55%;
+    --primary-foreground: 270 40% 97%;
+    --secondary: 270 40% 92%;
+    --secondary-foreground: 270 60% 55%;
+    --border: 270 40% 88%;
+    --ring: 270 60% 55%;
+  }
+
   /* Esports Elite - Ultra Modern Gaming Theme */
   [data-theme='esports-elite'] {
-    --background: 225 44% 4%; /* #05070D */
-    --foreground: 214 100% 95%; /* #E6F1FF */
-    --card: 222 40% 7% / 0.6; /* Glassy Dark */
+    --background: 225 44% 4%; 
+    --foreground: 214 100% 95%; 
+    --card: 222 40% 7% / 0.6; 
     --card-foreground: 214 100% 95%;
     --popover: 225 44% 4%;
     --popover-foreground: 214 100% 95%;
-    --primary: 182 100% 50%; /* #00F5FF - Neon Blue */
+    --primary: 182 100% 50%; 
     --primary-foreground: 225 44% 4%;
-    --secondary: 270 91% 65% / 0.2; /* #A855F7 - Neon Purple */
+    --secondary: 270 91% 65% / 0.2; 
     --secondary-foreground: 270 91% 65%;
     --muted: 225 44% 12%;
     --muted-foreground: 214 100% 70%;
-    --accent: 342 100% 50%; /* #FF004D - Gaming Red */
+    --accent: 342 100% 50%; 
     --accent-foreground: 214 100% 95%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 182 100% 50% / 0.2;
     --input: 182 100% 50% / 0.2;
     --ring: 182 100% 50%;
-    --radius: 1.25rem; /* 20px */
+    --radius: 1.25rem; 
   }
 
   /* Premium Glass Theme - Luxury iOS Style */
   [data-theme='premium-dark'] {
-    --background: 240 10% 6%; /* #0F0F12 */
-    --foreground: 0 0% 92%;    /* #EAEAEA */
-    --card: 240 10% 10% / 0.5; /* #1A1A1F with transparency */
+    --background: 240 10% 6%; 
+    --foreground: 0 0% 92%;    
+    --card: 240 10% 10% / 0.5; 
     --card-foreground: 0 0% 92%;
     --popover: 240 10% 6%;
     --popover-foreground: 0 0% 92%;
-    --primary: 40 46% 60%;     /* #C6A76A - Champagne Gold */
+    --primary: 40 46% 60%;     
     --primary-foreground: 240 10% 6%;
-    --secondary: 0 0% 81% / 0.15; /* #CFCFCF with transparency */
+    --secondary: 0 0% 81% / 0.15; 
     --secondary-foreground: 0 0% 81%;
     --muted: 240 9% 15%;
-    --muted-foreground: 0 0% 60%; /* #9A9A9A */
-    --accent: 0 0% 81%;           /* #CFCFCF - Metallic Silver */
+    --muted-foreground: 0 0% 60%; 
+    --accent: 0 0% 81%;           
     --accent-foreground: 240 10% 6%;
     --border: 0 0% 100% / 0.15;
     --input: 0 0% 100% / 0.15;
@@ -100,21 +170,21 @@
 
   /* Neon Phantom X - Ultra Gaming Theme */
   [data-theme='neon-phantom'] {
-    --background: 222 40% 7%; /* #0B0F1A */
-    --foreground: 214 100% 95%; /* #E6F1FF */
-    --card: 222 40% 10% / 0.6; /* #111827 with transparency */
+    --background: 222 40% 7%; 
+    --foreground: 214 100% 95%; 
+    --card: 222 40% 10% / 0.6; 
     --card-foreground: 214 100% 95%;
     --popover: 222 40% 7%;
     --popover-foreground: 214 100% 95%;
-    --primary: 182 100% 50%; /* #00F5FF - Electric Blue */
+    --primary: 182 100% 50%; 
     --primary-foreground: 222 40% 7%;
-    --secondary: 270 91% 65% / 0.15; /* #A855F7 - Neon Purple */
+    --secondary: 270 91% 65% / 0.15; 
     --secondary-foreground: 270 91% 65%;
     --muted: 222 40% 15%;
     --muted-foreground: 214 100% 70%;
-    --accent: 152 100% 50%; /* #00FF88 - Toxic Green */
+    --accent: 152 100% 50%; 
     --accent-foreground: 222 40% 7%;
-    --destructive: 342 100% 50%; /* #FF004D - Gaming Red */
+    --destructive: 342 100% 50%; 
     --destructive-foreground: 214 100% 95%;
     --border: 182 100% 50% / 0.3;
     --input: 182 100% 50% / 0.3;
@@ -219,6 +289,26 @@
 }
 
 /* Theme Background Overrides */
+html[data-theme='nordic-lite'] body {
+  background: #F4F7F6 !important;
+}
+
+html[data-theme='oled-stealth'] body {
+  background: #000000 !important;
+}
+
+html[data-theme='desert-sand'] body {
+  background: #FDF5E6 !important;
+}
+
+html[data-theme='emerald-night'] body {
+  background: radial-gradient(circle at top, #0B1611, #050806) !important;
+}
+
+html[data-theme='lavender-mist'] body {
+  background: #F4ECF7 !important;
+}
+
 html[data-theme='esports-elite'] body {
   background: radial-gradient(circle at 30% 20%, rgba(0, 245, 255, 0.15), transparent 40%),
               radial-gradient(circle at 70% 80%, rgba(168, 85, 247, 0.15), transparent 40%),

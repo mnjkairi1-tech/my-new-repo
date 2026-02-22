@@ -9,10 +9,14 @@ import {
   Zap,
   Snowflake,
   Type,
-  Ghost,
   Shield,
   Gamepad2,
-  Trophy
+  Trophy,
+  Cloud,
+  Ghost,
+  Compass,
+  Mountain,
+  Flower2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -31,6 +35,11 @@ export default function UiThemesPage() {
   const themes = [
     { name: 'default', label: 'Default Light', icon: Sun, color: 'bg-orange-100 text-orange-600' },
     { name: 'dark', label: 'Classic Dark', icon: Moon, color: 'bg-slate-800 text-slate-100' },
+    { name: 'nordic-lite', label: 'Nordic Lite', icon: Cloud, color: 'bg-blue-50 text-blue-600' },
+    { name: 'oled-stealth', label: 'OLED Stealth', icon: Ghost, color: 'bg-black text-white' },
+    { name: 'desert-sand', label: 'Desert Sand', icon: Compass, color: 'bg-orange-50 text-orange-800' },
+    { name: 'emerald-night', label: 'Emerald Night', icon: Mountain, color: 'bg-green-950 text-emerald-400' },
+    { name: 'lavender-mist', label: 'Lavender Mist', icon: Flower2, color: 'bg-purple-50 text-purple-600' },
     { name: 'esports-elite', label: 'Esports Elite', icon: Trophy, color: 'bg-black text-cyan-400 border border-cyan-500/50' },
     { name: 'premium-dark', label: 'Premium Glass', icon: Crown, color: 'bg-zinc-900 text-yellow-500' },
     { name: 'neon-phantom', label: 'Neon Phantom X', icon: Gamepad2, color: 'bg-blue-900 text-cyan-400' },
@@ -49,7 +58,7 @@ export default function UiThemesPage() {
       </div>
       <div className="relative z-10 w-full max-w-2xl p-6">
         <ClubHeader title="UI Themes" showBackButton />
-        <p className="text-muted-foreground mt-2 text-sm">Choose a theme that fits your mood.</p>
+        <p className="text-muted-foreground mt-2 text-sm">Choose a theme that fits your mood. From minimal to electric.</p>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 mt-8">
           {themes.map((t) => (
@@ -70,7 +79,7 @@ export default function UiThemesPage() {
                 >
                   <t.icon className="w-8 h-8" />
                 </div>
-                <span className="text-sm font-black text-center text-foreground px-2 uppercase tracking-tighter">{t.label}</span>
+                <span className="text-xs font-black text-center text-foreground px-2 uppercase tracking-tighter">{t.label}</span>
                 {isClient && theme === t.name && (
                     <div className="mt-2 text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">ACTIVE</div>
                 )}
