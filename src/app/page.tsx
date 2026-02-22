@@ -1,7 +1,6 @@
-
 'use client';
 
-import React, { useCallback, useRef, Suspense, lazy } from 'react';
+import React, { useCallback, useRef, Suspense, lazy, useState } from 'react';
 import Image from 'next/image';
 import {
   Wand2,
@@ -10,6 +9,12 @@ import {
   Pin,
   TrendingUp,
   Sparkles,
+  ChevronRight,
+  History,
+  Heart,
+  Star,
+  ExternalLink,
+  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -39,8 +44,8 @@ const ToolsTabContent = lazy(() => import('@/components/tools-tab-content'));
 const ToolsLoadingSkeleton = () => (
     <div className="p-4 space-y-4">
         <div className="flex gap-2 items-center">
-            <Skeleton className="h-12 flex-grow rounded-full" />
-            <Skeleton className="h-12 w-12 rounded-full" />
+            <Skeleton className="h-12 flex-grow rounded-none" />
+            <Skeleton className="h-12 w-12 rounded-none" />
         </div>
         <div className="grid grid-cols-2 gap-4">
             {[...Array(6)].map((_, i) => (
@@ -52,7 +57,8 @@ const ToolsLoadingSkeleton = () => (
 
 function HomePageContent() {
   const { t } = useLanguage();
-  const { pinnedTools, handlePinToggle, addRecentTool } = useUserPreferences();
+  const { pinnedTools, handlePinToggle, addRecentTool, recentTools, heartedTools, starredTools, handleHeartToggle, handleStarToggle } = useUserPreferences();
+  const [activeSavedTab, setActiveSavedTab] = useState('recent');
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
 
   const carouselSlides = [
@@ -179,6 +185,110 @@ function HomePageContent() {
                 })}
             </div>
         </section>
+
+        <section className="mt-6 mb-16">
+            <div className="flex justify-center items-center gap-8 my-4">
+                <div className="flex flex-col items-center gap-2">
+                    <Button variant={activeSavedTab === 'heart' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('heart')} className="w-20 h-16 rounded-none bg-pink-100/50 text-pink-500 shadow-lg soft-shadow"><Heart className="w-7 h-7"/></Button>
+                    <span className="text-sm font-medium text-muted-foreground">Hearted</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <Button variant={activeSavedTab === 'recent' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('recent')} className="w-24 h-20 rounded-none bg-blue-100/50 text-blue-500 shadow-lg soft-shadow"><History className="w-9 h-9"/></Button>
+                    <span className="text-sm font-medium text-muted-foreground">Recent</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <Button variant={activeSavedTab === 'star' ? 'secondary' : 'ghost'} size="icon" onClick={() => setActiveSavedTab('star')} className="w-20 h-16 rounded-none bg-yellow-100/50 text-yellow-500 shadow-lg soft-shadow"><Star className="w-7 h-7"/></Button>
+                    <span className="text-sm font-medium text-muted-foreground">Starred</span>
+                </div>
+            </div>
+            
+            {activeSavedTab === 'recent' && (
+                <div className="mt-4">
+                    {recentTools.length > 0 ? (
+                        <div className="space-y-3">
+                        {recentTools.map((tool, index) => (
+                            <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
+                                <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
+                                    {tool.image && <Image src={tool.image} alt={tool.name} width={56} height={56} className="rounded-none" data-ai-hint={tool.name} unoptimized />}
+                                    <div className="flex-grow">
+                                        <h5 className="font-semibold text-base">{tool.name}</h5>
+                                        <p className="text-sm text-muted-foreground">{tool.category}</p>
+                                    </div>
+                                    <Button variant="ghost" size="icon" className="text-muted-foreground rounded-none w-10 h-10">
+                                        <ChevronRight />
+                                    </Button>
+                                </Card>
+                            </a>
+                        ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-10 text-muted-foreground">
+                            <History className="mx-auto w-10 h-10" />
+                            <p className="mt-4 text-base">{t('home.recents.empty')}</p>
+                            <p className="text-sm">{t('home.recents.emptyDescription')}</p>
+                        </div>
+                    )}
+                </div>
+            )}
+            
+            {activeSavedTab === 'heart' && (
+                <div className="mt-4">
+                {heartedTools.length > 0 ? (
+                    <div className="space-y-3">
+                    {heartedTools.map((tool, index) => (
+                        <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
+                            <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
+                                {tool.image && <Image src={tool.image} alt={tool.name} width={56} height={56} className="rounded-none" data-ai-hint={tool.name} unoptimized />}
+                                <div className="flex-grow">
+                                    <h5 className="font-semibold text-base">{tool.name}</h5>
+                                    <p className="text-sm text-muted-foreground">{tool.category}</p>
+                                </div>
+                                <Button variant="ghost" size="icon" className="text-red-500 rounded-none w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleHeartToggle(tool as Tool); }}>
+                                    <Heart className="fill-current"/>
+                                </Button>
+                            </Card>
+                        </a>
+                    ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-10 text-muted-foreground">
+                        <Heart className="mx-auto w-10 h-10" />
+                        <p className="mt-4 text-base">No hearted tools yet.</p>
+                        <p className="text-sm">Tools you heart will appear here.</p>
+                    </div>
+                )}
+                </div>
+            )}
+
+            {activeSavedTab === 'star' && (
+                <div className="mt-4">
+                    {starredTools.length > 0 ? (
+                        <div className="space-y-3">
+                        {starredTools.map((tool, index) => (
+                            <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
+                                <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-none soft-shadow hover:bg-accent/50 transition-colors">
+                                    {tool.image && <Image src={tool.image} alt={tool.name} width={56} height={56} className="rounded-none" data-ai-hint={tool.name} unoptimized />}
+                                    <div className="flex-grow">
+                                        <h5 className="font-semibold text-base">{tool.name}</h5>
+                                        <p className="text-sm text-muted-foreground">{tool.category}</p>
+                                    </div>
+                                    <Button variant="ghost" size="icon" className="text-yellow-400 rounded-none w-10 h-10" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleStarToggle(tool as Tool); }}>
+                                        <Star className="fill-current"/>
+                                    </Button>
+                                </Card>
+                            </a>
+                        ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-10 text-muted-foreground">
+                            <Star className="mx-auto w-10 h-10" />
+                            <p className="mt-4 text-base">No starred tools yet.</p>
+                            <p className="text-sm">Tools you star will appear here.</p>
+                        </div>
+                    )}
+                </div>
+            )}
+        </section>
     </div>
   );
 }
@@ -277,8 +387,8 @@ function GalaxyAppMain() {
 
 export default function GalaxyApp() {
   return (
-    <Suspense fallback={<div className="flex items-center justify-center h-screen"><div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
-        <GalaxyAppMain />
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-background"><Loader2 className="animate-spin text-primary w-10 h-10" /></div>}>
+      <GalaxyAppMain />
     </Suspense>
   );
 }

@@ -108,7 +108,8 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
       'esports-pro',
       'velvet-sunset',
       'cosmic-neon',
-      'neon-volt'
+      'neon-volt',
+      'minimal-snow'
     ];
     if (darkThemes.includes(newTheme)) {
       root.classList.add('dark');

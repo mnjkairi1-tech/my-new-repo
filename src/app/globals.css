@@ -120,7 +120,7 @@
     --radius: 0.4rem;
   }
 
-  /* ARCTIC SNOW - MINIMAL BLACK & WHITE (High Contrast Dark) */
+  /* ARCTIC SNOW - MINIMAL BLACK & WHITE (High Contrast) */
   [data-theme='minimal-snow'] {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
@@ -128,15 +128,15 @@
     --card-foreground: 0 0% 100%;
     --primary: 0 0% 100%;
     --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 100% / 0.1;
+    --secondary: 0 0% 100% / 0.15;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 100% / 0.05;
-    --muted-foreground: 0 0% 75%;
+    --muted: 0 0% 100% / 0.1;
+    --muted-foreground: 0 0% 80%;
     --accent: 0 0% 100% / 0.2;
-    --border: 0 0% 100% / 0.3;
-    --input: 0 0% 10%;
+    --border: 0 0% 100% / 0.4;
+    --input: 0 0% 5%;
     --ring: 0 0% 100%;
-    --radius: 0rem;
+    --radius: 0rem; /* Stark Sharp Corners as requested */
   }
 
   [data-theme='minimal-forest'] {
@@ -209,26 +209,26 @@
     --radius: 2rem;
   }
 
-  /* MONO CLEAN - HIGH CONTRAST B&W INSPIRED BY IMAGE */
+  /* MONO CLEAN - HIGH CONTRAST WHITE BASED ON IMAGE */
   [data-theme='mono-clean'] {
-    --background: 0 0% 97%;
+    --background: 0 0% 100%;
     --foreground: 0 0% 0%;
-    --card: 0 0% 100%;
+    --card: 0 0% 98%;
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
     --primary: 0 0% 0%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 90%;
+    --secondary: 0 0% 92%;
     --secondary-foreground: 0 0% 0%;
-    --muted: 0 0% 92%;
+    --muted: 0 0% 95%;
     --muted-foreground: 0 0% 40%;
-    --accent: 0 0% 85%;
+    --accent: 0 0% 90%;
     --accent-foreground: 0 0% 0%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 80%;
-    --input: 0 0% 90%;
+    --border: 0 0% 85%;
+    --input: 0 0% 95%;
     --ring: 0 0% 0%;
     --radius: 2rem;
   }
@@ -257,7 +257,7 @@
     --radius: 1.5rem;
   }
 
-  /* COSMIC NEON - INSPIRED BY NEW IMAGE */
+  /* COSMIC NEON - INSPIRED BY MOBILE DASHBOARD IMAGE */
   [data-theme='cosmic-neon'] {
     --background: 240 20% 3%;
     --foreground: 0 0% 100%;
@@ -265,13 +265,13 @@
     --card-foreground: 0 0% 100%;
     --popover: 240 20% 5%;
     --popover-foreground: 0 0% 100%;
-    --primary: 280 100% 60%; /* Vibrant Purple */
+    --primary: 280 100% 60%; 
     --primary-foreground: 0 0% 100%;
-    --secondary: 200 100% 50% / 0.2; /* Electric Blue Glass */
+    --secondary: 200 100% 50% / 0.2;
     --secondary-foreground: 200 100% 60%;
     --muted: 240 20% 10%;
     --muted-foreground: 240 10% 70%;
-    --accent: 160 100% 50%; /* Neon Green for accents */
+    --accent: 160 100% 50%;
     --accent-foreground: 240 20% 5%;
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
@@ -283,26 +283,26 @@
 
   /* NEON VOLT - INSPIRED BY DASHBOARD IMAGE */
   [data-theme='neon-volt'] {
-    --background: 0 0% 4%; /* Near black matte */
+    --background: 0 0% 4%;
     --foreground: 0 0% 100%;
     --card: 0 0% 7%;
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 5%;
     --popover-foreground: 0 0% 100%;
-    --primary: 84 100% 59%; /* Volt Green */
+    --primary: 84 100% 59%;
     --primary-foreground: 0 0% 0%;
     --secondary: 0 0% 15%;
     --secondary-foreground: 84 100% 59%;
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 60%;
-    --accent: 35 100% 55%; /* Electric Orange */
+    --accent: 35 100% 55%;
     --accent-foreground: 0 0% 0%;
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 15%;
     --input: 0 0% 15%;
     --ring: 84 100% 59%;
-    --radius: 2.5rem; /* High roundness like in the image */
+    --radius: 2.5rem;
   }
 }
 
@@ -317,13 +317,12 @@
     background: linear-gradient(180deg, hsl(var(--soft-blue)), hsl(var(--lavender)), hsl(var(--baby-pink)));
   }
   
-  /* Background gradients for specific dark themes */
   html[data-theme='cosmic-neon'] body {
     background: radial-gradient(circle at 50% -20%, #1a1a3a 0%, #05050a 100%);
   }
 
   html[data-theme='neon-volt'] body {
-    background: #0D0D0D; /* Pure Matte Dark */
+    background: #0D0D0D;
   }
 }
 

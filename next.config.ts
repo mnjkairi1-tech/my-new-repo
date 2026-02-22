@@ -32,7 +32,7 @@ const withPWA = withPWAInit({
       options: {
         cacheName: "tool-icons-cache",
         expiration: {
-          maxEntries: 2000,
+          maxEntries: 5000, // Large number for many tools
           maxAgeSeconds: 60 * 24 * 60 * 60, // 60 days
         },
         cacheableResponse: {
@@ -41,13 +41,13 @@ const withPWA = withPWAInit({
       },
     },
     {
-      // Cache images from external sources like Unsplash and Picsum
+      // Cache images from external sources like Unsplash, Picsum, and Postimg
       urlPattern: /^https:\/\/(images\.unsplash\.com|picsum\.photos|i\.postimg\.cc).*/i,
       handler: "CacheFirst",
       options: {
         cacheName: "external-images-cache",
         expiration: {
-          maxEntries: 500,
+          maxEntries: 1000,
           maxAgeSeconds: 60 * 24 * 60 * 60,
         },
         cacheableResponse: {
@@ -62,7 +62,7 @@ const withPWA = withPWAInit({
       options: {
         cacheName: "next-image-cache",
         expiration: {
-          maxEntries: 1000,
+          maxEntries: 2000,
           maxAgeSeconds: 60 * 24 * 60 * 60,
         },
         cacheableResponse: {

@@ -22,14 +22,14 @@ export default function UiThemesPage() {
     { name: 'default', label: 'Default Light', icon: Sun, color: 'bg-orange-100 text-orange-600' },
     { name: 'dark', label: 'Classic Dark', icon: Moon, color: 'bg-slate-800 text-slate-100' },
     { name: 'nordic-lite', label: 'Nordic Lite', icon: Cloud, color: 'bg-blue-50 text-blue-600' },
-    { name: 'oled-stealth', label: 'OLED Stealth', icon: Ghost, color: 'bg-black text-white' },
+    { name: 'oled-stealth', label: 'OLED Stealth (Dark Black)', icon: Ghost, color: 'bg-black text-white' },
+    { name: 'minimal-snow', label: 'Arctic Snow (Minimal Black)', icon: Snowflake, color: 'bg-black text-white border-white/40' },
+    { name: 'minimal-obsidian', label: 'Obsidian (Matte Charcoal)', icon: Terminal, color: 'bg-zinc-900 text-zinc-100' },
     { name: 'desert-sand', label: 'Desert Sand', icon: Compass, color: 'bg-orange-50 text-orange-800' },
     { name: 'emerald-night', label: 'Emerald Night', icon: Mountain, color: 'bg-green-950 text-emerald-400' },
     { name: 'lavender-mist', label: 'Lavender Mist', icon: Flower2, color: 'bg-purple-50 text-purple-600' },
     
     /* MINIMAL THEMES */
-    { name: 'minimal-obsidian', label: 'Obsidian', icon: Terminal, color: 'bg-zinc-900 text-zinc-100' },
-    { name: 'minimal-snow', label: 'Arctic Snow', icon: Snowflake, color: 'bg-black text-white border-white/20' },
     { name: 'minimal-forest', label: 'Deep Forest', icon: Trees, color: 'bg-emerald-950 text-emerald-400' },
     { name: 'minimal-sand', label: 'Warm Sand', icon: Wind, color: 'bg-amber-50 text-amber-900' },
     { name: 'minimal-ocean', label: 'Midnight Sea', icon: Droplets, color: 'bg-blue-950 text-cyan-400' },
@@ -41,16 +41,10 @@ export default function UiThemesPage() {
     /* CUTE THEME */
     { name: 'cute-mint-glass', label: 'Minty Marshmallow', icon: Leaf, color: 'bg-emerald-50 text-emerald-500' },
 
-    /* NEW MONO THEME BASED ON IMAGE */
+    /* NEW PHOTO-INSPIRED THEMES */
     { name: 'mono-clean', label: 'Mono Clean', icon: Maximize, color: 'bg-white text-black border-black/10' },
-
-    /* VELVET SUNSET THEME BASED ON IMAGE */
     { name: 'velvet-sunset', label: 'Velvet Sunset', icon: Sunset, color: 'bg-[#1F1F1F] text-[#FF5F6D]' },
-
-    /* COSMIC NEON THEME BASED ON NEW IMAGE */
     { name: 'cosmic-neon', label: 'Cosmic Neon', icon: Sparkles, color: 'bg-[#05050a] text-[#8E54E9] border-[#00F5FF]/20' },
-
-    /* NEON VOLT THEME BASED ON DASHBOARD IMAGE */
     { name: 'neon-volt', label: 'Neon Volt', icon: Zap, color: 'bg-[#0D0D0D] text-[#A3FF47] border-[#A3FF47]/20' },
   ];
 

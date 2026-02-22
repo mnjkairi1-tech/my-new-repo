@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,7 +8,7 @@ import { useLanguage } from '@/lib/language';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
-import { Share2, Star, Search, Filter, Scale, Check } from 'lucide-react';
+import { Share2, Star, Search, Filter, Scale, Check, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
@@ -47,21 +47,22 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
                         src={tool.image}
                         alt={tool.name}
                         fill
-                        className="object-contain rounded-md"
+                        className="object-contain rounded-none"
                         data-ai-hint={tool.dataAiHint}
                         unoptimized
                     />
+                    <div className="absolute -inset-1 bg-primary/20 rounded-none blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <h5 className="font-semibold text-foreground text-sm leading-tight line-clamp-2 mt-2">{tool.name}</h5>
             </div>
             <div className="flex items-center justify-center gap-2 pt-2">
-                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-foreground/80 bg-white/10 hover:bg-white/20" onClick={(e) => onShare(e, tool)}>
+                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-none text-foreground/80 bg-white/10 hover:bg-white/20" onClick={(e) => onShare(e, tool)}>
                     <Share2 className="w-4 h-4" />
                 </Button>
-                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-foreground/80 bg-white/10 hover:bg-white/50" onClick={handleStarClick}>
+                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-none text-foreground/80 bg-white/10 hover:bg-white/50" onClick={handleStarClick}>
                     <Star className={cn('w-4 h-4 transition-all', isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
                 </Button>
-                <Button variant="ghost" size="icon" className={cn("w-8 h-8 rounded-full text-foreground/80 bg-white/10 hover:bg-white/50", isSelectedForCompare && "bg-primary/20")} onClick={handleCompareClick}>
+                <Button variant="ghost" size="icon" className={cn("w-8 h-8 rounded-none text-foreground/80 bg-white/10 hover:bg-white/50", isSelectedForCompare && "bg-primary/20")} onClick={handleCompareClick}>
                     {isSelectedForCompare ? <Check className="w-4 h-4 text-primary" /> : <Scale className="w-4 h-4" />}
                 </Button>
             </div>
@@ -77,13 +78,19 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     const [searchTerm, setSearchTerm] = useState('');
     const [priceFilter, setPriceFilter] = useState('All');
     const [visibleCount, setVisibleCount] = useState(20);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
     
-    const tools = useMemo(() => {
-        let filteredTools: Tool[] = allToolsServer;
+    const filteredTools = useMemo(() => {
+        if (!isMounted) return [];
+        let tools: Tool[] = allToolsServer;
         const lowerCaseSearchTerm = searchTerm.toLowerCase();
 
         if (lowerCaseSearchTerm) {
-            filteredTools = filteredTools.filter(tool =>
+            tools = tools.filter(tool =>
                 tool.name.toLowerCase().includes(lowerCaseSearchTerm) ||
                 (tool.description && tool.description.toLowerCase().includes(lowerCaseSearchTerm)) ||
                 (tool.category && tool.category.toLowerCase().includes(lowerCaseSearchTerm))
@@ -91,15 +98,23 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
         }
 
         if (priceFilter === 'Free') {
-            filteredTools = filteredTools.filter(tool => tool.pricing === 'Free' || tool.pricing === 'Freemium');
+            tools = tools.filter(tool => tool.pricing === 'Free' || tool.pricing === 'Freemium');
         }
         
-        return filteredTools;
-    }, [searchTerm, priceFilter]);
+        return tools;
+    }, [searchTerm, priceFilter, isMounted]);
 
     const handleLoadMore = () => {
         setVisibleCount(prevCount => prevCount + 20);
     };
+
+    if (!isMounted) {
+        return (
+            <div className="flex-grow flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     return (
         <div className="flex flex-col h-full">
@@ -109,7 +124,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                         <Input 
                             placeholder="Search tools..."
-                            className="pl-10 bg-card rounded-full h-12 border-border soft-shadow"
+                            className="pl-10 bg-card rounded-none h-12 border-border soft-shadow"
                             value={searchTerm}
                             onChange={(e) => {
                                 setSearchTerm(e.target.value);
@@ -119,14 +134,17 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     </div>
                      <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="icon" className="w-12 h-12 rounded-full bg-card soft-shadow">
+                            <Button variant="outline" size="icon" className="w-12 h-12 rounded-none bg-card soft-shadow">
                                 <Filter className="w-5 h-5"/>
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
+                        <DropdownMenuContent className="w-56 rounded-none">
                             <DropdownMenuLabel>Sort by Price</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuRadioGroup value={priceFilter} onValueChange={setPriceFilter}>
+                            <DropdownMenuRadioGroup value={priceFilter} onValueChange={(value) => {
+                                setPriceFilter(value);
+                                setVisibleCount(20);
+                            }}>
                                 <DropdownMenuRadioItem value="All">All</DropdownMenuRadioItem>
                                 <DropdownMenuRadioItem value="Free">Free & Freemium</DropdownMenuRadioItem>
                             </DropdownMenuRadioGroup>
@@ -134,12 +152,12 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     </DropdownMenu>
                 </div>
                 <div className="text-center mt-2 text-sm font-semibold text-muted-foreground">
-                    {`${tools.length} Tools`}
+                    {`${filteredTools.length} Tools`}
                 </div>
             </div>
             <div className="flex-1 overflow-y-auto px-4 no-scrollbar pt-2 pb-20">
                  <div className="grid grid-cols-2 gap-4">
-                    {tools.slice(0, visibleCount).map(tool => (
+                    {filteredTools.slice(0, visibleCount).map(tool => (
                         <ToolCard
                             key={tool.name}
                             tool={tool}
@@ -149,9 +167,9 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                         />
                     ))}
                 </div>
-                {visibleCount < tools.length && (
+                {visibleCount < filteredTools.length && (
                     <div className="text-center mt-6">
-                        <Button onClick={handleLoadMore}>Load More</Button>
+                        <Button onClick={handleLoadMore} className="rounded-none">Load More</Button>
                     </div>
                 )}
             </div>

@@ -6,7 +6,7 @@ import { Leaf } from 'lucide-react';
 /**
  * MintyAnimation Component
  * Renders soft falling leaves for the Minty Marshmallow theme.
- * Removed the bird agent as per user request.
+ * Clean version without the bird agent.
  */
 export function MintyAnimation() {
   const [leaves, setLeaves] = useState<{ id: number; left: number; delay: number; duration: number; size: number; rotation: number }[]>([]);

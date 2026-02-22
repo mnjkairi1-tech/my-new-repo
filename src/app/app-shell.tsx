@@ -3,7 +3,7 @@
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { useSwipeable } from 'react-swipeable';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { useMemo, Suspense } from 'react';
+import { useMemo, Suspense, useEffect } from 'react';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { MintyAnimation } from '@/components/themes/minty-animation';
 
@@ -35,6 +35,19 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
         return '';
     }, [pathname, searchParams]);
 
+    const currentIndex = useMemo(() => navItems.findIndex(item => item.id === activeTabId), [navItems, activeTabId]);
+
+    useEffect(() => {
+        if (currentIndex !== -1) {
+            if (currentIndex > 0) {
+                router.prefetch(navItems[currentIndex - 1].route);
+            }
+            if (currentIndex < navItems.length - 1) {
+                router.prefetch(navItems[currentIndex + 1].route);
+            }
+        }
+    }, [currentIndex, router, navItems]);
+
     const isSwipeablePage = () => {
         const swipeablePaths = ['/', '/community', '/community/my-profile'];
         return swipeablePaths.includes(pathname);
@@ -42,13 +55,11 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
 
     const swipeHandlers = useSwipeable({
         onSwipedLeft: () => {
-            const currentIndex = navItems.findIndex(item => item.id === activeTabId);
             if (isSwipeablePage() && currentIndex !== -1 && currentIndex < navItems.length - 1) {
                 router.push(navItems[currentIndex + 1].route);
             }
         },
         onSwipedRight: () => {
-            const currentIndex = navItems.findIndex(item => item.id === activeTabId);
             if (isSwipeablePage() && currentIndex > 0) {
                 router.push(navItems[currentIndex - 1].route);
             }
