@@ -72,12 +72,12 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
     });
 
     return (
-        <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-md mx-auto overflow-x-hidden">
+        <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-md md:max-w-none md:max-w-screen-2xl mx-auto overflow-x-hidden transition-all duration-500 ease-in-out">
             {/* Live Animation for Minty Marshmallow theme */}
             {theme === 'cute-mint-glass' && <MintyAnimation />}
             
             <main 
-                className="relative z-10 flex-grow pb-24 h-full" 
+                className="relative z-10 flex-grow pb-24 md:pb-32 h-full px-0 md:px-6 lg:px-12" 
                 {...(isSwipeablePage() ? swipeHandlers : {})}
             >
                 {children}

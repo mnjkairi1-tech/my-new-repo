@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -62,33 +61,35 @@ export default function SocialMediaToolsPage() {
         };
 
         return (
-            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-24 shrink-0">
+            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-24 md:w-32 shrink-0">
             <Card 
-                className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-none"
+                className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl"
             >
                 <div className="relative">
-                    <Image
-                    src={tool.image}
-                    alt={tool.name || 'Tool Image'}
-                    width={120}
-                    height={90}
-                    className="w-full h-auto aspect-[4/3] object-cover"
-                    data-ai-hint={tool.dataAiHint}
-                    unoptimized
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="aspect-square relative bg-secondary/20 flex items-center justify-center p-4 md:p-6">
+                        <Image
+                        src={tool.image}
+                        alt={tool.name || 'Tool Image'}
+                        width={64}
+                        height={64}
+                        className="object-contain"
+                        data-ai-hint={tool.dataAiHint}
+                        unoptimized
+                        />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
                     <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
                         <ExternalLink className="w-3 h-3"/>
                     </div>
                 </div>
                 <CardContent className='p-2 flex flex-col flex-grow'>
-                  <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow">{tool.name}</CardTitle>
-                  <div className="flex items-center justify-end gap-1 mt-1">
-                      <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={(e) => handleShareTool(e, tool)}>
-                          <Share2 className="w-3 h-3" />
+                  <CardTitle className="text-[10px] md:text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow text-center">{tool.name}</CardTitle>
+                  <div className="flex items-center justify-center gap-1 mt-1">
+                      <Button variant="ghost" size="icon" className="w-6 h-6 md:w-8 md:h-8 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={(e) => handleShareTool(e, tool)}>
+                          <Share2 className="w-3 h-3 md:w-4 md:h-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={handleStarClick}>
-                          <Star className={cn('w-3.5 h-3.5 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
+                      <Button variant="ghost" size="icon" className="w-6 h-6 md:w-8 md:h-8 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={handleStarClick}>
+                          <Star className={cn('w-3.5 h-3.5 md:w-4.5 md:h-4.5 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
                       </Button>
                   </div>
                 </CardContent>
@@ -112,7 +113,7 @@ export default function SocialMediaToolsPage() {
       <div className="absolute inset-0 z-0 opacity-50">
         <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
       </div>
-      <div className="relative z-10 w-full max-w-sm pt-6 px-4">
+      <div className="relative z-10 w-full max-w-7xl pt-6 px-4 md:px-8">
         <header className="flex items-center justify-between gap-4">
             <div className='flex items-center gap-4'>
                 <Link href="/" passHref>
@@ -122,7 +123,7 @@ export default function SocialMediaToolsPage() {
                 </Link>
                 <div className='flex items-center gap-2'>
                     <Users className="w-6 h-6 text-foreground" />
-                    <h1 className="text-2xl font-bold text-foreground">
+                    <h1 className="text-2xl md:text-3xl font-black text-foreground">
                         Social Media Tools
                     </h1>
                 </div>
@@ -130,22 +131,22 @@ export default function SocialMediaToolsPage() {
         </header>
       </div>
 
-      <main className="relative z-10 w-full max-w-sm flex-1 flex flex-col min-h-0 mt-6">
-        <div className="flex-grow overflow-y-auto no-scrollbar p-4 space-y-8">
+      <main className="relative z-10 w-full max-w-7xl flex-1 flex flex-col min-h-0 mt-6 px-4 md:px-8">
+        <div className="flex-grow overflow-y-auto no-scrollbar py-4 space-y-12">
             {filteredToolData.map((category, index) => {
               if (category.tools.length === 0) return null;
 
               return (
-              <section key={index}>
-                  <div className="flex justify-between items-center mb-3 px-2">
-                      <h2 className="font-semibold text-xl flex items-center gap-2">
+              <section key={index} className="space-y-4">
+                  <div className="flex justify-between items-center px-2">
+                      <h2 className="font-bold text-xl md:text-2xl flex items-center gap-2">
                           {category.icon}
                           {category.title}
                       </h2>
                        {index === 0 && isClient && (
                           <DropdownMenu open={open} onOpenChange={setOpen}>
                               <DropdownMenuTrigger asChild>
-                                  <Button variant="outline" size="sm" className="bg-white/50">
+                                  <Button variant="outline" size="sm" className="bg-white/50 rounded-full h-10 px-6 font-bold shadow-md">
                                       <Filter className="w-4 h-4 mr-2" />
                                       Filter
                                   </Button>
@@ -161,7 +162,7 @@ export default function SocialMediaToolsPage() {
                           </DropdownMenu>
                       )}
                   </div>
-                  <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 horizontal-scroll-container">
+                  <div className="flex gap-6 overflow-x-auto no-scrollbar pb-4 -mx-4 px-4 horizontal-scroll-container">
                       {category.tools.map((tool) => (
                         <ToolCard tool={tool} key={tool.name} />
                       ))}
