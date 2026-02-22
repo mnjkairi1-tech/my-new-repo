@@ -66,6 +66,9 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
         },
         trackMouse: true,
         preventScrollOnSwipe: true,
+        // Prevent swiping when interacting with carousels or horizontal scroll areas
+        noSwipingSelector: '.no-scrollbar, .horizontal-scroll-container, [role="region"], .embla',
+        delta: 40, // Increase threshold to avoid accidental tab switches
     });
 
     return (
