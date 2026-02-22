@@ -256,6 +256,30 @@
     --ring: 345 100% 70%;
     --radius: 1.5rem;
   }
+
+  /* COSMIC NEON - INSPIRED BY NEW IMAGE */
+  [data-theme='cosmic-neon'] {
+    --background: 240 20% 3%;
+    --foreground: 0 0% 100%;
+    --card: 240 20% 7% / 0.8;
+    --card-foreground: 0 0% 100%;
+    --popover: 240 20% 5%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 280 100% 60%; /* Vibrant Purple */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 200 100% 50% / 0.2; /* Electric Blue Glass */
+    --secondary-foreground: 200 100% 60%;
+    --muted: 240 20% 10%;
+    --muted-foreground: 240 10% 70%;
+    --accent: 160 100% 50%; /* Neon Green for accents */
+    --accent-foreground: 240 20% 5%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 200 100% 50% / 0.15;
+    --input: 240 20% 10%;
+    --ring: 280 100% 60%;
+    --radius: 2.25rem;
+  }
 }
 
 @layer base {
@@ -267,6 +291,11 @@
   html:not([data-theme]) body, 
   html[data-theme='default'] body {
     background: linear-gradient(180deg, hsl(var(--soft-blue)), hsl(var(--lavender)), hsl(var(--baby-pink)));
+  }
+  
+  /* Background gradients for specific dark themes */
+  html[data-theme='cosmic-neon'] body {
+    background: radial-gradient(circle at 50% -20%, #1a1a3a 0%, #05050a 100%);
   }
 }
 

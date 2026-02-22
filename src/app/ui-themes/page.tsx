@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Palette, Sun, Moon, Cloud, Ghost, Compass, Mountain, Flower2, 
-  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf, Maximize, Sunset
+  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf, Maximize, Sunset, Sparkles
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
@@ -46,6 +46,9 @@ export default function UiThemesPage() {
 
     /* VELVET SUNSET THEME BASED ON IMAGE */
     { name: 'velvet-sunset', label: 'Velvet Sunset', icon: Sunset, color: 'bg-[#1F1F1F] text-[#FF5F6D]' },
+
+    /* COSMIC NEON THEME BASED ON NEW IMAGE */
+    { name: 'cosmic-neon', label: 'Cosmic Neon', icon: Sparkles, color: 'bg-[#05050a] text-[#8E54E9] border-[#00F5FF]/20' },
   ];
 
   return (
