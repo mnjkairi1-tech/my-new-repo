@@ -4,11 +4,14 @@ import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { useSwipeable } from 'react-swipeable';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useMemo, Suspense } from 'react';
+import { useUserPreferences } from '@/context/user-preferences-context';
+import { MintyAnimation } from '@/components/themes/minty-animation';
 
 function AppShellContent({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const { theme } = useUserPreferences();
 
     const navItems = useMemo(() => [
         { id: 'home', route: '/?tab=home' },
@@ -56,8 +59,11 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
 
     return (
         <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-md mx-auto overflow-x-hidden">
+            {/* Live Animation for Minty Marshmallow theme */}
+            {theme === 'cute-mint-glass' && <MintyAnimation />}
+            
             <main 
-                className="flex-grow pb-24 h-full" 
+                className="relative z-10 flex-grow pb-24 h-full" 
                 {...(isSwipeablePage() ? swipeHandlers : {})}
             >
                 {children}
