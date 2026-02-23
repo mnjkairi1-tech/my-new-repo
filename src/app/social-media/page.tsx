@@ -61,7 +61,7 @@ export default function SocialMediaToolsPage() {
         };
 
         return (
-            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-24 md:w-32 shrink-0">
+            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group h-full">
             <Card 
                 className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl"
             >
@@ -113,7 +113,7 @@ export default function SocialMediaToolsPage() {
       <div className="absolute inset-0 z-0 opacity-50">
         <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
       </div>
-      <div className="relative z-10 w-full max-w-7xl pt-6 px-4 md:px-8">
+      <div className="relative z-10 w-full max-w-7xl pt-6 px-4 md:px-8 mx-auto">
         <header className="flex items-center justify-between gap-4">
             <div className='flex items-center gap-4'>
                 <Link href="/" passHref>
@@ -131,7 +131,7 @@ export default function SocialMediaToolsPage() {
         </header>
       </div>
 
-      <main className="relative z-10 w-full max-w-7xl flex-1 flex flex-col min-h-0 mt-6 px-4 md:px-8">
+      <main className="relative z-10 w-full max-w-7xl flex-1 flex flex-col min-h-0 mt-6 px-4 md:px-8 mx-auto">
         <div className="flex-grow overflow-y-auto no-scrollbar py-4 space-y-12">
             {filteredToolData.map((category, index) => {
               if (category.tools.length === 0) return null;
@@ -162,9 +162,11 @@ export default function SocialMediaToolsPage() {
                           </DropdownMenu>
                       )}
                   </div>
-                  <div className="flex gap-6 overflow-x-auto no-scrollbar pb-4 -mx-4 px-4 horizontal-scroll-container">
+                  <div className="flex md:grid overflow-x-auto no-scrollbar md:overflow-visible gap-6 pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 horizontal-scroll-container" onTouchStart={(e) => e.stopPropagation()}>
                       {category.tools.map((tool) => (
-                        <ToolCard tool={tool} key={tool.name} />
+                        <div key={tool.name} className="w-28 md:w-full shrink-0 md:shrink">
+                            <ToolCard tool={tool} />
+                        </div>
                       ))}
                   </div>
               </section>

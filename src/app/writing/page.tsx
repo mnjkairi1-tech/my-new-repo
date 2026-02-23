@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
@@ -62,28 +61,30 @@ export default function WritingToolsPage() {
         };
 
         return (
-            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-24 shrink-0">
+            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group h-full">
             <Card 
                 className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-none"
             >
                 <div className="relative">
-                    <Image
-                    src={tool.image}
-                    alt={tool.name}
-                    width={120}
-                    height={90}
-                    className="w-full h-auto aspect-[4/3] object-cover"
-                    data-ai-hint={tool.dataAiHint}
-                    unoptimized
-                    />
+                    <div className="aspect-[4/3] relative bg-secondary/30 flex items-center justify-center p-4">
+                        <Image
+                        src={tool.image}
+                        alt={tool.name}
+                        width={120}
+                        height={90}
+                        className="object-contain"
+                        data-ai-hint={tool.dataAiHint}
+                        unoptimized
+                        />
+                    </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
                         <ExternalLink className="w-3 h-3"/>
                     </div>
                 </div>
                 <CardContent className='p-2 flex flex-col flex-grow'>
-                    <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow">{tool.name}</CardTitle>
-                    <div className="flex items-center justify-end gap-1 mt-1">
+                    <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow text-center">{tool.name}</CardTitle>
+                    <div className="flex items-center justify-center gap-1 mt-1">
                         <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={(e) => handleShareTool(e, tool)}>
                           <Share2 className="w-3 h-3" />
                         </Button>
@@ -113,7 +114,7 @@ export default function WritingToolsPage() {
       <div className="absolute inset-0 z-0 opacity-50">
         <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
       </div>
-      <div className="relative z-10 w-full max-w-sm pt-6 px-4">
+      <div className="relative z-10 w-full max-w-7xl pt-6 px-4 md:px-8 mx-auto">
         <header className="flex items-center justify-between gap-4">
             <div className='flex items-center gap-4'>
                 <Link href="/" passHref>
@@ -123,7 +124,7 @@ export default function WritingToolsPage() {
                 </Link>
                 <div className='flex items-center gap-2'>
                     <Feather className="w-6 h-6 text-foreground" />
-                    <h1 className="text-2xl font-bold text-foreground">
+                    <h1 className="text-2xl md:text-3xl font-bold text-foreground">
                         Writing Tools
                     </h1>
                 </div>
@@ -131,22 +132,22 @@ export default function WritingToolsPage() {
         </header>
       </div>
 
-      <main className="relative z-10 w-full max-w-sm flex-1 flex flex-col min-h-0 mt-6">
+      <main className="relative z-10 w-full max-w-7xl flex-1 flex flex-col min-h-0 mt-6 px-4 md:px-8 mx-auto">
         <div className="flex-grow overflow-y-auto no-scrollbar p-4 space-y-8">
             {filteredToolData.map((category, index) => {
               if (category.tools.length === 0) return null;
 
               return (
-              <section key={index}>
+              <section key={index} className="space-y-4">
                   <div className="flex justify-between items-center mb-3 px-2">
-                      <h2 className="font-semibold text-xl flex items-center gap-2">
+                      <h2 className="font-semibold text-xl md:text-2xl flex items-center gap-2">
                           {category.icon}
                           {category.title}
                       </h2>
                       {index === 0 && isClient && (
                           <DropdownMenu open={open} onOpenChange={setOpen}>
                               <DropdownMenuTrigger asChild>
-                                  <Button variant="outline" size="sm" className="bg-white/50">
+                                  <Button variant="outline" size="sm" className="bg-white/50 rounded-full h-10 px-6 font-bold shadow-md">
                                       <Filter className="w-4 h-4 mr-2" />
                                       Filter
                                   </Button>
@@ -162,9 +163,11 @@ export default function WritingToolsPage() {
                           </DropdownMenu>
                       )}
                   </div>
-                  <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 horizontal-scroll-container">
+                  <div className="flex md:grid overflow-x-auto no-scrollbar md:overflow-visible gap-4 pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 horizontal-scroll-container" onTouchStart={(e) => e.stopPropagation()}>
                       {category.tools.map((tool) => (
-                        <ToolCard tool={tool} key={tool.name} />
+                        <div key={tool.name} className="w-28 md:w-full shrink-0 md:shrink">
+                            <ToolCard tool={tool} />
+                        </div>
                       ))}
                   </div>
               </section>

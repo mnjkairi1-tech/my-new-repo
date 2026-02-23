@@ -163,9 +163,11 @@ export default function VideoEditingToolsPage() {
                           </DropdownMenu>
                       )}
                   </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+                  <div className="flex md:grid overflow-x-auto no-scrollbar md:overflow-visible gap-4 pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 horizontal-scroll-container" onTouchStart={(e) => e.stopPropagation()}>
                       {category.tools.map((tool) => (
-                        <ToolCard tool={tool} key={tool.name} />
+                        <div key={tool.name} className="w-28 md:w-full shrink-0 md:shrink">
+                            <ToolCard tool={tool} />
+                        </div>
                       ))}
                   </div>
               </section>

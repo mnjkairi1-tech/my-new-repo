@@ -114,7 +114,7 @@ function HomePageContent() {
             </a>
         </div>
         
-        <div className="my-4 px-4">
+        <div className="my-4 px-4" onTouchStart={(e) => e.stopPropagation()}>
             <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]}>
                 <CarouselContent>
                     {carouselSlides.map((slide, index) => (
@@ -141,7 +141,7 @@ function HomePageContent() {
                     <Button variant="link" className="text-primary p-0 h-auto font-semibold">{t('home.seeAll')}</Button>
                 </Link>
             </div>
-            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 horizontal-scroll-container">
+            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 horizontal-scroll-container" onTouchStart={(e) => e.stopPropagation()}>
                 {popularTools.map(tool => (
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 md:w-32 text-center" onClick={() => handleToolClick(tool)}>
                         <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-secondary flex items-center justify-center p-2 text-primary shadow-md overflow-hidden hover:scale-110 transition-transform">
@@ -210,7 +210,7 @@ function HomePageContent() {
                 </div>
             </div>
             
-            <div className="horizontal-scroll-container">
+            <div className="horizontal-scroll-container" onTouchStart={(e) => e.stopPropagation()}>
                 {activeSavedTab === 'recent' && (
                     <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                         {recentTools.length > 0 ? (
