@@ -108,29 +108,31 @@ function HomePageContent() {
                         className="bg-background rounded-full h-14 text-base pl-6 pr-14 border-2 border-primary/20 shadow-lg cursor-pointer"
                     />
                     <div className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center">
-                        <Send className="w-5 h-5"/>
+                        <Send className="w-5 h-5 ml-0.5"/>
                     </div>
                 </div>
             </a>
         </div>
         
-        <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]} className="my-4">
-            <CarouselContent>
-                {carouselSlides.map((slide, index) => (
-                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                        <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
-                            <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden shadow-xl hover:scale-[1.02] transition-transform">
-                                <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                <div className="absolute bottom-0 left-0 p-4">
-                                    <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
+        <div className="my-4">
+            <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]}>
+                <CarouselContent>
+                    {carouselSlides.map((slide, index) => (
+                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                            <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
+                                <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden shadow-xl hover:scale-[1.02] transition-transform">
+                                    <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                    <div className="absolute bottom-0 left-0 p-4">
+                                        <h3 className="font-bold text-2xl text-white">{slide.title}</h3>
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
-                    </CarouselItem>
-                ))}
-            </CarouselContent>
-        </Carousel>
+                            </Link>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+            </Carousel>
+        </div>
 
         <section>
             <div className="flex justify-between items-center mb-3">
@@ -139,7 +141,7 @@ function HomePageContent() {
                     <Button variant="link" className="text-primary p-0 h-auto font-semibold">{t('home.seeAll')}</Button>
                 </Link>
             </div>
-            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-6 px-6">
+            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-6 px-6 horizontal-scroll-container">
                 {popularTools.map(tool => (
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 md:w-32 text-center" onClick={() => handleToolClick(tool)}>
                         <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-secondary flex items-center justify-center p-2 text-primary shadow-md overflow-hidden hover:scale-110 transition-transform">
@@ -208,62 +210,36 @@ function HomePageContent() {
                 </div>
             </div>
             
-            {activeSavedTab === 'recent' && (
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {recentTools.length > 0 ? (
-                        recentTools.map((tool, index) => (
-                            <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
-                                <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-2xl soft-shadow hover:bg-accent/50 transition-colors">
-                                    {tool.image && <div className="w-14 h-14 relative shrink-0"><Image src={tool.image} alt={tool.name} fill className="object-contain" data-ai-hint={tool.name} unoptimized /></div>}
-                                    <div className="flex-grow">
-                                        <h5 className="font-semibold text-base">{tool.name}</h5>
-                                        <p className="text-sm text-muted-foreground">{tool.category}</p>
-                                    </div>
-                                    <ChevronRight className="text-muted-foreground" />
-                                </Card>
-                            </a>
-                        ))
-                    ) : (
-                        <div className="col-span-full text-center py-10 text-muted-foreground">
-                            <History className="mx-auto w-10 h-10 opacity-20" />
-                            <p className="mt-4 text-base">{t('home.recents.empty')}</p>
-                            <p className="text-sm">{t('home.recents.emptyDescription')}</p>
-                        </div>
-                    )}
-                </div>
-            )}
-            
-            {activeSavedTab === 'heart' && (
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                {heartedTools.length > 0 ? (
-                    heartedTools.map((tool, index) => (
-                        <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
-                            <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-2xl soft-shadow hover:bg-accent/50 transition-colors">
-                                {tool.image && <div className="w-14 h-14 relative shrink-0"><Image src={tool.image} alt={tool.name} fill className="object-contain" data-ai-hint={tool.name} unoptimized /></div>}
-                                <div className="flex-grow">
-                                    <h5 className="font-semibold text-base">{tool.name}</h5>
-                                    <p className="text-sm text-muted-foreground">{tool.category}</p>
-                                </div>
-                                <Button variant="ghost" size="icon" className="text-red-500 hover:bg-red-50" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleHeartToggle(tool as Tool); }}>
-                                    <Heart className="fill-current"/>
-                                </Button>
-                            </Card>
-                        </a>
-                    ))
-                ) : (
-                    <div className="col-span-full text-center py-10 text-muted-foreground">
-                        <Heart className="mx-auto w-10 h-10 opacity-20" />
-                        <p className="mt-4 text-base">No hearted tools yet.</p>
-                        <p className="text-sm">Tools you heart will appear here.</p>
+            <div className="horizontal-scroll-container">
+                {activeSavedTab === 'recent' && (
+                    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {recentTools.length > 0 ? (
+                            recentTools.map((tool, index) => (
+                                <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
+                                    <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-2xl soft-shadow hover:bg-accent/50 transition-colors">
+                                        {tool.image && <div className="w-14 h-14 relative shrink-0"><Image src={tool.image} alt={tool.name} fill className="object-contain" data-ai-hint={tool.name} unoptimized /></div>}
+                                        <div className="flex-grow">
+                                            <h5 className="font-semibold text-base">{tool.name}</h5>
+                                            <p className="text-sm text-muted-foreground">{tool.category}</p>
+                                        </div>
+                                        <ChevronRight className="text-muted-foreground" />
+                                    </Card>
+                                </a>
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-10 text-muted-foreground">
+                                <History className="mx-auto w-10 h-10 opacity-20" />
+                                <p className="mt-4 text-base">{t('home.recents.empty')}</p>
+                                <p className="text-sm">{t('home.recents.emptyDescription')}</p>
+                            </div>
+                        )}
                     </div>
                 )}
-                </div>
-            )}
-
-            {activeSavedTab === 'star' && (
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {starredTools.length > 0 ? (
-                        starredTools.map((tool, index) => (
+                
+                {activeSavedTab === 'heart' && (
+                    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {heartedTools.length > 0 ? (
+                        heartedTools.map((tool, index) => (
                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                 <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-2xl soft-shadow hover:bg-accent/50 transition-colors">
                                     {tool.image && <div className="w-14 h-14 relative shrink-0"><Image src={tool.image} alt={tool.name} fill className="object-contain" data-ai-hint={tool.name} unoptimized /></div>}
@@ -271,21 +247,49 @@ function HomePageContent() {
                                         <h5 className="font-semibold text-base">{tool.name}</h5>
                                         <p className="text-sm text-muted-foreground">{tool.category}</p>
                                     </div>
-                                    <Button variant="ghost" size="icon" className="text-yellow-400 hover:bg-yellow-50" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleStarToggle(tool as Tool); }}>
-                                        <Star className="fill-current"/>
+                                    <Button variant="ghost" size="icon" className="text-red-500 hover:bg-red-50" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleHeartToggle(tool as Tool); }}>
+                                        <Heart className="fill-current"/>
                                     </Button>
                                 </Card>
                             </a>
                         ))
                     ) : (
                         <div className="col-span-full text-center py-10 text-muted-foreground">
-                            <Star className="mx-auto w-10 h-10 opacity-20" />
-                            <p className="mt-4 text-base">No starred tools yet.</p>
-                            <p className="text-sm">Tools you star will appear here.</p>
+                            <Heart className="mx-auto w-10 h-10 opacity-20" />
+                            <p className="mt-4 text-base">No hearted tools yet.</p>
+                            <p className="text-sm">Tools you heart will appear here.</p>
                         </div>
                     )}
-                </div>
-            )}
+                    </div>
+                )}
+
+                {activeSavedTab === 'star' && (
+                    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {starredTools.length > 0 ? (
+                            starredTools.map((tool, index) => (
+                                <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
+                                    <Card className="p-3 flex items-center gap-4 bg-card border-none rounded-2xl soft-shadow hover:bg-accent/50 transition-colors">
+                                        {tool.image && <div className="w-14 h-14 relative shrink-0"><Image src={tool.image} alt={tool.name} fill className="object-contain" data-ai-hint={tool.name} unoptimized /></div>}
+                                        <div className="flex-grow">
+                                            <h5 className="font-semibold text-base">{tool.name}</h5>
+                                            <p className="text-sm text-muted-foreground">{tool.category}</p>
+                                        </div>
+                                        <Button variant="ghost" size="icon" className="text-yellow-400 hover:bg-yellow-50" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleStarToggle(tool as Tool); }}>
+                                            <Star className="fill-current"/>
+                                        </Button>
+                                    </Card>
+                                </a>
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-10 text-muted-foreground">
+                                <Star className="mx-auto w-10 h-10 opacity-20" />
+                                <p className="mt-4 text-base">No starred tools yet.</p>
+                                <p className="text-sm">Tools you star will appear here.</p>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
         </section>
     </div>
   );
@@ -300,14 +304,6 @@ function GalaxyAppMain() {
   const { addRecentTool } = useUserPreferences();
   
   useCustomBack();
-
-  const handleShareTool = (e: React.MouseEvent, tool: Tool) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (navigator.share) {
-      navigator.share({ title: tool.name, url: tool.url });
-    }
-  };
 
   return (
     <Tabs value={activeTab} className="h-full flex flex-col">
@@ -356,7 +352,13 @@ function GalaxyAppMain() {
             
             <TabsContent value="tools" className="mt-0 h-full">
                 <Suspense fallback={<ToolsLoadingSkeleton />}>
-                    <ToolsTabContent onShare={handleShareTool} onClick={addRecentTool} />
+                    <ToolsTabContent onShare={(e, tool) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (navigator.share) {
+                            navigator.share({ title: tool.name, url: tool.url });
+                        }
+                    }} onClick={addRecentTool} />
                 </Suspense>
             </TabsContent>
             

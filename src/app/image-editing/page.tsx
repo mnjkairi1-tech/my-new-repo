@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -62,28 +61,30 @@ export default function ImageEditingToolsPage() {
         };
 
         return (
-            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group w-24 shrink-0">
+            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group">
             <Card 
-                className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-none"
+                className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl"
             >
                 <div className="relative">
-                    <Image
-                    src={tool.image}
-                    alt={tool.name || 'Tool Image'}
-                    width={120}
-                    height={90}
-                    className="w-full h-auto aspect-[4/3] object-cover"
-                    data-ai-hint={tool.dataAiHint}
-                    unoptimized
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="aspect-[4/3] relative bg-secondary/30 flex items-center justify-center p-4">
+                        <Image
+                        src={tool.image}
+                        alt={tool.name || 'Tool Image'}
+                        width={120}
+                        height={90}
+                        className="object-contain"
+                        data-ai-hint={tool.dataAiHint}
+                        unoptimized
+                        />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
                     <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
                         <ExternalLink className="w-3 h-3"/>
                     </div>
                 </div>
                 <CardContent className='p-2 flex flex-col flex-grow'>
-                  <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow">{tool.name}</CardTitle>
-                  <div className="flex items-center justify-end gap-1 mt-1">
+                  <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow text-center">{tool.name}</CardTitle>
+                  <div className="flex items-center justify-center gap-1 mt-1">
                       <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={(e) => handleShareTool(e, tool)}>
                           <Share2 className="w-3 h-3" />
                       </Button>
@@ -112,7 +113,7 @@ export default function ImageEditingToolsPage() {
       <div className="absolute inset-0 z-0 opacity-50">
         <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
       </div>
-      <div className="relative z-10 w-full max-w-sm pt-6 px-4">
+      <div className="relative z-10 w-full max-w-7xl mx-auto pt-6 px-4 md:px-8">
         <header className="flex items-center justify-between gap-4">
             <div className='flex items-center gap-4'>
                 <Link href="/" passHref>
@@ -122,7 +123,7 @@ export default function ImageEditingToolsPage() {
                 </Link>
                 <div className='flex items-center gap-2'>
                     <ImageIcon className="w-6 h-6 text-foreground" />
-                    <h1 className="text-2xl font-bold text-foreground">
+                    <h1 className="text-2xl md:text-3xl font-bold text-foreground">
                         Image Editing Tools
                     </h1>
                 </div>
@@ -130,8 +131,8 @@ export default function ImageEditingToolsPage() {
         </header>
       </div>
 
-      <main className="relative z-10 w-full max-w-sm flex-1 flex flex-col min-h-0 mt-6">
-        <div className="flex-grow overflow-y-auto no-scrollbar p-4 space-y-8">
+      <main className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0 mt-6 px-4 md:px-8">
+        <div className="flex-grow overflow-y-auto no-scrollbar space-y-8 py-4">
             {filteredToolData.map((category, index) => {
               if (category.tools.length === 0) return null;
 
@@ -161,7 +162,7 @@ export default function ImageEditingToolsPage() {
                           </DropdownMenu>
                       )}
                   </div>
-                  <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 horizontal-scroll-container">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 horizontal-scroll-container">
                       {category.tools.map((tool) => (
                         <ToolCard tool={tool} key={tool.name} />
                       ))}
