@@ -61,7 +61,7 @@ export default function VideoEditingToolsPage() {
         };
 
         return (
-            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group">
+            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group h-full">
             <Card 
                 className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl"
             >
@@ -133,21 +133,21 @@ export default function VideoEditingToolsPage() {
       </div>
 
       <main className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0 mt-6 px-4 md:px-8">
-        <div className="flex-grow overflow-y-auto no-scrollbar space-y-8 py-4">
+        <div className="flex-grow overflow-y-auto no-scrollbar space-y-12 py-4 pb-24">
             {filteredToolData.map((category, index) => {
               if (category.tools.length === 0) return null;
 
               return (
-              <section key={index}>
-                  <div className="flex justify-between items-center mb-3 px-2">
-                      <h2 className="font-semibold text-xl flex items-center gap-2">
+              <section key={index} className="space-y-4">
+                  <div className="flex justify-between items-center px-2">
+                      <h2 className="font-bold text-xl md:text-2xl flex items-center gap-2">
                           {category.icon}
                           {category.title}
                       </h2>
                       {index === 0 && isClient && (
                           <DropdownMenu open={open} onOpenChange={setOpen}>
                               <DropdownMenuTrigger asChild>
-                                  <Button variant="outline" size="sm" className="bg-white/50">
+                                  <Button variant="outline" size="sm" className="bg-white/50 rounded-full h-10 px-6 font-bold shadow-md">
                                       <Filter className="w-4 h-4 mr-2" />
                                       Filter
                                   </Button>
@@ -163,7 +163,7 @@ export default function VideoEditingToolsPage() {
                           </DropdownMenu>
                       )}
                   </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 horizontal-scroll-container">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
                       {category.tools.map((tool) => (
                         <ToolCard tool={tool} key={tool.name} />
                       ))}

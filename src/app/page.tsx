@@ -98,7 +98,7 @@ function HomePageContent() {
 
   return (
     <div className="space-y-8 pb-10 animate-fade-in-up max-w-7xl mx-auto">
-        <div className="my-4 max-w-2xl mx-auto">
+        <div className="my-4 max-w-2xl mx-auto px-4">
             <label className="block text-center text-muted-foreground text-sm mb-2">Ask what AI you want</label>
             <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
                 <div className="relative cursor-pointer">
@@ -107,14 +107,14 @@ function HomePageContent() {
                         placeholder="Chat with AI Atlas..."
                         className="bg-background rounded-full h-14 text-base pl-6 pr-14 border-2 border-primary/20 shadow-lg cursor-pointer"
                     />
-                    <div className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center">
+                    <div className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center pointer-events-none">
                         <Send className="w-5 h-5 ml-0.5"/>
                     </div>
                 </div>
             </a>
         </div>
         
-        <div className="my-4">
+        <div className="my-4 px-4">
             <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]}>
                 <CarouselContent>
                     {carouselSlides.map((slide, index) => (
@@ -134,14 +134,14 @@ function HomePageContent() {
             </Carousel>
         </div>
 
-        <section>
+        <section className="px-4">
             <div className="flex justify-between items-center mb-3">
                 <h4 className="font-semibold text-xl">{t('home.popularTools.title')}</h4>
                 <Link href="/popular-tools">
                     <Button variant="link" className="text-primary p-0 h-auto font-semibold">{t('home.seeAll')}</Button>
                 </Link>
             </div>
-            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-6 px-6 horizontal-scroll-container">
+            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 horizontal-scroll-container">
                 {popularTools.map(tool => (
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 md:w-32 text-center" onClick={() => handleToolClick(tool)}>
                         <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-secondary flex items-center justify-center p-2 text-primary shadow-md overflow-hidden hover:scale-110 transition-transform">
@@ -153,9 +153,9 @@ function HomePageContent() {
             </div>
         </section>
 
-        <section>
+        <section className="px-4">
             <h4 className="font-semibold text-xl mb-4">{t('home.quickTools.title')}</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {sortedQuickToolCategories.map((category) => {
                     const isPinned = pinnedTools?.has(category.name);
                     return (
@@ -188,7 +188,7 @@ function HomePageContent() {
             </div>
         </section>
 
-        <section className="mt-6 mb-16 max-w-4xl mx-auto">
+        <section className="mt-6 mb-16 max-w-4xl mx-auto px-4">
             <div className="flex justify-center items-center gap-8 my-4">
                 <div className="flex flex-col items-center gap-2">
                     <button onClick={() => setActiveSavedTab('heart')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'heart' ? "scale-110" : "opacity-60")}>
