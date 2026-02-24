@@ -53,13 +53,13 @@
   }
 
   [data-theme='midnight-glass'] {
-    --background: 222 47% 11%;
+    --background: 222 47% 4%;
     --foreground: 0 0% 100%;
     --card: 0 0% 100% / 0.06;
     --card-foreground: 0 0% 100%;
-    --popover: 222 47% 11%;
+    --popover: 222 47% 4%;
     --primary: 0 0% 100%;
-    --primary-foreground: 222 47% 11%;
+    --primary-foreground: 222 47% 4%;
     --secondary: 0 0% 100% / 0.08;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 100% / 0.1;
@@ -68,7 +68,7 @@
     --accent-foreground: 0 0% 100%;
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 100% / 0.12;
+    --border: 0 0% 100% / 0.15;
     --input: 0 0% 100% / 0.08;
     --ring: 0 0% 100%;
     --radius: 1.5rem;
@@ -341,8 +341,25 @@
   }
 
   html[data-theme='midnight-glass'] body {
-    background: radial-gradient(circle at 20% 20%, #1f2937 0%, #0f172a 40%, #000000 100%) fixed !important;
+    background: 
+      radial-gradient(circle at 50% 30%, rgba(255,255,255,0.08), transparent 60%),
+      radial-gradient(circle at 50% 80%, rgba(0,60,255,0.15), transparent 70%),
+      #050810 !important;
+    background-attachment: fixed !important;
     color: #ffffff !important;
+  }
+
+  [data-theme='midnight-glass'] body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(
+      circle at 50% 40%,
+      rgba(255,255,255,0.08),
+      transparent 60%
+    );
   }
 }
 
@@ -358,28 +375,28 @@
     animation: float-slow 12s ease-in-out infinite;
   }
 
-  /* Premium Glass Card with White Shine */
+  /* Premium Glass Card with High-Gloss Shine */
   .glass-card-effect {
-    @apply relative overflow-hidden backdrop-blur-[30px];
+    @apply relative overflow-hidden backdrop-blur-[30px] transform-gpu;
     background: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.6),
-      inset 0 0 0.5px rgba(255, 255, 255, 0.2),
-      0 0 40px rgba(255, 255, 255, 0.04) !important;
+      0 10px 40px rgba(0, 0, 0, 0.6),
+      0 0 40px rgba(255, 255, 255, 0.05),
+      inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
   }
 
-  /* Shining Highlight Overlay */
+  /* White Shine Highlight Overlay - Cinematic Look */
   .glass-card-effect::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     background: linear-gradient(
-      135deg,
+      145deg,
       rgba(255, 255, 255, 0.25) 0%,
       rgba(255, 255, 255, 0.05) 40%,
-      rgba(255, 255, 255, 0.02) 100%
+      transparent 70%
     );
     pointer-events: none;
     z-index: 1;
@@ -392,7 +409,7 @@
   }
 
   .glass-input-effect {
-    @apply backdrop-blur-[20px];
+    @apply backdrop-blur-[20px] transform-gpu;
     background: rgba(255, 255, 255, 0.08) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     box-shadow: 
@@ -401,16 +418,34 @@
   }
 
   .bottom-nav-glass {
-    @apply backdrop-blur-[25px];
+    @apply backdrop-blur-[40px] transform-gpu;
     background: rgba(255, 255, 255, 0.07) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 
+      0 -20px 60px rgba(0, 0, 0, 0.8),
+      0 0 40px rgba(255, 255, 255, 0.05) !important;
   }
 
   .transform-gpu {
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;
+  }
+
+  /* Active Tab Glow Indicator */
+  .tab-glow-indicator {
+    @apply relative;
+  }
+  
+  [data-theme='midnight-glass'] .tab-glow-indicator[data-state=active]::after {
+    content: "";
+    @apply absolute left-1/2 -bottom-1 -translate-x-1/2 rounded-full;
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 
+      0 0 20px rgba(255, 255, 255, 0.8),
+      0 0 40px rgba(255, 255, 255, 0.4);
   }
 }
 

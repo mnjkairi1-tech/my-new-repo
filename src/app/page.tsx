@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useCallback, useRef, Suspense, lazy, useState, useEffect } from 'react';
+import React, { useCallback, useRef, Suspense, useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import {
   Wand2,
@@ -37,9 +38,11 @@ import {
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { useUser } from '@/firebase/auth/use-user';
-import useCustomBack from '@/hooks/use-back-button-handler';
 
-const ToolsTabContent = lazy(() => import('@/components/tools-tab-content'));
+const ToolsTabContent = dynamic(() => import('@/components/tools-tab-content'), {
+    ssr: false,
+    loading: () => <ToolsLoadingSkeleton />
+});
 
 const ToolsLoadingSkeleton = () => (
     <div className="p-4 space-y-4 max-w-7xl mx-auto">
@@ -129,11 +132,11 @@ function HomePageContent() {
                             <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                                 <div className={cn(
                                     "relative aspect-[16/9] w-full rounded-[2rem] overflow-hidden shadow-xl hover:scale-[1.02] transition-transform",
-                                    isMidnight ? "glass-card-effect border-white/20" : ""
+                                    isMidnight ? "glass-card-effect" : ""
                                 )}>
                                     <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                                    <div className="absolute bottom-0 left-0 p-6">
+                                    <div className="absolute bottom-0 left-0 p-6 z-10">
                                         <h3 className="font-black text-2xl text-white tracking-tight">{slide.title}</h3>
                                     </div>
                                 </div>
@@ -156,9 +159,9 @@ function HomePageContent() {
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 md:w-32 text-center" onClick={() => handleToolClick(tool)}>
                         <div className={cn(
                             "w-16 h-16 md:w-20 md:h-20 rounded-[1.5rem] flex items-center justify-center p-3 shadow-md overflow-hidden hover:scale-110 transition-transform",
-                            isMidnight ? "glass-card-effect border-white/20" : "bg-secondary text-primary"
+                            isMidnight ? "glass-card-effect" : "bg-secondary text-primary"
                         )}>
-                            <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain" unoptimized />
+                            <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain relative z-10" unoptimized />
                         </div>
                         <p className={cn("text-[10px] font-black uppercase tracking-tighter text-center mt-3 truncate w-full", isMidnight ? "text-white/80" : "text-muted-foreground")}>{tool.name}</p>
                     </a>
@@ -175,13 +178,13 @@ function HomePageContent() {
                         <Link href={category.url} key={category.name} className="block group">
                             <Card className={cn(
                                 "relative overflow-hidden rounded-[2rem] shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none aspect-[3/1]",
-                                isMidnight ? "glass-card-effect border-white/20" : ""
+                                isMidnight ? "glass-card-effect" : ""
                             )}>
                                 <Button
                                     variant="ghost"
                                     size="icon"
                                     className={cn(
-                                        "absolute top-3 right-3 z-10 w-10 h-10 rounded-full text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
+                                        "absolute top-3 right-3 z-20 w-10 h-10 rounded-full text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
                                         isPinned ? (isMidnight ? 'text-white' : 'text-primary') : 'opacity-0 group-hover:opacity-100'
                                     )}
                                     onClick={(e) => {
@@ -194,7 +197,7 @@ function HomePageContent() {
                                 </Button>
                                 <Image src={category.image} alt={category.name} fill className="object-cover" data-ai-hint={category.name} unoptimized />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                                <div className="absolute bottom-0 left-0 p-5">
+                                <div className="absolute bottom-0 left-0 p-5 z-10">
                                     <h5 className="text-white font-black text-xl tracking-tight uppercase">{t(`home.quickTools.categories.${category.translationKey}`)}</h5>
                                 </div>
                             </Card>
@@ -210,8 +213,8 @@ function HomePageContent() {
                     <button onClick={() => setActiveSavedTab('heart')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'heart' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
                             "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center rounded-[1.5rem] shadow-lg soft-shadow transition-all",
-                            isMidnight ? "glass-card-effect border-white/20" : "bg-pink-100/50 text-pink-500"
-                        )}><Heart className={cn("w-7 h-7 md:w-9 md:h-9", activeSavedTab === 'heart' && "fill-current", isMidnight && activeSavedTab === 'heart' && "text-pink-500")} /></div>
+                            isMidnight ? "glass-card-effect" : "bg-pink-100/50 text-pink-500"
+                        )}><Heart className={cn("w-7 h-7 md:w-9 md:h-9 relative z-10", activeSavedTab === 'heart' && "fill-current", isMidnight && activeSavedTab === 'heart' && "text-pink-500")} /></div>
                         <span className={cn("text-xs font-black uppercase tracking-widest", isMidnight && "text-white")}>Hearted</span>
                     </button>
                 </div>
@@ -219,8 +222,8 @@ function HomePageContent() {
                     <button onClick={() => setActiveSavedTab('recent')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'recent' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
                             "w-24 h-20 md:w-28 md:h-24 flex items-center justify-center rounded-[1.5rem] shadow-lg soft-shadow transition-all",
-                            isMidnight ? "glass-card-effect border-white/20" : "bg-blue-100/50 text-blue-500"
-                        )}><History className={cn("w-9 h-9 md:w-11 md:h-11", isMidnight && activeSavedTab === 'recent' && "text-blue-400")}/></div>
+                            isMidnight ? "glass-card-effect" : "bg-blue-100/50 text-blue-500"
+                        )}><History className={cn("w-9 h-9 md:w-11 md:h-11 relative z-10", isMidnight && activeSavedTab === 'recent' && "text-blue-400")}/></div>
                         <span className={cn("text-xs font-black uppercase tracking-widest", isMidnight && "text-white")}>Recent</span>
                     </button>
                 </div>
@@ -228,8 +231,8 @@ function HomePageContent() {
                     <button onClick={() => setActiveSavedTab('star')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'star' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
                             "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center rounded-[1.5rem] shadow-lg soft-shadow transition-all",
-                            isMidnight ? "glass-card-effect border-white/20" : "bg-yellow-100/50 text-yellow-500"
-                        )}><Star className={cn("w-7 h-7 md:w-9 md:h-9", activeSavedTab === 'star' && "fill-current", isMidnight && activeSavedTab === 'star' && "text-yellow-400")} /></div>
+                            isMidnight ? "glass-card-effect" : "bg-yellow-100/50 text-yellow-500"
+                        )}><Star className={cn("w-7 h-7 md:w-9 md:h-9 relative z-10", activeSavedTab === 'star' && "fill-current", isMidnight && activeSavedTab === 'star' && "text-yellow-400")} /></div>
                         <span className={cn("text-xs font-black uppercase tracking-widest", isMidnight && "text-white")}>Starred</span>
                     </button>
                 </div>
@@ -242,14 +245,14 @@ function HomePageContent() {
                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                 <Card className={cn(
                                     "p-4 flex items-center gap-4 border-none rounded-[1.5rem] transition-all hover:bg-white/5",
-                                    isMidnight ? "glass-card-effect border-white/10" : "bg-card soft-shadow"
+                                    isMidnight ? "glass-card-effect" : "bg-card soft-shadow"
                                 )}>
-                                    {tool.image && <div className="w-14 h-14 relative shrink-0"><Image src={tool.image} alt={tool.name} fill className="object-contain" data-ai-hint={tool.name} unoptimized /></div>}
-                                    <div className="flex-grow">
+                                    {tool.image && <div className="w-14 h-14 relative shrink-0 z-10"><Image src={tool.image} alt={tool.name} fill className="object-contain" data-ai-hint={tool.name} unoptimized /></div>}
+                                    <div className="flex-grow z-10">
                                         <h5 className={cn("font-bold text-base", isMidnight && "text-white")}>{tool.name}</h5>
                                         <p className="text-xs text-muted-foreground uppercase font-bold tracking-tighter">{tool.category}</p>
                                     </div>
-                                    <ChevronRight className={isMidnight ? "text-white/30" : "text-muted-foreground"} />
+                                    <ChevronRight className={cn("relative z-10", isMidnight ? "text-white/30" : "text-muted-foreground")} />
                                 </Card>
                             </a>
                         ))
@@ -337,8 +340,8 @@ function GalaxyAppMain() {
                             value={tabId} 
                             onClick={() => router.push(`/?tab=${tabId}`)} 
                             className={cn(
-                                "data-[state=active]:text-primary text-xs font-black uppercase tracking-widest border-b-4 border-transparent rounded-none pb-3 bg-transparent shadow-none transition-all",
-                                isMidnight && "text-white/40 data-[state=active]:text-white data-[state=active]:border-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
+                                "data-[state=active]:text-primary text-xs font-black uppercase tracking-widest border-b-4 border-transparent rounded-none pb-3 bg-transparent shadow-none transition-all tab-glow-indicator",
+                                isMidnight && "text-white/40 data-[state=active]:text-white data-[state=active]:border-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
                             )}
                         >
                             {t(`tabs.${tabId}`)}
@@ -354,15 +357,13 @@ function GalaxyAppMain() {
             </TabsContent>
             
             <TabsContent value="tools" className="mt-0 h-full">
-                <Suspense fallback={<ToolsLoadingSkeleton />}>
-                    <ToolsTabContent onShare={(e, tool) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        if (navigator.share) {
-                            navigator.share({ title: tool.name, url: tool.url });
-                        }
-                    }} onClick={addRecentTool} />
-                </Suspense>
+                <ToolsTabContent onShare={(e, tool) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (navigator.share) {
+                        navigator.share({ title: tool.name, url: tool.url });
+                    }
+                }} onClick={addRecentTool} />
             </TabsContent>
             
             <TabsContent value="trending" className="px-6 mt-4">
@@ -370,13 +371,13 @@ function GalaxyAppMain() {
                     <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" className="block group">
                         <Card className={cn(
                             "border-none rounded-[2.5rem] shadow-lg overflow-hidden hover:scale-[1.01] transition-all duration-500",
-                            isMidnight ? "glass-card-effect border-white/20" : "bg-card"
+                            isMidnight ? "glass-card-effect" : "bg-card"
                         )}>
                             <div className="relative aspect-video md:aspect-[21/9]">
                                 <Image src={"https://picsum.photos/seed/trending-ai/1200/600"} alt="Trending" fill className="object-cover" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                             </div>
-                            <div className="p-8">
+                            <div className="p-8 relative z-10">
                                 <h3 className={cn("font-black text-3xl tracking-tight uppercase", isMidnight && "text-white")}>Trending AI Tools</h3>
                                 <p className="text-muted-foreground text-lg mt-2 font-medium">Discover the fastest-growing AI tools globally.</p>
                             </div>
