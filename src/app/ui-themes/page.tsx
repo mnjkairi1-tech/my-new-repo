@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Palette, Sun, Moon, Cloud, Ghost, Compass, Mountain, Flower2, 
-  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf, Maximize, Sunset, Sparkles, Zap
+  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf, Maximize, Sunset, Sparkles, Zap, GlassWater
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
@@ -21,6 +21,7 @@ export default function UiThemesPage() {
   const themes = [
     { name: 'default', label: 'Default Light', icon: Sun, color: 'bg-orange-100 text-orange-600' },
     { name: 'dark', label: 'Classic Dark', icon: Moon, color: 'bg-slate-800 text-slate-100' },
+    { name: 'midnight-glass', label: 'Midnight Glass', icon: GlassWater, color: 'bg-zinc-900 text-white border-white/20' },
     { name: 'nordic-lite', label: 'Nordic Lite', icon: Cloud, color: 'bg-blue-50 text-blue-600' },
     { name: 'oled-stealth', label: 'OLED Stealth (Dark Black)', icon: Ghost, color: 'bg-black text-white' },
     { name: 'minimal-snow', label: 'Arctic Snow (Minimal Black)', icon: Snowflake, color: 'bg-black text-white border-white/40' },
