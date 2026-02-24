@@ -53,25 +53,25 @@
   }
 
   [data-theme='midnight-glass'] {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 10% / 0.6;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 6%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 100% / 0.08;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 5%;
     --primary: 0 0% 100%;
     --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 15% / 0.8;
+    --secondary: 0 0% 100% / 0.15;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 12%;
+    --muted: 0 0% 10%;
     --muted-foreground: 0 0% 70%;
-    --accent: 0 0% 100% / 0.1;
+    --accent: 0 0% 100% / 0.2;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 100% / 0.15;
-    --input: 0 0% 12%;
+    --border: 0 0% 100% / 0.25;
+    --input: 0 0% 10%;
     --ring: 0 0% 100%;
-    --radius: 1.75rem;
+    --radius: 1.5rem;
   }
 
   [data-theme='nordic-lite'] {
@@ -341,7 +341,21 @@
   }
 
   html[data-theme='midnight-glass'] body {
-    background: radial-gradient(circle at 50% -20%, #121212 0%, #000000 100%);
+    background: #000000;
+    position: relative;
+  }
+
+  html[data-theme='midnight-glass'] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
   }
 }
 
@@ -358,7 +372,33 @@
   }
 
   .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-white/10 shadow-2xl;
+    @apply relative overflow-hidden backdrop-blur-3xl;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-shine {
+    position: relative;
+  }
+
+  .glass-shine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .transform-gpu {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
 }
 

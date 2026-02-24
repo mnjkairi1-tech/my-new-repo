@@ -22,9 +22,10 @@ import {
 import { allToolsServer } from '@/lib/all-tools-server';
 
 const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void, t: (key: string) => string }) => {
-    const { starredTools, handleStarToggle, comparisonList, selectForCompare } = useUserPreferences();
+    const { theme, starredTools, handleStarToggle, comparisonList, selectForCompare } = useUserPreferences();
     const isStarred = starredTools.some(t => t.name === tool.name);
     const isSelectedForCompare = comparisonList.some(t => t.name === tool.name);
+    const isMidnight = theme === 'midnight-glass';
 
     const handleStarClick = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -40,30 +41,47 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
   
     return (
       <a href={tool.url} target="_blank" rel="noopener noreferrer" className="block group" onClick={() => onClick(tool)}>
-        <Card className="bg-card/80 backdrop-blur-lg border-white/20 rounded-2xl soft-shadow transition-all duration-300 hover:scale-[1.02] overflow-hidden aspect-square flex flex-col p-4 justify-between">
-            <div className='text-center flex flex-col items-center justify-center gap-2 flex-grow'>
-                <div className='relative w-14 h-14 md:w-20 md:h-20'>
+        <Card className={cn(
+            "border border-border/50 rounded-[var(--radius)] transition-all duration-300 hover:scale-[1.02] overflow-hidden flex flex-col aspect-square p-4 justify-between",
+            isMidnight ? "glass-card glass-shine border-white/20" : "bg-card backdrop-blur-xl soft-shadow"
+        )}>
+            <div className='text-center flex flex-col items-center justify-center gap-2 flex-grow relative z-10'>
+                <div className={cn(
+                    'relative w-16 h-16 md:w-20 md:h-20 mb-2 transition-transform duration-500 group-hover:scale-110',
+                    isMidnight && "drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                )}>
                     <Image
                         src={tool.image}
                         alt={tool.name}
                         fill
-                        className="object-contain rounded-none"
+                        className="object-contain"
                         data-ai-hint={tool.dataAiHint}
                         unoptimized
                     />
-                    <div className="absolute -inset-1 bg-primary/20 rounded-none blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                <h5 className="font-bold text-foreground text-sm md:text-base leading-tight line-clamp-2 mt-2">{tool.name}</h5>
+                <h5 className={cn(
+                    "font-bold text-sm md:text-base leading-tight line-clamp-1",
+                    isMidnight ? "text-white tracking-wide" : "text-foreground"
+                )}>{tool.name}</h5>
             </div>
-            <div className="flex items-center justify-center gap-2 pt-2">
-                <Button variant="ghost" size="icon" className="w-8 h-8 md:w-10 md:h-10 rounded-full text-foreground/80 bg-white/10 hover:bg-white/20" onClick={(e) => onShare(e, tool)}>
-                    <Share2 className="w-4 h-4 md:w-5 md:h-5" />
+            <div className="flex items-center justify-center gap-3 pt-2 relative z-10">
+                <Button variant="ghost" size="icon" className={cn(
+                    "w-9 h-9 rounded-full transition-colors",
+                    isMidnight ? "bg-white/10 hover:bg-white/20 text-white" : "bg-secondary/50 hover:bg-secondary"
+                )} onClick={(e) => onShare(e, tool)}>
+                    <Share2 className="w-4 h-4 md:w-5 h-5" />
                 </Button>
-                <Button variant="ghost" size="icon" className="w-8 h-8 md:w-10 md:h-10 rounded-full text-foreground/80 bg-white/10 hover:bg-white/50" onClick={handleStarClick}>
-                    <Star className={cn('w-4 h-4 md:w-5 md:h-5 transition-all', isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
+                <Button variant="ghost" size="icon" className={cn(
+                    "w-9 h-9 rounded-full transition-colors",
+                    isMidnight ? "bg-white/10 hover:bg-white/20 text-white" : "bg-secondary/50 hover:bg-secondary"
+                )} onClick={handleStarClick}>
+                    <Star className={cn('w-4.5 h-4.5 md:w-5.5 h-5.5 transition-all', isStarred ? 'fill-yellow-400 text-yellow-400' : (isMidnight ? 'text-white/60' : 'text-foreground/60'))}/>
                 </Button>
-                <Button variant="ghost" size="icon" className={cn("w-8 h-8 md:w-10 md:h-10 rounded-full text-foreground/80 bg-white/10 hover:bg-white/50", isSelectedForCompare && "bg-primary/20")} onClick={handleCompareClick}>
-                    {isSelectedForCompare ? <Check className="w-4 h-4 md:w-5 md:h-5 text-primary" /> : <Scale className="w-4 h-4 md:w-5 md:h-5" />}
+                <Button variant="ghost" size="icon" className={cn(
+                    "w-9 h-9 rounded-full transition-colors",
+                    isSelectedForCompare ? "bg-primary/20" : (isMidnight ? "bg-white/10 hover:bg-white/20 text-white" : "bg-secondary/50 hover:bg-secondary")
+                )} onClick={handleCompareClick}>
+                    {isSelectedForCompare ? <Check className="w-4.5 h-4.5 text-primary" /> : <Scale className="w-4.5 h-4.5" />}
                 </Button>
             </div>
         </Card>
@@ -74,6 +92,8 @@ ToolCard.displayName = 'ToolCard';
 
 export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void }) {
     const { t } = useLanguage();
+    const { theme } = useUserPreferences();
+    const isMidnight = theme === 'midnight-glass';
     
     const [searchTerm, setSearchTerm] = useState('');
     const [priceFilter, setPriceFilter] = useState('All');
@@ -121,10 +141,13 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
             <div className="px-4 pb-4">
                 <div className="flex gap-4 items-center max-w-2xl mx-auto">
                     <div className="relative flex-grow">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                        <Search className={cn("absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5", isMidnight ? "text-white/50" : "text-muted-foreground")} />
                         <Input 
                             placeholder="Search tools..."
-                            className="pl-12 bg-card rounded-full h-12 border-border shadow-md"
+                            className={cn(
+                                "pl-12 rounded-full h-12 shadow-md transition-all",
+                                isMidnight ? "bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:bg-white/15" : "bg-card border-border"
+                            )}
                             value={searchTerm}
                             onChange={(e) => {
                                 setSearchTerm(e.target.value);
@@ -134,7 +157,10 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     </div>
                      <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="icon" className="w-12 h-12 rounded-full bg-card shadow-md">
+                            <Button variant="outline" size="icon" className={cn(
+                                "w-12 h-12 rounded-full shadow-md",
+                                isMidnight ? "bg-white/10 border-white/20 text-white" : "bg-card"
+                            )}>
                                 <Filter className="w-5 h-5"/>
                             </Button>
                         </DropdownMenuTrigger>
@@ -151,7 +177,10 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
-                <div className="text-center mt-4 text-sm font-bold text-muted-foreground uppercase tracking-widest">
+                <div className={cn(
+                    "text-center mt-4 text-[10px] font-black uppercase tracking-[0.2em]",
+                    isMidnight ? "text-white/40" : "text-muted-foreground"
+                )}>
                     {`${filteredTools.length} Tools Discovered`}
                 </div>
             </div>
@@ -169,7 +198,10 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                 </div>
                 {visibleCount < filteredTools.length && (
                     <div className="text-center mt-12 mb-8">
-                        <Button onClick={handleLoadMore} size="lg" className="rounded-full px-8 h-14 text-lg font-bold shadow-xl">Load More Tools</Button>
+                        <Button onClick={handleLoadMore} size="lg" className={cn(
+                            "rounded-full px-8 h-14 text-lg font-bold shadow-xl transition-all",
+                            isMidnight ? "bg-white text-black hover:bg-white/90" : "shadow-primary/20"
+                        )}>Load More Tools</Button>
                     </div>
                 )}
             </div>

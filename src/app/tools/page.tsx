@@ -72,38 +72,36 @@ export default function AllToolsPage() {
         return (
             <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group">
             <Card 
-                className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl"
+                className="bg-card backdrop-blur-xl border border-border/50 soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-[var(--radius)]"
             >
                 <div className="relative">
-                    <div className="aspect-[3/2] relative bg-secondary/30 flex items-center justify-center p-6">
+                    <div className="aspect-square relative bg-secondary/20 flex items-center justify-center p-8">
                         <Image
                         src={tool.image}
                         alt={tool.name || 'Tool Image'}
-                        width={80}
-                        height={80}
+                        width={100}
+                        height={100}
                         className="object-contain"
                         data-ai-hint={tool.dataAiHint}
                         unoptimized
                         />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
                     <div className="absolute top-2 right-2 bg-primary/80 text-primary-foreground rounded-full p-1.5 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
                         <ExternalLink className="w-4 h-4"/>
                     </div>
-                     <div className="absolute bottom-2 left-2 bg-background/80 text-foreground text-[10px] font-black uppercase tracking-tighter px-3 py-1 rounded-full">{tool.category}</div>
                 </div>
-                <CardContent className='p-4 flex flex-col flex-grow'>
-                  <CardTitle className="text-base font-bold text-foreground leading-tight line-clamp-1 flex-grow">{tool.name}</CardTitle>
-                  <p className="text-xs text-muted-foreground mt-2 line-clamp-2 leading-relaxed">{tool.description}</p>
-                  <div className="flex items-center justify-end gap-2 mt-4">
-                      <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-foreground/80 bg-secondary/50 hover:bg-secondary" onClick={(e) => handleShareTool(e, tool)}>
+                <CardContent className='p-4 flex flex-col items-center text-center flex-grow'>
+                  <CardTitle className="text-base font-bold text-foreground leading-tight line-clamp-1 mb-4">{tool.name}</CardTitle>
+                  
+                  <div className="flex items-center justify-center gap-3 w-full mt-auto">
+                      <Button variant="ghost" size="icon" className="w-9 h-9 rounded-full bg-secondary/50 hover:bg-secondary" onClick={(e) => handleShareTool(e, tool)}>
                           <Share2 className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full text-foreground/80 bg-secondary/50 hover:bg-secondary" onClick={handleStarClick}>
-                          <Star className={cn('w-4 h-4 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
+                      <Button variant="ghost" size="icon" className="w-9 h-9 rounded-full bg-secondary/50 hover:bg-secondary" onClick={handleStarClick}>
+                          <Star className={cn('w-4.5 h-4.5 transition-all', isClient && isStarred ? 'fill-yellow-400 text-yellow-400' : 'text-foreground/60')}/>
                       </Button>
-                      <Button variant="ghost" size="icon" className={cn("w-8 h-8 rounded-full text-foreground/80 bg-secondary/50 hover:bg-secondary", isSelectedForCompare && "bg-primary/20")} onClick={handleCompareClick}>
-                        {isSelectedForCompare ? <Check className="w-4 h-4 text-primary" /> : <Scale className="w-4 h-4" />}
+                      <Button variant="ghost" size="icon" className={cn("w-9 h-9 rounded-full bg-secondary/50 hover:bg-secondary", isSelectedForCompare && "bg-primary/20")} onClick={handleCompareClick}>
+                        {isSelectedForCompare ? <Check className="w-4.5 h-4.5 text-primary" /> : <Scale className="w-4.5 h-4.5" />}
                       </Button>
                   </div>
                 </CardContent>
@@ -152,13 +150,13 @@ export default function AllToolsPage() {
             </div>
         </header>
 
-         <div className="flex gap-4 items-center my-6 max-w-3xl mx-auto">
+         <div className="flex gap-4 items-center my-6 max-w-3xl mx-auto px-4">
             <div className="relative flex-grow">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <input 
                     type="search"
                     placeholder="Search over 1 million AI tools..."
-                    className="pl-12 w-full h-14 bg-background/80 backdrop-blur-sm rounded-full border-2 border-white/20 shadow-xl focus:border-primary/30 transition-all text-base outline-none pr-6"
+                    className="pl-12 w-full h-14 bg-card backdrop-blur-sm rounded-full border border-border shadow-xl focus:border-primary/30 transition-all text-base outline-none pr-6"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -166,7 +164,7 @@ export default function AllToolsPage() {
             {isClient && (
                  <DropdownMenu open={open} onOpenChange={setOpen}>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="icon" className="w-14 h-14 rounded-full bg-white/50 border-white/20 shadow-xl">
+                        <Button variant="outline" size="icon" className="w-14 h-14 rounded-full bg-card border-border shadow-xl">
                             <Filter className="w-6 h-6" />
                         </Button>
                     </DropdownMenuTrigger>
