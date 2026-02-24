@@ -52,8 +52,8 @@ export function BottomNavBar({ activeTab }: { activeTab: string }) {
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 h-16 w-[90%] max-w-sm z-50">
         <div className={cn(
-            "h-full rounded-full overflow-hidden border border-white/20 shadow-2xl",
-            isMidnight ? "bottom-nav-glass" : "bg-card/90 backdrop-blur-xl"
+            "h-full rounded-full overflow-hidden border shadow-2xl",
+            isMidnight ? "bottom-nav-glass" : "bg-card/90 backdrop-blur-xl border-white/20"
         )}>
           <div className="flex justify-around items-center h-full px-4">
             <NavItem href="/?tab=home" path="home" icon={Home} label="Home" currentActiveTab={activeTab} />

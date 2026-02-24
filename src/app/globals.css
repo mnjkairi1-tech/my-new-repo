@@ -53,25 +53,25 @@
   }
 
   [data-theme='midnight-glass'] {
-    --background: 222 47% 4%;
+    --background: 225 43% 4%; /* #050810 */
     --foreground: 0 0% 100%;
-    --card: 0 0% 100% / 0.06;
+    --card: 0 0% 100% / 0.08;
     --card-foreground: 0 0% 100%;
-    --popover: 222 47% 4%;
+    --popover: 225 43% 4%;
     --primary: 0 0% 100%;
-    --primary-foreground: 222 47% 4%;
-    --secondary: 0 0% 100% / 0.08;
+    --primary-foreground: 225 43% 4%;
+    --secondary: 0 0% 100% / 0.1;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 100% / 0.1;
+    --muted: 0 0% 100% / 0.12;
     --muted-foreground: 0 0% 70%;
     --accent: 0 0% 100% / 0.15;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 100% / 0.15;
-    --input: 0 0% 100% / 0.08;
+    --border: 0 0% 100% / 0.18;
+    --input: 0 0% 100% / 0.1;
     --ring: 0 0% 100%;
-    --radius: 1.5rem;
+    --radius: 1.75rem; /* 28px */
   }
 
   [data-theme='nordic-lite'] {
@@ -341,25 +341,9 @@
   }
 
   html[data-theme='midnight-glass'] body {
-    background: 
-      radial-gradient(circle at 50% 30%, rgba(255,255,255,0.08), transparent 60%),
-      radial-gradient(circle at 50% 80%, rgba(0,60,255,0.15), transparent 70%),
-      #050810 !important;
+    background: #050810 !important;
     background-attachment: fixed !important;
     color: #ffffff !important;
-  }
-
-  [data-theme='midnight-glass'] body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background: radial-gradient(
-      circle at 50% 40%,
-      rgba(255,255,255,0.08),
-      transparent 60%
-    );
   }
 }
 
@@ -375,31 +359,43 @@
     animation: float-slow 12s ease-in-out infinite;
   }
 
-  /* Premium Glass Card with High-Gloss Shine */
+  /* Ultra realistic Premium Glass Card */
   .glass-card-effect {
-    @apply relative overflow-hidden backdrop-blur-[30px] transform-gpu;
-    background: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    @apply relative overflow-hidden transform-gpu;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.04) 40%,
+      rgba(255, 255, 255, 0.02) 100%
+    ) !important;
+    backdrop-filter: blur(40px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(160%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 28px !important;
     box-shadow: 
-      0 10px 40px rgba(0, 0, 0, 0.6),
-      0 0 40px rgba(255, 255, 255, 0.05),
-      inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+      0 15px 50px rgba(0, 0, 0, 0.8),
+      0 0 60px rgba(255, 255, 255, 0.05),
+      inset 0 1px 1px rgba(255, 255, 255, 0.35),
+      inset 0 -1px 1px rgba(0, 0, 0, 0.6) !important;
   }
 
-  /* White Shine Highlight Overlay - Cinematic Look */
+  /* Specular Top-Left Shine */
   .glass-card-effect::before {
     content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.25) 0%,
-      rgba(255, 255, 255, 0.05) 40%,
-      transparent 70%
-    );
-    pointer-events: none;
+    @apply absolute inset-0 pointer-events-none;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.35) 0%, transparent 40%);
+    opacity: 0.6;
     z-index: 1;
+  }
+
+  /* Edge Diffusion Glow */
+  .glass-card-effect::after {
+    content: "";
+    @apply absolute -inset-[2px] rounded-[inherit] pointer-events-none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent, rgba(255, 255, 255, 0.1));
+    filter: blur(4px);
+    opacity: 0.4;
+    z-index: -1;
   }
 
   .white-glow-effect {
@@ -409,18 +405,19 @@
   }
 
   .glass-input-effect {
-    @apply backdrop-blur-[20px] transform-gpu;
+    @apply backdrop-blur-[35px] transform-gpu;
     background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 50px !important;
     box-shadow: 
       inset 0 1px 2px rgba(255, 255, 255, 0.2),
       0 4px 20px rgba(0, 0, 0, 0.4) !important;
   }
 
   .bottom-nav-glass {
-    @apply backdrop-blur-[40px] transform-gpu;
+    @apply backdrop-blur-[50px] transform-gpu;
     background: rgba(255, 255, 255, 0.07) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.25) !important;
     box-shadow: 
       0 -20px 60px rgba(0, 0, 0, 0.8),
       0 0 40px rgba(255, 255, 255, 0.05) !important;
