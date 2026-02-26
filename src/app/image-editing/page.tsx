@@ -4,26 +4,46 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Filter, Image as ImageIcon
+    ArrowLeft, ExternalLink, Star, Share2, Filter, Image as ImageIcon, X, Plus, Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Dialog, DialogContent, Header, Title, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, imageEditingToolData } from '@/lib/image-editing-tool-data';
-
+import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
+import { doc, setDoc, collection, addDoc, serverTimestamp, query, where } from 'firebase/firestore';
+import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
+import { setDocumentNonBlocking, addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
 export default function ImageEditingToolsPage() {
     const { toast } = useToast();
+    const { user } = useUser();
+    const firestore = useFirestore();
     const [priceFilter, setPriceFilter] = useState('All');
     const [open, setOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
+    const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+    const [activeCategory, setActiveCategory] = useState('');
+    const [newToolUrl, setNewNewToolUrl] = useState('');
+    const [isAdding, setIsAdding] = useState(false);
+
+    const isOwner = user?.email === 'mnjkairi1@gmail.com';
 
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+    // Fetch hidden and added tools from Firestore
+    const hiddenToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'hidden_tools') : null, [firestore]);
+    const { data: hiddenTools } = useCollection(hiddenToolsQuery);
+    
+    const addedToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'ai_tools') : null, [firestore]);
+    const { data: addedTools } = useCollection(addedToolsQuery);
 
     const handleShareTool = useCallback(async (e: React.MouseEvent, tool: Tool) => {
         e.preventDefault();
@@ -50,6 +70,44 @@ export default function ImageEditingToolsPage() {
         }
     }, [toast]);
 
+    const handleDeleteTool = (tool: Tool) => {
+        if (!firestore) return;
+        const hiddenRef = doc(firestore, 'hidden_tools', tool.name.replace(/\s+/g, '_').toLowerCase());
+        setDocumentNonBlocking(hiddenRef, { name: tool.name, hiddenAt: serverTimestamp() }, { merge: true });
+        toast({ title: "Tool Removed", description: `${tool.name} is now hidden for everyone.` });
+    };
+
+    const handleAddTool = async () => {
+        if (!newToolUrl.trim() || !firestore) return;
+        setIsAdding(true);
+        try {
+            let url = newToolUrl.trim();
+            if (!url.startsWith('http')) url = 'https://' + url;
+            
+            const info = await validateAndGetToolInfo({ url });
+            const toolData = {
+                name: info.toolName || new URL(url).hostname,
+                description: info.toolDescription || 'AI Tool',
+                url: url,
+                image: `https://www.google.com/s2/favicons?sz=128&domain=${new URL(url).hostname}`,
+                dataAiHint: (info.toolName || 'ai tool').toLowerCase(),
+                pricing: 'Freemium' as const,
+                categoryTitle: activeCategory,
+                isActive: true,
+                createdAt: serverTimestamp()
+            };
+
+            await addDocumentNonBlocking(collection(firestore, 'ai_tools'), toolData);
+            toast({ title: "Tool Added!", description: `${toolData.name} added to ${activeCategory}.` });
+            setIsAddDialogOpen(false);
+            setNewNewToolUrl('');
+        } catch (e) {
+            toast({ variant: 'destructive', title: "Error", description: "Could not add tool. Please check the URL." });
+        } finally {
+            setIsAdding(false);
+        }
+    };
+
     const ToolCard = ({ tool }: { tool: Tool }) => {
         const { starredTools, handleStarToggle } = useUserPreferences();
         const isStarred = isClient && starredTools.some(t => t.name === tool.name);
@@ -61,52 +119,67 @@ export default function ImageEditingToolsPage() {
         };
 
         return (
-            <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group h-full">
-            <Card 
-                className="bg-white/80 border-none soft-shadow transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl"
-            >
-                <div className="relative">
-                    <div className="aspect-[4/3] relative bg-secondary/30 flex items-center justify-center p-4">
-                        <Image
-                        src={tool.image}
-                        alt={tool.name || 'Tool Image'}
-                        width={120}
-                        height={90}
-                        className="object-contain"
-                        data-ai-hint={tool.dataAiHint}
-                        unoptimized
-                        />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                    <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ExternalLink className="w-3 h-3"/>
-                    </div>
-                </div>
-                <CardContent className='p-2 flex flex-col flex-grow'>
-                  <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow text-center">{tool.name}</CardTitle>
-                  <div className="flex items-center justify-center gap-1 mt-1">
-                      <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={(e) => handleShareTool(e, tool)}>
-                          <Share2 className="w-3 h-3" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={handleStarClick}>
-                          <Star className={cn('w-3.5 h-3.5 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
-                      </Button>
-                  </div>
-                </CardContent>
-            </Card>
-            </Link>
+            <div className="relative group h-full">
+                {isOwner && (
+                    <button 
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDeleteTool(tool); }}
+                        className="absolute -top-2 -right-2 z-30 bg-red-500 text-white rounded-full p-1.5 shadow-lg border-2 border-white hover:scale-110 transition-transform"
+                    >
+                        <X className="w-3.5 h-3.5" />
+                    </button>
+                )}
+                <Link href={tool.url} target="_blank" rel="noopener noreferrer" className="block h-full">
+                    <Card 
+                        className="bg-white/80 border-none soft-shadow transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl dark:glass-card-effect"
+                    >
+                        <div className="relative">
+                            <div className="aspect-[4/3] relative bg-secondary/30 flex items-center justify-center p-4">
+                                <Image
+                                src={tool.image}
+                                alt={tool.name || 'Tool Image'}
+                                width={120}
+                                height={90}
+                                className="object-contain"
+                                data-ai-hint={tool.dataAiHint}
+                                unoptimized
+                                />
+                            </div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                            <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                                <ExternalLink className="w-3 h-3"/>
+                            </div>
+                        </div>
+                        <CardContent className='p-2 flex flex-col flex-grow'>
+                        <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow text-center">{tool.name}</CardTitle>
+                        <div className="flex items-center justify-center gap-1 mt-1">
+                            <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={(e) => handleShareTool(e, tool)}>
+                                <Share2 className="w-3 h-3" />
+                            </Button>
+                            <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={handleStarClick}>
+                                <Star className={cn('w-3.5 h-3.5 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
+                            </Button>
+                        </div>
+                        </CardContent>
+                    </Card>
+                </Link>
+            </div>
         );
     }
 
     const filteredToolData = useMemo(() => {
-        if (priceFilter === 'All') {
-            return imageEditingToolData;
-        }
-        return imageEditingToolData.map(category => ({
-            ...category,
-            tools: category.tools.filter(tool => tool.pricing === 'Free' || tool.pricing === 'Freemium')
-        })).filter(category => category.tools.length > 0);
-    }, [priceFilter]);
+        const hiddenNames = new Set(hiddenTools?.map(t => t.name) || []);
+        
+        return imageEditingToolData.map(category => {
+            const staticTools = category.tools.filter(tool => !hiddenNames.has(tool.name));
+            const dynTools = addedTools?.filter(t => t.categoryTitle === category.title) || [];
+            
+            let combined = [...staticTools, ...dynTools];
+            if (priceFilter === 'Free') {
+                combined = combined.filter(tool => tool.pricing === 'Free' || tool.pricing === 'Freemium');
+            }
+            return { ...category, tools: combined };
+        });
+    }, [priceFilter, hiddenTools, addedTools]);
     
   return (
     <div className="bg-background min-h-screen flex flex-col items-center justify-start font-body relative">
@@ -134,7 +207,7 @@ export default function ImageEditingToolsPage() {
       <main className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0 mt-6 px-4 md:px-8">
         <div className="flex-grow overflow-y-auto no-scrollbar space-y-12 py-4 pb-24">
             {filteredToolData.map((category, index) => {
-              if (category.tools.length === 0) return null;
+              if (category.tools.length === 0 && !isOwner) return null;
 
               return (
               <section key={index} className="space-y-4">
@@ -142,6 +215,14 @@ export default function ImageEditingToolsPage() {
                       <h2 className="font-bold text-xl md:text-2xl flex items-center gap-2">
                           {category.icon}
                           {category.title}
+                          {isOwner && (
+                              <button 
+                                onClick={() => { setActiveCategory(category.title); setIsAddDialogOpen(true); }}
+                                className="bg-green-500 text-white rounded-full p-1 shadow-md hover:scale-110 transition-transform"
+                              >
+                                  <Plus className="w-4 h-4" />
+                              </button>
+                          )}
                       </h2>
                        {index === 0 && isClient && (
                           <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -173,6 +254,29 @@ export default function ImageEditingToolsPage() {
             )})}
         </div>
       </main>
+
+      <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+          <DialogContent className="max-w-sm rounded-3xl">
+              <DialogHeader>
+                  <DialogTitle>Add Tool to {activeCategory}</DialogTitle>
+              </DialogHeader>
+              <div className="py-4 space-y-4">
+                  <Input 
+                    placeholder="Paste tool website URL..." 
+                    value={newToolUrl}
+                    onChange={(e) => setNewNewToolUrl(e.target.value)}
+                    className="rounded-xl h-12"
+                  />
+                  <p className="text-[10px] text-muted-foreground px-1">AI will automatically fetch name and icon.</p>
+              </div>
+              <DialogFooter>
+                  <Button variant="outline" onClick={() => setIsAddDialogOpen(false)} className="rounded-xl">Cancel</Button>
+                  <Button onClick={handleAddTool} disabled={isAdding} className="rounded-xl">
+                      {isAdding ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : "Add Tool"}
+                  </Button>
+              </DialogFooter>
+          </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -53,9 +53,9 @@
   }
 
   [data-theme='midnight-glass'] {
-    --background: 225 43% 4%; /* #050810 */
+    --background: 225 43% 4%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 100% / 0.08;
+    --card: 0 0% 100% / 0.06;
     --card-foreground: 0 0% 100%;
     --popover: 225 43% 4%;
     --primary: 0 0% 100%;
@@ -71,73 +71,7 @@
     --border: 0 0% 100% / 0.18;
     --input: 0 0% 100% / 0.1;
     --ring: 0 0% 100%;
-    --radius: 1.75rem; /* 28px */
-  }
-
-  [data-theme='nordic-lite'] {
-    --background: 210 20% 98%;
-    --foreground: 210 40% 10%;
-    --card: 0 0% 100%;
-    --primary: 210 100% 45%;
-    --secondary: 210 30% 94%;
-    --accent: 190 100% 95%;
-    --border: 210 20% 90%;
-    --radius: 0.75rem;
-  }
-
-  [data-theme='oled-stealth'] {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 90%;
-    --card: 0 0% 3%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 8%;
-    --accent: 0 0% 12%;
-    --border: 0 0% 10%;
-    --radius: 0.75rem;
-  }
-
-  [data-theme='desert-sand'] {
-    --background: 35 40% 96%;
-    --foreground: 25 30% 20%;
-    --card: 35 40% 98%;
-    --primary: 25 80% 45%;
-    --secondary: 35 30% 90%;
-    --accent: 40 100% 94%;
-    --border: 35 30% 85%;
-    --radius: 1.5rem;
-  }
-
-  [data-theme='emerald-night'] {
-    --background: 160 50% 4%;
-    --foreground: 160 20% 95%;
-    --card: 160 50% 6%;
-    --primary: 155 100% 50%;
-    --secondary: 160 30% 12%;
-    --accent: 150 100% 15%;
-    --border: 160 30% 15%;
-    --radius: 1.25rem;
-  }
-
-  [data-theme='lavender-mist'] {
-    --background: 270 40% 98%;
-    --foreground: 270 40% 20%;
-    --card: 0 0% 100%;
-    --primary: 270 80% 60%;
-    --secondary: 270 30% 94%;
-    --accent: 280 100% 96%;
-    --border: 270 30% 90%;
-    --radius: 2rem;
-  }
-
-  [data-theme='minimal-obsidian'] {
-    --background: 240 6% 10%;
-    --foreground: 0 0% 98%;
-    --card: 240 6% 13%;
-    --primary: 0 0% 100%;
-    --secondary: 240 6% 18%;
-    --border: 240 6% 22%;
-    --radius: 0.4rem;
+    --radius: 1.75rem;
   }
 
   [data-theme='minimal-snow'] {
@@ -157,168 +91,6 @@
     --ring: 0 0% 100%;
     --radius: 0rem;
   }
-
-  [data-theme='minimal-forest'] {
-    --background: 140 30% 5%;
-    --foreground: 140 20% 95%;
-    --card: 140 30% 8%;
-    --primary: 145 100% 45%;
-    --secondary: 140 20% 15%;
-    --border: 140 20% 18%;
-    --radius: 1.25rem;
-  }
-
-  [data-theme='minimal-sand'] {
-    --background: 40 30% 95%;
-    --foreground: 40 40% 15%;
-    --card: 40 30% 98%;
-    --primary: 35 70% 40%;
-    --secondary: 40 20% 90%;
-    --border: 40 20% 85%;
-    --radius: 1.5rem;
-  }
-
-  [data-theme='minimal-ocean'] {
-    --background: 210 40% 5%;
-    --foreground: 210 20% 98%;
-    --card: 210 40% 8%;
-    --primary: 195 100% 50%;
-    --secondary: 210 30% 15%;
-    --border: 210 30% 18%;
-    --radius: 1rem;
-  }
-
-  [data-theme='premium-glass'] {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 100% / 0.05;
-    --card-foreground: 0 0% 98%;
-    --primary: 45 50% 60%;
-    --secondary: 240 10% 15%;
-    --border: 0 0% 100% / 0.1;
-    --radius: 1.5rem;
-  }
-
-  [data-theme='esports-pro'] {
-    --background: 228 45% 7%;
-    --foreground: 210 40% 98%;
-    --card: 228 45% 12% / 0.8;
-    --primary: 185 100% 50%;
-    --secondary: 275 100% 50%;
-    --accent: 345 100% 50%;
-    --border: 185 100% 50% / 0.3;
-    --radius: 1rem;
-  }
-
-  [data-theme='cute-mint-glass'] {
-    --background: 150 40% 98%;
-    --foreground: 160 40% 15%;
-    --card: 0 0% 100% / 0.7;
-    --card-foreground: 160 40% 15%;
-    --primary: 155 100% 40%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 155 100% 92%;
-    --secondary-foreground: 155 100% 30%;
-    --muted: 150 30% 94%;
-    --muted-foreground: 160 20% 40%;
-    --accent: 155 100% 90%;
-    --accent-foreground: 155 100% 25%;
-    --border: 155 100% 85%;
-    --ring: 155 100% 40%;
-    --radius: 2rem;
-  }
-
-  [data-theme='mono-clean'] {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 0%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 0 0% 0%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 92%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 0 0% 95%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 0 0% 90%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 85%;
-    --input: 0 0% 95%;
-    --ring: 0 0% 0%;
-    --radius: 2rem;
-  }
-
-  [data-theme='velvet-sunset'] {
-    --background: 0 0% 12%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 15%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 345 100% 70%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 18%;
-    --secondary-foreground: 345 100% 70%;
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 70%;
-    --accent: 20 100% 70%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 20%;
-    --input: 0 0% 18%;
-    --ring: 345 100% 70%;
-    --radius: 1.5rem;
-  }
-
-  [data-theme='cosmic-neon'] {
-    --background: 240 20% 3%;
-    --foreground: 0 0% 100%;
-    --card: 240 20% 7% / 0.8;
-    --card-foreground: 0 0% 100%;
-    --popover: 240 20% 5%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 280 100% 60%; 
-    --primary-foreground: 0 0% 100%;
-    --secondary: 200 100% 50% / 0.2;
-    --secondary-foreground: 200 100% 60%;
-    --muted: 240 20% 10%;
-    --muted-foreground: 240 10% 70%;
-    --accent: 160 100% 50%;
-    --accent-foreground: 240 20% 5%;
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 200 100% 50% / 0.15;
-    --input: 240 20% 10%;
-    --ring: 280 100% 60%;
-    --radius: 2.25rem;
-  }
-
-  [data-theme='neon-volt'] {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 84 100% 59%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 84 100% 59%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 35 100% 55%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 84 100% 59%;
-    --radius: 2.5rem;
-  }
 }
 
 @layer base {
@@ -327,21 +99,11 @@
     @apply bg-background text-foreground transition-colors duration-300 overflow-x-hidden antialiased;
     min-height: 100vh;
   }
-  html:not([data-theme]) body, 
-  html[data-theme='default'] body {
-    background: linear-gradient(180deg, hsl(var(--soft-blue)), hsl(var(--lavender)), hsl(var(--baby-pink)));
-  }
   
-  html[data-theme='cosmic-neon'] body {
-    background: radial-gradient(circle at 50% -20%, #1a1a3a 0%, #05050a 100%);
-  }
-
-  html[data-theme='neon-volt'] body {
-    background: #0D0D0D;
-  }
-
   html[data-theme='midnight-glass'] body {
-    background: #050810 !important;
+    background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.08), transparent 60%),
+                radial-gradient(circle at 50% 80%, rgba(0,60,255,0.15), transparent 70%),
+                #050810 !important;
     background-attachment: fixed !important;
     color: #ffffff !important;
   }
@@ -351,23 +113,10 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-  .animate-leaf-fall {
-    animation: leaf-fall linear infinite;
-  }
-
-  .animate-float-slow {
-    animation: float-slow 12s ease-in-out infinite;
-  }
-
-  /* Ultra realistic Premium Glass Card */
+  /* Premium Glass Card with Top Shine */
   .glass-card-effect {
     @apply relative overflow-hidden transform-gpu;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.12) 0%,
-      rgba(255, 255, 255, 0.04) 40%,
-      rgba(255, 255, 255, 0.02) 100%
-    ) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
     backdrop-filter: blur(40px) saturate(160%) !important;
     -webkit-backdrop-filter: blur(40px) saturate(160%) !important;
     border: 1px solid rgba(255, 255, 255, 0.18) !important;
@@ -379,29 +128,18 @@
       inset 0 -1px 1px rgba(0, 0, 0, 0.6) !important;
   }
 
-  /* Specular Top-Left Shine */
+  /* Specular High-Gloss Shine Overlay */
   .glass-card-effect::before {
     content: "";
     @apply absolute inset-0 pointer-events-none;
-    background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.35) 0%, transparent 40%);
-    opacity: 0.6;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0.05) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
     z-index: 1;
-  }
-
-  /* Edge Diffusion Glow */
-  .glass-card-effect::after {
-    content: "";
-    @apply absolute -inset-[2px] rounded-[inherit] pointer-events-none;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent, rgba(255, 255, 255, 0.1));
-    filter: blur(4px);
-    opacity: 0.4;
-    z-index: -1;
-  }
-
-  .white-glow-effect {
-    box-shadow: 
-      0 0 80px rgba(255, 255, 255, 0.08),
-      0 0 120px rgba(255, 255, 255, 0.05) !important;
   }
 
   .glass-input-effect {
@@ -423,40 +161,17 @@
       0 0 40px rgba(255, 255, 255, 0.05) !important;
   }
 
-  .transform-gpu {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    perspective: 1000px;
-  }
-
   /* Active Tab Glow Indicator */
-  .tab-glow-indicator {
-    @apply relative;
-  }
-  
   [data-theme='midnight-glass'] .tab-glow-indicator[data-state=active]::after {
     content: "";
     @apply absolute left-1/2 -bottom-1 -translate-x-1/2 rounded-full;
-    width: 40px;
+    width: 60px;
     height: 4px;
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 
       0 0 20px rgba(255, 255, 255, 0.8),
       0 0 40px rgba(255, 255, 255, 0.4);
   }
-}
-
-@keyframes leaf-fall {
-  0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; }
-  10% { opacity: 0.6; }
-  50% { transform: translateY(50vh) rotate(180deg) translateX(30px); }
-  90% { opacity: 0.6; }
-  100% { transform: translateY(110vh) rotate(360deg) translateX(-30px); opacity: 0; }
-}
-
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-15px) rotate(5deg); }
 }
 
 @keyframes fade-in-up {
