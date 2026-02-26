@@ -23,7 +23,7 @@
     --border: 255 100% 90%;
     --input: 255 100% 90%;
     --ring: 258 100% 70%;
-    --radius: 1.25rem;
+    --radius: 0px;
   }
 
   [data-theme='dark'], .dark {
@@ -61,10 +61,10 @@
     --border: 0 0% 100% / 0.18;
     --input: 0 0% 100% / 0.1;
     --ring: 0 0% 100%;
-    --radius: 1.75rem;
+    --radius: 0px;
   }
 
-  /* MINTY MARSHMALLOW - CORRECTED GREEN */
+  /* MINTY MARSHMALLOW */
   [data-theme='cute-mint-glass'] {
     --background: 160 60% 98%;
     --foreground: 160 40% 20%;
@@ -77,10 +77,10 @@
     --muted-foreground: 160 20% 45%;
     --accent: 160 100% 90%;
     --border: 160 100% 85%;
-    --radius: 1.5rem;
+    --radius: 0px;
   }
 
-  /* VELVET SUNSET - RESTORED */
+  /* VELVET SUNSET */
   [data-theme='velvet-sunset'] {
     --background: 340 40% 5%;
     --foreground: 20 100% 95%;
@@ -93,7 +93,7 @@
     --muted-foreground: 340 20% 70%;
     --accent: 15 100% 50%;
     --border: 340 40% 20%;
-    --radius: 1.25rem;
+    --radius: 0px;
   }
 
   /* WARM DESERT SAND */
@@ -107,7 +107,7 @@
     --secondary: 35 60% 85%;
     --accent: 45 100% 90%;
     --border: 25 30% 80%;
-    --radius: 1rem;
+    --radius: 0px;
   }
 
   /* EMERALD NIGHT */
@@ -120,7 +120,7 @@
     --primary-foreground: 160 50% 4%;
     --secondary: 160 30% 15%;
     --border: 160 30% 15%;
-    --radius: 1.5rem;
+    --radius: 0px;
   }
 
   /* COSMIC NEON */
@@ -134,7 +134,7 @@
     --secondary: 260 40% 12%;
     --accent: 190 100% 50%;
     --border: 260 40% 15%;
-    --radius: 2rem;
+    --radius: 0px;
   }
 
   /* NEON VOLT */
@@ -147,7 +147,7 @@
     --primary-foreground: 0 0% 0%;
     --secondary: 75 100% 10%;
     --border: 75 100% 15%;
-    --radius: 0.5rem;
+    --radius: 0px;
   }
 
   /* ARCTIC SNOW */
@@ -160,7 +160,7 @@
     --primary-foreground: 0 0% 100%;
     --secondary: 210 20% 90%;
     --border: 210 20% 85%;
-    --radius: 0rem;
+    --radius: 0px;
   }
 }
 
@@ -194,7 +194,7 @@
     backdrop-filter: blur(40px) saturate(160%) !important;
     -webkit-backdrop-filter: blur(40px) saturate(160%) !important;
     border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    border-radius: 28px !important;
+    border-radius: 0px !important;
     box-shadow: 
       0 15px 50px rgba(0, 0, 0, 0.8),
       0 0 60px rgba(255, 255, 255, 0.05),

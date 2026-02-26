@@ -51,7 +51,7 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
     return (
       <a href={tool.url} target="_blank" rel="noopener noreferrer" className="block group" onClick={() => onClick(tool)}>
         <Card className={cn(
-            "border border-border/50 rounded-[var(--radius)] transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col aspect-square p-4 justify-between",
+            "border border-border/50 rounded-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col aspect-square p-4 justify-between",
             isMidnight ? "glass-card-effect" : "bg-card backdrop-blur-xl soft-shadow"
         )}>
             <div className='text-center flex flex-col items-center justify-center gap-2 flex-grow relative z-10'>
@@ -156,8 +156,8 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
 
     return (
         <div className="flex flex-col h-full max-w-7xl mx-auto">
-            <div className="px-4 pb-4">
-                <div className="flex gap-4 items-center max-w-2xl mx-auto">
+            <div className="px-0 pb-4">
+                <div className="flex gap-4 items-center max-w-2xl mx-auto px-4">
                     <div className="relative flex-grow">
                         <Search className={cn("absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5", isMidnight ? "text-white/50" : "text-muted-foreground")} />
                         <Input 
@@ -202,8 +202,8 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     {`10,000+ Tools Discovered`}
                 </div>
             </div>
-            <div className="flex-1 overflow-y-auto px-4 no-scrollbar pt-2 pb-20">
-                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+            <div className="flex-1 overflow-y-auto px-0 no-scrollbar pt-2 pb-20">
+                 <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
                     {filteredTools.slice(0, visibleCount).map(tool => (
                         <ToolCard
                             key={tool.name}
@@ -226,7 +226,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
 
             <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
                 <AlertDialogContent className={cn(
-                    "rounded-[2.5rem] border-none max-w-[90%] md:max-w-md",
+                    "rounded-none border-none max-w-[90%] md:max-w-md",
                     isMidnight ? "glass-card-effect" : "bg-card backdrop-blur-3xl"
                 )}>
                     <AlertDialogHeader>
@@ -236,7 +236,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                         </AlertDialogTitle>
                         <AlertDialogDescription asChild>
                             <div className="space-y-6 pt-4">
-                                <div className="flex items-start gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10">
+                                <div className="flex items-start gap-4 p-4 rounded-none bg-primary/5 border border-primary/10">
                                     <SearchCode className="w-6 h-6 text-primary shrink-0" />
                                     <div className="text-left">
                                         <div className="font-bold text-foreground">1) Use Search</div>
@@ -244,7 +244,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                                     </div>
                                 </div>
                                 
-                                <div className="flex items-start gap-4 p-4 rounded-2xl bg-yellow-400/5 border border-yellow-400/10">
+                                <div className="flex items-start gap-4 p-4 rounded-none bg-yellow-400/5 border border-yellow-400/10">
                                     <StarHalf className="w-6 h-6 text-yellow-400 shrink-0" />
                                     <div className="text-left">
                                         <div className="font-bold text-foreground">2) Star Tools</div>
@@ -252,7 +252,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                                     </div>
                                 </div>
 
-                                <div className="flex items-start gap-4 p-4 rounded-2xl bg-blue-400/5 border border-blue-400/10">
+                                <div className="flex items-start gap-4 p-4 rounded-none bg-blue-400/5 border border-blue-400/10">
                                     <UserPlus className="w-6 h-6 text-blue-400 shrink-0" />
                                     <div className="text-left">
                                         <div className="font-bold text-foreground">3) Add Custom Links</div>
@@ -262,8 +262,8 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                             </div>
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter className="mt-6">
-                        <AlertDialogAction className="w-full h-12 rounded-2xl font-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20">
+                    <AlertDialogFooter className="mt-6 px-4 pb-4">
+                        <AlertDialogAction className="w-full h-12 rounded-none font-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20">
                             Got it, thanks!
                         </AlertDialogAction>
                     </AlertDialogFooter>

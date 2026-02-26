@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useRef, Suspense, useState, useEffect } from 'react';
@@ -45,14 +44,14 @@ const ToolsTabContent = dynamic(() => import('@/components/tools-tab-content'), 
 });
 
 const ToolsLoadingSkeleton = () => (
-    <div className="p-4 space-y-4 max-w-7xl mx-auto">
-        <div className="flex gap-2 items-center">
-            <div className="h-12 flex-grow bg-white/5 rounded-full animate-pulse" />
-            <div className="h-12 w-12 bg-white/5 rounded-full animate-pulse" />
+    <div className="p-0 space-y-4 max-w-7xl mx-auto">
+        <div className="flex gap-2 items-center px-4">
+            <div className="h-12 flex-grow bg-white/5 rounded-none animate-pulse" />
+            <div className="h-12 w-12 bg-white/5 rounded-none animate-pulse" />
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {[...Array(10)].map((_, i) => (
-                <div key={i} className="h-48 bg-white/5 rounded-3xl animate-pulse" />
+        <div className="grid grid-cols-3 gap-2 px-0">
+            {[...Array(9)].map((_, i) => (
+                <div key={i} className="h-32 bg-white/5 rounded-none animate-pulse" />
             ))}
         </div>
     </div>
@@ -110,8 +109,8 @@ function HomePageContent() {
             <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
                 <div className="relative group">
                     <div className={cn(
-                        "rounded-full h-14 text-base pl-6 pr-14 border shadow-lg flex items-center transition-all",
-                        isMidnight ? "glass-input-effect text-white/60" : "bg-background border-primary/20 text-muted-foreground"
+                        "rounded-none h-14 text-base pl-6 pr-14 border shadow-lg flex items-center transition-all",
+                        isMidnight ? "glass-input-effect text-white/60 !rounded-full" : "bg-background border-primary/20 text-muted-foreground !rounded-full"
                     )}>
                         Chat with AI Atlas...
                     </div>
@@ -125,15 +124,15 @@ function HomePageContent() {
             </a>
         </div>
         
-        <div className="my-4 px-4" onTouchStart={(e) => e.stopPropagation()}>
+        <div className="my-4 px-0" onTouchStart={(e) => e.stopPropagation()}>
             <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]}>
                 <CarouselContent>
                     {carouselSlides.map((slide, index) => (
                         <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                             <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                                 <div className={cn(
-                                    "relative aspect-[16/9] w-full overflow-hidden shadow-xl hover:scale-[1.02] transition-transform",
-                                    isMidnight ? "glass-card-effect" : "rounded-[2.5rem] border border-border/50"
+                                    "relative aspect-[16/9] w-full overflow-hidden shadow-xl hover:scale-[1.02] transition-transform rounded-none",
+                                    isMidnight ? "glass-card-effect" : "border border-border/50"
                                 )}>
                                     <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
@@ -148,19 +147,19 @@ function HomePageContent() {
             </Carousel>
         </div>
 
-        <section className="px-4">
-            <div className="flex justify-between items-center mb-4 px-2">
+        <section className="px-0">
+            <div className="flex justify-between items-center mb-4 px-4">
                 <h4 className={cn("font-black text-xl tracking-tight uppercase", isMidnight && "text-white")}>{t('home.popularTools.title')}</h4>
                 <Link href="/popular-tools">
                     <Button variant="link" className={cn("p-0 h-auto font-bold text-xs uppercase tracking-widest", isMidnight ? "text-white/60" : "text-primary")}>{t('home.seeAll')}</Button>
                 </Link>
             </div>
-            <div className="flex md:grid overflow-x-auto md:overflow-visible no-scrollbar pb-2 horizontal-scroll-container md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4" onTouchStart={(e) => e.stopPropagation()}>
+            <div className="flex md:grid overflow-x-auto md:overflow-visible no-scrollbar pb-2 horizontal-scroll-container md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2 px-0" onTouchStart={(e) => e.stopPropagation()}>
                 {popularTools.map(tool => (
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 md:w-full text-center group" onClick={() => handleToolClick(tool)}>
                         <div className={cn(
-                            "w-16 h-16 md:w-20 md:h-20 flex items-center justify-center p-3 shadow-md overflow-hidden hover:scale-110 transition-transform duration-300",
-                            isMidnight ? "glass-card-effect" : "bg-secondary text-primary rounded-[1.5rem] border border-border/50"
+                            "w-16 h-16 md:w-20 md:h-20 flex items-center justify-center p-3 shadow-md overflow-hidden hover:scale-110 transition-transform duration-300 rounded-none",
+                            isMidnight ? "glass-card-effect" : "bg-secondary text-primary border border-border/50"
                         )}>
                             <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain relative z-10" unoptimized />
                         </div>
@@ -170,16 +169,16 @@ function HomePageContent() {
             </div>
         </section>
 
-        <section className="px-4">
-            <h4 className={cn("font-black text-xl tracking-tight uppercase mb-6 px-2", isMidnight && "text-white")}>{t('home.quickTools.title')}</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="px-0">
+            <h4 className={cn("font-black text-xl tracking-tight uppercase mb-6 px-4", isMidnight && "text-white")}>{t('home.quickTools.title')}</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 {sortedQuickToolCategories.map((category) => {
                     const isPinned = pinnedTools?.has(category.name);
                     return (
                         <Link href={category.url} key={category.name} className="block group">
                             <Card className={cn(
-                                "relative overflow-hidden shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none aspect-[3/1]",
-                                isMidnight ? "glass-card-effect" : "rounded-[2rem]"
+                                "relative overflow-hidden shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none aspect-[3/1] rounded-none",
+                                isMidnight ? "glass-card-effect" : ""
                             )}>
                                 <Button
                                     variant="ghost"
@@ -208,13 +207,13 @@ function HomePageContent() {
             </div>
         </section>
 
-        <section className="mt-10 mb-16 max-w-4xl mx-auto px-4">
-            <div className="flex justify-center items-center gap-8 my-6">
+        <section className="mt-10 mb-16 max-w-4xl mx-auto px-0">
+            <div className="flex justify-center items-center gap-8 my-6 px-4">
                 <div className="flex flex-col items-center gap-2">
                     <button onClick={() => setActiveSavedTab('heart')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'heart' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
-                            "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all",
-                            isMidnight ? "glass-card-effect" : "bg-pink-100/50 text-pink-500 rounded-[1.5rem] soft-shadow"
+                            "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all rounded-none",
+                            isMidnight ? "glass-card-effect" : "bg-pink-100/50 text-pink-500 soft-shadow"
                         )}><Heart className={cn("w-7 h-7 md:w-9 md:h-9 relative z-10", activeSavedTab === 'heart' && "fill-current", isMidnight && activeSavedTab === 'heart' && "text-pink-500")} /></div>
                         <span className={cn("text-xs font-black uppercase tracking-widest", isMidnight && "text-white")}>Hearted</span>
                     </button>
@@ -222,8 +221,8 @@ function HomePageContent() {
                 <div className="flex flex-col items-center gap-2">
                     <button onClick={() => setActiveSavedTab('recent')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'recent' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
-                            "w-24 h-20 md:w-28 md:h-24 flex items-center justify-center shadow-lg transition-all",
-                            isMidnight ? "glass-card-effect" : "bg-blue-100/50 text-blue-500 rounded-[1.5rem] soft-shadow"
+                            "w-24 h-20 md:w-28 md:h-24 flex items-center justify-center shadow-lg transition-all rounded-none",
+                            isMidnight ? "glass-card-effect" : "bg-blue-100/50 text-blue-500 soft-shadow"
                         )}><History className={cn("w-9 h-9 md:w-11 md:h-11 relative z-10", isMidnight && activeSavedTab === 'recent' && "text-blue-400")}/></div>
                         <span className={cn("text-xs font-black uppercase tracking-widest", isMidnight && "text-white")}>Recent</span>
                     </button>
@@ -231,22 +230,22 @@ function HomePageContent() {
                 <div className="flex flex-col items-center gap-2">
                     <button onClick={() => setActiveSavedTab('star')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'star' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
-                            "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all",
-                            isMidnight ? "glass-card-effect" : "bg-yellow-100/50 text-yellow-500 rounded-[1.5rem] soft-shadow"
+                            "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all rounded-none",
+                            isMidnight ? "glass-card-effect" : "bg-yellow-100/50 text-yellow-500 soft-shadow"
                         )}><Star className={cn("w-7 h-7 md:w-9 md:h-9 relative z-10", activeSavedTab === 'star' && "fill-current", isMidnight && activeSavedTab === 'star' && "text-yellow-400")} /></div>
                         <span className={cn("text-xs font-black uppercase tracking-widest", isMidnight && "text-white")}>Starred</span>
                     </button>
                 </div>
             </div>
             
-            <div className="horizontal-scroll-container" onTouchStart={(e) => e.stopPropagation()}>
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="horizontal-scroll-container px-0" onTouchStart={(e) => e.stopPropagation()}>
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
                     {(activeSavedTab === 'recent' ? recentTools : activeSavedTab === 'heart' ? heartedTools : starredTools).length > 0 ? (
                         (activeSavedTab === 'recent' ? recentTools : activeSavedTab === 'heart' ? heartedTools : starredTools).map((tool, index) => (
                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                 <Card className={cn(
-                                    "p-4 flex items-center gap-4 border-none transition-all hover:bg-white/5",
-                                    isMidnight ? "glass-card-effect" : "bg-card soft-shadow rounded-[1.5rem]"
+                                    "p-4 flex items-center gap-4 border-none transition-all hover:bg-white/5 rounded-none",
+                                    isMidnight ? "glass-card-effect" : "bg-card soft-shadow"
                                 )}>
                                     {tool.image && <div className="w-14 h-14 relative shrink-0 z-10"><Image src={tool.image} alt={tool.name} fill className="object-contain" data-ai-hint={tool.name} unoptimized /></div>}
                                     <div className="flex-grow z-10">
@@ -353,7 +352,7 @@ function GalaxyAppMain() {
         </header>
         
         <div className="flex-1 overflow-y-auto no-scrollbar">
-            <TabsContent value="home" className="px-6 mt-0">
+            <TabsContent value="home" className="px-0 mt-0">
                 <HomePageContent />
             </TabsContent>
             
@@ -371,7 +370,7 @@ function GalaxyAppMain() {
                 <div className="max-w-7xl mx-auto space-y-6">
                     <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" className="block group">
                         <Card className={cn(
-                            "border-none rounded-[2.5rem] shadow-lg overflow-hidden hover:scale-[1.01] transition-all duration-500",
+                            "border-none rounded-none shadow-lg overflow-hidden hover:scale-[1.01] transition-all duration-500",
                             isMidnight ? "glass-card-effect" : "bg-card"
                         )}>
                             <div className="relative aspect-video md:aspect-[21/9]">
