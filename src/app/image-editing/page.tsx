@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -142,12 +141,7 @@ export default function ImageEditingToolsPage() {
             <div className="relative group h-full">
                 {isOwner && (
                     <button 
-                        onClick={(e) => { 
-                            e.preventDefault(); 
-                            e.stopPropagation(); 
-                            setToolToDelete(tool);
-                            setIsDeleteAlertOpen(true);
-                        }}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setToolToDelete(tool); setIsDeleteAlertOpen(true); }}
                         className="absolute -top-2 -right-2 z-30 bg-red-500 text-white rounded-full p-1.5 shadow-lg border-2 border-white hover:scale-110 transition-transform"
                     >
                         <X className="w-3.5 h-3.5" />
@@ -164,7 +158,7 @@ export default function ImageEditingToolsPage() {
                             <div className="aspect-[4/3] relative flex items-center justify-center p-4">
                                 <Image
                                 src={tool.image}
-                                alt={tool.name || 'Tool Image'}
+                                alt={tool.name}
                                 width={80}
                                 height={80}
                                 className="object-contain z-10"
@@ -195,7 +189,7 @@ export default function ImageEditingToolsPage() {
             </div>
         );
     }
-
+    
     const filteredToolData = useMemo(() => {
         const hiddenNames = new Set(hiddenTools?.map(t => t.name) || []);
         
@@ -210,7 +204,8 @@ export default function ImageEditingToolsPage() {
             return { ...category, tools: combined };
         });
     }, [priceFilter, hiddenTools, addedTools]);
-    
+
+
   return (
     <div className="bg-background min-h-screen flex flex-col items-center justify-start font-body relative">
       <div className="absolute inset-0 z-0 opacity-50">
@@ -256,7 +251,7 @@ export default function ImageEditingToolsPage() {
                               </button>
                           )}
                       </h2>
-                       {index === 0 && isClient && (
+                      {index === 0 && isClient && (
                           <DropdownMenu open={open} onOpenChange={setOpen}>
                               <DropdownMenuTrigger asChild>
                                   <Button variant="outline" size="sm" className={cn(

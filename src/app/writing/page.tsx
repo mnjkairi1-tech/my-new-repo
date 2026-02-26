@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
@@ -242,6 +241,7 @@ export default function WritingToolsPage() {
               <section key={index} className="space-y-4">
                   <div className="flex justify-between items-center px-2">
                       <h2 className={cn("font-bold text-xl md:text-2xl flex items-center gap-2", isMidnight ? "text-white" : "text-foreground")}>
+                          {category.icon}
                           {category.title}
                           {isOwner && (
                               <button 
