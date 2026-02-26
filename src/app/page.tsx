@@ -100,8 +100,8 @@ function HomePageContent() {
   }, [addRecentTool]);
 
   return (
-    <div className="space-y-8 pb-10 animate-fade-in-up max-w-7xl mx-auto">
-        <div className="my-4 max-w-2xl mx-auto px-4">
+    <div className="space-y-8 pb-10 animate-fade-in-up max-w-7xl mx-auto w-full">
+        <div className="my-4 max-w-2xl mx-auto px-2">
             <label className={cn(
                 "block text-center text-xs font-bold uppercase tracking-widest mb-3",
                 isMidnight ? "text-white/60" : "text-muted-foreground"
@@ -110,12 +110,12 @@ function HomePageContent() {
                 <div className="relative group">
                     <div className={cn(
                         "rounded-none h-14 text-base pl-6 pr-14 border shadow-lg flex items-center transition-all",
-                        isMidnight ? "glass-input-effect text-white/60 !rounded-full" : "bg-background border-primary/20 text-muted-foreground !rounded-full"
+                        isMidnight ? "glass-input-effect text-white/60 !rounded-none" : "bg-background border-primary/20 text-muted-foreground !rounded-none"
                     )}>
                         Chat with AI Atlas...
                     </div>
                     <div className={cn(
-                        "absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 flex items-center justify-center pointer-events-none transition-transform group-hover:scale-110",
+                        "absolute right-2 top-1/2 -translate-y-1/2 rounded-none w-10 h-10 flex items-center justify-center pointer-events-none transition-transform group-hover:scale-110",
                         isMidnight ? "bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.4)]" : "bg-primary text-primary-foreground"
                     )}>
                         <Send className="w-5 h-5 ml-0.5"/>
@@ -124,15 +124,15 @@ function HomePageContent() {
             </a>
         </div>
         
-        <div className="my-4 px-0" onTouchStart={(e) => e.stopPropagation()}>
-            <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]}>
-                <CarouselContent>
+        <div className="my-0 px-0 w-full" onTouchStart={(e) => e.stopPropagation()}>
+            <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]} className="w-full">
+                <CarouselContent className="-ml-0">
                     {carouselSlides.map((slide, index) => (
-                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                        <CarouselItem key={index} className="pl-0 md:basis-1/2 lg:basis-1/3">
                             <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                                 <div className={cn(
                                     "relative aspect-[16/9] w-full overflow-hidden shadow-xl hover:scale-[1.02] transition-transform rounded-none",
-                                    isMidnight ? "glass-card-effect" : "border border-border/50"
+                                    isMidnight ? "glass-card-effect" : "border-none"
                                 )}>
                                     <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
@@ -154,7 +154,7 @@ function HomePageContent() {
                     <Button variant="link" className={cn("p-0 h-auto font-bold text-xs uppercase tracking-widest", isMidnight ? "text-white/60" : "text-primary")}>{t('home.seeAll')}</Button>
                 </Link>
             </div>
-            <div className="flex md:grid overflow-x-auto md:overflow-visible no-scrollbar pb-2 horizontal-scroll-container md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2 px-0" onTouchStart={(e) => e.stopPropagation()}>
+            <div className="flex md:grid overflow-x-auto md:overflow-visible no-scrollbar pb-2 horizontal-scroll-container md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2 px-2" onTouchStart={(e) => e.stopPropagation()}>
                 {popularTools.map(tool => (
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 md:w-full text-center group" onClick={() => handleToolClick(tool)}>
                         <div className={cn(
@@ -171,7 +171,7 @@ function HomePageContent() {
 
         <section className="px-0">
             <h4 className={cn("font-black text-xl tracking-tight uppercase mb-6 px-4", isMidnight && "text-white")}>{t('home.quickTools.title')}</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
                 {sortedQuickToolCategories.map((category) => {
                     const isPinned = pinnedTools?.has(category.name);
                     return (
@@ -184,7 +184,7 @@ function HomePageContent() {
                                     variant="ghost"
                                     size="icon"
                                     className={cn(
-                                        "absolute top-3 right-3 z-20 w-10 h-10 rounded-full text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
+                                        "absolute top-3 right-3 z-20 w-10 h-10 rounded-none text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
                                         isPinned ? (isMidnight ? 'text-white' : 'text-primary') : 'opacity-0 group-hover:opacity-100'
                                     )}
                                     onClick={(e) => {
@@ -207,7 +207,7 @@ function HomePageContent() {
             </div>
         </section>
 
-        <section className="mt-10 mb-16 max-w-4xl mx-auto px-0">
+        <section className="mt-10 mb-16 max-w-4xl mx-auto px-0 w-full">
             <div className="flex justify-center items-center gap-8 my-6 px-4">
                 <div className="flex flex-col items-center gap-2">
                     <button onClick={() => setActiveSavedTab('heart')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'heart' ? "scale-110" : "opacity-40")}>
@@ -239,7 +239,7 @@ function HomePageContent() {
             </div>
             
             <div className="horizontal-scroll-container px-0" onTouchStart={(e) => e.stopPropagation()}>
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-0">
                     {(activeSavedTab === 'recent' ? recentTools : activeSavedTab === 'heart' ? heartedTools : starredTools).length > 0 ? (
                         (activeSavedTab === 'recent' ? recentTools : activeSavedTab === 'heart' ? heartedTools : starredTools).map((tool, index) => (
                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
@@ -288,7 +288,7 @@ function GalaxyAppMain() {
   return (
     <Tabs value={activeTab} className="h-full flex flex-col">
         <header className={cn(
-            "px-6 pt-6 flex-shrink-0 sticky top-0 z-50 transition-all",
+            "px-4 pt-6 flex-shrink-0 sticky top-0 z-50 transition-all",
             isMidnight ? "bg-black/80 backdrop-blur-3xl border-b border-white/10" : "bg-background/80 backdrop-blur-md border-b border-white/10"
         )}>
             <div className="max-w-7xl mx-auto flex justify-between items-center py-2">
@@ -299,7 +299,7 @@ function GalaxyAppMain() {
                     )}>
                         <GalaxyLogo className="w-6 h-6" />
                     </div>
-                    <span className={cn("text-2xl font-black tracking-tighter", isMidnight ? "text-white" : "text-foreground")}>AI ATLAS</span>
+                    <span className={cn("text-xl font-bold tracking-tight", isMidnight ? "text-white" : "text-foreground")}>Ai Atlas</span>
                 </div>
                 <div className='flex items-start gap-3'>
                     <Link href="/ultra-free" className="flex flex-col items-center gap-1 group">
