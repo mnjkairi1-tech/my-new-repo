@@ -124,7 +124,6 @@ function HomePageContent() {
             </a>
         </div>
         
-        {/* Carousel section with added side gap */}
         <div className="my-0 px-4 w-full" onTouchStart={(e) => e.stopPropagation()}>
             <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]} className="w-full">
                 <CarouselContent className="-ml-0">
@@ -155,7 +154,7 @@ function HomePageContent() {
                     <Button variant="link" className={cn("p-0 h-auto font-bold text-xs uppercase tracking-widest", isMidnight ? "text-white/60" : "text-primary")}>{t('home.seeAll')}</Button>
                 </Link>
             </div>
-            <div className="flex md:grid overflow-x-auto md:overflow-visible no-scrollbar pb-2 horizontal-scroll-container md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2 px-2" onTouchStart={(e) => e.stopPropagation()}>
+            <div className="flex md:grid overflow-x-auto md:overflow-visible no-scrollbar pb-2 horizontal-scroll-container md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2 px-4" onTouchStart={(e) => e.stopPropagation()}>
                 {popularTools.map(tool => (
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 md:w-full text-center group" onClick={() => handleToolClick(tool)}>
                         <div className={cn(
@@ -172,7 +171,7 @@ function HomePageContent() {
 
         <section className="px-0">
             <h4 className={cn("font-black text-xl tracking-tight uppercase mb-6 px-4", isMidnight && "text-white")}>{t('home.quickTools.title')}</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
                 {sortedQuickToolCategories.map((category) => {
                     const isPinned = pinnedTools?.has(category.name);
                     return (

@@ -358,7 +358,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                 <Button variant="ghost" size="icon" className="w-10 h-10 sm:w-12 sm:h-12" onClick={() => setIsSidebarOpen(true)}>
                     <Menu className="w-5 h-5 sm:w-6 sm:h-6"/>
                 </Button>
-                <SheetTitle>AI Atlas</SheetTitle>
+                <SheetTitle>Ai Atlas</SheetTitle>
                 <div className="flex items-center gap-1 sm:gap-2">
                     <Button variant="ghost" size="icon" className="w-10 h-10 sm:w-12 sm:h-12" onClick={handleNewChat}>
                         <Edit className="w-5 h-5 sm:w-6 sm:h-6"/>
@@ -434,7 +434,7 @@ export function AIChatSheet({ isOpen, onOpenChange }: AIChatSheetProps) {
                     </Button>
                     <div className="relative flex-grow">
                         <Input
-                            placeholder="Ask AI Atlas..."
+                            placeholder="Ask Ai Atlas..."
                             className="bg-gray-900 border-gray-800 rounded-full h-12 text-base pl-4 pr-24 text-white placeholder:text-gray-500"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
