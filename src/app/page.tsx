@@ -133,7 +133,7 @@ function HomePageContent() {
                             <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                                 <div className={cn(
                                     "relative aspect-[16/9] w-full overflow-hidden shadow-xl hover:scale-[1.02] transition-transform",
-                                    isMidnight ? "glass-card-effect" : "rounded-[2rem] border border-border/50"
+                                    isMidnight ? "glass-card-effect" : "rounded-[2.5rem] border border-border/50"
                                 )}>
                                     <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
@@ -273,6 +273,7 @@ function HomePageContent() {
 function GalaxyAppMain() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { t } = useLanguage();
   const activeTab = searchParams.get('tab') || 'home';
   const { user } = useUser();
   const { theme, addRecentTool } = useUserPreferences();
