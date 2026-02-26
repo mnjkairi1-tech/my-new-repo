@@ -1,114 +1,161 @@
 {
   "entities": {
-    "SupportRequest": {
+    "UserProfile": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "SupportRequest",
+      "title": "UserProfile",
       "type": "object",
-      "description": "Represents a user's request for support or general inquiry within the AI Atlas application.",
+      "description": "Represents a user within the AI Atlas application, primarily for managing roles and permissions related to content submission and moderation. Authentication details (like passwords) are handled by an external system.",
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier for the SupportRequest entity."
+          "description": "Unique identifier for the UserProfile entity."
         },
-        "userId": {
+        "email": {
           "type": "string",
-          "description": "Reference to the unique identifier of the user who submitted the support request. (Relationship: User 1:N SupportRequest)"
+          "description": "The email address of the user, used for identification. The owner (mnjkairi1@gmail.com) will be identified by this email.",
+          "format": "email"
         },
-        "userName": {
+        "role": {
           "type": "string",
-          "description": "The name of the user who submitted the support request, for display and identification in an administrative view."
-        },
-        "subject": {
-          "type": "string",
-          "description": "A brief subject or title that summarizes the nature of the support request."
-        },
-        "message": {
-          "type": "string",
-          "description": "The detailed message from the user describing their problem, question, or inquiry."
-        },
-        "status": {
-          "type": "string",
-          "description": "The current processing status of the support request (e.g., 'new', 'open', 'in progress', 'resolved', 'closed')."
+          "description": "The role of the user, determining their permissions within the application (e.g., 'owner', 'user'). The 'owner' role grants privileges to add and delete AI tools."
         },
         "createdAt": {
           "type": "string",
-          "description": "Timestamp indicating when the support request was originally created.",
+          "description": "Timestamp indicating when the user profile was created.",
           "format": "date-time"
         },
         "updatedAt": {
           "type": "string",
-          "description": "Timestamp indicating the last time the support request was modified or updated.",
+          "description": "Timestamp indicating when the user profile was last updated.",
           "format": "date-time"
         }
       },
       "required": [
         "id",
-        "userId",
-        "userName",
-        "subject",
-        "message",
-        "status",
-        "createdAt"
+        "email",
+        "role",
+        "createdAt",
+        "updatedAt"
       ]
     },
-    "BugReport": {
+    "AICategory": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "BugReport",
+      "title": "AICategory",
       "type": "object",
-      "description": "Represents a user's report of a bug or technical issue encountered within the AI Atlas application.",
+      "description": "Represents a category under which AI tools can be grouped (e.g., 'Image Generation', 'Video Editing'). Tools can be associated with one or more categories.",
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier for the BugReport entity."
+          "description": "Unique identifier for the AICategory entity."
         },
-        "userId": {
+        "name": {
           "type": "string",
-          "description": "Reference to the unique identifier of the user who submitted the bug report. (Relationship: User 1:N BugReport)"
-        },
-        "userName": {
-          "type": "string",
-          "description": "The name of the user who submitted the bug report, for display and identification in an administrative view."
-        },
-        "title": {
-          "type": "string",
-          "description": "A brief, concise title or summary of the reported bug."
+          "description": "The name of the category (e.g., 'Video', 'Text-to-Speech')."
         },
         "description": {
           "type": "string",
-          "description": "A detailed explanation of the bug, including unexpected behavior and observed symptoms."
-        },
-        "reproductionSteps": {
-          "type": "string",
-          "description": "Clear and sequential steps that can be followed to reproduce the reported bug."
-        },
-        "environmentInfo": {
-          "type": "string",
-          "description": "Information about the user's operating environment when the bug occurred (e.g., browser type and version, operating system, device)."
-        },
-        "status": {
-          "type": "string",
-          "description": "The current processing status of the bug report (e.g., 'new', 'triaged', 'in progress', 'resolved', 'closed', 'wont-fix')."
+          "description": "A brief description of the types of AI tools that belong to this category."
         },
         "createdAt": {
           "type": "string",
-          "description": "Timestamp indicating when the bug report was originally submitted.",
+          "description": "Timestamp indicating when the category was created.",
           "format": "date-time"
         },
         "updatedAt": {
           "type": "string",
-          "description": "Timestamp indicating the last time the bug report was modified or updated.",
+          "description": "Timestamp indicating when the category was last updated.",
           "format": "date-time"
         }
       },
       "required": [
         "id",
-        "userId",
-        "userName",
-        "title",
+        "name",
         "description",
-        "reproductionSteps",
-        "status",
-        "createdAt"
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AITool": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "AITool",
+      "type": "object",
+      "description": "Represents an individual AI tool listed in the AI Atlas directory, including its details, display properties, and categorization.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the AITool entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the AI tool (e.g., 'Runway', 'Pika')."
+        },
+        "description": {
+          "type": "string",
+          "description": "A concise description of the AI tool's primary functionality or purpose."
+        },
+        "websiteUrl": {
+          "type": "string",
+          "description": "The URL to the official website of the AI tool. This is the link that the owner would provide when adding a new tool.",
+          "format": "uri"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "The URL for the primary image of the tool, typically used for larger cards like those in 'Quick Tools' or 'Featured Card'.",
+          "format": "uri"
+        },
+        "iconUrl": {
+          "type": "string",
+          "description": "The URL for a smaller icon representing the tool, often used in sections like 'Free popular tools'. Can be the same as 'imageUrl' or a distinct smaller icon.",
+          "format": "uri"
+        },
+        "isFeatured": {
+          "type": "boolean",
+          "description": "A flag indicating if this tool should be prominently displayed in the 'Featured Card' section."
+        },
+        "isPopular": {
+          "type": "boolean",
+          "description": "A flag indicating if this tool should be listed in the 'Free popular tools' section."
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "A flag indicating whether the tool is currently active and visible to all users. Setting this to 'false' effectively 'deletes' the tool from public view without removing it from the database (soft delete)."
+        },
+        "categoryIds": {
+          "type": "array",
+          "description": "An array of IDs referencing the AICategory entities this tool belongs to. (Relationship: AICategory N:N AITool)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Reference to the UserProfile ID of the user who submitted or 'owns' this tool. This will typically refer to the designated owner user (mnjkairi1@gmail.com). (Relationship: UserProfile 1:N AITool)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the AI tool was added to the directory.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the AI tool's information was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "websiteUrl",
+        "imageUrl",
+        "iconUrl",
+        "isFeatured",
+        "isPopular",
+        "isActive",
+        "categoryIds",
+        "ownerId",
+        "createdAt",
+        "updatedAt"
       ]
     }
   },
@@ -121,54 +168,64 @@
   "firestore": {
     "structure": [
       {
-        "path": "/supportRequests/{supportRequestId}",
+        "path": "/userProfiles/{userId}",
         "definition": {
-          "entityName": "SupportRequest",
+          "entityName": "UserProfile",
           "schema": {
-            "$ref": "#/backend/entities/SupportRequest"
+            "$ref": "#/backend/entities/UserProfile"
           },
-          "description": "A top-level collection for all user-submitted support requests. Each document includes denormalized 'userId' and 'userName' for authorization independence and efficient querying. Regular users can only access their own requests, while support staff can access all. QAPs are supported for both user-specific and admin-wide listings.",
+          "description": "Stores individual user profiles. Access is restricted to the user whose ID matches the document ID. Primarily used for storing user-specific data and their role, though the 'owner' role for global permissions is primarily handled by the '/roles_owner' collection for Authorization Independence. Includes 'id', 'email', 'role', 'createdAt', 'updatedAt'."
+        }
+      },
+      {
+        "path": "/aiCategories/{categoryId}",
+        "definition": {
+          "entityName": "AICategory",
+          "schema": {
+            "$ref": "#/backend/entities/AICategory"
+          },
+          "description": "Contains metadata for AI tool categories. These documents are publicly readable by all users. Only the designated 'owner' (mnjkairi1@gmail.com, whose UID is present in '/roles_owner') can create, update, or delete category documents. Includes 'id', 'name', 'description', 'createdAt', 'updatedAt'.",
           "params": [
             {
-              "name": "supportRequestId",
-              "description": "The unique identifier for a specific support request."
+              "name": "categoryId",
+              "description": "The unique identifier for an AI category."
             }
           ]
         }
       },
       {
-        "path": "/bugReports/{bugReportId}",
+        "path": "/aiTools/{toolId}",
         "definition": {
-          "entityName": "BugReport",
+          "entityName": "AITool",
           "schema": {
-            "$ref": "#/backend/entities/BugReport"
+            "$ref": "#/backend/entities/AITool"
           },
-          "description": "A top-level collection for all user-submitted bug reports. Each document includes denormalized 'userId' and 'userName' for authorization independence and efficient querying. Regular users can only access their own reports, while support staff can access all. QAPs are supported for both user-specific and admin-wide listings.",
+          "description": "Stores details for each AI tool. Documents are publicly readable if 'isActive' is true, enabling QAPs for list operations. The 'ownerId' field explicitly denormalizes ownership (referencing the UID of 'mnjkairi1@gmail.com'), ensuring Authorization Independence for write operations. Only the designated 'owner' (checked via '/roles_owner' collection) can create, update, or set the 'isActive' status. Includes 'id', 'name', 'description', 'websiteUrl', 'imageUrl', 'iconUrl', 'isFeatured', 'isPopular', 'isActive', 'categoryIds', 'ownerId', 'createdAt', 'updatedAt'.",
           "params": [
             {
-              "name": "bugReportId",
-              "description": "The unique identifier for a specific bug report."
+              "name": "toolId",
+              "description": "The unique identifier for an AI tool."
             }
           ]
         }
       },
       {
-        "path": "/supportStaff/{userId}",
+        "path": "/roles_owner/{ownerUid}",
         "definition": {
-          "entityName": "SupportStaffUser",
+          "entityName": "UserProfile",
           "schema": {
-            "$ref": "#/backend/entities/SupportStaffUser"
+            "$ref": "#/backend/entities/UserProfile"
           },
-          "description": "A collection containing documents where the document ID is the UID of a user designated as support staff. The mere existence of a document in this collection grants administrative read/write access to support requests and bug reports. This implements a Database-Backed Access Control (DBAC) model for roles.",
+          "description": "A collection used to explicitly mark users who have the 'owner' global role. A document exists for 'mnjkairi1@gmail.com''s UID. This collection enables Authorization Independence for global owner checks (e.g., for creating/managing tools/categories) by allowing security rules to perform a single, top-level existence check. Documents here typically contain minimal data, serving primarily as a presence indicator for the given UID.",
           "params": [
             {
-              "name": "userId",
-              "description": "The unique identifier (UID) of the user who is a support staff member."
+              "name": "ownerUid",
+              "description": "The unique identifier of a user who possesses the global 'owner' role."
             }
           ]
         }
       }
     ],
-    "reasoning": "The Firestore structure is designed to provide clear separation of concerns, robust security, and efficient querying for both regular users and administrative staff, following the core design principles. \n\n**Authorization Independence:**\n1.  **Support Requests and Bug Reports:** Each `SupportRequest` and `BugReport` document includes `userId` and `userName`. This denormalization means that security rules do not need to perform `get()` operations on a separate `users` collection to verify ownership or display user information in an admin view. An authenticated user (`request.auth.uid`) can directly check if their UID matches `resource.data.userId` for ownership-based access. This enables atomic creation and updates.\n2.  **Admin Roles:** Support staff authorization is managed via a dedicated top-level collection, `/supportStaff/{userId}`. The existence of a document at this path signifies that the `userId` associated with the path is a support administrator. Security rules can atomically check `exists(/databases/$(database)/documents/supportStaff/$(request.auth.uid))` without relying on hierarchical dependencies or complex lookups within the data being accessed. This keeps security rules simple and performant.\n\n**QAPs (Query as a Principal):**\n1.  **User Access:** Regular users can securely list their own `SupportRequest` and `BugReport` documents by performing a query like `firestore.collection('supportRequests').where('userId', '==', currentUser.uid)`. This query is efficient, relies on `userId` within the document (Authorization Independence), and ensures users only retrieve data they are authorized to see. Similarly for bug reports.\n2.  **Admin Access:** Support staff can efficiently list *all* `SupportRequest` and `BugReport` documents from their respective top-level collections (`/supportRequests` and `/bugReports`). The security rules will grant `read` access to the entire collection if `request.auth.uid` is present in the `/supportStaff` collection. This allows a clear, unfiltered view for administrative purposes without violating security, as the authorization check is performed at the collection level based on the staff role.\n\n**Structural Segregation:**\n*   `supportRequests` and `bugReports` are distinct top-level collections. This ensures that all documents within each collection share the same security posture (user-owned, support-staff accessible). There is no mixing of public/private or different access levels within the same collection, simplifying rule writing.\n*   `supportStaff` is a separate collection specifically for managing roles, further segregating concerns.\n\n**Access Modeling:**\n*   **Private Data (User-Owned):** `SupportRequest` and `BugReport` documents are inherently user-owned, with `userId` clearly defining ownership within the document itself.\n*   **Global Roles (DBAC):** The `/supportStaff/{userId}` collection implements DBAC, where the role is determined by document existence in the database, not custom claims.\n\n**Data Clarity and Predictability:**\n*   Entities use explicit `status` fields (e.g., 'new', 'open') for clear state modeling.\n*   Consistent naming conventions are used: `userId`, `supportRequestId`, `bugReportId`, `createdAt`, `updatedAt`."
+    "reasoning": "The recommended Firestore structure prioritizes Authorization Independence and Query-Accurate Permissions (QAPs) by employing structural segregation and denormalization. Authorization Independence: 1. Global Owner Role: A dedicated collection /roles_owner/{ownerUid} stores the UIDs of users with 'owner' privileges. This eliminates hierarchical authorization dependencies for global actions (like creating new tools or categories) by allowing security rules to perform a single get().exists() check on this top-level collection, completely independent of specific parent documents. This makes rules robust and easy to debug. The user identified as 'mnjkairi1@gmail.com' will have their UID stored here. 2. Tool Ownership Denormalization: Each /aiTools/{toolId} document explicitly includes an ownerId field, which will be the UID of the designated owner ('mnjkairi1@gmail.com'). This denormalization means that rules for modifying a specific tool do not need to get() any parent or user document to determine ownership. The ownership check is self-contained within the tool document, supporting atomic operations and preventing cascading rule failures. Query-Accurate Permissions (QAPs): 1. Structural Segregation for Tools: All AITool documents reside in a single /aiTools collection. Public readability is controlled by the isActive field within each tool document. Security rules will enforce that regular users can only list or get tools where isActive is true. This allows for efficient client-side queries (e.g., db.collection('aiTools').where('isActive', '==', true).get()) without requiring the rules to filter results, thus adhering to QAP principles. The 'owner' can bypass this isActive check. 2. Global Categories: /aiCategories are globally readable, ensuring that list operations for categories are always fully accurate and authorized. Write access is restricted to the owner via the /roles_owner collection. 3. User Profiles: /userProfiles/{userId} are segregated, with userId matching request.auth.uid, making individual profile management straightforward and secure through path-based authorization. Only the user themselves can read/write their own profile."
   }
 }
