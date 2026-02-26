@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>AI Atlas</title>
+        <title>Ai Atlas</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Your Cute Guide to Creative AI Tools" />
         <link rel="manifest" href="/manifest.json" />
