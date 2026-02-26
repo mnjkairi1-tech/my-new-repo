@@ -112,7 +112,7 @@ function HomePageContent() {
                         "rounded-none h-14 text-base pl-6 pr-14 border shadow-lg flex items-center transition-all",
                         isMidnight ? "glass-input-effect text-white/60 !rounded-none" : "bg-background border-primary/20 text-muted-foreground !rounded-none"
                     )}>
-                        Chat with AI Atlas...
+                        Chat with Ai Atlas...
                     </div>
                     <div className={cn(
                         "absolute right-2 top-1/2 -translate-y-1/2 rounded-none w-10 h-10 flex items-center justify-center pointer-events-none transition-transform group-hover:scale-110",
@@ -124,7 +124,8 @@ function HomePageContent() {
             </a>
         </div>
         
-        <div className="my-0 px-0 w-full" onTouchStart={(e) => e.stopPropagation()}>
+        {/* Carousel section with added side gap */}
+        <div className="my-0 px-4 w-full" onTouchStart={(e) => e.stopPropagation()}>
             <Carousel opts={{ loop: true }} plugins={[autoplayPlugin.current]} className="w-full">
                 <CarouselContent className="-ml-0">
                     {carouselSlides.map((slide, index) => (
