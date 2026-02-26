@@ -8,7 +8,7 @@ import { useLanguage } from '@/lib/language';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
-import { Share2, Star, Search, Filter, Scale, Check, Loader2 } from 'lucide-react';
+import { Share2, Star, Search, Filter, Scale, Check, Loader2, Info, SearchCode, StarHalf, UserPlus } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
@@ -19,6 +19,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { allToolsServer } from '@/lib/all-tools-server';
 
 const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void, t: (key: string) => string }) => {
@@ -42,7 +51,7 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
     return (
       <a href={tool.url} target="_blank" rel="noopener noreferrer" className="block group" onClick={() => onClick(tool)}>
         <Card className={cn(
-            "border border-border/50 rounded-[var(--radius)] transition-all duration-300 hover:scale-[1.02] overflow-hidden flex flex-col aspect-square p-4 justify-between",
+            "border border-border/50 rounded-[var(--radius)] transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col aspect-square p-4 justify-between",
             isMidnight ? "glass-card-effect" : "bg-card backdrop-blur-xl soft-shadow"
         )}>
             <div className='text-center flex flex-col items-center justify-center gap-2 flex-grow relative z-10'>
@@ -99,6 +108,10 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     const [priceFilter, setPriceFilter] = useState('All');
     const [visibleCount, setVisibleCount] = useState(20);
     const [isMounted, setIsMounted] = useState(false);
+    
+    // Logic for click limiting
+    const [loadMoreClicks, setLoadMoreClicks] = useState(0);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
@@ -125,7 +138,12 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     }, [searchTerm, priceFilter, isMounted]);
 
     const handleLoadMore = () => {
-        setVisibleCount(prevCount => prevCount + 20);
+        if (loadMoreClicks < 2) {
+            setLoadMoreClicks(prev => prev + 1);
+            setVisibleCount(prevCount => prevCount + 20);
+        } else {
+            setIsAlertOpen(true);
+        }
     };
 
     if (!isMounted) {
@@ -205,6 +223,50 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     </div>
                 )}
             </div>
+
+            <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+                <AlertDialogContent className={cn(
+                    "rounded-[2.5rem] border-none max-w-[90%] md:max-w-md",
+                    isMidnight ? "glass-card-effect" : "bg-card backdrop-blur-3xl"
+                )}>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="flex items-center gap-2 text-xl font-black uppercase tracking-tight">
+                            <Info className="w-6 h-6 text-primary" />
+                            Smart Tips
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="space-y-6 pt-4">
+                            <div className="flex items-start gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10">
+                                <SearchCode className="w-6 h-6 text-primary shrink-0" />
+                                <div className="text-left">
+                                    <p className="font-bold text-foreground">1) Use Search</p>
+                                    <p className="text-xs text-muted-foreground">Instead of scrolling, type the tool name or category to find it instantly.</p>
+                                </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-4 p-4 rounded-2xl bg-yellow-400/5 border border-yellow-400/10">
+                                <StarHalf className="w-6 h-6 text-yellow-400 shrink-0" />
+                                <div className="text-left">
+                                    <p className="font-bold text-foreground">2) Star Tools</p>
+                                    <p className="text-xs text-muted-foreground">Click the star button on any tool to save it to your dashboard for quick access.</p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-start gap-4 p-4 rounded-2xl bg-blue-400/5 border border-blue-400/10">
+                                <UserPlus className="w-6 h-6 text-blue-400 shrink-0" />
+                                <div className="text-left">
+                                    <p className="font-bold text-foreground">3) Add Custom Links</p>
+                                    <p className="text-xs text-muted-foreground">Go to your Profile page to add your own favorite AI website links.</p>
+                                </div>
+                            </div>
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter className="mt-6">
+                        <AlertDialogAction className="w-full h-12 rounded-2xl font-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20">
+                            Got it, thanks!
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 }
