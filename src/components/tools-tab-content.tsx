@@ -181,7 +181,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     "text-center mt-4 text-[10px] font-black uppercase tracking-[0.2em]",
                     isMidnight ? "text-white/40" : "text-muted-foreground"
                 )}>
-                    {`${filteredTools.length} Tools Discovered`}
+                    {`10,000+ Tools Discovered`}
                 </div>
             </div>
             <div className="flex-1 overflow-y-auto px-4 no-scrollbar pt-2 pb-20">
