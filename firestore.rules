@@ -2,118 +2,60 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    /**
-     * AI Atlas Security Rules
-     * 
-     * Core Philosophy:
-     * This ruleset implements a strict Administrative-Owner model alongside a public-read model for 
-     * directory content. Authorization is decoupled through a dedicated global roles collection 
-     * (/roles_owner) and denormalized ownership fields.
-     * 
-     * Data Structure:
-     * - /userProfiles/{userId}: Private user data, accessible only by the individual user.
-     * - /aiCategories/{categoryId}: Publicly readable metadata for AI groupings.
-     * - /aiTools/{toolId}: The core directory. Publicly readable if 'isActive' is true. 
-     * - /roles_owner/{ownerUid}: A lookup collection to verify global administrative privileges.
-     * 
-     * Key Security Decisions:
-     * - Prototyping Mode: Schema validation is omitted to allow for rapid iteration. Only 
-     *   identity and relational integrity (like ownerId consistency) are enforced.
-     * - Global Owner Privileges: Administrative actions (adding tools, deleting/deactivating tools, 
-     *   managing categories) are strictly restricted to users whose UIDs exist in the 
-     *   /roles_owner collection (specifically intended for mnjkairi1@gmail.com).
-     * - Soft-Delete/Visibility: The 'isActive' flag on AI tools controls public visibility. 
-     *   Non-owners can only see tools where 'isActive' is true.
-     * 
-     * Denormalization for Authorization:
-     * - Each AITool document contains an 'ownerId' and 'isActive' flag. This allows rules to 
-     *   check permissions without performing expensive cross-collection joins or lookups 
-     *   on every read.
-     */
-
-    // --- Helper Functions ---
-
-    /** Checks if the request is from an authenticated user. */
     function isSignedIn() {
       return request.auth != null;
     }
 
-    /** Checks if the authenticated user's UID matches the provided userId. */
-    function isOwner(userId) {
-      return isSignedIn() && request.auth.uid == userId;
-    }
-
-    /** 
-     * Checks if the authenticated user has global owner privileges.
-     * Performs a lookup in the /roles_owner collection.
-     */
     function isGlobalOwner() {
-      return isSignedIn() && exists(/databases/$(database)/documents/roles_owner/$(request.auth.uid));
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/roles_owner/$(request.auth.uid)) ||
+        request.auth.token.email == "mnjkairi1@gmail.com" ||
+        request.auth.uid == "t9B6SJjDhAPxv3t9RunFmS3Ne4A2"
+      );
     }
 
-    /** Verifies a document exists and the requester is the owner (used for updates/deletes). */
-    function isExistingOwner(userId) {
-      return resource != null && isOwner(userId);
-    }
-
-    // --- Collection Rules ---
-
-    /**
-     * @description Rules for user profiles. Only the user themselves can manage their data.
-     * @path /userProfiles/{userId}
-     * @allow (get, update) if request.auth.uid == userId
-     * @deny (create) if request.resource.data.id != request.auth.uid
-     * @principle Path-based authorization and internal field consistency.
-     */
     match /userProfiles/{userId} {
-      allow get, list: if isOwner(userId);
-      allow create: if isOwner(userId) && request.resource.data.id == userId;
-      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
-      allow delete: if isExistingOwner(userId);
+      allow get, list: if request.auth.uid == userId;
+      allow create: if request.auth.uid == userId && request.resource.data.id == userId;
+      allow update: if request.auth.uid == userId;
+      allow delete: if false;
     }
 
-    /**
-     * @description Global AI categories. Publicly readable, but only manageable by the global owner.
-     * @path /aiCategories/{categoryId}
-     * @allow (list) for all users; (create, delete) for global owner.
-     * @deny (write) for standard authenticated users.
-     * @principle Public read with role-based administrative writes.
-     */
     match /aiCategories/{categoryId} {
-      allow get, list: if true;
-      allow create, update, delete: if isGlobalOwner();
+      allow read: if true;
+      allow write: if isGlobalOwner();
     }
 
-    /**
-     * @description AI Tools directory. Visibility controlled by isActive flag for public users.
-     * @path /aiTools/{toolId}
-     * @allow (get) if tool is active OR requester is global owner.
-     * @deny (create, delete) for any user who is not the global owner (mnjkairi1@gmail.com).
-     * @principle Attribute-based access control (isActive) combined with global role checks.
-     */
     match /aiTools/{toolId} {
-      // Public can see active tools. Global owners can see everything (including "deleted"/inactive tools).
-      allow get: if resource.data.isActive == true || isGlobalOwner();
-      allow list: if isGlobalOwner() || (resource.data.isActive == true);
-      
-      // Administrative operations restricted to the owner identified in /roles_owner
-      allow create: if isGlobalOwner();
-      allow update: if isGlobalOwner() && resource != null;
-      allow delete: if isGlobalOwner() && resource != null;
+      allow read: if resource.data.isActive == true || isGlobalOwner();
+      allow write: if isGlobalOwner();
+    }
+    
+    // New collections for dynamic tool management
+    match /ai_tools/{toolId} {
+      allow read: if true;
+      allow write: if isGlobalOwner();
     }
 
-    /**
-     * @description Role lookup collection. Stores UIDs of users with 'owner' privileges.
-     * @path /roles_owner/{ownerUid}
-     * @allow (get) if user is checking their own role status.
-     * @deny (write) from the client to prevent unauthorized privilege escalation.
-     * @principle Immutable authorization tokens; prevents users from making themselves admins.
-     */
+    match /hidden_tools/{toolId} {
+      allow read: if true;
+      allow write: if isGlobalOwner();
+    }
+
     match /roles_owner/{ownerUid} {
-      allow get: if isOwner(ownerUid);
+      allow get: if request.auth.uid == ownerUid;
       allow list: if isGlobalOwner();
-      // Writes are denied here. This collection should be managed via Firebase Console or Admin SDK.
-      allow create, update, delete: if false;
+      allow write: if false;
+    }
+    
+    match /supportRequests/{id} {
+      allow create: if isSignedIn();
+      allow read, write: if isGlobalOwner();
+    }
+    
+    match /bugReports/{id} {
+      allow create: if isSignedIn();
+      allow read, write: if isGlobalOwner();
     }
   }
 }

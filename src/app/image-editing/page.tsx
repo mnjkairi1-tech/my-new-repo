@@ -11,12 +11,12 @@ import { Card, CardTitle, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Dialog, DialogContent, Header, Title, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, imageEditingToolData } from '@/lib/image-editing-tool-data';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import { doc, setDoc, collection, addDoc, serverTimestamp, query, where } from 'firebase/firestore';
+import { doc, serverTimestamp, collection, query, where } from 'firebase/firestore';
 import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 import { setDocumentNonBlocking, addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
@@ -24,6 +24,7 @@ export default function ImageEditingToolsPage() {
     const { toast } = useToast();
     const { user } = useUser();
     const firestore = useFirestore();
+    const { theme } = useUserPreferences();
     const [priceFilter, setPriceFilter] = useState('All');
     const [open, setOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
@@ -33,12 +34,12 @@ export default function ImageEditingToolsPage() {
     const [isAdding, setIsAdding] = useState(false);
 
     const isOwner = user?.email === 'mnjkairi1@gmail.com';
+    const isMidnight = theme === 'midnight-glass';
 
     useEffect(() => {
         setIsClient(true);
     }, []);
 
-    // Fetch hidden and added tools from Firestore
     const hiddenToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'hidden_tools') : null, [firestore]);
     const { data: hiddenTools } = useCollection(hiddenToolsQuery);
     
@@ -130,35 +131,40 @@ export default function ImageEditingToolsPage() {
                 )}
                 <Link href={tool.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                     <Card 
-                        className="bg-white/80 border-none soft-shadow transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl dark:glass-card-effect"
+                        className={cn(
+                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col",
+                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow rounded-3xl"
+                        )}
                     >
                         <div className="relative">
-                            <div className="aspect-[4/3] relative bg-secondary/30 flex items-center justify-center p-4">
+                            <div className="aspect-[4/3] relative flex items-center justify-center p-4">
                                 <Image
                                 src={tool.image}
                                 alt={tool.name || 'Tool Image'}
-                                width={120}
-                                height={90}
-                                className="object-contain"
+                                width={80}
+                                height={80}
+                                className="object-contain z-10"
                                 data-ai-hint={tool.dataAiHint}
                                 unoptimized
                                 />
                             </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                            <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity z-20">
                                 <ExternalLink className="w-3 h-3"/>
                             </div>
                         </div>
-                        <CardContent className='p-2 flex flex-col flex-grow'>
-                        <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow text-center">{tool.name}</CardTitle>
-                        <div className="flex items-center justify-center gap-1 mt-1">
-                            <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={(e) => handleShareTool(e, tool)}>
-                                <Share2 className="w-3 h-3" />
-                            </Button>
-                            <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={handleStarClick}>
-                                <Star className={cn('w-3.5 h-3.5 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
-                            </Button>
-                        </div>
+                        <CardContent className='p-2 flex flex-col flex-grow items-center text-center relative z-10'>
+                            <CardTitle className={cn(
+                                "text-xs font-bold leading-tight line-clamp-2 flex-grow",
+                                isMidnight ? "text-white" : "text-foreground"
+                            )}>{tool.name}</CardTitle>
+                            <div className="flex items-center justify-center gap-2 mt-2 w-full">
+                                <Button variant="ghost" size="icon" className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20" onClick={(e) => handleShareTool(e, tool)}>
+                                    <Share2 className="w-3.5 h-3.5" />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20" onClick={handleStarClick}>
+                                    <Star className={cn('w-4 h-4 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-white/60')}/>
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </Link>
@@ -190,13 +196,16 @@ export default function ImageEditingToolsPage() {
         <header className="flex items-center justify-between gap-4">
             <div className='flex items-center gap-4'>
                 <Link href="/" passHref>
-                    <Button variant="ghost" size="icon" className="w-12 h-12 rounded-full bg-white/50 backdrop-blur-sm">
+                    <Button variant="ghost" size="icon" className={cn(
+                        "w-12 h-12 rounded-full backdrop-blur-sm",
+                        isMidnight ? "bg-white/10 border-white/20 text-white" : "bg-white/50"
+                    )}>
                     <ArrowLeft />
                     </Button>
                 </Link>
                 <div className='flex items-center gap-2'>
-                    <ImageIcon className="w-6 h-6 text-foreground" />
-                    <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+                    <ImageIcon className={cn("w-6 h-6", isMidnight ? "text-white" : "text-foreground")} />
+                    <h1 className={cn("text-2xl md:text-3xl font-black tracking-tight", isMidnight ? "text-white" : "text-foreground")}>
                         Image Editing Tools
                     </h1>
                 </div>
@@ -212,8 +221,7 @@ export default function ImageEditingToolsPage() {
               return (
               <section key={index} className="space-y-4">
                   <div className="flex justify-between items-center px-2">
-                      <h2 className="font-bold text-xl md:text-2xl flex items-center gap-2">
-                          {category.icon}
+                      <h2 className={cn("font-bold text-xl md:text-2xl flex items-center gap-2", isMidnight ? "text-white" : "text-foreground")}>
                           {category.title}
                           {isOwner && (
                               <button 
@@ -227,7 +235,10 @@ export default function ImageEditingToolsPage() {
                        {index === 0 && isClient && (
                           <DropdownMenu open={open} onOpenChange={setOpen}>
                               <DropdownMenuTrigger asChild>
-                                  <Button variant="outline" size="sm" className="bg-white/50 rounded-full h-10 px-6 font-bold shadow-md">
+                                  <Button variant="outline" size="sm" className={cn(
+                                      "rounded-full h-10 px-6 font-bold shadow-md",
+                                      isMidnight ? "bg-white/10 border-white/20 text-white" : "bg-white/50"
+                                  )}>
                                       <Filter className="w-4 h-4 mr-2" />
                                       Filter
                                   </Button>
@@ -243,7 +254,7 @@ export default function ImageEditingToolsPage() {
                           </DropdownMenu>
                       )}
                   </div>
-                  <div className="flex md:grid overflow-x-auto no-scrollbar md:overflow-visible gap-4 pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 horizontal-scroll-container" onTouchStart={(e) => e.stopPropagation()}>
+                  <div className="flex md:grid overflow-x-auto no-scrollbar md:overflow-visible gap-6 pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 horizontal-scroll-container">
                       {category.tools.map((tool) => (
                         <div key={tool.name} className="w-28 md:w-full shrink-0 md:shrink">
                             <ToolCard tool={tool} />

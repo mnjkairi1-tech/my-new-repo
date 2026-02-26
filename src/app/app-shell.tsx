@@ -2,7 +2,7 @@
 
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useMemo, Suspense } from 'react';
+import { useMemo, useState, useEffect, Suspense } from 'react';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { MintyAnimation } from '@/components/themes/minty-animation';
 import { cn } from '@/lib/utils';
@@ -11,6 +11,12 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { theme } = useUserPreferences();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const isMidnight = theme === 'midnight-glass';
 
     const activeTabId = useMemo(() => {
@@ -28,18 +34,21 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
         return '';
     }, [pathname, searchParams]);
 
+    if (!mounted) return <div className="min-h-screen bg-[#050810]" />;
+
     return (
         <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-7xl mx-auto overflow-x-hidden transition-all duration-500 ease-in-out">
             {/* Ambient Lighting System for Midnight Glass */}
             {isMidnight && (
                 <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
                     {/* Top Center White Glow */}
-                    <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[120%] h-[60%] rounded-full bg-[rgba(255,255,255,0.12)] blur-[80px]" />
+                    <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[140%] h-[60%] rounded-full bg-[rgba(255,255,255,0.12)] blur-[80px]" />
                     {/* Bottom Blue Aura */}
-                    <div className="absolute bottom-[-15%] left-1/2 -translate-x-1/2 w-[140%] h-[70%] rounded-full bg-[rgba(0,80,255,0.18)] blur-[100px]" />
-                    {/* Side Haze */}
-                    <div className="absolute top-1/2 -left-[20%] w-[50%] h-[50%] rounded-full bg-[rgba(255,255,255,0.05)] blur-[80px]" />
-                    <div className="absolute top-1/2 -right-[20%] w-[50%] h-[50%] rounded-full bg-[rgba(255,255,255,0.05)] blur-[80px]" />
+                    <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[160%] h-[70%] rounded-full bg-[rgba(0,80,255,0.18)] blur-[100px]" />
+                    {/* Side Haze Left */}
+                    <div className="absolute top-1/2 -left-[30%] w-[60%] h-[60%] rounded-full bg-[rgba(255,255,255,0.05)] blur-[80px]" />
+                    {/* Side Haze Right */}
+                    <div className="absolute top-1/2 -right-[30%] w-[60%] h-[60%] rounded-full bg-[rgba(255,255,255,0.05)] blur-[80px]" />
                 </div>
             )}
 
