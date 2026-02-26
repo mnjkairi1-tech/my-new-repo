@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -44,7 +43,7 @@ export default function StudentToolsPage() {
         setIsClient(true);
     }, []);
 
-    // Global real-time queries for all users
+    // Global queries for real-time visibility for ALL users
     const hiddenToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'hidden_tools') : null, [firestore]);
     const { data: hiddenTools } = useCollection(hiddenToolsQuery);
     

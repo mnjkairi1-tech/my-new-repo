@@ -1,4 +1,3 @@
-
 'use server';
 
 import { z } from 'zod';
@@ -28,6 +27,7 @@ const validationPrompt = ai.definePrompt(
       - isSafe: Return true unless the domain is definitively known for distributing malware or active phishing.
       - isAiTool: Always return true for any valid website that offers a service or information.
       - toolName: Extract ONLY the official brand name of the tool or company. Remove all subdomains and suffixes unless they are part of the brand.
+        IMPORTANT: Avoid generic terms like "Official Website" or "Home Page". Use the proper brand casing.
         Examples:
         - "https://filmora.wondershare.com" -> "Filmora"
         - "https://chat.openai.com" -> "ChatGPT"
