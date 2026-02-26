@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
@@ -12,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Input } from '@/components/ui/input';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, type ToolCategory, videoEditingToolData } from '@/lib/video-editing-tools-data';
@@ -24,6 +26,7 @@ export default function VideoEditingToolsPage() {
     const { toast } = useToast();
     const { user } = useUser();
     const firestore = useFirestore();
+    const { theme } = useUserPreferences();
     const [priceFilter, setPriceFilter] = useState('All');
     const [open, setOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
@@ -31,8 +34,11 @@ export default function VideoEditingToolsPage() {
     const [activeCategory, setActiveCategory] = useState('');
     const [newToolUrl, setNewNewToolUrl] = useState('');
     const [isAdding, setIsAdding] = useState(false);
+    const [toolToDelete, setToolToDelete] = useState<any | null>(null);
+    const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
     const isOwner = user?.email === 'mnjkairi1@gmail.com';
+    const isMidnight = theme === 'midnight-glass';
 
     useEffect(() => {
         setIsClient(true);
@@ -69,11 +75,13 @@ export default function VideoEditingToolsPage() {
         }
     }, [toast]);
 
-    const handleDeleteTool = (tool: Tool) => {
-        if (!firestore) return;
-        const hiddenRef = doc(firestore, 'hidden_tools', tool.name.replace(/\s+/g, '_').toLowerCase());
-        setDocumentNonBlocking(hiddenRef, { name: tool.name, hiddenAt: serverTimestamp() }, { merge: true });
-        toast({ title: "Tool Removed", description: `${tool.name} is now hidden for everyone.` });
+    const confirmDelete = () => {
+        if (!toolToDelete || !firestore) return;
+        const hiddenRef = doc(firestore, 'hidden_tools', toolToDelete.name.replace(/\s+/g, '_').toLowerCase());
+        setDocumentNonBlocking(hiddenRef, { name: toolToDelete.name, hiddenAt: serverTimestamp() }, { merge: true });
+        toast({ title: "Tool Removed", description: `${toolToDelete.name} is now hidden for everyone.` });
+        setIsDeleteAlertOpen(false);
+        setToolToDelete(null);
     };
 
     const handleAddTool = async () => {
@@ -121,15 +129,23 @@ export default function VideoEditingToolsPage() {
             <div className="relative group h-full">
                 {isOwner && (
                     <button 
-                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDeleteTool(tool); }}
+                        onClick={(e) => { 
+                            e.preventDefault(); 
+                            e.stopPropagation(); 
+                            setToolToDelete(tool);
+                            setIsDeleteAlertOpen(true);
+                        }}
                         className="absolute -top-2 -right-2 z-30 bg-red-500 text-white rounded-full p-1.5 shadow-lg border-2 border-white hover:scale-110 transition-transform"
                     >
                         <X className="w-3.5 h-3.5" />
                     </button>
                 )}
-                <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block h-full">
+                <Link href={tool.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                     <Card 
-                        className="bg-white/80 border-none soft-shadow transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl dark:glass-card-effect"
+                        className={cn(
+                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl",
+                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow"
+                        )}
                     >
                         <div className="relative">
                             <div className="aspect-[4/3] relative bg-secondary/30 flex items-center justify-center p-4">
@@ -144,18 +160,21 @@ export default function VideoEditingToolsPage() {
                                 />
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                            <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="absolute top-1 right-1 bg-primary/80 text-primary-foreground rounded-full p-1 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity z-20">
                                 <ExternalLink className="w-3 h-3"/>
                             </div>
                         </div>
-                        <CardContent className='p-2 flex flex-col flex-grow'>
-                            <CardTitle className="text-xs font-bold text-foreground leading-tight line-clamp-2 flex-grow text-center">{tool.name}</CardTitle>
+                        <CardContent className='p-2 flex flex-col flex-grow items-center text-center relative z-10'>
+                            <CardTitle className={cn(
+                                "text-xs font-bold leading-tight line-clamp-2 flex-grow text-center",
+                                isMidnight ? "text-white" : "text-foreground"
+                            )}>{tool.name}</CardTitle>
                             <div className="flex items-center justify-center gap-1 mt-1">
-                                <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={(e) => handleShareTool(e, tool)}>
-                                    <Share2 className="w-3 h-3" />
+                                <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20" onClick={(e) => handleShareTool(e, tool)}>
+                                    <Share2 className="w-3.5 h-3.5" />
                                 </Button>
-                                <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full text-foreground/80 bg-white/30 hover:bg-white/50" onClick={handleStarClick}>
-                                    <Star className={cn('w-3.5 h-3.5 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : 'text-foreground/60')}/>
+                                <Button variant="ghost" size="icon" className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20" onClick={handleStarClick}>
+                                    <Star className={cn('w-4 h-4 transition-all', isClient && isStarred ? 'fill-yellow-300 text-yellow-300' : (isMidnight ? 'text-white/60' : 'text-foreground/60'))}/>
                                 </Button>
                             </div>
                         </CardContent>
@@ -190,13 +209,16 @@ export default function VideoEditingToolsPage() {
         <header className="flex items-center justify-between gap-4">
             <div className='flex items-center gap-4'>
                 <Link href="/" passHref>
-                    <Button variant="ghost" size="icon" className="w-12 h-12 rounded-full bg-white/50 backdrop-blur-sm">
+                    <Button variant="ghost" size="icon" className={cn(
+                        "w-12 h-12 rounded-full backdrop-blur-sm",
+                        isMidnight ? "bg-white/10 border-white/20 text-white" : "bg-white/50"
+                    )}>
                     <ArrowLeft />
                     </Button>
                 </Link>
                 <div className='flex items-center gap-2'>
-                    <Scissors className="w-6 h-6 text-foreground" />
-                    <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+                    <Scissors className={cn("w-6 h-6", isMidnight ? "text-white" : "text-foreground")} />
+                    <h1 className={cn("text-2xl md:text-3xl font-bold text-foreground", isMidnight ? "text-white" : "")}>
                         Video Editing Tools
                     </h1>
                 </div>
@@ -212,7 +234,7 @@ export default function VideoEditingToolsPage() {
               return (
               <section key={index} className="space-y-4">
                   <div className="flex justify-between items-center px-2">
-                      <h2 className="font-bold text-xl md:text-2xl flex items-center gap-2">
+                      <h2 className={cn("font-bold text-xl md:text-2xl flex items-center gap-2", isMidnight ? "text-white" : "text-foreground")}>
                           {category.icon}
                           {category.title}
                           {isOwner && (
@@ -227,7 +249,10 @@ export default function VideoEditingToolsPage() {
                       {index === 0 && isClient && (
                           <DropdownMenu open={open} onOpenChange={setOpen}>
                               <DropdownMenuTrigger asChild>
-                                  <Button variant="outline" size="sm" className="bg-white/50 rounded-full h-10 px-6 font-bold shadow-md">
+                                  <Button variant="outline" size="sm" className={cn(
+                                      "rounded-full h-10 px-6 font-bold shadow-md",
+                                      isMidnight ? "bg-white/10 border-white/20 text-white" : "bg-white/50"
+                                  )}>
                                       <Filter className="w-4 h-4 mr-2" />
                                       Filter
                                   </Button>
@@ -277,6 +302,23 @@ export default function VideoEditingToolsPage() {
               </DialogFooter>
           </DialogContent>
       </Dialog>
+
+      <AlertDialog open={isDeleteAlertOpen} onOpenChange={setIsDeleteAlertOpen}>
+          <AlertDialogContent className="rounded-3xl">
+              <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                      This will permanently hide "{toolToDelete?.name}" from the app for all users.
+                  </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                  <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground rounded-xl">
+                      Confirm Delete
+                  </AlertDialogAction>
+              </AlertDialogFooter>
+          </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
