@@ -60,7 +60,6 @@ const ToolsLoadingSkeleton = () => (
 function HomePageContent() {
   const { t } = useLanguage();
   const { theme, pinnedTools, handlePinToggle, addRecentTool, recentTools, heartedTools, starredTools, handleHeartToggle, handleStarToggle } = useUserPreferences();
-  const [activeSavedTab, setActiveSavedTab] = useState('recent');
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   const isMidnight = theme === 'midnight-glass';
 
@@ -154,11 +153,11 @@ function HomePageContent() {
                     <Button variant="link" className={cn("p-0 h-auto font-bold text-xs uppercase tracking-widest", isMidnight ? "text-white/60" : "text-primary")}>{t('home.seeAll')}</Button>
                 </Link>
             </div>
-            <div className="flex md:grid overflow-x-auto md:overflow-visible no-scrollbar pb-2 horizontal-scroll-container md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2 px-4" onTouchStart={(e) => e.stopPropagation()}>
+            <div className="flex overflow-x-auto no-scrollbar pb-2 horizontal-scroll-container gap-2 px-4" onTouchStart={(e) => e.stopPropagation()}>
                 {popularTools.map(tool => (
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 md:w-full text-center group" onClick={() => handleToolClick(tool)}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 text-center group" onClick={() => handleToolClick(tool)}>
                         <div className={cn(
-                            "w-16 h-16 md:w-20 md:h-20 flex items-center justify-center p-3 shadow-md overflow-hidden hover:scale-110 transition-transform duration-300 rounded-none",
+                            "w-16 h-16 flex items-center justify-center p-3 shadow-md overflow-hidden hover:scale-110 transition-transform duration-300 rounded-none",
                             isMidnight ? "glass-card-effect" : "bg-secondary text-primary border border-border/50"
                         )}>
                             <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain relative z-10" unoptimized />
@@ -176,31 +175,36 @@ function HomePageContent() {
                     const isPinned = pinnedTools?.has(category.name);
                     return (
                         <Link href={category.url} key={category.name} className="block group">
-                            <Card className={cn(
-                                "relative overflow-hidden shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none aspect-[3/1] rounded-none",
-                                isMidnight ? "glass-card-effect" : ""
+                            <div className={cn(
+                                "p-1.5 transition-all duration-300",
+                                theme === 'cute-mint-glass' ? "bg-primary/20" : "bg-primary/5"
                             )}>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className={cn(
-                                        "absolute top-3 right-3 z-20 w-10 h-10 rounded-none text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
-                                        isPinned ? (isMidnight ? 'text-white' : 'text-primary') : 'opacity-0 group-hover:opacity-100'
-                                    )}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        handlePinToggle(category.name);
-                                    }}
-                                >
-                                    <Pin className={cn("w-5 h-5", isPinned && "fill-current")} />
-                                </Button>
-                                <Image src={category.image} alt={category.name} fill className="object-cover" data-ai-hint={category.name} unoptimized />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                                <div className="absolute bottom-0 left-0 p-5 z-10">
-                                    <h5 className="text-white font-black text-xl tracking-tight uppercase">{t(`home.quickTools.categories.${category.translationKey}`)}</h5>
-                                </div>
-                            </Card>
+                                <Card className={cn(
+                                    "relative overflow-hidden shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none aspect-[3/1] rounded-none",
+                                    isMidnight ? "glass-card-effect" : ""
+                                )}>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className={cn(
+                                            "absolute top-3 right-3 z-20 w-10 h-10 rounded-none text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
+                                            isPinned ? (isMidnight ? 'text-white' : 'text-primary') : 'opacity-0 group-hover:opacity-100'
+                                        )}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            handlePinToggle(category.name);
+                                        }}
+                                    >
+                                        <Pin className={cn("w-5 h-5", isPinned && "fill-current")} />
+                                    </Button>
+                                    <Image src={category.image} alt={category.name} fill className="object-cover" data-ai-hint={category.name} unoptimized />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                                    <div className="absolute bottom-0 left-0 p-5 z-10">
+                                        <h5 className="text-white font-black text-xl tracking-tight uppercase">{t(`home.quickTools.categories.${category.translationKey}`)}</h5>
+                                    </div>
+                                </Card>
+                            </div>
                         </Link>
                     )
                 })}
