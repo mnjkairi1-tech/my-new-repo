@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
@@ -11,15 +12,15 @@ import { Card, CardTitle, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Input } from '@/components/ui/input';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, databaseBackendToolData } from '@/lib/database-backend-tools-data';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { doc, serverTimestamp, collection } from 'firebase/firestore';
 import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 import { setDocumentNonBlocking, addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Input } from '@/components/ui/input';
 
 export default function DatabaseBackendToolsPage() {
     const { toast } = useToast();
@@ -155,7 +156,7 @@ export default function DatabaseBackendToolsPage() {
                         )}
                     >
                         <div className="relative">
-                            <div className="aspect-[4/3] relative flex items-center justify-center p-4">
+                            <div className="aspect-[4/3] relative bg-secondary/30 flex items-center justify-center p-4">
                                 <Image
                                 src={tool.image}
                                 alt={tool.name}

@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useMemo, useCallback, useState, useEffect } from 'react';
@@ -11,15 +12,15 @@ import { Card, CardTitle, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Input } from '@/components/ui/input';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, healthcareAiToolData } from '@/lib/healthcare-ai-data';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { doc, serverTimestamp, collection } from 'firebase/firestore';
 import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 import { setDocumentNonBlocking, addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Input } from '@/components/ui/input';
 
 export default function HealthcareAiPage() {
     const { toast } = useToast();
@@ -155,7 +156,7 @@ export default function HealthcareAiPage() {
                         )}
                     >
                         <div className="relative">
-                            <div className="aspect-[4/3] relative flex items-center justify-center p-4">
+                            <div className="aspect-[4/3] relative bg-secondary/30 flex items-center justify-center p-4">
                                 <Image
                                 src={tool.image}
                                 alt={tool.name}
@@ -225,7 +226,7 @@ export default function HealthcareAiPage() {
                 <div className='flex items-center gap-2'>
                     <HeartPulse className={cn("w-6 h-6", isMidnight ? "text-white" : "text-foreground")} />
                     <h1 className={cn("text-2xl md:text-3xl font-black tracking-tight", isMidnight ? "text-white" : "text-foreground")}>
-                        Healthcare AI
+                        Healthcare Ai
                     </h1>
                 </div>
             </div>

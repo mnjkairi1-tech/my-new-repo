@@ -12,15 +12,15 @@ import { Card, CardTitle, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Input } from '@/components/ui/input';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, aiAgentsToolData } from '@/lib/ai-agents-data';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { doc, serverTimestamp, collection } from 'firebase/firestore';
 import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 import { setDocumentNonBlocking, addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Input } from '@/components/ui/input';
 
 const iconMap: { [key: string]: React.ReactNode } = {
     User: <User className="w-5 h-5 text-primary"/>,
@@ -55,7 +55,7 @@ const iconMap: { [key: string]: React.ReactNode } = {
     Shield: <Shield className="w-5 h-5 text-primary"/>,
 };
 
-export default function AIAdgentsPage() {
+export default function AiAgentsPage() {
     const { toast } = useToast();
     const { user } = useUser();
     const firestore = useFirestore();
@@ -65,7 +65,7 @@ export default function AIAdgentsPage() {
     const [isClient, setIsClient] = useState(false);
     const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
     const [activeCategory, setActiveCategory] = useState('');
-    const [newToolUrl, setNewNewToolUrl] = useState('');
+    const [newToolUrls, setNewToolUrls] = useState(['', '', '', '', '']);
     const [isAdding, setIsAdding] = useState(false);
     const [toolToDelete, setToolToDelete] = useState<any | null>(null);
     const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
@@ -89,7 +89,7 @@ export default function AIAdgentsPage() {
     
         const shareData = {
           title: tool.name,
-          text: `Check out this AI tool: ${tool.name}`,
+          text: `Check out this Ai tool: ${tool.name}`,
           url: tool.url,
         };
     
@@ -117,32 +117,45 @@ export default function AIAdgentsPage() {
         setToolToDelete(null);
     };
 
-    const handleAddTool = async () => {
-        if (!newToolUrl.trim() || !firestore) return;
+    const handleAddTools = async () => {
+        const validUrls = newToolUrls.filter(u => u.trim() !== "");
+        if (validUrls.length === 0 || !firestore) return;
+        
         setIsAdding(true);
         try {
-            let url = newToolUrl.trim();
-            if (!url.startsWith('http')) url = 'https://' + url;
-            
-            const info = await validateAndGetToolInfo({ url });
-            const toolData = {
-                name: info.toolName || new URL(url).hostname,
-                description: info.toolDescription || 'AI Agent Tool',
-                url: url,
-                image: `https://www.google.com/s2/favicons?sz=128&domain=${new URL(url).hostname}`,
-                dataAiHint: (info.toolName || 'ai agent').toLowerCase(),
-                pricing: 'Freemium' as const,
-                categoryTitle: activeCategory,
-                isActive: true,
-                createdAt: serverTimestamp()
-            };
+            let successCount = 0;
+            for (const rawUrl of validUrls) {
+                let url = rawUrl.trim();
+                if (!url.startsWith('http')) url = 'https://' + url;
+                
+                try {
+                    const info = await validateAndGetToolInfo({ url });
+                    const toolData = {
+                        name: info.toolName || new URL(url).hostname,
+                        description: info.toolDescription || 'Ai Tool',
+                        url: url,
+                        image: `https://www.google.com/s2/favicons?sz=128&domain=${new URL(url).hostname}`,
+                        dataAiHint: (info.toolName || 'ai tool').toLowerCase(),
+                        pricing: 'Freemium' as const,
+                        categoryTitle: activeCategory,
+                        isActive: true,
+                        createdAt: serverTimestamp()
+                    };
 
-            await addDocumentNonBlocking(collection(firestore, 'ai_tools'), toolData);
-            toast({ title: "Tool Added!", description: `${toolData.name} added to ${activeCategory}.` });
-            setIsAddDialogOpen(false);
-            setNewNewToolUrl('');
-        } catch (e) {
-            toast({ variant: 'destructive', title: "Error", description: "Could not add tool. Please check the URL." });
+                    await addDocumentNonBlocking(collection(firestore, 'ai_tools'), toolData);
+                    successCount++;
+                } catch (err) {
+                    console.error("Error adding tool:", url, err);
+                }
+            }
+            
+            if (successCount > 0) {
+                toast({ title: "Success!", description: `${successCount} tool(s) added to ${activeCategory}.` });
+                setIsAddDialogOpen(false);
+                setNewToolUrls(['', '', '', '', '']);
+            } else {
+                toast({ variant: 'destructive', title: "Error", description: "Could not add tools. Check the URLs." });
+            }
         } finally {
             setIsAdding(false);
         }
@@ -171,15 +184,15 @@ export default function AIAdgentsPage() {
                 <Link href={tool.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                     <Card 
                         className={cn(
-                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl",
+                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-none",
                             isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow"
                         )}
                     >
                         <div className="relative">
-                            <div className="aspect-[4/3] relative flex items-center justify-center p-4">
+                            <div className="aspect-[4/3] relative bg-secondary/30 flex items-center justify-center p-4">
                                 <Image
                                 src={tool.image}
-                                alt={tool.name || 'Tool Image'}
+                                alt={tool.name}
                                 width={80}
                                 height={80}
                                 className="object-contain z-10"
@@ -246,7 +259,7 @@ export default function AIAdgentsPage() {
                 <div className='flex items-center gap-2'>
                     <Bot className={cn("w-6 h-6", isMidnight ? "text-white" : "text-foreground")} />
                     <h1 className={cn("text-2xl md:text-3xl font-black tracking-tight", isMidnight ? "text-white" : "text-foreground")}>
-                        AI Agents
+                        Ai Agents
                     </h1>
                 </div>
             </div>
@@ -295,9 +308,9 @@ export default function AIAdgentsPage() {
                           </DropdownMenu>
                       )}
                   </div>
-                  <div className="flex md:grid overflow-x-auto no-scrollbar md:overflow-visible gap-6 pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 horizontal-scroll-container">
+                  <div className="flex md:grid overflow-x-auto no-scrollbar md:overflow-visible gap-4 pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 horizontal-scroll-container">
                       {category.tools.map((tool) => (
-                        <div key={tool.name} className="w-28 md:w-full shrink-0 md:shrink">
+                        <div key={tool.name} className="w-28 md:w-full shrink-0 md:shrink p-1.5 bg-primary/5">
                             <ToolCard tool={tool} />
                         </div>
                       ))}
@@ -308,30 +321,37 @@ export default function AIAdgentsPage() {
       </main>
 
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <DialogContent className="max-w-sm rounded-3xl">
+          <DialogContent className="max-w-md rounded-none">
               <DialogHeader>
-                  <DialogTitle>Add Tool to {activeCategory}</DialogTitle>
+                  <DialogTitle>Add Tools to {activeCategory}</DialogTitle>
               </DialogHeader>
-              <div className="py-4 space-y-4">
-                  <Input 
-                    placeholder="Paste tool website URL..." 
-                    value={newToolUrl}
-                    onChange={(e) => setNewNewToolUrl(e.target.value)}
-                    className="rounded-xl h-12"
-                  />
-                  <p className="text-[10px] text-muted-foreground px-1">AI will automatically fetch name and icon.</p>
+              <div className="py-4 space-y-3">
+                  {newToolUrls.map((url, index) => (
+                      <Input 
+                        key={index}
+                        placeholder={`Paste tool website URL ${index + 1}...`} 
+                        value={url}
+                        onChange={(e) => {
+                            const updated = [...newToolUrls];
+                            updated[index] = e.target.value;
+                            setNewToolUrls(updated);
+                        }}
+                        className="rounded-none h-11"
+                      />
+                  ))}
+                  <p className="text-[10px] text-muted-foreground px-1">Ai Atlas will automatically fetch names and icons.</p>
               </div>
               <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsAddDialogOpen(false)} className="rounded-xl">Cancel</Button>
-                  <Button onClick={handleAddTool} disabled={isAdding} className="rounded-xl">
-                      {isAdding ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : "Add Tool"}
+                  <Button variant="outline" onClick={() => setIsAddDialogOpen(false)} className="rounded-none">Cancel</Button>
+                  <Button onClick={handleAddTools} disabled={isAdding} className="rounded-none">
+                      {isAdding ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : "Add Tools"}
                   </Button>
               </DialogFooter>
           </DialogContent>
       </Dialog>
 
       <AlertDialog open={isDeleteAlertOpen} onOpenChange={setIsDeleteAlertOpen}>
-          <AlertDialogContent className="rounded-3xl">
+          <AlertDialogContent className="rounded-none">
               <AlertDialogHeader>
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
@@ -339,8 +359,8 @@ export default function AIAdgentsPage() {
                   </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                  <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground rounded-xl">
+                  <AlertDialogCancel className="rounded-none">Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground rounded-none">
                       Confirm Delete
                   </AlertDialogAction>
               </AlertDialogFooter>
