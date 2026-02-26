@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Input } from '@/components/ui/input';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, startupToolData } from '@/lib/startup-tool-data';
@@ -32,6 +33,8 @@ export default function StartupToolsPage() {
     const [activeCategory, setActiveCategory] = useState('');
     const [newToolUrl, setNewNewToolUrl] = useState('');
     const [isAdding, setIsAdding] = useState(false);
+    const [toolToDelete, setToolToDelete] = useState<any | null>(null);
+    const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
     const isOwner = user?.email === 'mnjkairi1@gmail.com';
     const isMidnight = theme === 'midnight-glass';
@@ -71,11 +74,13 @@ export default function StartupToolsPage() {
         }
     }, [toast]);
 
-    const handleDeleteTool = (tool: Tool) => {
-        if (!firestore) return;
-        const hiddenRef = doc(firestore, 'hidden_tools', tool.name.replace(/\s+/g, '_').toLowerCase());
-        setDocumentNonBlocking(hiddenRef, { name: tool.name, hiddenAt: serverTimestamp() }, { merge: true });
-        toast({ title: "Tool Removed", description: `${tool.name} is now hidden for everyone.` });
+    const confirmDelete = () => {
+        if (!toolToDelete || !firestore) return;
+        const hiddenRef = doc(firestore, 'hidden_tools', toolToDelete.name.replace(/\s+/g, '_').toLowerCase());
+        setDocumentNonBlocking(hiddenRef, { name: toolToDelete.name, hiddenAt: serverTimestamp() }, { merge: true });
+        toast({ title: "Tool Removed", description: `${toolToDelete.name} is now hidden for everyone.` });
+        setIsDeleteAlertOpen(false);
+        setToolToDelete(null);
     };
 
     const handleAddTool = async () => {
@@ -123,7 +128,7 @@ export default function StartupToolsPage() {
             <div className="relative group h-full">
                 {isOwner && (
                     <button 
-                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDeleteTool(tool); }}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setToolToDelete(tool); setIsDeleteAlertOpen(true); }}
                         className="absolute -top-2 -right-2 z-30 bg-red-500 text-white rounded-full p-1.5 shadow-lg border-2 border-white hover:scale-110 transition-transform"
                     >
                         <X className="w-3.5 h-3.5" />
@@ -187,13 +192,13 @@ export default function StartupToolsPage() {
         });
     }, [priceFilter, hiddenTools, addedTools]);
 
-    return (
+  return (
     <div className="bg-background min-h-screen flex flex-col items-center justify-start font-body relative">
       <div className="absolute inset-0 z-0 opacity-50">
         <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
       </div>
       <div className="relative z-10 w-full max-w-7xl mx-auto pt-6 px-4 md:px-8">
-         <header className="flex items-center justify-between gap-4">
+        <header className="flex items-center justify-between gap-4">
             <div className='flex items-center gap-4'>
                 <Link href="/" passHref>
                     <Button variant="ghost" size="icon" className={cn(
@@ -220,7 +225,7 @@ export default function StartupToolsPage() {
 
               return (
               <section key={index} className="space-y-4">
-                  <div className="flex justify-between items-center mb-3 px-2">
+                  <div className="flex justify-between items-center px-2">
                       <h2 className={cn("font-bold text-xl md:text-2xl flex items-center gap-2", isMidnight ? "text-white" : "text-foreground")}>
                           {category.title}
                           {isOwner && (
@@ -232,7 +237,7 @@ export default function StartupToolsPage() {
                               </button>
                           )}
                       </h2>
-                      {index === 0 && isClient && (
+                       {index === 0 && isClient && (
                           <DropdownMenu open={open} onOpenChange={setOpen}>
                               <DropdownMenuTrigger asChild>
                                   <Button variant="outline" size="sm" className={cn(
@@ -288,6 +293,23 @@ export default function StartupToolsPage() {
               </DialogFooter>
           </DialogContent>
       </Dialog>
+
+      <AlertDialog open={isDeleteAlertOpen} onOpenChange={setIsDeleteAlertOpen}>
+          <AlertDialogContent className="rounded-3xl">
+              <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                      This will permanently hide "{toolToDelete?.name}" from the app for all users.
+                  </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                  <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground rounded-xl">
+                      Confirm Delete
+                  </AlertDialogAction>
+              </AlertDialogFooter>
+          </AlertDialogContent>
+      </AlertDialog>
     </div>
-    );
+  );
 }
