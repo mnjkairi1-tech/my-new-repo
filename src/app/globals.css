@@ -64,6 +64,38 @@
     --radius: 1.75rem;
   }
 
+  /* MINTY MARSHMALLOW - CORRECTED GREEN */
+  [data-theme='cute-mint-glass'] {
+    --background: 160 60% 98%;
+    --foreground: 160 40% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 160 40% 20%;
+    --primary: 160 100% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 160 50% 92%;
+    --muted: 160 30% 95%;
+    --muted-foreground: 160 20% 45%;
+    --accent: 160 100% 90%;
+    --border: 160 100% 85%;
+    --radius: 1.5rem;
+  }
+
+  /* VELVET SUNSET - RESTORED */
+  [data-theme='velvet-sunset'] {
+    --background: 340 40% 5%;
+    --foreground: 20 100% 95%;
+    --card: 340 40% 10% / 0.6;
+    --card-foreground: 20 100% 95%;
+    --primary: 20 100% 60%;
+    --primary-foreground: 340 40% 5%;
+    --secondary: 340 40% 15%;
+    --muted: 340 40% 12%;
+    --muted-foreground: 340 20% 70%;
+    --accent: 15 100% 50%;
+    --border: 340 40% 20%;
+    --radius: 1.25rem;
+  }
+
   /* WARM DESERT SAND */
   [data-theme='desert-sand'] {
     --background: 35 50% 92%;

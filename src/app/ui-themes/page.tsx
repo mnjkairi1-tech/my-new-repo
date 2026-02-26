@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  Palette, Sun, Moon, Cloud, Ghost, Compass, Mountain, Flower2, 
-  Terminal, Snowflake, Trees, Wind, Droplets, Gem, Trophy, Leaf, Maximize, Sunset, Sparkles, Zap, GlassWater
+  Palette, Sun, Moon, Compass, Mountain, 
+  Snowflake, Leaf, Sparkles, Zap, GlassWater, Sunset
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
@@ -28,6 +28,7 @@ export default function UiThemesPage() {
     { name: 'neon-volt', label: 'Neon Volt', icon: Zap, color: 'bg-[#0D0D0D] text-[#A3FF47] border-[#A3FF47]/20' },
     { name: 'minimal-snow', label: 'Arctic Snow', icon: Snowflake, color: 'bg-zinc-100 text-black border-black/40' },
     { name: 'cute-mint-glass', label: 'Minty Marshmallow', icon: Leaf, color: 'bg-emerald-50 text-emerald-500' },
+    { name: 'velvet-sunset', label: 'Velvet Sunset', icon: Sunset, color: 'bg-red-900 text-orange-400' },
   ];
 
   return (
