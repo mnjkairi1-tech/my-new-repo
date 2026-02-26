@@ -72,6 +72,7 @@ export default function UltraFreePage() {
                                 fill
                                 className="object-contain rounded-md"
                                 data-ai-hint={tool.name}
+                                unoptimized
                             />
                             <div className="absolute -inset-1 bg-primary/20 rounded-lg blur-md -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
@@ -102,6 +103,7 @@ export default function UltraFreePage() {
                           height={32}
                           className="object-contain"
                           data-ai-hint={tool.name}
+                          unoptimized
                       />
                   </div>
                   <div className="flex-grow">
@@ -149,9 +151,8 @@ export default function UltraFreePage() {
                     </Button>
                 </Link>
                 <div className='flex items-center gap-2'>
-                    <Gift className="w-6 h-6 text-foreground" />
-                    <h1 className="text-2xl font-bold text-foreground">
-                        Ultra Tools
+                    <h1 className="text-xl font-bold text-foreground">
+                        Ai Atlas Ultra
                     </h1>
                 </div>
             </div>
@@ -176,7 +177,7 @@ export default function UltraFreePage() {
                 </CarouselContent>
             </Carousel>
             
-            <h2 className="font-semibold text-2xl text-center text-foreground/80 tracking-wider pt-4">
+            <h2 className="font-bold text-xl text-center text-foreground/80 tracking-tight pt-4">
                 Allrounder AI Tools
             </h2>
             
@@ -187,7 +188,7 @@ export default function UltraFreePage() {
             </div>
 
             <footer className="text-center py-8 mt-8 border-t-2 border-primary/10">
-                <p className="text-sm text-muted-foreground tracking-widest uppercase">AI ATLAS 2099</p>
+                <p className="text-sm text-muted-foreground tracking-widest uppercase">Ai Atlas 2099</p>
                 <p className="text-xs text-muted-foreground/70 mt-1">Discovering the Future of Intelligence</p>
             </footer>
 

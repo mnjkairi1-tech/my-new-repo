@@ -59,7 +59,7 @@ export default function MaxFreePage() {
 
         return (
              <Link href={tool.url} key={tool.name} target="_blank" rel="noopener noreferrer" className="block group">
-                <Card className="bg-card/60 backdrop-blur-lg border border-white/10 soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden rounded-2xl">
+                <Card className="bg-card/60 backdrop-blur-lg border border-white/10 soft-shadow transition-all duration-300 hover:border-primary/30 hover:scale-[1.02] overflow-hidden rounded-none">
                     <CardContent className='p-4 text-center flex flex-col items-center justify-center gap-2'>
                         <div className='relative w-14 h-14'>
                             <Image
@@ -99,9 +99,8 @@ export default function MaxFreePage() {
                     </Button>
                 </Link>
                 <div className='flex items-center gap-2'>
-                    <Zap className="w-6 h-6 text-foreground" />
-                    <h1 className="text-2xl font-bold text-foreground">
-                        Max Tools
+                    <h1 className="text-xl font-bold text-foreground">
+                        Ai Atlas Max
                     </h1>
                 </div>
             </div>
