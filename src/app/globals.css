@@ -100,7 +100,7 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-  /* Premium Luxury Glass Card */
+  /* Premium Luxury Glass Card with Specular Shine */
   .glass-card-effect {
     @apply relative overflow-hidden transform-gpu;
     background: linear-gradient(
