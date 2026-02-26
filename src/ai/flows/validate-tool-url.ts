@@ -1,3 +1,4 @@
+
 'use server';
 
 import { z } from 'zod';
@@ -23,15 +24,17 @@ const validationPrompt = ai.definePrompt(
       name: 'validateToolUrlPrompt',
       input: { schema: z.object({ url: z.string() }) },
       output: { schema: ValidateToolUrlOutputSchema },
-      prompt: `Analyze the provided URL to extract its basic identity and check for safety.
+      prompt: `Analyze the provided URL to extract its official brand identity and check for safety.
       
       URL: {{{url}}}
       
       Instructions:
       - isSafe: Return true unless the domain is definitively known for distributing malware or active phishing.
       - isAiTool: Always return true for any valid website that offers a service or information.
-      - toolName: Identify the site's name (e.g., "Google", "OpenAI").
-      - toolDescription: Provide a very brief tagline.`,
+      - toolName: Extract the official brand name of the tool or company. Do NOT provide the URL or hostname. 
+        Example: If URL is "https://filmora.wondershare.com", toolName should be "Filmora".
+        Example: If URL is "https://openai.com", toolName should be "OpenAI".
+      - toolDescription: Provide a very brief tagline (max 10 words).`,
     }
   );
   
@@ -50,7 +53,8 @@ export async function validateAndGetToolInfo(
     };
   }
 
-  const hostname = urlObj.hostname.replace('www.', '');
+  const hostname = urlObj.hostname.replace('www.', '').split('.')[0];
+  const capitalizedHostname = hostname.charAt(0).toUpperCase() + hostname.slice(1);
 
   try {
     const { output } = await validationPrompt({ url: input.url });
@@ -59,28 +63,26 @@ export async function validateAndGetToolInfo(
       return {
         isAiTool: true,
         isSafe: true,
-        toolName: hostname,
-        toolDescription: 'User-added link.',
+        toolName: capitalizedHostname,
+        toolDescription: 'AI Tool',
         reason: 'AI validation fallback mode active.',
       };
     }
     
     return {
         ...output,
-        toolName: output.toolName || hostname,
+        toolName: output.toolName || capitalizedHostname,
         isAiTool: true, 
         isSafe: output.isSafe ?? true
     };
 
   } catch (e: any) {
-    // If AI service fails, we still allow the tool if it's a valid URL format
-    // assuming it's safe for the user unless proven otherwise by a real security list.
     console.error("AI Validation Service Error (Falling back to basic validation):", e);
     return {
       isAiTool: true,
       isSafe: true,
-      toolName: hostname,
-      toolDescription: 'User-added link.',
+      toolName: capitalizedHostname,
+      toolDescription: 'AI Tool',
       reason: 'Validation fallback: AI service temporarily unavailable.',
     };
   }

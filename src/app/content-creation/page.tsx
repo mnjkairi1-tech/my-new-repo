@@ -43,6 +43,7 @@ export default function ContentCreationPage() {
         setIsClient(true);
     }, []);
 
+    // Global queries for all users
     const hiddenToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'hidden_tools') : null, [firestore]);
     const { data: hiddenTools } = useCollection(hiddenToolsQuery);
     
