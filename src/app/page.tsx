@@ -58,6 +58,7 @@ const ToolsLoadingSkeleton = () => (
 );
 
 function HomePageContent() {
+  const [activeSavedTab, setActiveSavedTab] = useState('recent');
   const { t } = useLanguage();
   const { theme, pinnedTools, handlePinToggle, addRecentTool, recentTools, heartedTools, starredTools, handleHeartToggle, handleStarToggle } = useUserPreferences();
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
@@ -104,7 +105,7 @@ function HomePageContent() {
             <label className={cn(
                 "block text-center text-xs font-bold uppercase tracking-widest mb-3",
                 isMidnight ? "text-white/60" : "text-muted-foreground"
-            )}>{isMidnight ? "✨ Search the Galaxy" : "Ask what AI you want"}</label>
+            )}>{isMidnight ? "✨ Search the Galaxy" : "Ask what Ai you want"}</label>
             <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
                 <div className="relative group">
                     <div className={cn(
