@@ -43,7 +43,7 @@ export default function ContentCreationPage() {
         setIsClient(true);
     }, []);
 
-    // Global queries for all users
+    // Global queries for all users for real-time updates
     const hiddenToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'hidden_tools') : null, [firestore]);
     const { data: hiddenTools } = useCollection(hiddenToolsQuery);
     
@@ -129,12 +129,7 @@ export default function ContentCreationPage() {
             <div className="relative group h-full">
                 {isOwner && (
                     <button 
-                        onClick={(e) => { 
-                            e.preventDefault(); 
-                            e.stopPropagation(); 
-                            setToolToDelete(tool);
-                            setIsDeleteAlertOpen(true);
-                        }}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setToolToDelete(tool); setIsDeleteAlertOpen(true); }}
                         className="absolute -top-2 -right-2 z-30 bg-red-500 text-white rounded-full p-1.5 shadow-lg border-2 border-white hover:scale-110 transition-transform"
                     >
                         <X className="w-3.5 h-3.5" />
@@ -143,8 +138,8 @@ export default function ContentCreationPage() {
                 <Link href={tool.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                     <Card 
                         className={cn(
-                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col",
-                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow rounded-[2.5rem]"
+                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl",
+                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow"
                         )}
                     >
                         <div className="relative">

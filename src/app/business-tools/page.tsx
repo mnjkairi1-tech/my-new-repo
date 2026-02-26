@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -18,6 +19,7 @@ import { doc, serverTimestamp, collection } from 'firebase/firestore';
 import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 import { setDocumentNonBlocking, addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Input } from '@/components/ui/input';
 
 type Tool = {
@@ -41,6 +43,8 @@ export default function BusinessToolsPage() {
     const [activeCategory, setActiveCategory] = useState('');
     const [newToolUrl, setNewNewToolUrl] = useState('');
     const [isAdding, setIsAdding] = useState(false);
+    const [toolToDelete, setToolToDelete] = useState<any | null>(null);
+    const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
     const isOwner = user?.email === 'mnjkairi1@gmail.com';
     const isMidnight = theme === 'midnight-glass';
@@ -49,6 +53,7 @@ export default function BusinessToolsPage() {
         setIsClient(true);
     }, []);
 
+    // Global queries for real-time sync across all users
     const hiddenToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'hidden_tools') : null, [firestore]);
     const { data: hiddenTools } = useCollection(hiddenToolsQuery);
     
@@ -80,11 +85,13 @@ export default function BusinessToolsPage() {
         }
     }, [toast]);
 
-    const handleDeleteTool = (tool: Tool) => {
-        if (!firestore) return;
-        const hiddenRef = doc(firestore, 'hidden_tools', tool.name.replace(/\s+/g, '_').toLowerCase());
-        setDocumentNonBlocking(hiddenRef, { name: tool.name, hiddenAt: serverTimestamp() }, { merge: true });
-        toast({ title: "Tool Removed", description: `${tool.name} is now hidden for everyone.` });
+    const confirmDelete = () => {
+        if (!toolToDelete || !firestore) return;
+        const hiddenRef = doc(firestore, 'hidden_tools', toolToDelete.name.replace(/\s+/g, '_').toLowerCase());
+        setDocumentNonBlocking(hiddenRef, { name: toolToDelete.name, hiddenAt: serverTimestamp() }, { merge: true });
+        toast({ title: "Tool Removed", description: `${toolToDelete.name} is now hidden for everyone.` });
+        setIsDeleteAlertOpen(false);
+        setToolToDelete(null);
     };
 
     const handleAddTool = async () => {
@@ -132,7 +139,7 @@ export default function BusinessToolsPage() {
             <div className="relative group h-full">
                 {isOwner && (
                     <button 
-                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDeleteTool(tool); }}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setToolToDelete(tool); setIsDeleteAlertOpen(true); }}
                         className="absolute -top-2 -right-2 z-30 bg-red-500 text-white rounded-full p-1.5 shadow-lg border-2 border-white hover:scale-110 transition-transform"
                     >
                         <X className="w-3.5 h-3.5" />
@@ -141,8 +148,8 @@ export default function BusinessToolsPage() {
                 <Link href={tool.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                     <Card 
                         className={cn(
-                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col",
-                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow rounded-[2.5rem]"
+                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl",
+                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow"
                         )}
                     >
                         <div className="relative">
@@ -297,6 +304,23 @@ export default function BusinessToolsPage() {
               </DialogFooter>
           </DialogContent>
       </Dialog>
+
+      <AlertDialog open={isDeleteAlertOpen} onOpenChange={setIsDeleteAlertOpen}>
+          <AlertDialogContent className="rounded-3xl">
+              <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                      This will permanently hide "{toolToDelete?.name}" from the app for all users.
+                  </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                  <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground rounded-xl">
+                      Confirm Delete
+                  </AlertDialogAction>
+              </AlertDialogFooter>
+          </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

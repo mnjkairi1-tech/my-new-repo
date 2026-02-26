@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -43,6 +44,7 @@ export default function ProductivityToolsPage() {
         setIsClient(true);
     }, []);
 
+    // Global queries for all users for real-time updates
     const hiddenToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'hidden_tools') : null, [firestore]);
     const { data: hiddenTools } = useCollection(hiddenToolsQuery);
     

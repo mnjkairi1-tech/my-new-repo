@@ -4,19 +4,15 @@
 import { z } from 'zod';
 import { ai } from '@/ai/genkit';
 
-const ValidateToolUrlInputSchema = z.object({
-  url: z.string().url().describe('The URL of the tool or website to validate.'),
-});
-
 const ValidateToolUrlOutputSchema = z.object({
   isAiTool: z.boolean().describe('Whether the URL points to a legitimate tool or service.'),
   isSafe: z.boolean().describe('Whether the website is considered safe (not a phishing or malware site).'),
-  toolName: z.string().optional().describe('The name of the site if identified.'),
+  toolName: z.string().optional().describe('The official brand name of the tool.'),
   toolDescription: z.string().optional().describe('A brief, one-sentence description of the site.'),
   reason: z.string().optional().describe('A brief reason for the validation decision, especially if it fails.'),
 });
 
-export type ValidateToolUrlInput = z.infer<typeof ValidateToolUrlInputSchema>;
+export type ValidateToolUrlInput = { url: string };
 export type ValidateToolUrlOutput = z.infer<typeof ValidateToolUrlOutputSchema>;
 
 const validationPrompt = ai.definePrompt(
@@ -31,9 +27,12 @@ const validationPrompt = ai.definePrompt(
       Instructions:
       - isSafe: Return true unless the domain is definitively known for distributing malware or active phishing.
       - isAiTool: Always return true for any valid website that offers a service or information.
-      - toolName: Extract the official brand name of the tool or company. Do NOT provide the URL or hostname. 
-        Example: If URL is "https://filmora.wondershare.com", toolName should be "Filmora".
-        Example: If URL is "https://openai.com", toolName should be "OpenAI".
+      - toolName: Extract ONLY the official brand name of the tool or company. Remove all subdomains and suffixes unless they are part of the brand.
+        Examples:
+        - "https://filmora.wondershare.com" -> "Filmora"
+        - "https://chat.openai.com" -> "ChatGPT"
+        - "https://www.canva.com" -> "Canva"
+        - "https://runwayml.com" -> "Runway"
       - toolDescription: Provide a very brief tagline (max 10 words).`,
     }
   );

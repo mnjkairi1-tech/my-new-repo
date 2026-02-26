@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
@@ -43,6 +44,7 @@ export default function WritingToolsPage() {
         setIsClient(true);
     }, []);
 
+    // Global real-time queries for all users
     const hiddenToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'hidden_tools') : null, [firestore]);
     const { data: hiddenTools } = useCollection(hiddenToolsQuery);
     

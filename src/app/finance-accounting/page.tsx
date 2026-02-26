@@ -44,6 +44,7 @@ export default function FinanceAccountingToolsPage() {
         setIsClient(true);
     }, []);
 
+    // Global queries for real-time updates for all users
     const hiddenToolsQuery = useMemoFirebase(() => firestore ? collection(firestore, 'hidden_tools') : null, [firestore]);
     const { data: hiddenTools } = useCollection(hiddenToolsQuery);
     
@@ -143,8 +144,8 @@ export default function FinanceAccountingToolsPage() {
                 <Link href={tool.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                     <Card 
                         className={cn(
-                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col",
-                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow rounded-[2.5rem]"
+                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl",
+                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow"
                         )}
                     >
                         <div className="relative">
