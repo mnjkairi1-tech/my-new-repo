@@ -1,5 +1,4 @@
 
-
 import {
   Clapperboard,
   Heart,
@@ -41,6 +40,8 @@ import {
   Pin,
   Loader2,
   Scale,
+  Camera,
+  Shapes
 } from 'lucide-react';
 import { getImage, getHint } from './placeholder-images';
 import type { Tool } from './types';
@@ -81,6 +82,78 @@ export const popularTools: Tool[] = [
     dataAiHint: 'openai chat',
     description: 'Conversational AI by OpenAI.',
     icon: 'Bot',
+  },
+  {
+    name: 'Midjourney',
+    category: 'Image',
+    url: 'https://www.midjourney.com/',
+    image: 'https://www.google.com/s2/favicons?sz=128&domain=midjourney.com',
+    dataAiHint: 'ai art',
+    description: 'Generate high-quality images.',
+    icon: 'ImageIcon',
+  },
+  {
+    name: 'Firefly',
+    category: 'Design',
+    url: 'https://firefly.adobe.com/',
+    image: 'https://www.google.com/s2/favicons?sz=128&domain=adobe.com',
+    dataAiHint: 'generative design',
+    description: 'Adobe generative AI.',
+    icon: 'Paintbrush',
+  },
+  {
+    name: 'Canva AI',
+    category: 'Design',
+    url: 'https://www.canva.com/ai-image-generator/',
+    image: 'https://www.google.com/s2/favicons?sz=128&domain=canva.com',
+    dataAiHint: 'design templates',
+    description: 'Magic media by Canva.',
+    icon: 'Shapes',
+  },
+  {
+    name: 'Notion AI',
+    category: 'Writing',
+    url: 'https://www.notion.so/product/ai',
+    image: 'https://www.google.com/s2/favicons?sz=128&domain=notion.so',
+    dataAiHint: 'workspace app',
+    description: 'AI in your workspace.',
+    icon: 'BookOpen',
+  },
+  {
+    name: 'Perplexity',
+    category: 'Search',
+    url: 'https://www.perplexity.ai/',
+    image: 'https://www.google.com/s2/favicons?sz=128&domain=perplexity.ai',
+    dataAiHint: 'answer engine',
+    description: 'Conversational search engine.',
+    icon: 'Search',
+  },
+  {
+    name: 'Claude',
+    category: 'Chat',
+    url: 'https://claude.ai/',
+    image: 'https://www.google.com/s2/favicons?sz=128&domain=anthropic.com',
+    dataAiHint: 'anthropic ai',
+    description: 'Helpful AI by Anthropic.',
+    icon: 'MessageSquare',
+  },
+  {
+    name: 'Sora',
+    category: 'Video',
+    url: 'https://openai.com/sora',
+    image: 'https://www.google.com/s2/favicons?sz=128&domain=openai.com',
+    dataAiHint: 'openai video',
+    description: 'Realistic AI video.',
+    icon: 'Video',
+  },
+  {
+    name: 'Google Lens',
+    category: 'Search',
+    url: 'https://lens.google.com/',
+    image: 'https://www.google.com/s2/favicons?sz=128&domain=google.com',
+    dataAiHint: 'visual search',
+    description: 'Search what you see.',
+    icon: 'Camera',
   },
 ];
 
@@ -128,4 +201,3 @@ export const quickToolCategories = [
     { name: 'AI Search', url: '/ai-search', image: getImage('quick-tool-ai-search'), dataAiHint: getHint('quick-tool-ai-search'), translationKey: 'aiSearch' },
     { name: 'Healthcare AI', url: '/healthcare-ai', image: getImage('quick-tool-healthcare-ai'), dataAiHint: getHint('quick-tool-healthcare-ai'), translationKey: 'healthcareAi' },
 ];
-      
