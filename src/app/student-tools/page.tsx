@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -12,8 +11,8 @@ import { Card, CardTitle, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { type Tool, studentAiToolData } from '@/lib/student-tools-data';
@@ -129,12 +128,7 @@ export default function StudentToolsPage() {
             <div className="relative group h-full">
                 {isOwner && (
                     <button 
-                        onClick={(e) => { 
-                            e.preventDefault(); 
-                            e.stopPropagation(); 
-                            setToolToDelete(tool);
-                            setIsDeleteAlertOpen(true);
-                        }}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setToolToDelete(tool); setIsDeleteAlertOpen(true); }}
                         className="absolute -top-2 -right-2 z-30 bg-red-500 text-white rounded-full p-1.5 shadow-lg border-2 border-white hover:scale-110 transition-transform"
                     >
                         <X className="w-3.5 h-3.5" />
@@ -143,8 +137,8 @@ export default function StudentToolsPage() {
                 <Link href={tool.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                     <Card 
                         className={cn(
-                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col",
-                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow rounded-[2.5rem]"
+                            "border-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col rounded-3xl",
+                            isMidnight ? "glass-card-effect" : "bg-white/80 soft-shadow"
                         )}
                     >
                         <div className="relative">

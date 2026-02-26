@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
@@ -16,7 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Input } from '@/components/ui/input';
 import { useUserPreferences } from '@/context/user-preferences-context';
-import { type Tool, type ToolCategory, writingToolData } from '@/lib/writing-tools-data.tsx';
+import { type Tool, type ToolCategory, writingToolData } from '@/lib/writing-tools-data';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { doc, serverTimestamp, collection } from 'firebase/firestore';
 import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
@@ -129,12 +128,7 @@ export default function WritingToolsPage() {
             <div className="relative group h-full">
                 {isOwner && (
                     <button 
-                        onClick={(e) => { 
-                            e.preventDefault(); 
-                            e.stopPropagation(); 
-                            setToolToDelete(tool);
-                            setIsDeleteAlertOpen(true);
-                        }}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setToolToDelete(tool); setIsDeleteAlertOpen(true); }}
                         className="absolute -top-2 -right-2 z-30 bg-red-500 text-white rounded-full p-1.5 shadow-lg border-2 border-white hover:scale-110 transition-transform"
                     >
                         <X className="w-3.5 h-3.5" />
