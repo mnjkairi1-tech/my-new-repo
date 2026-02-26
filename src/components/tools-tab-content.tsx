@@ -109,7 +109,6 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     const [visibleCount, setVisibleCount] = useState(20);
     const [isMounted, setIsMounted] = useState(false);
     
-    // Logic for click limiting
     const [loadMoreClicks, setLoadMoreClicks] = useState(0);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
 
@@ -215,9 +214,9 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     ))}
                 </div>
                 {visibleCount < filteredTools.length && (
-                    <div className="text-center mt-12 mb-8">
+                    <div className="text-center mt-12 mb-8 px-4">
                         <Button onClick={handleLoadMore} size="lg" className={cn(
-                            "rounded-full px-8 h-14 text-lg font-bold shadow-xl transition-all",
+                            "w-full max-w-sm rounded-none h-14 text-lg font-bold shadow-xl transition-all",
                             isMidnight ? "bg-white text-black hover:bg-white/90" : "shadow-primary/20"
                         )}>Load More Tools</Button>
                     </div>
@@ -234,33 +233,31 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                             <Info className="w-6 h-6 text-primary" />
                             Smart Tips
                         </AlertDialogTitle>
-                        <AlertDialogDescription asChild>
-                            <div className="space-y-6 pt-4">
-                                <div className="flex items-start gap-4 p-4 rounded-none bg-primary/5 border border-primary/10">
-                                    <SearchCode className="w-6 h-6 text-primary shrink-0" />
-                                    <div className="text-left">
-                                        <div className="font-bold text-foreground">1) Use Search</div>
-                                        <div className="text-xs text-muted-foreground">Instead of scrolling, type the tool name or category to find it instantly.</div>
-                                    </div>
-                                </div>
-                                
-                                <div className="flex items-start gap-4 p-4 rounded-none bg-yellow-400/5 border border-yellow-400/10">
-                                    <StarHalf className="w-6 h-6 text-yellow-400 shrink-0" />
-                                    <div className="text-left">
-                                        <div className="font-bold text-foreground">2) Star Tools</div>
-                                        <div className="text-xs text-muted-foreground">Click the star button on any tool to save it to your dashboard for quick access.</div>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start gap-4 p-4 rounded-none bg-blue-400/5 border border-blue-400/10">
-                                    <UserPlus className="w-6 h-6 text-blue-400 shrink-0" />
-                                    <div className="text-left">
-                                        <div className="font-bold text-foreground">3) Add Custom Links</div>
-                                        <div className="text-xs text-muted-foreground">Go to your Profile page to add your own favorite AI website links.</div>
-                                    </div>
+                        <div className="space-y-6 pt-4">
+                            <div className="flex items-start gap-4 p-4 rounded-none bg-primary/5 border border-primary/10">
+                                <SearchCode className="w-6 h-6 text-primary shrink-0" />
+                                <div className="text-left">
+                                    <div className="font-bold text-foreground">1) Use Search</div>
+                                    <div className="text-xs text-muted-foreground">Instead of scrolling, type the tool name or category to find it instantly.</div>
                                 </div>
                             </div>
-                        </AlertDialogDescription>
+                            
+                            <div className="flex items-start gap-4 p-4 rounded-none bg-yellow-400/5 border border-yellow-400/10">
+                                <StarHalf className="w-6 h-6 text-yellow-400 shrink-0" />
+                                <div className="text-left">
+                                    <div className="font-bold text-foreground">2) Star Tools</div>
+                                    <div className="text-xs text-muted-foreground">Click the star button on any tool to save it to your dashboard for quick access.</div>
+                                </div>
+                            </div>
+
+                            <div className="flex items-start gap-4 p-4 rounded-none bg-blue-400/5 border border-blue-400/10">
+                                <UserPlus className="w-6 h-6 text-blue-400 shrink-0" />
+                                <div className="text-left">
+                                    <div className="font-bold text-foreground">3) Add Custom Links</div>
+                                    <div className="text-xs text-muted-foreground">Go to your Profile page to add your own favorite AI website links.</div>
+                                </div>
+                            </div>
+                        </div>
                     </AlertDialogHeader>
                     <AlertDialogFooter className="mt-6 px-4 pb-4">
                         <AlertDialogAction className="w-full h-12 rounded-none font-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20">

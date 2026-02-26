@@ -9,8 +9,6 @@ import { UserPreferencesProvider } from '@/context/user-preferences-context';
 import { ThemeProvider } from '@/context/theme-provider';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
-// Disabling SSR for AppShell is the definitive fix for hydration errors
-// when using client-heavy features like Firebase, swipe gestures, and themes.
 const AppShell = dynamic(() => import('./app-shell').then(mod => mod.AppShell), {
   ssr: false,
   loading: () => (

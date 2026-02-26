@@ -27,7 +27,6 @@ import Link from 'next/link';
 import { SettingsPage } from '@/components/settings-page';
 import { cn } from '@/lib/utils';
 import { AuthScreen } from '@/components/auth-gate';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useLanguage } from '@/lib/language';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { useUser } from '@/firebase/auth/use-user';
@@ -110,9 +109,9 @@ function HomePageContent() {
                 <div className="relative group">
                     <div className={cn(
                         "rounded-none h-14 text-base pl-6 pr-14 border shadow-lg flex items-center transition-all",
-                        isMidnight ? "glass-input-effect text-white/60 !rounded-none" : "bg-background border-primary/20 text-muted-foreground !rounded-none"
+                        isMidnight ? "glass-input-effect text-white/60" : "bg-background border-primary/20 text-muted-foreground"
                     )}>
-                        Chat with Ai Atlas...
+                        Ask Ai Atlas...
                     </div>
                     <div className={cn(
                         "absolute right-2 top-1/2 -translate-y-1/2 rounded-none w-10 h-10 flex items-center justify-center pointer-events-none transition-transform group-hover:scale-110",
