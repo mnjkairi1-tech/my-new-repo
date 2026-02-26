@@ -100,7 +100,7 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-  /* Premium Luxury Glass Card with Specular Shine */
+  /* Premium Ultra-Realistic Glass Card with Specular Shine */
   .glass-card-effect {
     @apply relative overflow-hidden transform-gpu;
     background: linear-gradient(
@@ -120,7 +120,7 @@
       inset 0 -1px 1px rgba(0, 0, 0, 0.6) !important;
   }
 
-  /* Realistic Specular Shine */
+  /* Realistic Specular Shine overlay */
   .glass-card-effect::before {
     content: "";
     @apply absolute inset-0 pointer-events-none;
@@ -130,7 +130,6 @@
       transparent 40%
     );
     opacity: 0.6;
-    pointer-events: none;
     z-index: 1;
   }
 
