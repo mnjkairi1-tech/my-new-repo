@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
@@ -77,7 +76,8 @@ export default function StudentToolsPage() {
 
     const confirmDelete = () => {
         if (!toolToDelete || !firestore) return;
-        const hiddenRef = doc(firestore, 'hidden_tools', toolToDelete.name.replace(/\s+/g, '_').toLowerCase());
+        const toolId = toolToDelete.name.replace(/\s+/g, '_').toLowerCase();
+        const hiddenRef = doc(firestore, 'hidden_tools', toolId);
         setDocumentNonBlocking(hiddenRef, { name: toolToDelete.name, hiddenAt: serverTimestamp() }, { merge: true });
         toast({ title: "Tool Removed", description: `${toolToDelete.name} is now hidden for everyone.` });
         setIsDeleteAlertOpen(false);
@@ -192,11 +192,11 @@ export default function StudentToolsPage() {
     }
 
     const filteredToolData = useMemo(() => {
-        const hiddenNames = new Set(hiddenTools?.map(t => t.name) || []);
+        const hiddenNames = new Set(hiddenTools?.map(t => t.name.toLowerCase()) || []);
         
         return studentAiToolData.map(category => {
-            const staticTools = category.tools.filter(tool => !hiddenNames.has(tool.name));
-            const dynTools = addedTools?.filter(t => t.categoryTitle === category.title) || [];
+            const staticTools = category.tools.filter(tool => !hiddenNames.has(tool.name.toLowerCase()));
+            const dynTools = addedTools?.filter(t => t.categoryTitle === category.title && !hiddenNames.has(t.name.toLowerCase())) || [];
             
             let combined = [...staticTools, ...dynTools];
             if (priceFilter === 'Free') {
@@ -225,7 +225,7 @@ export default function StudentToolsPage() {
                 <div className='flex items-center gap-2'>
                     <GraduationCap className={cn("w-6 h-6", isMidnight ? "text-white" : "text-foreground")} />
                     <h1 className={cn("text-2xl md:text-3xl font-black tracking-tight", isMidnight ? "text-white" : "text-foreground")}>
-                        Student Tools
+                        Ai Atlas
                     </h1>
                 </div>
             </div>
