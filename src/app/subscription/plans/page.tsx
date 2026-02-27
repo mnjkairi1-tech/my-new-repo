@@ -1,19 +1,29 @@
-
 'use client';
 
 import React, { useState } from 'react';
 import { ClubHeader } from '@/components/club-header';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, Star, Zap, Crown } from 'lucide-react';
+import { Check, Star, Zap, Crown, CreditCard, Smartphone, Wallet, Banknote, ShieldCheck, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 type PlanType = 'basic' | 'standard' | 'pro';
 
+interface PaymentMethod {
+    id: string;
+    name: string;
+    description: string;
+    icon: React.ReactNode;
+    color: string;
+}
+
 export default function SubscriptionPlansPage() {
   const [activePlan, setActivePlan] = useState<PlanType>('basic');
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -90,19 +100,64 @@ export default function SubscriptionPlansPage() {
     },
   };
 
+  const paymentMethods: PaymentMethod[] = [
+    { 
+        id: 'razorpay', 
+        name: 'Razorpay', 
+        description: 'UPI, Cards, & Netbanking', 
+        icon: <CreditCard className="w-6 h-6" />, 
+        color: 'bg-blue-600' 
+    },
+    { 
+        id: 'stripe', 
+        name: 'Stripe', 
+        description: 'Global Credit/Debit Cards', 
+        icon: <div className="font-black text-xs">S</div>, 
+        color: 'bg-[#635BFF]' 
+    },
+    { 
+        id: 'paypal', 
+        name: 'PayPal', 
+        description: 'Fast, secure international payments', 
+        icon: <Wallet className="w-6 h-6" />, 
+        color: 'bg-[#003087]' 
+    },
+    { 
+        id: 'googleplay', 
+        name: 'Google Play', 
+        description: 'Direct billing via Play Store', 
+        icon: <Smartphone className="w-6 h-6" />, 
+        color: 'bg-green-500' 
+    },
+    { 
+        id: 'cashfree', 
+        name: 'Cashfree', 
+        description: 'Next-gen payment gateway', 
+        icon: <Banknote className="w-6 h-6" />, 
+        color: 'bg-[#1D3557]' 
+    },
+  ];
+
   const currentPlan = plans[activePlan];
 
-  const handlePlanSelection = () => {
+  const handleOpenPayment = () => {
     if (activePlan === 'basic') return;
+    setIsPaymentModalOpen(true);
+  };
 
+  const handleSelectPayment = (method: PaymentMethod) => {
+    setIsProcessing(true);
     toast({
-      title: "Redirecting...",
-      description: `Connecting you to support to activate the ${currentPlan.name} plan.`,
+      title: `${method.name} Selected`,
+      description: `Opening secure gateway for your ${currentPlan.name} plan...`,
     });
 
     setTimeout(() => {
-      router.push(`/support/contact?plan=${activePlan}`);
-    }, 1500);
+      setIsProcessing(false);
+      setIsPaymentModalOpen(false);
+      // Redirect to support contact with payment intent details
+      router.push(`/support/contact?plan=${activePlan}&method=${method.id}`);
+    }, 2000);
   };
 
   return (
@@ -183,7 +238,7 @@ export default function SubscriptionPlansPage() {
                         activePlan === 'basic' ? "bg-secondary text-primary hover:bg-secondary/80" : "bg-primary text-white shadow-primary/20 hover:bg-primary/90"
                     )}
                     disabled={activePlan === 'basic'}
-                    onClick={handlePlanSelection}
+                    onClick={handleOpenPayment}
                 >
                   {currentPlan.buttonText}
                 </Button>
@@ -191,6 +246,59 @@ export default function SubscriptionPlansPage() {
             </Card>
         </div>
       </div>
+
+      {/* Cute Stylish Payment selection Modal */}
+      <Dialog open={isPaymentModalOpen} onOpenChange={setIsPaymentModalOpen}>
+          <DialogContent className="max-w-sm rounded-[2rem] border-none bg-background p-0 overflow-hidden shadow-2xl">
+              <div className="bg-primary p-8 text-center text-white relative">
+                  <div className="absolute top-4 right-4">
+                      <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-full" onClick={() => setIsPaymentModalOpen(false)}>
+                          <Zap className="w-5 h-5 fill-current" />
+                      </Button>
+                  </div>
+                  <ShieldCheck className="w-16 h-16 mx-auto mb-4 opacity-90" />
+                  <DialogHeader>
+                      <DialogTitle className="text-2xl font-black text-white">Select Payment</DialogTitle>
+                      <DialogDescription className="text-white/80 font-medium">
+                          Choose your preferred method to activate <strong>{currentPlan.name}</strong>
+                      </DialogDescription>
+                  </DialogHeader>
+              </div>
+              
+              <div className="p-6 space-y-3 bg-card rounded-t-[2rem] -mt-6 relative z-10">
+                  {paymentMethods.map((method) => (
+                      <button
+                        key={method.id}
+                        disabled={isProcessing}
+                        onClick={() => handleSelectPayment(method)}
+                        className="w-full flex items-center gap-4 p-4 rounded-2xl bg-secondary/30 hover:bg-primary/10 transition-all group border border-transparent hover:border-primary/20 active:scale-[0.98]"
+                      >
+                          <div className={cn(
+                              "w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg transition-transform group-hover:rotate-12",
+                              method.color
+                          )}>
+                              {method.icon}
+                          </div>
+                          <div className="text-left flex-grow">
+                              <p className="font-bold text-base text-foreground">{method.name}</p>
+                              <p className="text-xs text-muted-foreground font-medium">{method.description}</p>
+                          </div>
+                          {isProcessing ? (
+                              <Loader2 className="w-5 h-5 animate-spin text-primary opacity-40" />
+                          ) : (
+                              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <Check className="w-4 h-4 text-primary" />
+                              </div>
+                          )}
+                      </button>
+                  ))}
+                  
+                  <div className="pt-4 text-center">
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Secure 256-bit SSL Encryption</p>
+                  </div>
+              </div>
+          </DialogContent>
+      </Dialog>
     </div>
   );
 }
