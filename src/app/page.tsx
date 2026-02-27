@@ -45,12 +45,12 @@ const ToolsTabContent = dynamic(() => import('@/components/tools-tab-content'), 
 const ToolsLoadingSkeleton = () => (
     <div className="p-0 space-y-4 max-w-7xl mx-auto">
         <div className="flex gap-2 items-center px-4">
-            <div className="h-12 flex-grow bg-white/5 rounded-none animate-pulse" />
-            <div className="h-12 w-12 bg-white/5 rounded-none animate-pulse" />
+            <div className="h-12 flex-grow bg-white/5 rounded-full animate-pulse" />
+            <div className="h-12 w-12 bg-white/5 rounded-full animate-pulse" />
         </div>
         <div className="grid grid-cols-3 gap-2 px-0">
             {[...Array(9)].map((_, i) => (
-                <div key={i} className="h-32 bg-white/5 rounded-none animate-pulse" />
+                <div key={i} className="h-32 bg-white/5 animate-pulse" />
             ))}
         </div>
     </div>
@@ -71,7 +71,7 @@ function HomePageContent() {
       link: "https://filmm.me/pzcMMikJ"
     },
     { 
-      title: "AI for Students",
+      title: "Ai for Students",
       image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmcsZW58MHx8fHwxNzcwMzQwNTAwfDA&ixlib.rb-4.1.0&q=80&w=1080",
       dataAiHint: "student studying",
       link: "/student-tools"
@@ -108,13 +108,13 @@ function HomePageContent() {
             <a href="https://deepai.org/chat#f28b909a-7a91-457c-b0c9-a8c93c94f5f0">
                 <div className="relative group">
                     <div className={cn(
-                        "rounded-none h-14 text-base pl-6 pr-14 border shadow-lg flex items-center transition-all",
+                        "rounded-full h-14 text-base pl-6 pr-14 border shadow-lg flex items-center transition-all",
                         isMidnight ? "glass-input-effect text-white/60" : "bg-background border-primary/20 text-muted-foreground"
                     )}>
                         Chat with Deep AI
                     </div>
                     <div className={cn(
-                        "absolute right-2 top-1/2 -translate-y-1/2 rounded-none w-10 h-10 flex items-center justify-center pointer-events-none transition-transform group-hover:scale-110",
+                        "absolute right-2 top-1/2 -translate-y-1/2 rounded-full w-10 h-10 flex items-center justify-center pointer-events-none transition-transform group-hover:scale-110",
                         isMidnight ? "bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.4)]" : "bg-primary text-primary-foreground"
                     )}>
                         <Send className="w-5 h-5 ml-0.5"/>
@@ -130,7 +130,7 @@ function HomePageContent() {
                         <CarouselItem key={index} className="pl-0 md:basis-1/2 lg:basis-1/3">
                             <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                                 <div className={cn(
-                                    "relative aspect-[16/9] w-full overflow-hidden shadow-xl hover:scale-[1.02] transition-transform rounded-none",
+                                    "relative aspect-[16/9] w-full overflow-hidden shadow-xl hover:scale-[1.02] transition-transform rounded-2xl",
                                     isMidnight ? "glass-card-effect" : "border-none"
                                 )}>
                                     <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
@@ -157,7 +157,7 @@ function HomePageContent() {
                 {popularTools.map(tool => (
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" key={tool.name} className="flex flex-col items-center shrink-0 w-24 text-center group" onClick={() => handleToolClick(tool)}>
                         <div className={cn(
-                            "w-16 h-16 flex items-center justify-center p-3 shadow-md overflow-hidden hover:scale-110 transition-transform duration-300 rounded-none",
+                            "w-16 h-16 flex items-center justify-center p-3 shadow-md overflow-hidden hover:scale-110 transition-transform duration-300 rounded-2xl",
                             isMidnight ? "glass-card-effect" : "bg-secondary text-primary border border-border/50"
                         )}>
                             <Image src={tool.image} alt={tool.name} width={48} height={48} className="w-full h-full object-contain relative z-10" unoptimized />
@@ -176,18 +176,18 @@ function HomePageContent() {
                     return (
                         <Link href={category.url} key={category.name} className="block group">
                             <div className={cn(
-                                "p-1.5 transition-all duration-300",
+                                "p-1.5 transition-all duration-300 rounded-2xl",
                                 theme === 'cute-mint-glass' ? "bg-primary/20" : "bg-primary/5"
                             )}>
                                 <Card className={cn(
-                                    "relative overflow-hidden shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none aspect-[3/1] rounded-none",
+                                    "relative overflow-hidden shadow-lg transition-all duration-300 group-hover:scale-[1.02] border-none aspect-[3/1] rounded-2xl",
                                     isMidnight ? "glass-card-effect" : ""
                                 )}>
                                     <Button
                                         variant="ghost"
                                         size="icon"
                                         className={cn(
-                                            "absolute top-3 right-3 z-20 w-10 h-10 rounded-none text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
+                                            "absolute top-3 right-3 z-20 w-10 h-10 rounded-full text-white bg-black/20 backdrop-blur-sm transition-all hover:bg-black/40",
                                             isPinned ? (isMidnight ? 'text-white' : 'text-primary') : 'opacity-0 group-hover:opacity-100'
                                         )}
                                         onClick={(e) => {
@@ -216,7 +216,7 @@ function HomePageContent() {
                 <div className="flex flex-col items-center gap-2">
                     <button onClick={() => setActiveSavedTab('heart')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'heart' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
-                            "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all rounded-none",
+                            "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all rounded-2xl",
                             isMidnight ? "glass-card-effect" : "bg-pink-100/50 text-pink-500 soft-shadow"
                         )}><Heart className={cn("w-7 h-7 md:w-9 md:h-9 relative z-10", activeSavedTab === 'heart' && "fill-current", isMidnight && activeSavedTab === 'heart' && "text-pink-500")} /></div>
                         <span className={cn("text-xs font-black uppercase tracking-widest", isMidnight && "text-white")}>Hearted</span>
@@ -225,7 +225,7 @@ function HomePageContent() {
                 <div className="flex flex-col items-center gap-2">
                     <button onClick={() => setActiveSavedTab('recent')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'recent' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
-                            "w-24 h-20 md:w-28 md:h-24 flex items-center justify-center shadow-lg transition-all rounded-none",
+                            "w-24 h-20 md:w-28 md:h-24 flex items-center justify-center shadow-lg transition-all rounded-2xl",
                             isMidnight ? "glass-card-effect" : "bg-blue-100/50 text-blue-500 soft-shadow"
                         )}><History className={cn("w-9 h-9 md:w-11 md:h-11 relative z-10", isMidnight && activeSavedTab === 'recent' && "text-blue-400")}/></div>
                         <span className={cn("text-xs font-black uppercase tracking-widest", isMidnight && "text-white")}>Recent</span>
@@ -234,7 +234,7 @@ function HomePageContent() {
                 <div className="flex flex-col items-center gap-2">
                     <button onClick={() => setActiveSavedTab('star')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'star' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
-                            "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all rounded-none",
+                            "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all rounded-2xl",
                             isMidnight ? "glass-card-effect" : "bg-yellow-100/50 text-yellow-500 soft-shadow"
                         )}><Star className={cn("w-7 h-7 md:w-9 md:h-9 relative z-10", activeSavedTab === 'star' && "fill-current", isMidnight && activeSavedTab === 'star' && "text-yellow-400")} /></div>
                         <span className={cn("text-xs font-black uppercase tracking-widest", isMidnight && "text-white")}>Starred</span>
@@ -248,7 +248,7 @@ function HomePageContent() {
                         (activeSavedTab === 'recent' ? recentTools : activeSavedTab === 'heart' ? heartedTools : starredTools).map((tool, index) => (
                             <a href={tool.url} target="_blank" rel="noopener noreferrer" key={`${tool.name}-${index}`}>
                                 <Card className={cn(
-                                    "p-4 flex items-center gap-4 border-none transition-all hover:bg-white/5 rounded-none",
+                                    "p-4 flex items-center gap-4 border-none transition-all hover:bg-white/5 rounded-2xl",
                                     isMidnight ? "glass-card-effect" : "bg-card soft-shadow"
                                 )}>
                                     {tool.image && <div className="w-14 h-14 relative shrink-0 z-10"><Image src={tool.image} alt={tool.name} fill className="object-contain" data-ai-hint={tool.name} unoptimized /></div>}
@@ -374,7 +374,7 @@ function GalaxyAppMain() {
                 <div className="max-w-7xl mx-auto space-y-6">
                     <Link href="https://explodingtopics.com/blog/most-popular-ai-tools" target="_blank" className="block group">
                         <Card className={cn(
-                            "border-none rounded-none shadow-lg overflow-hidden hover:scale-[1.01] transition-all duration-500",
+                            "border-none rounded-2xl shadow-lg overflow-hidden hover:scale-[1.01] transition-all duration-500",
                             isMidnight ? "glass-card-effect" : "bg-card"
                         )}>
                             <div className="relative aspect-video md:aspect-[21/9]">
@@ -382,8 +382,8 @@ function GalaxyAppMain() {
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                             </div>
                             <div className="p-8 relative z-10">
-                                <h3 className={cn("font-black text-3xl tracking-tight uppercase", isMidnight && "text-white")}>Trending AI Tools</h3>
-                                <p className="text-muted-foreground text-lg mt-2 font-medium">Discover the fastest-growing AI tools globally.</p>
+                                <h3 className={cn("font-black text-3xl tracking-tight uppercase", isMidnight && "text-white")}>Trending Ai Tools</h3>
+                                <p className="text-muted-foreground text-lg mt-2 font-medium">Discover the fastest-growing Ai tools globally.</p>
                             </div>
                         </Card>
                     </Link>
