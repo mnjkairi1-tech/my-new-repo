@@ -105,7 +105,7 @@ function HomePageContent() {
                 "block text-center text-xs font-bold uppercase tracking-widest mb-3",
                 isMidnight ? "text-white/60" : "text-muted-foreground"
             )}>{isMidnight ? "✨ Search the Galaxy" : "Ask what Ai you want"}</label>
-            <a href="https://deepai.org/">
+            <a href="https://deepai.org/chat#f28b909a-7a91-457c-b0c9-a8c93c94f5f0">
                 <div className="relative group">
                     <div className={cn(
                         "rounded-none h-14 text-base pl-6 pr-14 border shadow-lg flex items-center transition-all",

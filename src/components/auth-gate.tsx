@@ -1,4 +1,3 @@
-
 'use client';
 import { useAuth } from '@/firebase';
 import {
@@ -311,7 +310,7 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
         <div className="flex flex-col items-center mb-8">
             <GalaxyLogo className="w-16 h-16 mb-4 text-primary" />
             <h1 className="text-3xl font-bold text-foreground">
-            Welcome to AI Atlas
+            Welcome to Ai Atlas
             </h1>
             <p className="mt-2 text-md text-muted-foreground text-center">
             Sign in or create an account to get started.
@@ -379,7 +378,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
             <h1 className="text-3xl font-bold mb-4">Check Your Inbox</h1>
             <p className="text-lg text-muted-foreground mb-8">
                 We've sent a verification email to <strong>{user.email}</strong>. 
-                Please verify your email to access the full features of AI Atlas.
+                Please verify your email to access the full features of Ai Atlas.
             </p>
             <Button onClick={() => window.location.reload()} className="rounded-full h-12 px-8">
                 I've Verified, Continue
