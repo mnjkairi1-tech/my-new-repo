@@ -105,13 +105,13 @@ function HomePageContent() {
                 "block text-center text-xs font-bold uppercase tracking-widest mb-3",
                 isMidnight ? "text-white/60" : "text-muted-foreground"
             )}>{isMidnight ? "✨ Search the Galaxy" : "Ask what Ai you want"}</label>
-            <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
+            <a href="https://deepai.org/">
                 <div className="relative group">
                     <div className={cn(
                         "rounded-none h-14 text-base pl-6 pr-14 border shadow-lg flex items-center transition-all",
                         isMidnight ? "glass-input-effect text-white/60" : "bg-background border-primary/20 text-muted-foreground"
                     )}>
-                        Ask Ai Atlas...
+                        Chat with Deep AI
                     </div>
                     <div className={cn(
                         "absolute right-2 top-1/2 -translate-y-1/2 rounded-none w-10 h-10 flex items-center justify-center pointer-events-none transition-transform group-hover:scale-110",
