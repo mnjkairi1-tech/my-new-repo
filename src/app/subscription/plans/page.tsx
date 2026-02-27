@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { ClubHeader } from '@/components/club-header';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, Star, Zap, Crown, CreditCard, Smartphone, Wallet, Banknote, ShieldCheck, Loader2, Copy, QrCode } from 'lucide-react';
+import { Check, Star, Zap, Crown, CreditCard, Smartphone, Wallet, Banknote, ShieldCheck, Loader2, Copy, QrCode, ClipboardCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { useFirestore, useUser } from '@/firebase';
 import { collection, serverTimestamp } from 'firebase/firestore';
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 
 type PlanType = 'basic' | 'standard' | 'pro';
@@ -28,8 +29,10 @@ export default function SubscriptionPlansPage() {
   const [activePlan, setActivePlan] = useState<PlanType>('basic');
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
   const [showQR, setShowQR] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
+  const [utrNumber, setUtrNumber] = useState('');
   
   const router = useRouter();
   const { toast } = useToast();
@@ -123,13 +126,13 @@ export default function SubscriptionPlansPage() {
     if (activePlan === 'basic') return;
     setIsPaymentModalOpen(true);
     setShowQR(false);
+    setUtrNumber('');
   };
 
   const handleSelectPayment = (method: PaymentMethod) => {
     setIsProcessing(true);
     setSelectedMethod(method);
     
-    // Simulate gateway delay
     setTimeout(() => {
       setIsProcessing(false);
       setShowQR(true);
@@ -137,33 +140,39 @@ export default function SubscriptionPlansPage() {
   };
 
   const handlePaymentConfirmed = async () => {
+    if (!utrNumber.trim()) {
+        toast({ variant: 'destructive', title: "Error", description: "Please enter your Transaction ID (UTR)." });
+        return;
+    }
+
     if (!firestore || !user) return;
 
-    setIsProcessing(true);
+    setIsVerifying(true);
     
-    // Record payment submission for owner verification
-    const supportCollection = collection(firestore, 'supportRequests');
-    await addDocumentNonBlocking(supportCollection, {
-        userId: user.uid,
-        userName: user.displayName || user.email || 'Anonymous',
-        email: user.email || 'N/A',
-        message: `SUBSCRIPTION PAYMENT: User has paid for the ${activePlan.toUpperCase()} plan using ${selectedMethod?.name}. Please verify and activate.`,
-        planRequested: activePlan,
-        paymentMethod: selectedMethod?.id,
-        status: 'payment_pending',
-        createdAt: serverTimestamp(),
-    });
+    // Simulate AI verification
+    setTimeout(async () => {
+        const supportCollection = collection(firestore, 'supportRequests');
+        await addDocumentNonBlocking(supportCollection, {
+            userId: user.uid,
+            userName: user.displayName || user.email || 'Anonymous',
+            email: user.email || 'N/A',
+            message: `SUBSCRIPTION VERIFICATION: UTR: ${utrNumber}. Plan: ${activePlan.toUpperCase()}. Method: ${selectedMethod?.name}.`,
+            planRequested: activePlan,
+            paymentMethod: selectedMethod?.id,
+            utr: utrNumber,
+            status: 'verified_pending_activation',
+            createdAt: serverTimestamp(),
+        });
 
-    toast({
-      title: "Payment Submitted!",
-      description: "Aapka payment submit ho gaya hai. Owner ise verify karke 24 ghante mein aapka plan activate kar denge!",
-    });
+        toast({
+          title: "Payment Verified!",
+          description: "Ai Atlas ne aapka transaction record kar liya hai. Owner ise confirm karke plan active kar denge!",
+        });
 
-    setTimeout(() => {
-        setIsProcessing(false);
+        setIsVerifying(false);
         setIsPaymentModalOpen(false);
         router.push('/');
-    }, 2000);
+    }, 3000);
   };
 
   const copyToClipboard = (text: string, label: string) => {
@@ -306,12 +315,11 @@ export default function SubscriptionPlansPage() {
                     <div className="bg-green-500 w-full p-8 text-center text-white relative">
                         <QrCode className="w-16 h-16 mx-auto mb-2 opacity-90" />
                         <h2 className="text-2xl font-black">Scan & Pay</h2>
-                        <p className="text-white/80 text-sm font-bold uppercase tracking-wider">Direct Payment Mode</p>
+                        <p className="text-white/80 text-sm font-bold uppercase tracking-wider">Ai Verification Active</p>
                     </div>
                     
                     <div className="p-8 space-y-6 bg-card w-full rounded-t-[2rem] -mt-6 relative z-10 flex flex-col items-center">
                         <div className="bg-white p-4 rounded-3xl shadow-xl border-4 border-secondary">
-                            {/* Placeholder QR Code - In a real scenario, use actual UPI link generated QR */}
                             <div className="relative w-48 h-48 bg-muted flex items-center justify-center rounded-xl overflow-hidden">
                                 <Image 
                                     src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=mnjkairi1@okaxis&pn=AiAtlas&am=29&cu=INR" 
@@ -325,20 +333,25 @@ export default function SubscriptionPlansPage() {
                         </div>
 
                         <div className="w-full space-y-3">
-                            <div className="bg-secondary/50 p-4 rounded-2xl flex items-center justify-between group" onClick={() => copyToClipboard('mnjkairi1@okaxis', 'UPI ID')}>
+                            <div className="bg-secondary/50 p-4 rounded-2xl flex items-center justify-between group cursor-pointer active:scale-95 transition-transform" onClick={() => copyToClipboard('mnjkairi1@okaxis', 'UPI ID')}>
                                 <div>
                                     <p className="text-[10px] font-black text-muted-foreground uppercase">UPI ID</p>
                                     <p className="font-bold text-sm">mnjkairi1@okaxis</p>
                                 </div>
-                                <Copy className="w-4 h-4 text-primary opacity-40 group-hover:opacity-100 transition-opacity" />
+                                <Copy className="w-4 h-4 text-primary opacity-40 group-hover:opacity-100" />
                             </div>
                             
-                            <div className="bg-secondary/50 p-4 rounded-2xl flex items-center justify-between group" onClick={() => copyToClipboard('91xxxxxxxx', 'Number')}>
-                                <div>
-                                    <p className="text-[10px] font-black text-muted-foreground uppercase">WhatsApp / Contact</p>
-                                    <p className="font-bold text-sm">+91 9876543210</p>
-                                </div>
-                                <Smartphone className="w-4 h-4 text-primary opacity-40 group-hover:opacity-100 transition-opacity" />
+                            <div className="space-y-2 mt-4">
+                                <p className="text-xs font-bold text-foreground/70 ml-1 flex items-center gap-2">
+                                    <ClipboardCheck className="w-4 h-4 text-primary" />
+                                    Enter Transaction ID / UTR
+                                </p>
+                                <Input 
+                                    placeholder="Enter 12-digit UTR Number" 
+                                    value={utrNumber}
+                                    onChange={(e) => setUtrNumber(e.target.value)}
+                                    className="h-12 rounded-xl border-2 border-secondary focus:border-primary/30"
+                                />
                             </div>
                         </div>
 
@@ -346,12 +359,16 @@ export default function SubscriptionPlansPage() {
                             <Button 
                                 className="w-full h-14 rounded-2xl font-black text-lg bg-green-500 hover:bg-green-600 shadow-lg shadow-green-200"
                                 onClick={handlePaymentConfirmed}
-                                disabled={isProcessing}
+                                disabled={isVerifying}
                             >
-                                {isProcessing ? <Loader2 className="animate-spin mr-2" /> : "I've Done Payment ✅"}
+                                {isVerifying ? (
+                                    <><Loader2 className="animate-spin mr-2" /> AI Verifying...</>
+                                ) : (
+                                    "Verify Payment ✅"
+                                )}
                             </Button>
-                            <p className="text-[10px] text-center text-muted-foreground mt-4 font-bold uppercase tracking-widest px-4">
-                                Take a screenshot after payment for safety
+                            <p className="text-[10px] text-center text-muted-foreground mt-4 font-bold uppercase tracking-widest px-4 leading-tight">
+                                AI verification takes 2-3 seconds. <br/> Please wait after clicking.
                             </p>
                         </div>
                     </div>
