@@ -7,18 +7,22 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Check, Star, Zap, Crown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 type PlanType = 'basic' | 'standard' | 'pro';
 
 export default function SubscriptionPlansPage() {
   const [activePlan, setActivePlan] = useState<PlanType>('basic');
+  const router = useRouter();
+  const { toast } = useToast();
 
   const plans = {
     basic: {
       name: 'Basic',
       price: 'Free',
       period: '',
-      description: 'Perfect for exploring our AI tool catalog.',
+      description: 'Perfect for exploring our Ai tool catalog.',
       buttonText: 'Current Plan',
       buttonVariant: 'outline' as const,
       icon: <Zap className="w-10 h-10 text-blue-400" />,
@@ -88,6 +92,19 @@ export default function SubscriptionPlansPage() {
 
   const currentPlan = plans[activePlan];
 
+  const handlePlanSelection = () => {
+    if (activePlan === 'basic') return;
+
+    toast({
+      title: "Redirecting...",
+      description: `Connecting you to support to activate the ${currentPlan.name} plan.`,
+    });
+
+    setTimeout(() => {
+      router.push(`/support/contact?plan=${activePlan}`);
+    }, 1500);
+  };
+
   return (
     <div className="bg-background min-h-screen flex flex-col items-center justify-start font-body relative animate-fade-in-up">
       <div className="absolute inset-0 z-0 opacity-50">
@@ -99,7 +116,6 @@ export default function SubscriptionPlansPage() {
             <ClubHeader title="Subscription Plans" showBackButton />
         </div>
         
-        {/* Tab Switcher */}
         <div className="mt-4 flex bg-white/40 backdrop-blur-md p-1.5 rounded-2xl shadow-inner border border-white/20">
             {(['basic', 'standard', 'pro'] as PlanType[]).map((p) => (
                 <button
@@ -117,7 +133,6 @@ export default function SubscriptionPlansPage() {
             ))}
         </div>
 
-        {/* Selected Plan Display */}
         <div className="mt-8 flex justify-center">
             <Card 
               className={cn(
@@ -168,6 +183,7 @@ export default function SubscriptionPlansPage() {
                         activePlan === 'basic' ? "bg-secondary text-primary hover:bg-secondary/80" : "bg-primary text-white shadow-primary/20 hover:bg-primary/90"
                     )}
                     disabled={activePlan === 'basic'}
+                    onClick={handlePlanSelection}
                 >
                   {currentPlan.buttonText}
                 </Button>
