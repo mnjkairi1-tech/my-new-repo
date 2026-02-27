@@ -4,11 +4,15 @@ import React, { useState } from 'react';
 import { ClubHeader } from '@/components/club-header';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, Star, Zap, Crown, CreditCard, Smartphone, Wallet, Banknote, ShieldCheck, Loader2 } from 'lucide-react';
+import { Check, Star, Zap, Crown, CreditCard, Smartphone, Wallet, Banknote, ShieldCheck, Loader2, Copy, QrCode } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { useFirestore, useUser } from '@/firebase';
+import { collection, serverTimestamp } from 'firebase/firestore';
+import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import Image from 'next/image';
 
 type PlanType = 'basic' | 'standard' | 'pro';
 
@@ -24,8 +28,13 @@ export default function SubscriptionPlansPage() {
   const [activePlan, setActivePlan] = useState<PlanType>('basic');
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showQR, setShowQR] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
+  
   const router = useRouter();
   const { toast } = useToast();
+  const { user } = useUser();
+  const firestore = useFirestore();
 
   const plans = {
     basic: {
@@ -101,41 +110,11 @@ export default function SubscriptionPlansPage() {
   };
 
   const paymentMethods: PaymentMethod[] = [
-    { 
-        id: 'razorpay', 
-        name: 'Razorpay', 
-        description: 'UPI, Cards, & Netbanking', 
-        icon: <CreditCard className="w-6 h-6" />, 
-        color: 'bg-blue-600' 
-    },
-    { 
-        id: 'stripe', 
-        name: 'Stripe', 
-        description: 'Global Credit/Debit Cards', 
-        icon: <div className="font-black text-xs">S</div>, 
-        color: 'bg-[#635BFF]' 
-    },
-    { 
-        id: 'paypal', 
-        name: 'PayPal', 
-        description: 'Fast, secure international payments', 
-        icon: <Wallet className="w-6 h-6" />, 
-        color: 'bg-[#003087]' 
-    },
-    { 
-        id: 'googleplay', 
-        name: 'Google Play', 
-        description: 'Direct billing via Play Store', 
-        icon: <Smartphone className="w-6 h-6" />, 
-        color: 'bg-green-500' 
-    },
-    { 
-        id: 'cashfree', 
-        name: 'Cashfree', 
-        description: 'Next-gen payment gateway', 
-        icon: <Banknote className="w-6 h-6" />, 
-        color: 'bg-[#1D3557]' 
-    },
+    { id: 'razorpay', name: 'Razorpay', description: 'UPI, Cards, & Netbanking', icon: <CreditCard className="w-6 h-6" />, color: 'bg-blue-600' },
+    { id: 'stripe', name: 'Stripe', description: 'Global Credit/Debit Cards', icon: <div className="font-black text-xs">S</div>, color: 'bg-[#635BFF]' },
+    { id: 'paypal', name: 'PayPal', description: 'Fast, secure international payments', icon: <Wallet className="w-6 h-6" />, color: 'bg-[#003087]' },
+    { id: 'googleplay', name: 'Google Play', description: 'Direct billing via Play Store', icon: <Smartphone className="w-6 h-6" />, color: 'bg-green-500' },
+    { id: 'cashfree', name: 'Cashfree', description: 'Next-gen payment gateway', icon: <Banknote className="w-6 h-6" />, color: 'bg-[#1D3557]' },
   ];
 
   const currentPlan = plans[activePlan];
@@ -143,21 +122,53 @@ export default function SubscriptionPlansPage() {
   const handleOpenPayment = () => {
     if (activePlan === 'basic') return;
     setIsPaymentModalOpen(true);
+    setShowQR(false);
   };
 
   const handleSelectPayment = (method: PaymentMethod) => {
     setIsProcessing(true);
+    setSelectedMethod(method);
+    
+    // Simulate gateway delay
+    setTimeout(() => {
+      setIsProcessing(false);
+      setShowQR(true);
+    }, 1500);
+  };
+
+  const handlePaymentConfirmed = async () => {
+    if (!firestore || !user) return;
+
+    setIsProcessing(true);
+    
+    // Record payment submission for owner verification
+    const supportCollection = collection(firestore, 'supportRequests');
+    await addDocumentNonBlocking(supportCollection, {
+        userId: user.uid,
+        userName: user.displayName || user.email || 'Anonymous',
+        email: user.email || 'N/A',
+        message: `SUBSCRIPTION PAYMENT: User has paid for the ${activePlan.toUpperCase()} plan using ${selectedMethod?.name}. Please verify and activate.`,
+        planRequested: activePlan,
+        paymentMethod: selectedMethod?.id,
+        status: 'payment_pending',
+        createdAt: serverTimestamp(),
+    });
+
     toast({
-      title: `${method.name} Selected`,
-      description: `Opening secure gateway for your ${currentPlan.name} plan...`,
+      title: "Payment Submitted!",
+      description: "Aapka payment submit ho gaya hai. Owner ise verify karke 24 ghante mein aapka plan activate kar denge!",
     });
 
     setTimeout(() => {
-      setIsProcessing(false);
-      setIsPaymentModalOpen(false);
-      // Redirect to support contact with payment intent details
-      router.push(`/support/contact?plan=${activePlan}&method=${method.id}`);
+        setIsProcessing(false);
+        setIsPaymentModalOpen(false);
+        router.push('/');
     }, 2000);
+  };
+
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    toast({ title: "Copied!", description: `${label} copied to clipboard.` });
   };
 
   return (
@@ -247,56 +258,105 @@ export default function SubscriptionPlansPage() {
         </div>
       </div>
 
-      {/* Cute Stylish Payment selection Modal */}
       <Dialog open={isPaymentModalOpen} onOpenChange={setIsPaymentModalOpen}>
           <DialogContent className="max-w-sm rounded-[2rem] border-none bg-background p-0 overflow-hidden shadow-2xl">
-              <div className="bg-primary p-8 text-center text-white relative">
-                  <div className="absolute top-4 right-4">
-                      <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-full" onClick={() => setIsPaymentModalOpen(false)}>
-                          <Zap className="w-5 h-5 fill-current" />
-                      </Button>
-                  </div>
-                  <ShieldCheck className="w-16 h-16 mx-auto mb-4 opacity-90" />
-                  <DialogHeader>
-                      <DialogTitle className="text-2xl font-black text-white">Select Payment</DialogTitle>
-                      <DialogDescription className="text-white/80 font-medium">
-                          Choose your preferred method to activate <strong>{currentPlan.name}</strong>
-                      </DialogDescription>
-                  </DialogHeader>
-              </div>
-              
-              <div className="p-6 space-y-3 bg-card rounded-t-[2rem] -mt-6 relative z-10">
-                  {paymentMethods.map((method) => (
-                      <button
-                        key={method.id}
-                        disabled={isProcessing}
-                        onClick={() => handleSelectPayment(method)}
-                        className="w-full flex items-center gap-4 p-4 rounded-2xl bg-secondary/30 hover:bg-primary/10 transition-all group border border-transparent hover:border-primary/20 active:scale-[0.98]"
-                      >
-                          <div className={cn(
-                              "w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg transition-transform group-hover:rotate-12",
-                              method.color
-                          )}>
-                              {method.icon}
-                          </div>
-                          <div className="text-left flex-grow">
-                              <p className="font-bold text-base text-foreground">{method.name}</p>
-                              <p className="text-xs text-muted-foreground font-medium">{method.description}</p>
-                          </div>
-                          {isProcessing ? (
-                              <Loader2 className="w-5 h-5 animate-spin text-primary opacity-40" />
-                          ) : (
-                              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <Check className="w-4 h-4 text-primary" />
-                              </div>
-                          )}
-                      </button>
-                  ))}
-                  
-                  <div className="pt-4 text-center">
-                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Secure 256-bit SSL Encryption</p>
-                  </div>
-              </div>
+              {!showQR ? (
+                <>
+                    <div className="bg-primary p-8 text-center text-white relative">
+                        <ShieldCheck className="w-16 h-16 mx-auto mb-4 opacity-90" />
+                        <DialogHeader>
+                            <DialogTitle className="text-2xl font-black text-white">Select Payment</DialogTitle>
+                            <DialogDescription className="text-white/80 font-medium">
+                                Choose your method to pay <strong>{currentPlan.price}</strong>
+                            </DialogDescription>
+                        </DialogHeader>
+                    </div>
+                    
+                    <div className="p-6 space-y-3 bg-card rounded-t-[2rem] -mt-6 relative z-10">
+                        {paymentMethods.map((method) => (
+                            <button
+                                key={method.id}
+                                disabled={isProcessing}
+                                onClick={() => handleSelectPayment(method)}
+                                className="w-full flex items-center gap-4 p-4 rounded-2xl bg-secondary/30 hover:bg-primary/10 transition-all group border border-transparent hover:border-primary/20 active:scale-[0.98]"
+                            >
+                                <div className={cn(
+                                    "w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg transition-transform group-hover:rotate-12",
+                                    method.color
+                                )}>
+                                    {method.icon}
+                                </div>
+                                <div className="text-left flex-grow">
+                                    <p className="font-bold text-base text-foreground">{method.name}</p>
+                                    <p className="text-xs text-muted-foreground font-medium">{method.description}</p>
+                                </div>
+                                {isProcessing && selectedMethod?.id === method.id ? (
+                                    <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                                ) : (
+                                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Check className="w-4 h-4 text-primary" />
+                                    </div>
+                                )}
+                            </button>
+                        ))}
+                    </div>
+                </>
+              ) : (
+                <div className="p-0 flex flex-col items-center">
+                    <div className="bg-green-500 w-full p-8 text-center text-white relative">
+                        <QrCode className="w-16 h-16 mx-auto mb-2 opacity-90" />
+                        <h2 className="text-2xl font-black">Scan & Pay</h2>
+                        <p className="text-white/80 text-sm font-bold uppercase tracking-wider">Direct Payment Mode</p>
+                    </div>
+                    
+                    <div className="p-8 space-y-6 bg-card w-full rounded-t-[2rem] -mt-6 relative z-10 flex flex-col items-center">
+                        <div className="bg-white p-4 rounded-3xl shadow-xl border-4 border-secondary">
+                            {/* Placeholder QR Code - In a real scenario, use actual UPI link generated QR */}
+                            <div className="relative w-48 h-48 bg-muted flex items-center justify-center rounded-xl overflow-hidden">
+                                <Image 
+                                    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=mnjkairi1@okaxis&pn=AiAtlas&am=29&cu=INR" 
+                                    alt="Payment QR" 
+                                    width={200}
+                                    height={200}
+                                    className="object-contain"
+                                    unoptimized
+                                />
+                            </div>
+                        </div>
+
+                        <div className="w-full space-y-3">
+                            <div className="bg-secondary/50 p-4 rounded-2xl flex items-center justify-between group" onClick={() => copyToClipboard('mnjkairi1@okaxis', 'UPI ID')}>
+                                <div>
+                                    <p className="text-[10px] font-black text-muted-foreground uppercase">UPI ID</p>
+                                    <p className="font-bold text-sm">mnjkairi1@okaxis</p>
+                                </div>
+                                <Copy className="w-4 h-4 text-primary opacity-40 group-hover:opacity-100 transition-opacity" />
+                            </div>
+                            
+                            <div className="bg-secondary/50 p-4 rounded-2xl flex items-center justify-between group" onClick={() => copyToClipboard('91xxxxxxxx', 'Number')}>
+                                <div>
+                                    <p className="text-[10px] font-black text-muted-foreground uppercase">WhatsApp / Contact</p>
+                                    <p className="font-bold text-sm">+91 9876543210</p>
+                                </div>
+                                <Smartphone className="w-4 h-4 text-primary opacity-40 group-hover:opacity-100 transition-opacity" />
+                            </div>
+                        </div>
+
+                        <div className="pt-4 w-full">
+                            <Button 
+                                className="w-full h-14 rounded-2xl font-black text-lg bg-green-500 hover:bg-green-600 shadow-lg shadow-green-200"
+                                onClick={handlePaymentConfirmed}
+                                disabled={isProcessing}
+                            >
+                                {isProcessing ? <Loader2 className="animate-spin mr-2" /> : "I've Done Payment ✅"}
+                            </Button>
+                            <p className="text-[10px] text-center text-muted-foreground mt-4 font-bold uppercase tracking-widest px-4">
+                                Take a screenshot after payment for safety
+                            </p>
+                        </div>
+                    </div>
+                </div>
+              )}
           </DialogContent>
       </Dialog>
     </div>
