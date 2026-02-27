@@ -1,3 +1,4 @@
+
 "use client"
 
 import React from "react"
@@ -207,7 +208,7 @@ export function SettingsPage() {
           { label: t('settings.about.terms'), icon: FileText, isDialog: true, component: (
             <div className="text-sm text-muted-foreground max-h-[400px] overflow-y-auto">
               <h3 className="font-bold text-lg text-foreground mb-2">Terms of Service</h3>
-              <p className="mb-4">By using All AI Tools in One Website, you agree to follow these basic rules.</p>
+              <p className="mb-4">By using Ai Atlas, you agree to follow these basic rules.</p>
               <p className="mb-4">This website is made to help people discover and explore AI tools. We do our best to keep the information useful, but we do not guarantee that every tool listed will always work or be accurate.</p>
               <h4 className="font-semibold text-md text-foreground mb-2">User accounts & community</h4>
               <p className="mb-2">If you create an account or interact in the community:</p>
@@ -230,26 +231,11 @@ export function SettingsPage() {
               <p>We may update these terms in the future. Continued use of the website means you accept the updated terms.</p>
             </div>
           ) },
-          { label: t('settings.about.privacy'), icon: Shield, isDialog: true, component: (
-            <div className="text-sm text-muted-foreground max-h-[400px] overflow-y-auto">
-                <h3 className="font-bold text-lg text-foreground mb-2">Privacy Policy</h3>
-                <p className="mb-4">At All AI Tools in One Website, we respect your privacy and take it seriously. This page explains what kind of information we collect and why we collect it.</p>
-                <p className="mb-4">When you visit or use our website, some basic information like your browser type, device, IP address, and pages you visit may be collected automatically. This helps us understand how the website is used and how we can improve it.</p>
-                <p className="mb-4">If you create an account or use community features, we may ask for basic details like your name or email address. This information is only used to manage your account and provide a better experience on the website.</p>
-                <p className="mb-4">We do not sell, trade, or share your personal information with anyone for profit.</p>
-                <h4 className="font-semibold text-md text-foreground mb-2">Cookies</h4>
-                <p className="mb-4">Our website uses cookies to remember user preferences and improve performance. Google AdSense may also use cookies to show ads that are more relevant to you. You can disable cookies from your browser settings if you prefer.</p>
-                <h4 className="font-semibold text-md text-foreground mb-2">Google Ads</h4>
-                <p className="mb-4">We use Google AdSense to display ads. Google may use cookies and similar technologies to show ads based on your interests and previous visits to websites. You can manage or turn off personalized ads from Google Ads settings.</p>
-                <h4 className="font-semibold text-md text-foreground mb-2">Third-party links</h4>
-                <p className="mb-4">Our website lists and links to many third-party AI tools. We do not control these websites, so their privacy practices may be different. Please check their privacy policies separately.</p>
-                <p>By using this website, you agree to this Privacy Policy. This policy may be updated whenever needed.</p>
-            </div>
-          ) },
+          { label: t('settings.about.privacy'), icon: Shield, href: '/privacy-policy' },
            { label: "Disclaimer", icon: Info, isDialog: true, component: (
             <div className="text-sm text-muted-foreground max-h-[400px] overflow-y-auto">
                 <h3 className="font-bold text-lg text-foreground mb-2">Disclaimer</h3>
-                <p className="mb-4">All content on All AI Tools in One Website is shared for general information only.</p>
+                <p className="mb-4">All content on Ai Atlas is shared for general information only.</p>
                 <p className="mb-4">We do not promise results, earnings, accuracy, or performance of any AI tool listed here.</p>
                 <p className="mb-4">Some tools may change, stop working, or require payment.</p>
                 <p className="mb-4">Please use your own judgement before using any AI tool.</p>
@@ -259,7 +245,7 @@ export function SettingsPage() {
            { label: "Affiliate Disclosure", icon: LinkIcon, isDialog: true, component: (
             <div className="text-sm text-muted-foreground max-h-[400px] overflow-y-auto">
                 <h3 className="font-bold text-lg text-foreground mb-2">Affiliate Disclosure</h3>
-                <p className="mb-4">Some links on All AI Tools in One Website may be affiliate links.</p>
+                <p className="mb-4">Some links on Ai Atlas may be affiliate links.</p>
                 <p className="mb-4">This means we may earn a small commission if you sign up or purchase through those links — at no extra cost to you.</p>
                 <p className="mb-4">These commissions help us keep the website running and add more useful tools.</p>
                 <p>We try to list tools honestly and do not promote anything just for money.</p>
