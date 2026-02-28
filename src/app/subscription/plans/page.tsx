@@ -254,7 +254,7 @@ export default function SubscriptionPlansPage() {
                         <div className="bg-white p-4 rounded-3xl shadow-xl border-4 border-secondary">
                             <div className="relative w-48 h-48 bg-muted flex items-center justify-center rounded-xl overflow-hidden">
                                 <Image 
-                                    src="https://ibb.co/RpvCm8SB" 
+                                    src="https://ibb.co/JFQPkgPB" 
                                     alt="Payment QR" 
                                     width={200}
                                     height={200}
