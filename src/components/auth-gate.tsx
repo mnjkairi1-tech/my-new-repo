@@ -3,7 +3,6 @@ import { useAuth } from '@/firebase';
 import {
   GoogleAuthProvider,
   User,
-  signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
   signInWithCustomToken,
@@ -12,6 +11,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
+  setPersistence,
+  browserLocalPersistence,
 } from 'firebase/auth';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -40,11 +41,7 @@ function GoogleSignInButton({
       variant="outline"
       size="lg"
       className="w-full h-14 text-lg rounded-2xl bg-card border-2 border-primary/20 shadow-lg hover:bg-accent relative z-10 transition-all active:scale-95"
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onClick(e);
-      }}
+      onClick={onClick}
       disabled={isSigningIn}
     >
       <div className="flex items-center justify-center">
@@ -70,7 +67,7 @@ function GoogleSignInButton({
             ></path>
             </svg>
         )}
-        <span>{isSigningIn ? 'Signing in...' : 'Sign in with Google'}</span>
+        <span>{isSigningIn ? 'Processing...' : 'Sign in with Google'}</span>
       </div>
     </Button>
   );
@@ -302,32 +299,29 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   const auth = useAuth();
   const { toast } = useToast();
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [isCheckingRedirect, setIsCheckingRedirect] = useState(true);
   
-  // Handle redirect result on component mount (critical for webviews)
   useEffect(() => {
     if (!auth) return;
+
+    // Set persistence to local to ensure session survives reloads
+    setPersistence(auth, browserLocalPersistence);
+
+    // Pick up redirect result
     getRedirectResult(auth).then((result) => {
       if (result?.user) {
         onUser(result.user);
       }
+      setIsCheckingRedirect(false);
     }).catch((error) => {
       console.error("Redirect Result Error:", error);
+      setIsCheckingRedirect(false);
     });
   }, [auth, onUser]);
 
   const handleGoogleSignIn = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
-    // Native bridge support
-    if ((window as any).flutter_inappwebview) {
-        (window as any).flutter_inappwebview.callHandler('requestGoogleSignIn');
-        return;
-    }
-    if (window.parent && window.parent !== window) {
-       window.parent.postMessage(JSON.stringify({ type: 'requestGoogleSignIn' }), '*');
-       return;
-    }
 
     if (!auth) return;
     setIsSigningIn(true);
@@ -336,19 +330,15 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: 'select_account' });
         
-        // Use redirect instead of popup for better webviewer compatibility
+        // Native bridge support
+        if ((window as any).flutter_inappwebview) {
+            (window as any).flutter_inappwebview.callHandler('requestGoogleSignIn');
+            return;
+        }
+        
         await signInWithRedirect(auth, provider);
-        // Page will redirect, execution stops here.
     } catch (error: any) {
         console.error("Google Sign-In Error:", error);
-        const silentErrors = ['auth/popup-closed-by-user', 'auth/cancelled-popup-request'];
-        if (!silentErrors.includes(error.code)) {
-            toast({
-                variant: 'destructive',
-                title: 'Sign-In Failed',
-                description: 'Could not connect to Google. Please try again.',
-            });
-        }
         setIsSigningIn(false);
     }
   };
@@ -373,6 +363,11 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
       delete (window as any).handleCustomTokenSignIn;
     };
   }, [auth, onUser]);
+
+  // While checking if we just came back from a redirect, show the loader
+  if (isCheckingRedirect || isSigningIn) {
+      return <AuthLoader />;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 font-body overflow-x-hidden relative">
