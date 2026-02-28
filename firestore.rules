@@ -12,8 +12,7 @@ service cloud.firestore {
     function isGlobalOwner() {
       return isSignedIn() && (
         request.auth.token.email == "mnjkairi1@gmail.com" ||
-        request.auth.uid == "t9B6SJjDhAPxv3t9RunFmS3Ne4A2" ||
-        exists(/databases/$(database)/documents/roles_owner/$(request.auth.uid))
+        request.auth.uid == "t9B6SJjDhAPxv3t9RunFmS3Ne4A2"
       );
     }
 
@@ -23,7 +22,7 @@ service cloud.firestore {
 
     // --- COLLECTION RULES ---
 
-    // 1. Payment Requests - Critical for Subscription
+    // 1. Payment Requests
     match /paymentRequests/{requestId} {
       allow create: if isSignedIn();
       allow read, update, delete: if isGlobalOwner();
@@ -40,7 +39,7 @@ service cloud.firestore {
       allow read, update, delete: if isGlobalOwner();
     }
 
-    // 3. User Data (Profiles, Billing History, Memberships)
+    // 3. User Data (Profiles & Billing History)
     match /userProfiles/{userId} {
       allow read: if isSignedIn();
       allow write: if isOwner(userId) || isGlobalOwner();
