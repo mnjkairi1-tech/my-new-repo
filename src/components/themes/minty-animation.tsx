@@ -5,39 +5,39 @@ import { Leaf } from 'lucide-react';
 
 /**
  * MintyAnimation Component
- * Renders an artistic tree sketch and subtle falling leaves for the Minty Marshmallow theme.
+ * Renders an illustrative tree and subtle falling leaves for the Minty Marshmallow theme.
  */
 export function MintyAnimation() {
   const [leaves, setLeaves] = useState<{ id: number; left: number; top: number; delay: number; duration: number; size: number; rotation: number; fromTree?: boolean }[]>([]);
 
   useEffect(() => {
-    // 1. Global random falling leaves (kept as requested)
-    const randomLeaves = Array.from({ length: 4 }).map((_, i) => ({
+    // 1. Global random falling leaves for overall atmosphere
+    const randomLeaves = Array.from({ length: 3 }).map((_, i) => ({
       id: i,
       left: Math.random() * 100,
-      top: -100,
+      top: -50,
       delay: Math.random() * 10,
       duration: 15 + Math.random() * 15,
       size: 14 + Math.random() * 10,
       rotation: Math.random() * 360,
     }));
 
-    // 2. Leaves that specifically fall from the tree branches
+    // 2. Leaves that specifically fall from the illustrative tree branches
     const treeLeaves = Array.from({ length: 4 }).map((_, i) => {
-      // Branches are roughly in the top right area
+      // Branch positions on our new illustrative tree (roughly on the right side)
       const branchPos = [
-        { l: 85, t: 15 },
-        { l: 70, t: 5 },
-        { l: 90, t: 40 },
-        { l: 60, t: 10 }
+        { l: 82, t: 25 },
+        { l: 75, t: 15 },
+        { l: 88, t: 45 },
+        { l: 68, t: 35 }
       ][i % 4];
       
       return {
         id: i + 100,
         left: branchPos.l,
         top: branchPos.t,
-        delay: Math.random() * 15,
-        duration: 18 + Math.random() * 10,
+        delay: Math.random() * 20,
+        duration: 18 + Math.random() * 12,
         size: 12 + Math.random() * 8,
         rotation: Math.random() * 360,
         fromTree: true
@@ -49,44 +49,38 @@ export function MintyAnimation() {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[0] overflow-hidden">
-      {/* The Artistic Tree Sketch (Background Layer) */}
+      {/* Illustrative Nature Tree (Background Layer) */}
       <svg 
-        className="absolute right-0 top-0 w-full h-full opacity-[0.08] dark:opacity-[0.15]" 
-        viewBox="0 0 400 800" 
-        preserveAspectRatio="xMaxYMin meet"
+        className="absolute right-[-20px] top-0 h-full w-auto opacity-[0.1] dark:opacity-[0.2]" 
+        viewBox="0 0 300 800" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Main Trunk/Branch coming from top right */}
+        {/* Main Trunk */}
         <path 
-          d="M400 0 Q350 100 380 250 T350 450 T390 700" 
-          stroke="black" 
-          strokeWidth="4" 
-          strokeLinecap="round" 
+          d="M280 800C270 700 260 500 270 300C275 150 250 50 220 0" 
+          stroke="currentColor" 
+          strokeWidth="12" 
+          strokeLinecap="round"
+          className="text-primary/40"
         />
-        {/* Top Horizontal branch */}
-        <path 
-          d="M380 50 Q200 40 50 80" 
-          stroke="black" 
-          strokeWidth="3" 
-          strokeLinecap="round" 
-        />
-        <path 
-          d="M370 120 Q250 130 150 180" 
-          stroke="black" 
-          strokeWidth="2.5" 
-          strokeLinecap="round" 
-        />
-        {/* Small detail branches */}
-        <path d="M100 70 Q80 50 60 60" stroke="black" strokeWidth="1.5" />
-        <path d="M200 45 Q180 20 160 35" stroke="black" strokeWidth="1.5" />
-        <path d="M365 300 Q320 320 300 380" stroke="black" strokeWidth="2" />
-        <path d="M385 550 Q340 580 320 650" stroke="black" strokeWidth="2" />
         
-        {/* Little decorative nodes (like fruit or buds) */}
-        <circle cx="60" cy="60" r="3" fill="currentColor" className="text-primary/40" />
-        <circle cx="160" cy="35" r="3" fill="currentColor" className="text-primary/40" />
-        <circle cx="300" cy="380" r="4" fill="currentColor" className="text-primary/40" />
+        {/* Large Branches */}
+        <path d="M268 450C220 430 150 440 100 410" stroke="currentColor" strokeWidth="6" strokeLinecap="round" className="text-primary/30" />
+        <path d="M272 280C210 250 140 260 80 220" stroke="currentColor" strokeWidth="5" strokeLinecap="round" className="text-primary/30" />
+        <path d="M265 150C220 120 180 130 140 90" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-primary/30" />
+        
+        {/* Small Twigs & Detail */}
+        <path d="M110 415C90 400 70 410 55 395" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-primary/20" />
+        <path d="M90 225C70 210 50 220 35 205" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-primary/20" />
+        <path d="M150 100C130 80 110 90 95 75" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-primary/20" />
+        
+        {/* Decorative Buds/Nodes */}
+        <circle cx="55" cy="395" r="4" fill="currentColor" className="text-primary/40" />
+        <circle cx="35" cy="205" r="4" fill="currentColor" className="text-primary/40" />
+        <circle cx="95" cy="75" r="4" fill="currentColor" className="text-primary/40" />
+        <circle cx="180" cy="320" r="3" fill="currentColor" className="text-primary/30" />
+        <circle cx="120" cy="180" r="3" fill="currentColor" className="text-primary/30" />
       </svg>
 
       {/* Falling Leaves */}
@@ -107,8 +101,8 @@ export function MintyAnimation() {
         </div>
       ))}
 
-      {/* Ambient glow for the theme */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(16,185,129,0.04)_0%,transparent_60%)]" />
+      {/* Soft Ambient Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_30%,rgba(16,185,129,0.05)_0%,transparent_60%)]" />
     </div>
   );
 }
