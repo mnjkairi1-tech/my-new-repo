@@ -9,62 +9,71 @@ service cloud.firestore {
 
     function isGlobalOwner() {
       return isSignedIn() && (
-        exists(/databases/$(database)/documents/roles_owner/$(request.auth.uid)) ||
         request.auth.token.email == "mnjkairi1@gmail.com" ||
-        request.auth.uid == "t9B6SJjDhAPxv3t9RunFmS3Ne4A2"
+        request.auth.uid == "t9B6SJjDhAPxv3t9RunFmS3Ne4A2" ||
+        exists(/databases/$(database)/documents/roles_owner/$(request.auth.uid))
       );
     }
 
+    // User Profiles
+    match /user_profiles/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || isGlobalOwner());
+      allow write: if isSignedIn() && (request.auth.uid == userId || isGlobalOwner());
+    }
+    
     match /userProfiles/{userId} {
-      allow get, list: if request.auth.uid == userId;
-      allow create: if request.auth.uid == userId && request.resource.data.id == userId;
-      allow update: if request.auth.uid == userId;
-      allow delete: if false;
+      allow read, write: if isSignedIn() && (request.auth.uid == userId || isGlobalOwner());
+    }
+
+    // AI Tools and Categories (Public Read, Owner Write)
+    match /ai_tools/{toolId} {
+      allow read: if true;
+      allow write: if isGlobalOwner();
+    }
+    
+    match /aiTools/{toolId} {
+      allow read: if true;
+      allow write: if isGlobalOwner();
     }
 
     match /aiCategories/{categoryId} {
       allow read: if true;
       allow write: if isGlobalOwner();
     }
-
-    match /aiTools/{toolId} {
-      allow read: if resource.data.isActive == true || isGlobalOwner();
-      allow write: if isGlobalOwner();
-    }
     
-    // New collections for dynamic tool management
-    match /ai_tools/{toolId} {
-      allow read: if true;
-      allow write: if isGlobalOwner();
-    }
-
     match /hidden_tools/{toolId} {
       allow read: if true;
       allow write: if isGlobalOwner();
     }
 
-    match /roles_owner/{ownerUid} {
-      allow get: if request.auth.uid == ownerUid;
-      allow list: if isGlobalOwner();
-      allow write: if false;
+    // Submissions (Any user can create, Owner can manage)
+    match /paymentRequests/{id} {
+      allow create: if isSignedIn();
+      allow read, update, delete: if isGlobalOwner();
     }
     
     match /supportRequests/{id} {
       allow create: if isSignedIn();
-      allow read, write: if isGlobalOwner();
+      allow read, update, delete: if isGlobalOwner();
     }
     
     match /bugReports/{id} {
       allow create: if isSignedIn();
-      allow read, write: if isGlobalOwner();
+      allow read, update, delete: if isGlobalOwner();
     }
 
-    match /paymentRequests/{id} {
-      allow create: if isSignedIn();
-      allow read, delete: if isGlobalOwner();
+    // Admin Roles
+    match /roles_owner/{ownerUid} {
+      allow read: if isSignedIn() && (request.auth.uid == ownerUid || isGlobalOwner());
+      allow write: if false;
     }
 
-    // Community / Groups rules
+    // Generic User Data & Billing History
+    match /users/{userId}/{allPaths=**} {
+      allow read, write: if isSignedIn() && (request.auth.uid == userId || isGlobalOwner());
+    }
+
+    // Community / Groups
     match /groups/{groupId} {
       allow read: if true; 
       allow create: if isSignedIn();
@@ -84,15 +93,6 @@ service cloud.firestore {
         allow read: if true;
         allow write: if isSignedIn();
       }
-    }
-
-    match /users/{userId}/{allPaths=**} {
-      allow read, write: if request.auth.uid == userId || isGlobalOwner();
-    }
-
-    match /user_profiles/{userId} {
-      allow read: if true;
-      allow write: if request.auth.uid == userId || isGlobalOwner();
     }
   }
 }
