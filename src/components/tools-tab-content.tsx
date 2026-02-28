@@ -49,9 +49,9 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
     };
   
     return (
-      <a href={tool.url} target="_blank" rel="noopener noreferrer" className="block group" onClick={() => onClick(tool)}>
+      <a href={tool.url} target="_blank" rel="noopener noreferrer" className="block group h-full" onClick={() => onClick(tool)}>
         <Card className={cn(
-            "border border-border/50 rounded-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col aspect-square p-4 justify-between",
+            "border border-border/50 rounded-none transition-all duration-300 hover:scale-[1.02] hover:shadow-lg overflow-hidden h-full flex flex-col aspect-[4/5] p-4 justify-between",
             isMidnight ? "glass-card-effect" : "bg-card backdrop-blur-xl soft-shadow"
         )}>
             <div className='text-center flex flex-col items-center justify-center gap-2 flex-grow relative z-10'>
@@ -69,28 +69,28 @@ const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShar
                     />
                 </div>
                 <h5 className={cn(
-                    "font-bold text-sm md:text-base leading-tight line-clamp-1",
+                    "font-bold text-xs md:text-base leading-tight line-clamp-2 px-1",
                     isMidnight ? "text-white tracking-wide" : "text-foreground"
                 )}>{tool.name}</h5>
             </div>
-            <div className="flex items-center justify-center gap-3 pt-2 relative z-10">
+            <div className="flex items-center justify-center gap-2 md:gap-3 pt-3 relative z-10 border-t border-border/20">
                 <Button variant="ghost" size="icon" className={cn(
-                    "w-9 h-9 rounded-full transition-colors",
+                    "w-8 h-8 md:w-10 md:h-10 rounded-full transition-colors",
                     isMidnight ? "bg-white/10 hover:bg-white/20 text-white" : "bg-secondary/50 hover:bg-secondary"
                 )} onClick={(e) => onShare(e, tool)}>
                     <Share2 className="w-4 h-4 md:w-5 h-5" />
                 </Button>
                 <Button variant="ghost" size="icon" className={cn(
-                    "w-9 h-9 rounded-full transition-colors",
+                    "w-8 h-8 md:w-10 md:h-10 rounded-full transition-colors",
                     isMidnight ? "bg-white/10 hover:bg-white/20 text-white" : "bg-secondary/50 hover:bg-secondary"
                 )} onClick={handleStarClick}>
-                    <Star className={cn('w-4.5 h-4.5 md:w-5.5 h-5.5 transition-all', isStarred ? 'fill-yellow-400 text-yellow-400' : (isMidnight ? 'text-white/60' : 'text-foreground/60'))}/>
+                    <Star className={cn('w-4 h-4 md:w-5 h-5 transition-all', isStarred ? 'fill-yellow-400 text-yellow-400' : (isMidnight ? 'text-white/60' : 'text-foreground/60'))}/>
                 </Button>
                 <Button variant="ghost" size="icon" className={cn(
-                    "w-9 h-9 rounded-full transition-colors",
+                    "w-8 h-8 md:w-10 md:h-10 rounded-full transition-colors",
                     isSelectedForCompare ? "bg-primary/20" : (isMidnight ? "bg-white/10 hover:bg-white/20 text-white" : "bg-secondary/50 hover:bg-secondary")
                 )} onClick={handleCompareClick}>
-                    {isSelectedForCompare ? <Check className="w-4.5 h-4.5 text-primary" /> : <Scale className="w-4.5 h-4.5" />}
+                    {isSelectedForCompare ? <Check className="w-4 h-4 md:w-5 h-5 text-primary" /> : <Scale className="w-4 h-4 md:w-5 h-5" />}
                 </Button>
             </div>
         </Card>
@@ -201,8 +201,8 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     {`10,000+ Tools Discovered`}
                 </div>
             </div>
-            <div className="flex-1 overflow-y-auto px-0 no-scrollbar pt-2 pb-20">
-                 <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
+            <div className="flex-1 overflow-y-auto px-4 no-scrollbar pt-2 pb-20">
+                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                     {filteredTools.slice(0, visibleCount).map(tool => (
                         <ToolCard
                             key={tool.name}
