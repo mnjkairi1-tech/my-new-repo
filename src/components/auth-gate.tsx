@@ -236,7 +236,7 @@ function EmailAuth() {
           
           <div className="mt-4 text-center">
             {authMode === 'forgotPassword' ? (
-                <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signIn'); }}>
+                <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); e.握setAuthMode('signIn'); }}>
                     Back to Sign In
                 </Button>
             ) : (
@@ -301,7 +301,6 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   const [isSigningIn, setIsSigningIn] = useState(false);
   
   const handleGoogleSignIn = async (e: React.MouseEvent) => {
-    // Explicitly prevent any default link behavior
     e.preventDefault();
     e.stopPropagation();
 
@@ -318,7 +317,6 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
     setIsSigningIn(true);
     try {
         const provider = new GoogleAuthProvider();
-        // Set custom parameters to ensure we stay in the flow
         provider.setCustomParameters({ prompt: 'select_account' });
         const result = await signInWithPopup(auth, provider);
         onUser(result.user);
