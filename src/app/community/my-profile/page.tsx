@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Users, Star, MoreVertical, Edit, Heart, History, ChevronRight, Copy, Loader2, PlusCircle } from 'lucide-react';
+import { ArrowLeft, Users, Star, MoreVertical, Edit, Heart, History, ChevronRight, Copy, Loader2, PlusCircle, BadgeCheck } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ClubHeader } from '@/components/club-header';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -36,6 +36,7 @@ interface Group {
 interface UserProfile {
     displayName: string;
     photoURL: string;
+    plan?: string;
 }
 
 const MyProfileSkeleton = () => (
@@ -198,6 +199,8 @@ function MyProfilePageContent() {
         );
     }
 
+    const isPro = userProfileData?.plan === 'pro';
+
     return (
         <div className="bg-background text-foreground min-h-screen flex flex-col items-center justify-start font-body relative animate-fade-in-up">
             <div className="absolute inset-0 z-0 opacity-50">
@@ -240,7 +243,10 @@ function MyProfilePageContent() {
                                 <AvatarFallback className="rounded-none">{(user.displayName || user.email || 'U').charAt(0).toUpperCase()}</AvatarFallback>
                             </Avatar>
                             <div>
-                                <h1 className="text-2xl font-bold">{user.displayName || 'Community Member'}</h1>
+                                <div className="flex items-center gap-1.5">
+                                    <h1 className="text-2xl font-bold">{user.displayName || 'Community Member'}</h1>
+                                    {isPro && <BadgeCheck className="w-5 h-5 text-blue-400 fill-blue-400/20" />}
+                                </div>
                                 <div className="flex items-center gap-2 mt-1">
                                     <p className="text-muted-foreground">{user.email}</p>
                                     <Link href="/avatar-editor">

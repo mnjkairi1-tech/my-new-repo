@@ -45,7 +45,7 @@ export default function SubscriptionPlansPage() {
         '5 UI Themes',
         'Compare Tools',
         'Tools addition in groups',
-        '20 Favourite Tools',
+        '10 Favourite Tools',
         'Free popular tools',
         'Quick Tools access',
         'Recent usage tool'

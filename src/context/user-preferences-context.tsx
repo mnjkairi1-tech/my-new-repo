@@ -3,7 +3,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import type { Tool } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
-import { useUser } from '@/firebase';
+import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 
 type UserPreferencesContextType = {
@@ -24,6 +25,7 @@ type UserPreferencesContextType = {
   clearComparison: () => void;
   pinnedGroups: Set<string>;
   handlePinGroupToggle: (groupId: string) => void;
+  userPlan: string;
 };
 
 const UserPreferencesContext = createContext<UserPreferencesContextType | undefined>(undefined);
@@ -39,7 +41,13 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   const { toast } = useToast();
   const [pinnedGroups, setPinnedGroups] = useState<Set<string>>(new Set());
   const { user } = useUser();
+  const firestore = useFirestore();
   const router = useRouter();
+
+  // Fetch user plan for limit enforcement
+  const userProfileRef = useMemoFirebase(() => firestore && user ? doc(firestore, 'user_profiles', user.uid) : null, [firestore, user]);
+  const { data: userProfile } = useDoc(userProfileRef);
+  const userPlan = userProfile?.plan || 'basic';
 
 
   useEffect(() => {
@@ -129,6 +137,32 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
 
   const handleHeartToggle = (tool: Tool) => {
     if (!requireAuth('save tools')) return;
+
+    const isAlreadyHearted = heartedTools.some(t => t.name === tool.name);
+    
+    if (!isAlreadyHearted) {
+        // Enforce limits for adding new favorites
+        const currentCount = heartedTools.length;
+        if (userPlan === 'basic' && currentCount >= 10) {
+            toast({
+                variant: 'destructive',
+                title: 'Limit Reached',
+                description: 'Basic plan is limited to 10 favorites. Please upgrade to Standard or Pro!',
+            });
+            router.push('/subscription/plans');
+            return;
+        }
+        if (userPlan === 'standard' && currentCount >= 50) {
+            toast({
+                variant: 'destructive',
+                title: 'Limit Reached',
+                description: 'Standard plan is limited to 50 favorites. Please upgrade to Pro for unlimited!',
+            });
+            router.push('/subscription/plans');
+            return;
+        }
+    }
+
     setHeartedTools(prev => {
       const isHearted = prev.some(t => t.name === tool.name);
       const newHeartedTools = isHearted
@@ -227,6 +261,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
       clearComparison,
       pinnedGroups,
       handlePinGroupToggle,
+      userPlan
     }}>
       {children}
     </UserPreferencesContext.Provider>

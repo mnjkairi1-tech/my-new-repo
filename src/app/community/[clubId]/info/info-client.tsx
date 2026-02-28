@@ -55,6 +55,7 @@ interface GroupTool {
 interface UserProfile {
     displayName: string;
     photoURL: string;
+    plan?: string;
 }
 
 function AddMemberDialog({ clubId, groupRef }: { clubId: string, groupRef: any }) {
@@ -168,6 +169,24 @@ function AddMemberDialog({ clubId, groupRef }: { clubId: string, groupRef: any }
         </DialogContent>
     );
 }
+
+// Component to render member name with optional blue tick
+const MemberNameWithTick = ({ userId, displayName, role }: { userId: string, displayName: string, role: string }) => {
+    const firestore = useFirestore();
+    const userProfileRef = useMemoFirebase(() => firestore ? doc(firestore, 'user_profiles', userId) : null, [firestore, userId]);
+    const { data: profile } = useDoc<UserProfile>(userProfileRef);
+    const isPro = profile?.plan === 'pro';
+
+    return (
+        <div>
+            <div className="flex items-center gap-1">
+                <p className="font-semibold">{displayName}</p>
+                {isPro && <BadgeCheck className="w-4 h-4 text-blue-400 fill-blue-400/20" />}
+            </div>
+            {role === 'owner' && <p className='text-xs text-muted-foreground'>Group Creator</p>}
+        </div>
+    );
+};
 
 export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
     const router = useRouter();
@@ -523,10 +542,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                                 <AvatarImage src={member.photoURL ?? undefined} />
                                                 <AvatarFallback>{member.displayName?.charAt(0) || 'U'}</AvatarFallback>
                                             </Avatar>
-                                            <div>
-                                                <p className="font-semibold">{member.userId === user?.uid ? 'You' : member.displayName || 'Community Member'}</p>
-                                                {member.role === 'owner' && <p className='text-xs text-muted-foreground'>Group Creator</p>}
-                                            </div>
+                                            <MemberNameWithTick userId={member.userId} displayName={member.userId === user?.uid ? 'You' : member.displayName || 'Community Member'} role={member.role} />
                                         </div>
                                         {member.role === 'owner' && <BadgeCheck className='text-green-500' />}
                                     </div>

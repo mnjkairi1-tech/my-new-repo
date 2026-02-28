@@ -1,12 +1,10 @@
-
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Send, Users, ShieldCheck, ArrowDown, MoreVertical, Phone, Search, ArrowLeft, ExternalLink, Loader2, ChevronRight, MessageSquare, LayoutGrid } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
+import { Send, Users, ShieldCheck, ArrowDown, MoreVertical, Search, ArrowLeft, ExternalLink, Loader2, ChevronRight, MessageSquare, BadgeCheck } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { useUser, useFirestore, useMemoFirebase, useFirebaseApp } from '@/firebase';
+import { useUser, useFirestore, useMemoFirebase, useCollection, useDoc } from '@/firebase';
 import { Skeleton } from '@/components/ui/skeleton';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -15,8 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter, useParams } from 'next/navigation';
 import { Card } from '@/components/ui/card';
 import { allToolsServer } from '@/lib/all-tools-server';
-import { collection, doc, query, orderBy, limit, addDoc, serverTimestamp, setDoc, updateDoc, increment } from 'firebase/firestore';
-import { useCollection, useDoc } from '@/firebase';
+import { collection, doc, query, orderBy, limit, serverTimestamp, increment } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking, setDocumentNonBlocking, updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 
@@ -78,6 +75,20 @@ const ToolCard = ({ tool }: { tool: GroupTool }) => {
     );
 };
 
+// Component to render user name with optional blue tick
+const UserNameWithTick = ({ userId, userName, className }: { userId: string, userName: string, className?: string }) => {
+    const firestore = useFirestore();
+    const userProfileRef = useMemoFirebase(() => firestore ? doc(firestore, 'user_profiles', userId) : null, [firestore, userId]);
+    const { data: profile } = useDoc(userProfileRef);
+    const isPro = profile?.plan === 'pro';
+
+    return (
+        <div className={cn("flex items-center gap-1", className)}>
+            <span className="font-bold truncate">{userName}</span>
+            {isPro && <BadgeCheck className="w-3.5 h-3.5 text-blue-400 fill-blue-400/20" />}
+        </div>
+    );
+};
 
 export default function ClubDetailsPageClient() {
   const params = useParams();
@@ -234,7 +245,9 @@ export default function ClubDetailsPageClient() {
                  messages?.map((msg) => (
                   <div key={msg.id} className={`flex items-end gap-2 mb-2 ${msg.userId === user?.uid ? 'justify-end' : 'justify-start'}`}>
                     <div className={`p-3 rounded-2xl max-w-[70%] shadow-sm ${msg.userId === user?.uid ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-card text-foreground rounded-bl-none'}`}>
-                        {msg.userId !== user?.uid && <p className="font-bold text-xs mb-1 text-primary">{msg.userName}</p>}
+                        {msg.userId !== user?.uid && (
+                            <UserNameWithTick userId={msg.userId} userName={msg.userName} className="text-xs mb-1 text-primary" />
+                        )}
                         
                         {msg.text && <p className="text-sm leading-relaxed">{msg.text}</p>}
                         
@@ -359,4 +372,8 @@ export default function ClubDetailsPageClient() {
           </div>
     </div>
   );
+}
+
+function cn(...inputs: any[]) {
+    return inputs.filter(Boolean).join(' ');
 }
