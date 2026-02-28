@@ -1,22 +1,11 @@
-'use client';
-
 import React, { ReactNode } from 'react';
-import dynamic from 'next/dynamic';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/lib/language';
 import { UserPreferencesProvider } from '@/context/user-preferences-context';
 import { ThemeProvider } from '@/context/theme-provider';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
-
-const AppShell = dynamic(() => import('./app-shell').then(mod => mod.AppShell), {
-  ssr: false,
-  loading: () => (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center">
-      <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-    </div>
-  )
-});
+import { AppShell } from './app-shell';
 
 function GlobalProviders({ children }: { children: ReactNode }) {
   return (
