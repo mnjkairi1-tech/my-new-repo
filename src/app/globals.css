@@ -133,6 +133,38 @@
     --radius: 0.5rem;
   }
 
+  [data-theme='minimal-rose'] {
+    /* SOFT ROSE MINIMAL */
+    --background: 350 100% 99%;
+    --foreground: 350 40% 15%;
+    --card: 350 100% 100%;
+    --card-foreground: 350 40% 15%;
+    --primary: 350 80% 50%;
+    --primary-foreground: 350 100% 100%;
+    --secondary: 350 100% 97%;
+    --muted: 350 50% 96%;
+    --muted-foreground: 350 20% 45%;
+    --accent: 350 100% 94%;
+    --border: 350 30% 92%;
+    --radius: 0.5rem;
+  }
+
+  [data-theme='minimal-sky'] {
+    /* SOFT SKY MINIMAL */
+    --background: 210 100% 99%;
+    --foreground: 210 40% 15%;
+    --card: 210 100% 100%;
+    --card-foreground: 210 40% 15%;
+    --primary: 210 80% 50%;
+    --primary-foreground: 210 100% 100%;
+    --secondary: 210 100% 97%;
+    --muted: 210 50% 96%;
+    --muted-foreground: 210 20% 45%;
+    --accent: 210 100% 94%;
+    --border: 210 30% 92%;
+    --radius: 0.5rem;
+  }
+
   [data-theme='cute-mint-glass'] {
     /* MINTY MARSHMALLOW */
     --background: 160 60% 98%;
