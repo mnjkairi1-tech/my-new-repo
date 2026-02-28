@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Palette, Sun, Moon, Compass, Mountain, 
-  Snowflake, Leaf, Sparkles, Zap, GlassWater, Sunset, Heart, Cloud, Flower, Waves
+  Snowflake, Leaf, Sparkles, Zap, GlassWater, Sunset, Heart, Cloud, Flower, Waves, Star, Utensils, Zap as LemonIcon, Cherry, Rocket
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
@@ -32,6 +32,11 @@ export default function UiThemesPage() {
     { name: 'cute-mint-glass', label: 'Minty Marshmallow', icon: Leaf, color: 'bg-emerald-50 text-emerald-500' },
     { name: 'cute-berry-glass', label: 'Berry Marshmallow', icon: Heart, color: 'bg-rose-50 text-rose-500' },
     { name: 'cute-cloud-glass', label: 'Cloud Marshmallow', icon: Cloud, color: 'bg-sky-50 text-sky-500' },
+    { name: 'cute-lavender-glass', label: 'Lavender Haze', icon: Star, color: 'bg-purple-50 text-purple-500' },
+    { name: 'cute-peach-glass', label: 'Peach Sorbet', icon: Utensils, color: 'bg-orange-50 text-orange-400' },
+    { name: 'cute-lemon-glass', label: 'Lemon Fizz', icon: LemonIcon, color: 'bg-yellow-50 text-yellow-500' },
+    { name: 'cute-sakura-glass', label: 'Sakura Blossom', icon: Cherry, color: 'bg-pink-50 text-pink-400' },
+    { name: 'cute-galaxy-glass', label: 'Galaxy Bliss', icon: Rocket, color: 'bg-indigo-50 text-indigo-500' },
     { name: 'velvet-sunset', label: 'Velvet Sunset', icon: Sunset, color: 'bg-red-900 text-orange-400' },
   ];
 

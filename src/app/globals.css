@@ -28,7 +28,6 @@
   }
 
   [data-theme='dark'] {
-    /* CLASSIC DARK: SLATE */
     --background: 222 47% 11%;
     --foreground: 213 27% 84%;
     --card: 222 47% 11%;
@@ -43,7 +42,6 @@
   }
 
   [data-theme='midnight-glass'] {
-    /* ULTRA MIDNIGHT GLASS */
     --background: 225 43% 4%;
     --foreground: 0 0% 100%;
     --card: 0 0% 100% / 0.06;
@@ -58,7 +56,6 @@
   }
 
   [data-theme='desert-sand'] {
-    /* WARM DESERT SAND */
     --background: 35 50% 95%;
     --foreground: 25 40% 20%;
     --card: 35 50% 98%;
@@ -73,7 +70,6 @@
   }
 
   [data-theme='emerald-night'] {
-    /* DEEP EMERALD NIGHT */
     --background: 160 50% 4%;
     --foreground: 160 40% 95%;
     --card: 160 50% 7%;
@@ -88,7 +84,6 @@
   }
 
   [data-theme='cosmic-neon'] {
-    /* COSMIC PURPLE NEON */
     --background: 260 50% 4%;
     --foreground: 260 40% 98%;
     --card: 260 50% 8%;
@@ -103,7 +98,6 @@
   }
 
   [data-theme='neon-volt'] {
-    /* BLACK & VOLT GREEN */
     --background: 0 0% 2%;
     --foreground: 75 100% 90%;
     --card: 0 0% 5%;
@@ -118,7 +112,6 @@
   }
 
   [data-theme='minimal-snow'] {
-    /* PURE ARCTIC SNOW */
     --background: 0 0% 100%;
     --foreground: 0 0% 10%;
     --card: 0 0% 100%;
@@ -134,7 +127,6 @@
   }
 
   [data-theme='minimal-rose'] {
-    /* SOFT ROSE MINIMAL */
     --background: 350 100% 99%;
     --foreground: 350 40% 15%;
     --card: 350 100% 100%;
@@ -150,7 +142,6 @@
   }
 
   [data-theme='minimal-sky'] {
-    /* SOFT SKY MINIMAL */
     --background: 210 100% 99%;
     --foreground: 210 40% 15%;
     --card: 210 100% 100%;
@@ -166,7 +157,6 @@
   }
 
   [data-theme='cute-mint-glass'] {
-    /* MINTY MARSHMALLOW */
     --background: 160 60% 98%;
     --foreground: 160 40% 20%;
     --card: 0 0% 100% / 0.7;
@@ -181,7 +171,6 @@
   }
 
   [data-theme='cute-berry-glass'] {
-    /* BERRY MARSHMALLOW - RED/PINK */
     --background: 350 60% 98%;
     --foreground: 350 40% 20%;
     --card: 0 0% 100% / 0.7;
@@ -196,7 +185,6 @@
   }
 
   [data-theme='cute-cloud-glass'] {
-    /* CLOUD MARSHMALLOW - BLUE */
     --background: 210 60% 98%;
     --foreground: 210 40% 20%;
     --card: 0 0% 100% / 0.7;
@@ -210,8 +198,77 @@
     --border: 210 100% 85%;
   }
 
+  [data-theme='cute-lavender-glass'] {
+    --background: 270 60% 98%;
+    --foreground: 270 40% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 270 40% 20%;
+    --primary: 270 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 270 50% 92%;
+    --muted: 270 30% 95%;
+    --muted-foreground: 270 20% 45%;
+    --accent: 270 100% 90%;
+    --border: 270 100% 85%;
+  }
+
+  [data-theme='cute-peach-glass'] {
+    --background: 25 60% 98%;
+    --foreground: 25 40% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 25 40% 20%;
+    --primary: 25 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 25 50% 92%;
+    --muted: 25 30% 95%;
+    --muted-foreground: 25 20% 45%;
+    --accent: 25 100% 90%;
+    --border: 25 100% 85%;
+  }
+
+  [data-theme='cute-lemon-glass'] {
+    --background: 50 60% 98%;
+    --foreground: 50 40% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 50 40% 20%;
+    --primary: 50 100% 50%;
+    --primary-foreground: 0 0% 10%;
+    --secondary: 50 50% 92%;
+    --muted: 50 30% 95%;
+    --muted-foreground: 50 20% 45%;
+    --accent: 50 100% 90%;
+    --border: 50 100% 85%;
+  }
+
+  [data-theme='cute-sakura-glass'] {
+    --background: 340 60% 99%;
+    --foreground: 340 40% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 340 40% 20%;
+    --primary: 340 100% 70%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 340 50% 92%;
+    --muted: 340 30% 95%;
+    --muted-foreground: 340 20% 45%;
+    --accent: 340 100% 90%;
+    --border: 340 100% 85%;
+  }
+
+  [data-theme='cute-galaxy-glass'] {
+    --background: 280 60% 98%;
+    --foreground: 280 40% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 280 40% 20%;
+    --primary: 280 100% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 280 50% 92%;
+    --muted: 280 30% 95%;
+    --muted-foreground: 280 20% 45%;
+    --accent: 280 100% 90%;
+    --border: 280 100% 85%;
+  }
+
   [data-theme='velvet-sunset'] {
-    /* DEEP VELVET SUNSET */
     --background: 350 50% 5%;
     --foreground: 20 40% 95%;
     --card: 350 50% 8%;
@@ -284,4 +341,15 @@
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(100vh); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+.animate-float-up {
+  animation: float-up linear infinite;
 }

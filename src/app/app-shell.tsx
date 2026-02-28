@@ -7,6 +7,11 @@ import { useUserPreferences } from '@/context/user-preferences-context';
 import { MintyAnimation } from '@/components/themes/minty-animation';
 import { BerryAnimation } from '@/components/themes/berry-animation';
 import { CloudAnimation } from '@/components/themes/cloud-animation';
+import { LavenderAnimation } from '@/components/themes/lavender-animation';
+import { PeachAnimation } from '@/components/themes/peach-animation';
+import { LemonAnimation } from '@/components/themes/lemon-animation';
+import { SakuraAnimation } from '@/components/themes/sakura-animation';
+import { GalaxyAnimation } from '@/components/themes/galaxy-animation';
 import { cn } from '@/lib/utils';
 
 function AppShellContent({ children }: { children: React.ReactNode }) {
@@ -43,21 +48,22 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
             {/* Ambient Lighting System for Midnight Glass */}
             {isMidnight && (
                 <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-                    {/* Top Center White Glow */}
                     <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[140%] h-[60%] rounded-full bg-[rgba(255,255,255,0.12)] blur-[80px]" />
-                    {/* Bottom Blue Aura */}
                     <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[160%] h-[70%] rounded-full bg-[rgba(0,80,255,0.18)] blur-[100px]" />
-                    {/* Side Haze Left */}
                     <div className="absolute top-1/2 -left-[30%] w-[60%] h-[60%] rounded-full bg-[rgba(255,255,255,0.05)] blur-[80px]" />
-                    {/* Side Haze Right */}
                     <div className="absolute top-1/2 -right-[30%] w-[60%] h-[60%] rounded-full bg-[rgba(255,255,255,0.05)] blur-[80px]" />
                 </div>
             )}
 
-            {/* Live Animations for Cute Marshmallow themes */}
+            {/* Live Animations for Ultra Cute themes */}
             {theme === 'cute-mint-glass' && <MintyAnimation />}
             {theme === 'cute-berry-glass' && <BerryAnimation />}
             {theme === 'cute-cloud-glass' && <CloudAnimation />}
+            {theme === 'cute-lavender-glass' && <LavenderAnimation />}
+            {theme === 'cute-peach-glass' && <PeachAnimation />}
+            {theme === 'cute-lemon-glass' && <LemonAnimation />}
+            {theme === 'cute-sakura-glass' && <SakuraAnimation />}
+            {theme === 'cute-galaxy-glass' && <GalaxyAnimation />}
             
             <main className="relative z-10 flex-grow pb-24 md:pb-0 h-full px-0 md:px-6 lg:px-12">
                 {children}
