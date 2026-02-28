@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ClubHeader } from '@/components/club-header';
 import { Card, CardContent } from '@/components/ui/card';
-import { MessageCircle, Bug, ArrowLeft } from 'lucide-react';
+import { MessageCircle, Bug, CreditCard, LayoutDashboard } from 'lucide-react';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 
@@ -31,6 +31,17 @@ export default function AdminPage() {
                 <ClubHeader title="Admin Dashboard" showBackButton />
                 
                 <div className="grid grid-cols-2 gap-6 mt-12">
+                    <Link href="/admin/payments" passHref>
+                        <Card className="aspect-square bg-card/80 backdrop-blur-xl border-none shadow-xl flex flex-col items-center justify-center hover:scale-105 transition-transform cursor-pointer group border-l-4 border-l-green-500">
+                            <CardContent className="p-0 flex flex-col items-center gap-4">
+                                <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
+                                    <CreditCard className="w-8 h-8 text-green-600" />
+                                </div>
+                                <span className="font-bold text-lg">Payments</span>
+                            </CardContent>
+                        </Card>
+                    </Link>
+
                     <Link href="/admin/support" passHref>
                         <Card className="aspect-square bg-card/80 backdrop-blur-xl border-none shadow-xl flex flex-col items-center justify-center hover:scale-105 transition-transform cursor-pointer group">
                             <CardContent className="p-0 flex flex-col items-center gap-4">
@@ -48,10 +59,9 @@ export default function AdminPage() {
                                 <div className="w-16 h-16 bg-destructive/10 rounded-2xl flex items-center justify-center group-hover:bg-destructive/20 transition-colors">
                                     <Bug className="w-8 h-8 text-destructive" />
                                 </div>
-                                <span className="font-bold text-lg">Bug Reports</span>
+                                <span className="font-bold text-lg">Bugs</span>
                             </CardContent>
-                        </Card>
-                    </Link>
+                        </Link>
                 </div>
             </div>
         </div>

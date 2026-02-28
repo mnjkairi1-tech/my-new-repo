@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useCallback, useRef, Suspense, useState, useEffect } from 'react';
@@ -15,7 +16,8 @@ import {
   Heart,
   Star,
   ExternalLink,
-  Loader2
+  Loader2,
+  Lock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -29,13 +31,15 @@ import { cn } from '@/lib/utils';
 import { AuthScreen } from '@/components/auth-gate';
 import { useLanguage } from '@/lib/language';
 import { useUserPreferences } from '@/context/user-preferences-context';
-import { useUser } from '@/firebase/auth/use-user';
+import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   popularTools,
   quickToolCategories,
 } from '@/lib/home-page-data';
 import type { Tool } from '@/lib/types';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 
 const ToolsTabContent = dynamic(() => import('@/components/tools-tab-content'), {
     ssr: false,
@@ -276,20 +280,41 @@ function HomePageContent() {
 function GalaxyAppMain() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const firestore = useFirestore();
   const { t } = useLanguage();
   const activeTab = searchParams.get('tab') || 'home';
   const { user } = useUser();
   const { theme, addRecentTool } = useUserPreferences();
   const isMidnight = theme === 'midnight-glass';
   const [mounted, setMounted] = useState(false);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const [requiredPlan, setRequiredPlan] = useState<'standard' | 'pro'>('standard');
+
+  const userProfileRef = useMemoFirebase(() => firestore && user ? doc(firestore, 'user_profiles', user.uid) : null, [firestore, user]);
+  const { data: userProfile } = useDoc(userProfileRef);
+  const userPlan = userProfile?.plan || 'basic';
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const handleRestrictedAccess = (e: React.MouseEvent, type: 'max' | 'ultra') => {
+    e.preventDefault();
+    if (type === 'max' && userPlan === 'basic') {
+        setRequiredPlan('standard');
+        setIsUpgradeModalOpen(true);
+    } else if (type === 'ultra' && (userPlan === 'basic' || userPlan === 'standard')) {
+        setRequiredPlan('pro');
+        setIsUpgradeModalOpen(true);
+    } else {
+        router.push(type === 'max' ? '/max-free' : '/ultra-free');
+    }
+  };
+
   if (!mounted) return null;
 
   return (
+    <>
     <Tabs value={activeTab} className="h-full flex flex-col">
         <header className={cn(
             "px-4 pt-6 flex-shrink-0 sticky top-0 z-50 transition-all",
@@ -306,24 +331,26 @@ function GalaxyAppMain() {
                     <span className={cn("text-xl font-bold tracking-tight", isMidnight ? "text-white" : "text-foreground")}>Ai Atlas</span>
                 </div>
                 <div className='flex items-start gap-3'>
-                    <Link href="/ultra-free" className="flex flex-col items-center gap-1 group">
-                        <Button variant="ghost" size="icon" className={cn(
-                            "rounded-full w-10 h-10 transition-all group-hover:scale-110",
+                    <button onClick={(e) => handleRestrictedAccess(e, 'ultra')} className="flex flex-col items-center gap-1 group">
+                        <div className={cn(
+                            "rounded-full w-10 h-10 flex items-center justify-center transition-all group-hover:scale-110 relative",
                             isMidnight ? "bg-white/10 text-white border border-white/20" : "bg-secondary"
                         )}>
                             <Sparkles className="w-5 h-5" />
-                        </Button>
+                            {userPlan !== 'pro' && <Lock className="absolute -top-1 -right-1 w-3 h-3 text-yellow-500 fill-current" />}
+                        </div>
                         <span className={cn("text-[9px] font-black uppercase tracking-tighter text-center leading-none", isMidnight ? "text-white/60" : "text-primary/80")}>Ultra</span>
-                    </Link>
-                    <Link href="/max-free" className="flex flex-col items-center gap-1 group">
-                        <Button variant="ghost" size="icon" className={cn(
-                            "rounded-full w-10 h-10 transition-all group-hover:scale-110",
+                    </button>
+                    <button onClick={(e) => handleRestrictedAccess(e, 'max')} className="flex flex-col items-center gap-1 group">
+                        <div className={cn(
+                            "rounded-full w-10 h-10 flex items-center justify-center transition-all group-hover:scale-110 relative",
                             isMidnight ? "bg-white/10 text-white border border-white/20" : "bg-secondary"
                         )}>
                             <Gift className="w-5 h-5" />
-                        </Button>
+                            {userPlan === 'basic' && <Lock className="absolute -top-1 -right-1 w-3 h-3 text-yellow-500 fill-current" />}
+                        </div>
                         <span className={cn("text-[9px] font-black uppercase tracking-tighter text-center leading-none", isMidnight ? "text-white/60" : "text-primary/80")}>Max</span>
-                    </Link>
+                    </button>
                     <Link href="/mode" className="flex flex-col items-center gap-1 group">
                         <Button variant="ghost" size="icon" className={cn(
                             "rounded-full w-10 h-10 transition-all group-hover:scale-110",
@@ -397,6 +424,38 @@ function GalaxyAppMain() {
             </TabsContent>
         </div>
     </Tabs>
+
+    <Dialog open={isUpgradeModalOpen} onOpenChange={setIsUpgradeModalOpen}>
+        <DialogContent className="max-w-sm rounded-[2rem] border-none shadow-2xl">
+            <div className="text-center py-6">
+                <div className="w-20 h-20 bg-yellow-400/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Crown className="w-10 h-10 text-yellow-500 fill-current" />
+                </div>
+                <DialogHeader>
+                    <DialogTitle className="text-2xl font-black text-center">Upgrade Your Plan</DialogTitle>
+                    <DialogDescription className="text-center text-base font-medium mt-2">
+                        To enjoy {requiredPlan === 'pro' ? 'Ultra Free' : 'Max Free'} features, please upgrade to the <strong>{requiredPlan.toUpperCase()}</strong> plan.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="mt-8 space-y-3">
+                    <Button 
+                        onClick={() => { setIsUpgradeModalOpen(false); router.push('/subscription/plans'); }}
+                        className="w-full h-12 rounded-xl font-bold bg-primary text-white shadow-lg"
+                    >
+                        View Plans 🚀
+                    </Button>
+                    <Button 
+                        variant="ghost" 
+                        onClick={() => setIsUpgradeModalOpen(false)}
+                        className="w-full font-bold text-muted-foreground"
+                    >
+                        Maybe Later
+                    </Button>
+                </div>
+            </div>
+        </DialogContent>
+    </Dialog>
+    </>
   );
 }
 
