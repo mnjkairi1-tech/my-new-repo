@@ -30,6 +30,17 @@ export default function SubscriptionPlansPage() {
   const { user } = useUser();
   const firestore = useFirestore();
 
+  const premiumFeatures = [
+    'Get access to 1 million + tools',
+    '50 Favourite Tools',
+    'unlimited Favourite Tools',
+    'Max free tools',
+    'Get tools which is free for some time',
+    'ultra free tools',
+    'get daily new tools add automatically',
+    'get community premium blue ticks'
+  ];
+
   const plans = {
     basic: {
       name: 'Basic',
@@ -121,7 +132,6 @@ export default function SubscriptionPlansPage() {
     setIsVerifying(true);
     
     setTimeout(async () => {
-        // 1. Send request to Owner Portal
         const paymentRef = collection(firestore, 'paymentRequests');
         await addDocumentNonBlocking(paymentRef, {
             userId: user.uid,
@@ -133,7 +143,6 @@ export default function SubscriptionPlansPage() {
             createdAt: serverTimestamp(),
         });
 
-        // 2. Add to User's local billing history
         const userBillingRef = doc(firestore, 'users', user.uid, 'billing_history', utrNumber);
         setDocumentNonBlocking(userBillingRef, {
             plan: activePlan,
@@ -208,14 +217,22 @@ export default function SubscriptionPlansPage() {
                     {currentPlan.description}
                 </p>
                 <div className="space-y-4">
-                    {currentPlan.features.map((feature, i) => (
-                        <div key={i} className="flex items-center gap-3">
-                            <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
-                                <Check className="w-3.5 h-3.5 text-green-600" />
+                    {currentPlan.features.map((feature, i) => {
+                        const isPremium = premiumFeatures.includes(feature);
+                        return (
+                            <div key={i} className="flex items-center justify-between gap-3 group">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                                        <Check className="w-3.5 h-3.5 text-green-600" />
+                                    </div>
+                                    <span className="text-sm font-semibold text-foreground/80">{feature}</span>
+                                </div>
+                                {isPremium && (
+                                    <Crown className="w-4 h-4 text-yellow-500 fill-yellow-500/20 shrink-0 animate-pulse" />
+                                )}
                             </div>
-                            <span className="text-sm font-semibold text-foreground/80">{feature}</span>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
               </CardContent>
 
