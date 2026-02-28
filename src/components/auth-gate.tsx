@@ -153,7 +153,7 @@ function EmailAuth() {
 
   if (signUpState === 'pendingVerification' && authMode === 'signUp') {
       return (
-        <div className="rounded-2xl bg-card/80 backdrop-blur-sm shadow-xl p-6 text-center border-t-4 border-primary animate-fade-in-up">
+        <div className="rounded-2xl bg-card/90 backdrop-blur-md shadow-xl p-6 text-center border-t-4 border-primary animate-fade-in-up">
             <MailCheck className="w-16 h-16 text-green-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">Verify Your Email</h2>
             <p className="text-muted-foreground mb-4">
@@ -166,129 +166,125 @@ function EmailAuth() {
       );
   }
 
-  const isFlipped = authMode === 'signUp';
-
   return (
-    <div className="w-full perspective-1000 relative">
-      <div className={cn(
-        "relative w-full transition-transform duration-700 preserve-3d min-h-[420px]",
-        isFlipped && "[transform:rotateY(180deg)]"
-      )}>
-        {/* Front Side: Sign In / Forgot Password */}
-        <div className="backface-hidden w-full h-full bg-card/80 backdrop-blur-sm shadow-2xl rounded-3xl p-8 border border-white/20">
-          <h2 className="text-2xl font-black mb-6 text-center tracking-tight">
-            {authMode === 'forgotPassword' ? 'Reset Password' : 'Sign In'}
-          </h2>
-          
-          {authMode === 'forgotPassword' && (
-              <p className="text-xs text-muted-foreground mb-6 text-center leading-relaxed">
-                  Enter your email and we'll send you a password reset link.
-              </p>
-          )}
-
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-bold ml-1">Email Address</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              
-              {authMode !== 'forgotPassword' && (
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center justify-between px-1">
-                            <FormLabel className="font-bold">Password</FormLabel>
-                            <Button 
-                                variant="link" 
-                                className="h-auto p-0 text-xs text-primary font-bold"
-                                type="button"
-                                onClick={(e) => { e.preventDefault(); setAuthMode('forgotPassword'); }}
-                            >
-                                Forgot?
-                            </Button>
-                        </div>
-                        <FormControl>
-                          <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-              )}
-
-              <Button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-2xl text-lg font-black shadow-lg shadow-primary/20 transition-all active:scale-95">
-                {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (authMode === 'forgotPassword' ? 'Send Reset Link' : 'Login Now')}
+    <div className="w-full relative overflow-hidden min-h-[420px]">
+      {/* Container for the sliding effect */}
+      <div className="w-full bg-card/90 backdrop-blur-md shadow-2xl rounded-3xl p-8 border border-white/20 animate-fade-in-up">
+        {authMode === 'signUp' ? (
+          <div className="space-y-5 animate-in slide-in-from-right duration-500">
+            <h2 className="text-2xl font-black mb-6 text-center tracking-tight">Join AI Atlas</h2>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold ml-1">Email Address</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold ml-1">Choose Password</FormLabel>
+                      <FormControl>
+                        <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-2xl text-lg font-black shadow-lg shadow-primary/20 transition-all active:scale-95">
+                  {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Register Now'}
+                </Button>
+              </form>
+            </Form>
+            <div className="mt-6 text-center">
+              <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signIn'); }}>
+                Already have an account? Sign In
               </Button>
-            </form>
-          </Form>
-          
-          <div className="mt-6 text-center">
-            {authMode === 'forgotPassword' ? (
-                <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signIn'); }}>
-                    Back to Sign In
-                </Button>
-            ) : (
-                <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signUp'); }}>
-                  Create a new account
-                </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-5 animate-in slide-in-from-left duration-500">
+            <h2 className="text-2xl font-black mb-6 text-center tracking-tight">
+              {authMode === 'forgotPassword' ? 'Reset Password' : 'Sign In'}
+            </h2>
+            
+            {authMode === 'forgotPassword' && (
+                <p className="text-xs text-muted-foreground mb-6 text-center leading-relaxed">
+                    Enter your email and we'll send you a password reset link.
+                </p>
             )}
-          </div>
-        </div>
 
-        {/* Back Side: Sign Up */}
-        <div className="absolute inset-0 backface-hidden [transform:rotateY(180deg)] w-full h-full bg-card/80 backdrop-blur-sm shadow-2xl rounded-3xl p-8 border border-white/20">
-          <h2 className="text-2xl font-black mb-6 text-center tracking-tight">Join AI Atlas</h2>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-bold ml-1">Email Address</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold ml-1">Email Address</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                {authMode !== 'forgotPassword' && (
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <div className="flex items-center justify-between px-1">
+                              <FormLabel className="font-bold">Password</FormLabel>
+                              <Button 
+                                  variant="link" 
+                                  className="h-auto p-0 text-xs text-primary font-bold"
+                                  type="button"
+                                  onClick={(e) => { e.preventDefault(); setAuthMode('forgotPassword'); }}
+                              >
+                                  Forgot?
+                              </Button>
+                          </div>
+                          <FormControl>
+                            <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                 )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-bold ml-1">Choose Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-2xl text-lg font-black shadow-lg shadow-primary/20 transition-all active:scale-95">
-                {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Register Now'}
-              </Button>
-            </form>
-          </Form>
-          <div className="mt-6 text-center">
-            <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signIn'); }}>
-              Already have an account? Sign In
-            </Button>
+
+                <Button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-2xl text-lg font-black shadow-lg shadow-primary/20 transition-all active:scale-95">
+                  {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (authMode === 'forgotPassword' ? 'Send Reset Link' : 'Login Now')}
+                </Button>
+              </form>
+            </Form>
+            
+            <div className="mt-6 text-center">
+              {authMode === 'forgotPassword' ? (
+                  <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signIn'); }}>
+                      Back to Sign In
+                  </Button>
+              ) : (
+                  <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signUp'); }}>
+                    Create a new account
+                  </Button>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -304,10 +300,8 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   useEffect(() => {
     if (!auth) return;
 
-    // Set persistence to local to ensure session survives reloads
     setPersistence(auth, browserLocalPersistence);
 
-    // Pick up redirect result
     getRedirectResult(auth).then((result) => {
       if (result?.user) {
         onUser(result.user);
@@ -330,7 +324,6 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: 'select_account' });
         
-        // Native bridge support
         if ((window as any).flutter_inappwebview) {
             (window as any).flutter_inappwebview.callHandler('requestGoogleSignIn');
             return;
@@ -364,7 +357,6 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
     };
   }, [auth, onUser]);
 
-  // While checking if we just came back from a redirect, show the loader
   if (isCheckingRedirect || isSigningIn) {
       return <AuthLoader />;
   }
