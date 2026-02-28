@@ -32,6 +32,8 @@ export default function SubscriptionPlansPage() {
 
   const premiumFeatures = [
     'Get access to 1 million + tools',
+    'Get access to 1 million tools',
+    'Community Access',
     '50 Favourite Tools',
     'unlimited Favourite Tools',
     'Max free tools',
