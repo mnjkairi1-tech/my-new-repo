@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState } from 'react';
@@ -95,7 +94,6 @@ export default function SubscriptionPlansPage() {
         'Recent usage tool',
         'Max free tools',
         'Get tools which is free for some time',
-        'mod apps',
         'ultra free tools',
         'get daily new tools add automatically',
         'get community premium blue ticks',

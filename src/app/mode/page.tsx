@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Users, Palette, X, PlusCircle, Scale, Gift, ShieldAlert } from 'lucide-react';
+import { Users, Palette, X, PlusCircle, Scale, ShieldAlert } from 'lucide-react';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { useUser } from '@/firebase';
 
@@ -15,7 +15,6 @@ export default function ModePage() {
     { href: '/community', icon: <Users className="h-10 w-10 text-primary" />, label: 'Community' },
     { href: '/ui-themes', icon: <Palette className="h-10 w-10 text-primary" />, label: 'UI Themes' },
     { href: '/?tab=tools', icon: <Scale className="h-10 w-10 text-primary" />, label: 'Compare', onClick: clearComparison },
-    { href: 'https://modyolo.com/apps/productivity', icon: <Gift className="h-10 w-10 text-primary" />, label: 'Mod Apps', isExternal: true },
   ];
 
   // Add Admin mode only for the specific owner
@@ -41,10 +40,10 @@ export default function ModePage() {
       </div>
       <div className="relative z-10 flex flex-col items-center justify-start pt-12 w-full max-w-md mx-auto">
         <h1 className="text-4xl font-bold text-center text-foreground mb-12">Select a Mode</h1>
-        <div className="grid grid-cols-4 gap-4 w-full">
+        <div className="grid grid-cols-3 gap-4 w-full">
           {modes.map((mode) => (
             <div key={mode.label} className="flex flex-col items-center gap-2">
-                <Link href={mode.href} passHref onClick={() => mode.onClick && mode.onClick()} target={mode.isExternal ? '_blank' : '_self'} rel={mode.isExternal ? 'noopener noreferrer' : ''}>
+                <Link href={mode.href} passHref onClick={() => mode.onClick && mode.onClick()}>
                     <Button variant="secondary" size="icon" className="w-16 h-16 rounded-full shadow-lg soft-shadow">
                         {mode.icon}
                     </Button>
