@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    /* DEFAULT: SOFT LAVENDER LIGHT */
     --background: 255 75% 98%;
     --foreground: 255 20% 25%;
     --card: 255 100% 100%;
@@ -23,49 +24,117 @@
     --border: 255 100% 90%;
     --input: 255 100% 90%;
     --ring: 258 100% 70%;
-    --radius: 1rem;
+    --radius: 1.25rem;
   }
 
-  [data-theme='dark'], .dark {
-    --background: 222 84% 5%;
-    --foreground: 210 40% 98%;
-    --card: 222 84% 8%;
-    --card-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
+  [data-theme='dark'] {
+    /* CLASSIC DARK: SLATE */
+    --background: 222 47% 11%;
+    --foreground: 213 27% 84%;
+    --card: 222 47% 11%;
+    --card-foreground: 213 27% 84%;
+    --primary: 210 40% 98%;
     --primary-foreground: 222 47% 11%;
-    --secondary: 217 33% 18%;
-    --muted: 217 33% 18%;
-    --muted-foreground: 215 28% 65%;
-    --accent: 217 33% 18%;
-    --border: 217 33% 18%;
-    --ring: 224.3 76.3% 48%;
+    --secondary: 222 47% 15%;
+    --muted: 223 47% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 216 34% 17%;
+    --border: 216 34% 17%;
   }
 
-  /* ULTRA-REALISTIC MIDNIGHT GLASS */
   [data-theme='midnight-glass'] {
+    /* ULTRA MIDNIGHT GLASS */
     --background: 225 43% 4%;
     --foreground: 0 0% 100%;
     --card: 0 0% 100% / 0.06;
     --card-foreground: 0 0% 100%;
-    --popover: 225 43% 4%;
     --primary: 0 0% 100%;
     --primary-foreground: 225 43% 4%;
     --secondary: 0 0% 100% / 0.1;
-    --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 100% / 0.12;
     --muted-foreground: 0 0% 70%;
     --accent: 0 0% 100% / 0.15;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 0 0% 100%;
     --border: 0 0% 100% / 0.18;
-    --input: 0 0% 100% / 0.1;
-    --ring: 0 0% 100%;
-    --radius: 1rem;
   }
 
-  /* MINTY MARSHMALLOW */
+  [data-theme='desert-sand'] {
+    /* WARM DESERT SAND */
+    --background: 35 50% 95%;
+    --foreground: 25 40% 20%;
+    --card: 35 50% 98%;
+    --card-foreground: 25 40% 20%;
+    --primary: 25 80% 50%;
+    --primary-foreground: 35 50% 98%;
+    --secondary: 35 60% 88%;
+    --muted: 35 40% 90%;
+    --muted-foreground: 25 30% 45%;
+    --accent: 25 100% 92%;
+    --border: 35 40% 85%;
+  }
+
+  [data-theme='emerald-night'] {
+    /* DEEP EMERALD NIGHT */
+    --background: 160 50% 4%;
+    --foreground: 160 40% 95%;
+    --card: 160 50% 7%;
+    --card-foreground: 160 40% 95%;
+    --primary: 160 80% 60%;
+    --primary-foreground: 160 50% 4%;
+    --secondary: 160 40% 12%;
+    --muted: 160 30% 15%;
+    --muted-foreground: 160 20% 65%;
+    --accent: 160 80% 20%;
+    --border: 160 40% 15%;
+  }
+
+  [data-theme='cosmic-neon'] {
+    /* COSMIC PURPLE NEON */
+    --background: 260 50% 4%;
+    --foreground: 260 40% 98%;
+    --card: 260 50% 8%;
+    --card-foreground: 260 40% 98%;
+    --primary: 280 100% 75%;
+    --primary-foreground: 260 50% 4%;
+    --secondary: 260 40% 15%;
+    --muted: 260 30% 18%;
+    --muted-foreground: 260 20% 70%;
+    --accent: 280 100% 25%;
+    --border: 260 40% 20%;
+  }
+
+  [data-theme='neon-volt'] {
+    /* BLACK & VOLT GREEN */
+    --background: 0 0% 2%;
+    --foreground: 75 100% 90%;
+    --card: 0 0% 5%;
+    --card-foreground: 75 100% 90%;
+    --primary: 75 100% 50%;
+    --primary-foreground: 0 0% 2%;
+    --secondary: 0 0% 10%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 75 20% 60%;
+    --accent: 75 100% 15%;
+    --border: 0 0% 15%;
+  }
+
+  [data-theme='minimal-snow'] {
+    /* PURE ARCTIC SNOW */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 90%;
+    --border: 0 0% 90%;
+    --radius: 0.5rem;
+  }
+
   [data-theme='cute-mint-glass'] {
+    /* MINTY MARSHMALLOW */
     --background: 160 60% 98%;
     --foreground: 160 40% 20%;
     --card: 0 0% 100% / 0.7;
@@ -77,14 +146,28 @@
     --muted-foreground: 160 20% 45%;
     --accent: 160 100% 90%;
     --border: 160 100% 85%;
-    --radius: 1.25rem;
+  }
+
+  [data-theme='velvet-sunset'] {
+    /* DEEP VELVET SUNSET */
+    --background: 350 50% 5%;
+    --foreground: 20 40% 95%;
+    --card: 350 50% 8%;
+    --card-foreground: 20 40% 95%;
+    --primary: 20 100% 60%;
+    --primary-foreground: 350 50% 5%;
+    --secondary: 350 40% 12%;
+    --muted: 350 30% 15%;
+    --muted-foreground: 20 20% 70%;
+    --accent: 20 100% 20%;
+    --border: 350 40% 18%;
   }
 }
 
 @layer base {
   * { @apply border-border; }
   body {
-    @apply bg-background text-foreground transition-colors duration-300 overflow-x-hidden antialiased;
+    @apply bg-background text-foreground transition-colors duration-500 overflow-x-hidden antialiased;
     min-height: 100vh;
   }
 }
@@ -111,28 +194,17 @@
       inset 0 -1px 1px rgba(0, 0, 0, 0.6) !important;
   }
 
-  .glass-card-effect::before {
-    content: "";
-    @apply absolute inset-0 pointer-events-none;
-    background: radial-gradient(
-      circle at 20% 20%,
-      rgba(255, 255, 255, 0.35) 0%,
-      transparent 40%
-    );
-    opacity: 0.6;
-    z-index: 1;
+  .bottom-nav-glass {
+    background: rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(25px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 
-  /* 3D Flip Utilities */
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-  .backface-hidden {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+  .glass-input-effect {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 }
 

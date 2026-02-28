@@ -101,24 +101,11 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     // Manage Tailwind 'dark' class for automatic dark mode support
     const darkThemes = [
       'dark', 
-      'premium-dark', 
-      'neoglass', 
-      'black-vision', 
-      'cyberwave', 
-      'winter-glassmorphism', 
-      'neon-phantom',
-      'oled-stealth',
+      'midnight-glass',
       'emerald-night',
-      'minimal-obsidian',
-      'minimal-forest',
-      'minimal-ocean',
-      'premium-glass',
-      'esports-pro',
-      'velvet-sunset',
       'cosmic-neon',
       'neon-volt',
-      'minimal-snow',
-      'midnight-glass'
+      'velvet-sunset'
     ];
     if (darkThemes.includes(newTheme)) {
       root.classList.add('dark');
