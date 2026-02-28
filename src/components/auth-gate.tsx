@@ -76,7 +76,7 @@ const authSchema = z.object({
 });
 
 function EmailAuth() {
-  const [authMode, setAuthMode] = useState<'signIn' | 'signUp' | 'forgotPassword'>('signUp');
+  const [authMode, setAuthMode] = useState<'signIn' | 'signUp' | 'forgotPassword'>('signIn');
   const [signUpState, setSignUpState] = useState<'form' | 'pendingVerification'>('form');
   const [emailForVerification, setEmailForVerification] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -166,7 +166,7 @@ function EmailAuth() {
       );
   }
 
-  const isFlipped = authMode === 'signIn' || authMode === 'forgotPassword';
+  const isFlipped = authMode === 'signUp';
 
   return (
     <div className="w-full perspective-1000">
@@ -174,51 +174,8 @@ function EmailAuth() {
         "relative w-full transition-transform duration-700 preserve-3d min-h-[400px]",
         isFlipped && "[transform:rotateY(180deg)]"
       )}>
-        {/* Front Side: Sign Up */}
+        {/* Front Side: Sign In / Forgot Password */}
         <div className="backface-hidden w-full h-full bg-card/80 backdrop-blur-sm soft-shadow rounded-2xl p-6">
-          <h2 className="text-2xl font-bold mb-4 text-center">Create an Account</h2>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={isSubmitting} className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/20">
-                {isSubmitting ? 'Creating...' : 'Create Account'}
-              </Button>
-            </form>
-          </Form>
-          <div className="mt-4 text-center">
-            <Button variant="link" className="font-bold text-sm text-primary" onClick={() => setAuthMode('signIn')}>
-              Already have an account? Sign In
-            </Button>
-          </div>
-        </div>
-
-        {/* Back Side: Sign In / Forgot Password */}
-        <div className="absolute inset-0 backface-hidden [transform:rotateY(180deg)] w-full h-full bg-card/80 backdrop-blur-sm soft-shadow rounded-2xl p-6">
           <h2 className="text-2xl font-bold mb-4 text-center">
             {authMode === 'forgotPassword' ? 'Reset Password' : 'Sign In'}
           </h2>
@@ -257,7 +214,7 @@ function EmailAuth() {
                                 variant="link" 
                                 className="h-auto p-0 text-xs text-primary font-bold"
                                 type="button"
-                                onClick={() => setAuthMode('forgotPassword')}
+                                onClick={(e) => { e.preventDefault(); setAuthMode('forgotPassword'); }}
                             >
                                 Forgot?
                             </Button>
@@ -279,14 +236,57 @@ function EmailAuth() {
           
           <div className="mt-4 text-center">
             {authMode === 'forgotPassword' ? (
-                <Button variant="link" className="font-bold text-sm text-primary" onClick={() => setAuthMode('signIn')}>
+                <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signIn'); }}>
                     Back to Sign In
                 </Button>
             ) : (
-                <Button variant="link" className="font-bold text-sm text-primary" onClick={() => setAuthMode('signUp')}>
+                <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signUp'); }}>
                   Don't have an account? Sign Up
                 </Button>
             )}
+          </div>
+        </div>
+
+        {/* Back Side: Sign Up */}
+        <div className="absolute inset-0 backface-hidden [transform:rotateY(180deg)] w-full h-full bg-card/80 backdrop-blur-sm soft-shadow rounded-2xl p-6">
+          <h2 className="text-2xl font-bold mb-4 text-center">Create an Account</h2>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" disabled={isSubmitting} className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/20">
+                {isSubmitting ? 'Creating...' : 'Create Account'}
+              </Button>
+            </form>
+          </Form>
+          <div className="mt-4 text-center">
+            <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signIn'); }}>
+              Already have an account? Sign In
+            </Button>
           </div>
         </div>
       </div>
@@ -324,8 +324,9 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
         onUser(result.user);
     } catch (error: any) {
         console.error("Google Sign-In Error:", error);
-        // Special check for webview closed errors
-        if (error.code !== 'auth/popup-closed-by-user') {
+        // Special check for user cancellation to avoid scary toasts
+        const silentErrors = ['auth/popup-closed-by-user', 'auth/cancelled-popup-request'];
+        if (!silentErrors.includes(error.code)) {
             toast({
                 variant: 'destructive',
                 title: 'Google Sign-In Failed',
