@@ -242,7 +242,7 @@ export default function SubscriptionPlansPage() {
       </div>
 
       <Dialog open={isPaymentModalOpen} onOpenChange={setIsPaymentModalOpen}>
-          <DialogContent className="max-w-sm rounded-[2rem] border-none bg-background p-0 overflow-hidden shadow-2xl">
+          <DialogContent className="max-w-sm rounded-[2.5rem] border-none bg-background p-0 overflow-hidden shadow-2xl">
                 <div className="p-0 flex flex-col items-center">
                     <div className="bg-primary w-full p-8 text-center text-white relative">
                         <QrCode className="w-16 h-16 mx-auto mb-2 opacity-90" />
@@ -250,11 +250,11 @@ export default function SubscriptionPlansPage() {
                         <p className="text-white/80 text-xs font-bold uppercase tracking-wider">Manual Verification Mode</p>
                     </div>
                     
-                    <div className="p-8 space-y-6 bg-card w-full rounded-t-[2rem] -mt-6 relative z-10 flex flex-col items-center">
+                    <div className="p-8 space-y-6 bg-card w-full rounded-t-[2.5rem] -mt-6 relative z-10 flex flex-col items-center">
                         <div className="bg-white p-4 rounded-3xl shadow-xl border-4 border-secondary">
                             <div className="relative w-48 h-48 bg-muted flex items-center justify-center rounded-xl overflow-hidden">
                                 <Image 
-                                    src="https://ibb.co/JFQPkgPB" 
+                                    src="https://i.ibb.co/fGv70L71/Whats-App-Image-2026-02-28-at-07-47-16.jpg" 
                                     alt="Payment QR" 
                                     width={200}
                                     height={200}
