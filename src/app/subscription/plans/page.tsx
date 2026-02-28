@@ -38,7 +38,8 @@ export default function SubscriptionPlansPage() {
     'Get tools which is free for some time',
     'ultra free tools',
     'get daily new tools add automatically',
-    'get community premium blue ticks'
+    'get community premium blue ticks',
+    'get new features early'
   ];
 
   const plans = {
