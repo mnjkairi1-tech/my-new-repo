@@ -9,9 +9,11 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    // Manoj's Global Admin Access
     function isGlobalOwner() {
       return isSignedIn() && (
         request.auth.token.email == "mnjkairi1@gmail.com" ||
+        request.auth.uid == "t9B6SJjDhAPxv3t9RunFmS3Ne4A2" ||
         request.auth.uid == "t9B6SJjDhAPxv3t9RunFmS3Ne4A2"
       );
     }
@@ -22,31 +24,34 @@ service cloud.firestore {
 
     // --- COLLECTION RULES ---
 
-    // 1. Payment Requests
+    // 1. Allow Owner to do EVERYTHING everywhere
+    match /{allPaths=**} {
+      allow read, write: if isGlobalOwner();
+    }
+
+    // 2. Payment Requests - Public Create for all users
     match /paymentRequests/{requestId} {
       allow create: if isSignedIn();
       allow read, update, delete: if isGlobalOwner();
     }
 
-    // 2. Support & Bug Reports
+    // 3. Support & Bug Reports - Public Create for all users
     match /supportRequests/{id} {
       allow create: if isSignedIn();
-      allow read, update, delete: if isGlobalOwner();
     }
     
     match /bugReports/{id} {
       allow create: if isSignedIn();
-      allow read, update, delete: if isGlobalOwner();
     }
 
-    // 3. User Data (Profiles & Billing History)
+    // 4. User Data (Profiles & Billing History)
     match /userProfiles/{userId} {
-      allow read: if isSignedIn();
+      allow read: if isOwner(userId) || isGlobalOwner();
       allow write: if isOwner(userId) || isGlobalOwner();
     }
     
     match /user_profiles/{userId} {
-      allow read: if isSignedIn();
+      allow read: if isOwner(userId) || isGlobalOwner();
       allow write: if isOwner(userId) || isGlobalOwner();
     }
 
@@ -54,31 +59,21 @@ service cloud.firestore {
       allow read, write: if isOwner(userId) || isGlobalOwner();
     }
 
-    // 4. Publicly Readable AI Catalog
+    // 5. Publicly Readable AI Catalog
     match /aiTools/{id} {
       allow read: if true;
-      allow write: if isGlobalOwner();
     }
     
     match /ai_tools/{id} {
       allow read: if true;
-      allow write: if isGlobalOwner();
     }
 
     match /aiCategories/{id} {
       allow read: if true;
-      allow write: if isGlobalOwner();
     }
     
     match /hidden_tools/{id} {
       allow read: if true;
-      allow write: if isGlobalOwner();
-    }
-
-    // 5. System Roles
-    match /roles_owner/{uid} {
-      allow read: if isSignedIn();
-      allow write: if false; // Managed via Console only
     }
 
     // 6. Community Groups
