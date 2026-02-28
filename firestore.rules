@@ -3,7 +3,8 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper Functions
+    // --- HELPER FUNCTIONS ---
+    
     function isSignedIn() {
       return request.auth != null;
     }
@@ -20,43 +21,15 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
-    // Publicly readable AI Tools and Categories
-    match /ai_tools/{toolId} {
-      allow read: if true;
-      allow write: if isGlobalOwner();
-    }
-    
-    match /aiTools/{toolId} {
-      allow read: if true;
-      allow write: if isGlobalOwner();
-    }
+    // --- COLLECTION RULES ---
 
-    match /aiCategories/{categoryId} {
-      allow read: if true;
-      allow write: if isGlobalOwner();
-    }
-    
-    match /hidden_tools/{toolId} {
-      allow read: if true;
-      allow write: if isGlobalOwner();
-    }
-
-    // User Profiles - Users can read/write their own
-    match /user_profiles/{userId} {
-      allow read, write: if isOwner(userId) || isGlobalOwner();
-    }
-    
-    match /userProfiles/{userId} {
-      allow read, write: if isOwner(userId) || isGlobalOwner();
-    }
-
-    // Payment Requests - Any user can create, only owner can manage
+    // 1. Payment Requests - Critical for Subscription
     match /paymentRequests/{requestId} {
       allow create: if isSignedIn();
       allow read, update, delete: if isGlobalOwner();
     }
 
-    // Support & Bug Reports
+    // 2. Support & Bug Reports
     match /supportRequests/{id} {
       allow create: if isSignedIn();
       allow read, update, delete: if isGlobalOwner();
@@ -67,20 +40,51 @@ service cloud.firestore {
       allow read, update, delete: if isGlobalOwner();
     }
 
-    // Generic User Data (Billing history, memberships etc)
+    // 3. User Data (Profiles, Billing History, Memberships)
+    match /userProfiles/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(userId) || isGlobalOwner();
+    }
+    
+    match /user_profiles/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(userId) || isGlobalOwner();
+    }
+
     match /users/{userId}/{allPaths=**} {
       allow read, write: if isOwner(userId) || isGlobalOwner();
     }
 
-    // Owner Roles
-    match /roles_owner/{ownerUid} {
-      allow read: if isSignedIn();
-      allow write: if false; // Only manageable via Firebase Console
+    // 4. Publicly Readable AI Catalog
+    match /aiTools/{id} {
+      allow read: if true;
+      allow write: if isGlobalOwner();
+    }
+    
+    match /ai_tools/{id} {
+      allow read: if true;
+      allow write: if isGlobalOwner();
     }
 
-    // Community Groups
+    match /aiCategories/{id} {
+      allow read: if true;
+      allow write: if isGlobalOwner();
+    }
+    
+    match /hidden_tools/{id} {
+      allow read: if true;
+      allow write: if isGlobalOwner();
+    }
+
+    // 5. System Roles
+    match /roles_owner/{uid} {
+      allow read: if isSignedIn();
+      allow write: if false; // Managed via Console only
+    }
+
+    // 6. Community Groups
     match /groups/{groupId} {
-      allow read: if true; 
+      allow read: if true;
       allow create: if isSignedIn();
       allow update, delete: if isSignedIn() && (resource.data.ownerId == request.auth.uid || isGlobalOwner());
 
@@ -90,8 +94,7 @@ service cloud.firestore {
       }
 
       match /messages/{messageId} {
-        allow read: if isSignedIn(); 
-        allow write: if isSignedIn();
+        allow read, write: if isSignedIn();
       }
 
       match /tools/{toolId} {
