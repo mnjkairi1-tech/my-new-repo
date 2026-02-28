@@ -61,7 +61,8 @@ export default function AdminPage() {
                                 </div>
                                 <span className="font-bold text-lg">Bugs</span>
                             </CardContent>
-                        </Link>
+                        </Card>
+                    </Link>
                 </div>
             </div>
         </div>
