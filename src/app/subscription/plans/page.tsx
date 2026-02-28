@@ -243,6 +243,10 @@ export default function SubscriptionPlansPage() {
 
       <Dialog open={isPaymentModalOpen} onOpenChange={setIsPaymentModalOpen}>
           <DialogContent className="max-w-sm rounded-[2.5rem] border-none bg-background p-0 overflow-hidden shadow-2xl">
+                <DialogHeader className="sr-only">
+                    <DialogTitle>Complete Payment</DialogTitle>
+                    <DialogDescription>Please scan the QR code and enter the UTR number to activate your plan.</DialogDescription>
+                </DialogHeader>
                 <div className="p-0 flex flex-col items-center">
                     <div className="bg-primary w-full p-8 text-center text-white relative">
                         <QrCode className="w-16 h-16 mx-auto mb-2 opacity-90" />
