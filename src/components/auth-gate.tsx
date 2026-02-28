@@ -167,53 +167,14 @@ function EmailAuth() {
   }
 
   return (
-    <div className="w-full relative overflow-hidden min-h-[420px]">
-      {/* Container for the sliding effect */}
-      <div className="w-full bg-card/90 backdrop-blur-md shadow-2xl rounded-3xl p-8 border border-white/20 animate-fade-in-up">
-        {authMode === 'signUp' ? (
-          <div className="space-y-5 animate-in slide-in-from-right duration-500">
-            <h2 className="text-2xl font-black mb-6 text-center tracking-tight">Join AI Atlas</h2>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-bold ml-1">Email Address</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-bold ml-1">Choose Password</FormLabel>
-                      <FormControl>
-                        <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-2xl text-lg font-black shadow-lg shadow-primary/20 transition-all active:scale-95">
-                  {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Register Now'}
-                </Button>
-              </form>
-            </Form>
-            <div className="mt-6 text-center">
-              <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signIn'); }}>
-                Already have an account? Sign In
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-5 animate-in slide-in-from-left duration-500">
+    <div className="w-full relative [perspective:1000px] min-h-[420px]">
+      <div className={cn(
+          "relative w-full h-full transition-all duration-700 [transform-style:preserve-3d]",
+          authMode === 'signUp' ? "[transform:rotateY(180deg)]" : ""
+      )}>
+        {/* FRONT SIDE: SIGN IN */}
+        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-card/90 backdrop-blur-md shadow-2xl rounded-3xl p-8 border border-white/20">
+          <div className="space-y-5">
             <h2 className="text-2xl font-black mb-6 text-center tracking-tight">
               {authMode === 'forgotPassword' ? 'Reset Password' : 'Sign In'}
             </h2>
@@ -284,7 +245,52 @@ function EmailAuth() {
               )}
             </div>
           </div>
-        )}
+        </div>
+
+        {/* BACK SIDE: SIGN UP */}
+        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-card/90 backdrop-blur-md shadow-2xl rounded-3xl p-8 border border-white/20">
+          <div className="space-y-5">
+            <h2 className="text-2xl font-black mb-6 text-center tracking-tight">Join AI Atlas</h2>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold ml-1">Email Address</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold ml-1">Choose Password</FormLabel>
+                      <FormControl>
+                        <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl bg-background/50 border-none shadow-inner" disabled={isSubmitting} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-2xl text-lg font-black shadow-lg shadow-primary/20 transition-all active:scale-95">
+                  {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Register Now'}
+                </Button>
+              </form>
+            </Form>
+            <div className="mt-6 text-center">
+              <Button variant="link" className="font-bold text-sm text-primary" onClick={(e) => { e.preventDefault(); setAuthMode('signIn'); }}>
+                Already have an account? Sign In
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
