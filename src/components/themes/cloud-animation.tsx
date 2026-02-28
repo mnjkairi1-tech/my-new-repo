@@ -5,19 +5,19 @@ import { Cloud } from 'lucide-react';
 
 /**
  * CloudAnimation Component
- * Renders soft falling clouds for the Cloud Marshmallow theme.
+ * Renders subtle falling clouds for the Cloud Marshmallow theme.
  */
 export function CloudAnimation() {
   const [clouds, setClouds] = useState<{ id: number; left: number; delay: number; duration: number; size: number; rotation: number }[]>([]);
 
   useEffect(() => {
-    // Generate random properties for clouds
-    const newClouds = Array.from({ length: 12 }).map((_, i) => ({
+    // Reduced from 12 to 4 for a very subtle, light effect
+    const newClouds = Array.from({ length: 4 }).map((_, i) => ({
       id: i,
       left: Math.random() * 100,
-      delay: Math.random() * 10,
-      duration: 10 + Math.random() * 15,
-      size: 20 + Math.random() * 30,
+      delay: Math.random() * 20, // Much longer delay range
+      duration: 15 + Math.random() * 20, // Very slow drift
+      size: 24 + Math.random() * 30,
       rotation: Math.random() * 20 - 10,
     }));
     setClouds(newClouds);
@@ -29,7 +29,7 @@ export function CloudAnimation() {
       {clouds.map((cloud) => (
         <div
           key={cloud.id}
-          className="absolute top-[-100px] animate-leaf-fall text-primary/20 blur-[0.5px]"
+          className="absolute top-[-100px] animate-leaf-fall text-primary/15 blur-[0.5px]"
           style={{
             left: `${cloud.left}%`,
             animationDelay: `${cloud.delay}s`,
@@ -37,13 +37,13 @@ export function CloudAnimation() {
           }}
         >
           <div style={{ transform: `rotate(${cloud.rotation}deg)` }}>
-            <Cloud size={cloud.size} strokeWidth={1.5} fill="currentColor" />
+            <Cloud size={cloud.size} strokeWidth={1.2} fill="currentColor" />
           </div>
         </div>
       ))}
 
       {/* Soft floating particles */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.05)_0%,transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.03)_0%,transparent_70%)]" />
     </div>
   );
 }
