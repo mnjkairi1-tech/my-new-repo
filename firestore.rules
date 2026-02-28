@@ -59,6 +59,11 @@ service cloud.firestore {
       allow read, write: if isGlobalOwner();
     }
 
+    match /paymentRequests/{id} {
+      allow create: if isSignedIn();
+      allow read, delete: if isGlobalOwner();
+    }
+
     // Community / Groups rules
     match /groups/{groupId} {
       allow read: if true; 
@@ -81,11 +86,8 @@ service cloud.firestore {
       }
     }
 
-    match /users/{userId} {
-      allow read: if request.auth.uid == userId || isGlobalOwner();
-      match /groupMemberships/{groupId} {
-        allow read, write: if request.auth.uid == userId || isGlobalOwner();
-      }
+    match /users/{userId}/{allPaths=**} {
+      allow read, write: if request.auth.uid == userId || isGlobalOwner();
     }
 
     match /user_profiles/{userId} {
