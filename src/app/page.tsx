@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useRef, Suspense, useState, useEffect } from 'react';
@@ -17,7 +16,8 @@ import {
   Star,
   ExternalLink,
   Loader2,
-  Lock
+  Lock,
+  Crown
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -39,7 +39,7 @@ import {
   quickToolCategories,
 } from '@/lib/home-page-data';
 import type { Tool } from '@/lib/types';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 const ToolsTabContent = dynamic(() => import('@/components/tools-tab-content'), {
     ssr: false,
