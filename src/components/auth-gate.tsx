@@ -23,20 +23,26 @@ import { useToast } from '@/hooks/use-toast';
 import { AuthLoader } from './auth-loader';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { MailCheck, KeyRound } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 function GoogleSignInButton({
   onClick,
   isSigningIn,
 }: {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
   isSigningIn: boolean;
 }) {
   return (
     <Button
+      type="button"
       variant="outline"
       size="lg"
-      className="w-full h-14 text-lg rounded-2xl bg-card border-2 border-primary/20 soft-shadow hover:bg-accent"
-      onClick={onClick}
+      className="w-full h-14 text-lg rounded-2xl bg-card border-2 border-primary/20 soft-shadow hover:bg-accent relative z-10"
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick(e);
+      }}
       disabled={isSigningIn}
     >
       <div className="flex items-center justify-center">
@@ -68,24 +74,6 @@ const authSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
   password: z.string().optional(),
 });
-
-function PostSignUpMessage({ email, setAuthMode }: { email: string; setAuthMode: (mode: 'signIn' | 'signUp' | 'forgotPassword') => void; }) {
-  return (
-    <div className="rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6 text-center">
-        <MailCheck className="w-16 h-16 text-green-500 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold mb-2">Verify Your Email</h2>
-        <p className="text-muted-foreground mb-4">
-            We've sent a verification link to <span className="font-semibold text-foreground">{email}</span>.
-        </p>
-        <p className="text-muted-foreground">
-            Please check your inbox and click the link to finish creating your account.
-        </p>
-        <Button className="w-full mt-6 rounded-xl" onClick={() => setAuthMode('signIn')}>
-            Back to Sign In
-        </Button>
-    </div>
-  );
-}
 
 function EmailAuth() {
   const [authMode, setAuthMode] = useState<'signIn' | 'signUp' | 'forgotPassword'>('signUp');
@@ -163,62 +151,53 @@ function EmailAuth() {
     }
   };
 
-  useEffect(() => {
-    form.reset();
-    setSignUpState('form');
-  }, [authMode, form]);
-
   if (signUpState === 'pendingVerification' && authMode === 'signUp') {
-      return <PostSignUpMessage email={emailForVerification} setAuthMode={setAuthMode} />;
+      return (
+        <div className="rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6 text-center">
+            <MailCheck className="w-16 h-16 text-green-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Verify Your Email</h2>
+            <p className="text-muted-foreground mb-4">
+                We've sent a verification link to <span className="font-semibold text-foreground">{emailForVerification}</span>.
+            </p>
+            <Button className="w-full mt-6 rounded-xl" onClick={() => { setAuthMode('signIn'); setSignUpState('form'); }}>
+                Back to Sign In
+            </Button>
+        </div>
+      );
   }
 
-  return (
-    <div className="rounded-2xl bg-card/80 backdrop-blur-sm soft-shadow p-6">
-      <h2 className="text-2xl font-bold mb-4 text-center">
-        {authMode === 'signUp' ? 'Create an Account' : (authMode === 'signIn' ? 'Sign In' : 'Reset Password')}
-      </h2>
-      
-      {authMode === 'forgotPassword' && (
-          <p className="text-sm text-muted-foreground mb-4 text-center">
-              Don't worry! Enter your email below and we'll send you a password reset link.
-          </p>
-      )}
+  const isFlipped = authMode === 'signIn' || authMode === 'forgotPassword';
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          {authMode !== 'forgotPassword' && (
+  return (
+    <div className="w-full perspective-1000">
+      <div className={cn(
+        "relative w-full transition-transform duration-700 preserve-3d min-h-[400px]",
+        isFlipped && "[transform:rotateY(180deg)]"
+      )}>
+        {/* Front Side: Sign Up */}
+        <div className="backface-hidden w-full h-full bg-card/80 backdrop-blur-sm soft-shadow rounded-2xl p-6">
+          <h2 className="text-2xl font-bold mb-4 text-center">Create an Account</h2>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <div className="flex items-center justify-between">
-                        <FormLabel>Password</FormLabel>
-                        {authMode === 'signIn' && (
-                            <Button 
-                                variant="link" 
-                                className="h-auto p-0 text-xs text-primary font-bold"
-                                type="button"
-                                onClick={() => setAuthMode('forgotPassword')}
-                            >
-                                Forgot password?
-                            </Button>
-                        )}
-                    </div>
+                    <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
                     </FormControl>
@@ -226,24 +205,90 @@ function EmailAuth() {
                   </FormItem>
                 )}
               />
+              <Button type="submit" disabled={isSubmitting} className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/20">
+                {isSubmitting ? 'Creating...' : 'Create Account'}
+              </Button>
+            </form>
+          </Form>
+          <div className="mt-4 text-center">
+            <Button variant="link" className="font-bold text-sm text-primary" onClick={() => setAuthMode('signIn')}>
+              Already have an account? Sign In
+            </Button>
+          </div>
+        </div>
+
+        {/* Back Side: Sign In / Forgot Password */}
+        <div className="absolute inset-0 backface-hidden [transform:rotateY(180deg)] w-full h-full bg-card/80 backdrop-blur-sm soft-shadow rounded-2xl p-6">
+          <h2 className="text-2xl font-bold mb-4 text-center">
+            {authMode === 'forgotPassword' ? 'Reset Password' : 'Sign In'}
+          </h2>
+          
+          {authMode === 'forgotPassword' && (
+              <p className="text-xs text-muted-foreground mb-4 text-center">
+                  Enter your email and we'll send you a password reset link.
+              </p>
           )}
 
-          <Button type="submit" disabled={isSubmitting} className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/20">
-            {isSubmitting ? 'Processing...' : (authMode === 'signUp' ? 'Create Account' : (authMode === 'signIn' ? 'Sign In' : 'Send Reset Link'))}
-          </Button>
-        </form>
-      </Form>
-      
-      <div className="mt-4 text-center">
-        {authMode === 'forgotPassword' ? (
-            <Button variant="link" className="font-bold text-sm" onClick={() => setAuthMode('signIn')}>
-                Wait, I remember it! Back to Sign In
-            </Button>
-        ) : (
-            <Button variant="link" className="font-bold text-sm" onClick={() => setAuthMode(authMode === 'signUp' ? 'signIn' : 'signUp')}>
-              {authMode === 'signUp' ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
-            </Button>
-        )}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type="email" placeholder="you@example.com" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              {authMode !== 'forgotPassword' && (
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center justify-between">
+                            <FormLabel>Password</FormLabel>
+                            <Button 
+                                variant="link" 
+                                className="h-auto p-0 text-xs text-primary font-bold"
+                                type="button"
+                                onClick={() => setAuthMode('forgotPassword')}
+                            >
+                                Forgot?
+                            </Button>
+                        </div>
+                        <FormControl>
+                          <Input type="password" placeholder="••••••••" {...field} className="h-12 rounded-xl" disabled={isSubmitting} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+              )}
+
+              <Button type="submit" disabled={isSubmitting} className="w-full h-12 rounded-xl text-base font-bold shadow-lg shadow-primary/20">
+                {isSubmitting ? 'Loading...' : (authMode === 'forgotPassword' ? 'Send Link' : 'Sign In')}
+              </Button>
+            </form>
+          </Form>
+          
+          <div className="mt-4 text-center">
+            {authMode === 'forgotPassword' ? (
+                <Button variant="link" className="font-bold text-sm text-primary" onClick={() => setAuthMode('signIn')}>
+                    Back to Sign In
+                </Button>
+            ) : (
+                <Button variant="link" className="font-bold text-sm text-primary" onClick={() => setAuthMode('signUp')}>
+                  Don't have an account? Sign Up
+                </Button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -255,7 +300,11 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   const { toast } = useToast();
   const [isSigningIn, setIsSigningIn] = useState(false);
   
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (e: React.MouseEvent) => {
+    // Explicitly prevent any default link behavior
+    e.preventDefault();
+    e.stopPropagation();
+
     if ((window as any).flutter_inappwebview) {
         (window as any).flutter_inappwebview.callHandler('requestGoogleSignIn');
         return;
@@ -269,15 +318,20 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
     setIsSigningIn(true);
     try {
         const provider = new GoogleAuthProvider();
+        // Set custom parameters to ensure we stay in the flow
+        provider.setCustomParameters({ prompt: 'select_account' });
         const result = await signInWithPopup(auth, provider);
         onUser(result.user);
     } catch (error: any) {
         console.error("Google Sign-In Error:", error);
-        toast({
-            variant: 'destructive',
-            title: 'Google Sign-In Failed',
-            description: error.message || 'Could not complete the sign-in process.',
-        });
+        // Special check for webview closed errors
+        if (error.code !== 'auth/popup-closed-by-user') {
+            toast({
+                variant: 'destructive',
+                title: 'Google Sign-In Failed',
+                description: error.message || 'Could not complete the sign-in process.',
+            });
+        }
     } finally {
         setIsSigningIn(false);
     }
@@ -302,10 +356,10 @@ export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
     return () => {
       delete (window as any).handleCustomTokenSignIn;
     };
-  }, [auth, onUser, toast]);
+  }, [auth, onUser]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 font-body">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 font-body overflow-x-hidden">
       <div className="flex flex-col items-center justify-center w-full max-w-sm z-10">
         <div className="flex flex-col items-center mb-8">
             <GalaxyLogo className="w-16 h-16 mb-4 text-primary" />
@@ -394,7 +448,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthScreen
-      onUser={(newUser) => { }}
+      onUser={() => { }}
     />
   );
 }
