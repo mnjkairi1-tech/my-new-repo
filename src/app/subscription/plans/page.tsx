@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useFirestore, useUser } from '@/firebase';
 import { collection, serverTimestamp, doc } from 'firebase/firestore';
 import { addDocumentNonBlocking, setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
@@ -47,7 +47,7 @@ export default function SubscriptionPlansPage() {
         'Compare Tools',
         'Tools addition in groups',
         '20 Favourite Tools',
-        'Free Popular Tools',
+        'Free popular tools',
         'Quick Tools access',
         'Recent usage tool'
       ]
@@ -68,7 +68,7 @@ export default function SubscriptionPlansPage() {
         'Compare Tools',
         'Tools addition in groups',
         '50 Favourite Tools',
-        'Free Popular Tools',
+        'Free popular tools',
         'Quick Tools access',
         'Recent usage tool',
         'Max free tools',
@@ -90,7 +90,7 @@ export default function SubscriptionPlansPage() {
         'Compare Tools',
         'Tools addition in groups',
         'unlimited Favourite Tools',
-        'Free Popular Tools',
+        'Free popular tools',
         'Quick Tools access',
         'Recent usage tool',
         'Max free tools',
@@ -98,7 +98,7 @@ export default function SubscriptionPlansPage() {
         'mod apps',
         'ultra free tools',
         'get daily new tools add automatically',
-        'get community primum blue ticks',
+        'get community premium blue ticks',
         'get new features early'
       ]
     },
@@ -312,7 +312,7 @@ export default function SubscriptionPlansPage() {
               <AlertDialogHeader>
                   <AlertDialogTitle className="text-2xl font-black text-foreground">Thank You!</AlertDialogTitle>
                   <AlertDialogDescription className="text-base font-medium mt-2 leading-relaxed text-muted-foreground">
-                      We will manually check about payment and 100 percent u will unlock ur plan plese wait untill 24 hours.
+                      Thank you for your payment. Our team will manually verify the transaction. Once confirmed, your plan will be unlocked within 24 hours. We appreciate your patience.
                   </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter className="mt-8">
