@@ -148,6 +148,36 @@
     --border: 160 100% 85%;
   }
 
+  [data-theme='cute-berry-glass'] {
+    /* BERRY MARSHMALLOW - RED/PINK */
+    --background: 350 60% 98%;
+    --foreground: 350 40% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 350 40% 20%;
+    --primary: 350 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 350 50% 92%;
+    --muted: 350 30% 95%;
+    --muted-foreground: 350 20% 45%;
+    --accent: 350 100% 90%;
+    --border: 350 100% 85%;
+  }
+
+  [data-theme='cute-cloud-glass'] {
+    /* CLOUD MARSHMALLOW - BLUE */
+    --background: 210 60% 98%;
+    --foreground: 210 40% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 210 40% 20%;
+    --primary: 210 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 50% 92%;
+    --muted: 210 30% 95%;
+    --muted-foreground: 210 20% 45%;
+    --accent: 210 100% 90%;
+    --border: 210 100% 85%;
+  }
+
   [data-theme='velvet-sunset'] {
     /* DEEP VELVET SUNSET */
     --background: 350 50% 5%;

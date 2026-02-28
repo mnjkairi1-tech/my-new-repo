@@ -5,6 +5,8 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useMemo, useState, useEffect, Suspense } from 'react';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { MintyAnimation } from '@/components/themes/minty-animation';
+import { BerryAnimation } from '@/components/themes/berry-animation';
+import { CloudAnimation } from '@/components/themes/cloud-animation';
 import { cn } from '@/lib/utils';
 
 function AppShellContent({ children }: { children: React.ReactNode }) {
@@ -52,8 +54,10 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
                 </div>
             )}
 
-            {/* Live Animation for Minty Marshmallow theme */}
+            {/* Live Animations for Cute Marshmallow themes */}
             {theme === 'cute-mint-glass' && <MintyAnimation />}
+            {theme === 'cute-berry-glass' && <BerryAnimation />}
+            {theme === 'cute-cloud-glass' && <CloudAnimation />}
             
             <main className="relative z-10 flex-grow pb-24 md:pb-0 h-full px-0 md:px-6 lg:px-12">
                 {children}
