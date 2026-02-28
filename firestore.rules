@@ -3,6 +3,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Helper Functions
     function isSignedIn() {
       return request.auth != null;
     }
@@ -15,17 +16,11 @@ service cloud.firestore {
       );
     }
 
-    // User Profiles
-    match /user_profiles/{userId} {
-      allow read: if isSignedIn() && (request.auth.uid == userId || isGlobalOwner());
-      allow write: if isSignedIn() && (request.auth.uid == userId || isGlobalOwner());
-    }
-    
-    match /userProfiles/{userId} {
-      allow read, write: if isSignedIn() && (request.auth.uid == userId || isGlobalOwner());
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
     }
 
-    // AI Tools and Categories (Public Read, Owner Write)
+    // Publicly readable AI Tools and Categories
     match /ai_tools/{toolId} {
       allow read: if true;
       allow write: if isGlobalOwner();
@@ -46,12 +41,22 @@ service cloud.firestore {
       allow write: if isGlobalOwner();
     }
 
-    // Submissions (Any user can create, Owner can manage)
-    match /paymentRequests/{id} {
+    // User Profiles - Users can read/write their own
+    match /user_profiles/{userId} {
+      allow read, write: if isOwner(userId) || isGlobalOwner();
+    }
+    
+    match /userProfiles/{userId} {
+      allow read, write: if isOwner(userId) || isGlobalOwner();
+    }
+
+    // Payment Requests - Any user can create, only owner can manage
+    match /paymentRequests/{requestId} {
       allow create: if isSignedIn();
       allow read, update, delete: if isGlobalOwner();
     }
-    
+
+    // Support & Bug Reports
     match /supportRequests/{id} {
       allow create: if isSignedIn();
       allow read, update, delete: if isGlobalOwner();
@@ -62,18 +67,18 @@ service cloud.firestore {
       allow read, update, delete: if isGlobalOwner();
     }
 
-    // Admin Roles
-    match /roles_owner/{ownerUid} {
-      allow read: if isSignedIn() && (request.auth.uid == ownerUid || isGlobalOwner());
-      allow write: if false;
-    }
-
-    // Generic User Data & Billing History
+    // Generic User Data (Billing history, memberships etc)
     match /users/{userId}/{allPaths=**} {
-      allow read, write: if isSignedIn() && (request.auth.uid == userId || isGlobalOwner());
+      allow read, write: if isOwner(userId) || isGlobalOwner();
     }
 
-    // Community / Groups
+    // Owner Roles
+    match /roles_owner/{ownerUid} {
+      allow read: if isSignedIn();
+      allow write: if false; // Only manageable via Firebase Console
+    }
+
+    // Community Groups
     match /groups/{groupId} {
       allow read: if true; 
       allow create: if isSignedIn();
@@ -81,7 +86,7 @@ service cloud.firestore {
 
       match /members/{userId} {
         allow read: if true;
-        allow write: if isSignedIn() && (request.auth.uid == userId || isGlobalOwner());
+        allow write: if isOwner(userId) || isGlobalOwner();
       }
 
       match /messages/{messageId} {
