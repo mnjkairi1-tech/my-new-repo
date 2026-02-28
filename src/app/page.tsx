@@ -135,7 +135,7 @@ function HomePageContent() {
                         <CarouselItem key={index} className="pl-0 md:basis-1/2 lg:basis-1/3">
                             <Link href={slide.link} target={slide.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
                                 <div className={cn(
-                                    "relative aspect-[16/9] w-full overflow-hidden shadow-xl hover:scale-[1.02] transition-transform",
+                                    "relative aspect-[16/9] w-full overflow-hidden shadow-xl hover:scale-[1.02] transition-transform rounded-[2.5rem]",
                                     isMidnight ? "glass-card-effect" : "border-none"
                                 )}>
                                     <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
