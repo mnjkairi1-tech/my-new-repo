@@ -5,13 +5,14 @@ import React, { useState } from 'react';
 import { ClubHeader } from '@/components/club-header';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, Star, Zap, Crown, CreditCard, Smartphone, Wallet, Banknote, ShieldCheck, Loader2, Copy, QrCode, ClipboardCheck } from 'lucide-react';
+import { Check, Star, Zap, Crown, CreditCard, Smartphone, Wallet, Banknote, ShieldCheck, Loader2, Copy, QrCode, ClipboardCheck, Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useFirestore, useUser } from '@/firebase';
-import { collection, serverTimestamp, doc, setDoc } from 'firebase/firestore';
+import { collection, serverTimestamp, doc } from 'firebase/firestore';
 import { addDocumentNonBlocking, setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
@@ -21,6 +22,7 @@ type PlanType = 'basic' | 'standard' | 'pro';
 export default function SubscriptionPlansPage() {
   const [activePlan, setActivePlan] = useState<PlanType>('basic');
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [utrNumber, setUtrNumber] = useState('');
   
@@ -143,14 +145,9 @@ export default function SubscriptionPlansPage() {
             createdAt: serverTimestamp(),
         }, { merge: true });
 
-        toast({
-          title: "Payment Submitted!",
-          description: "Details sent to owner. Activation of plan will be 24 hours we will verify manually.",
-        });
-
         setIsVerifying(false);
         setIsPaymentModalOpen(false);
-        router.push('/');
+        setIsSuccessDialogOpen(true);
     }, 2000);
   };
 
@@ -306,6 +303,28 @@ export default function SubscriptionPlansPage() {
                 </div>
           </DialogContent>
       </Dialog>
+
+      <AlertDialog open={isSuccessDialogOpen} onOpenChange={setIsSuccessDialogOpen}>
+          <AlertDialogContent className="max-w-sm rounded-[2.5rem] border-none shadow-2xl p-8 text-center bg-card">
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Check className="w-10 h-10 text-green-600" />
+              </div>
+              <AlertDialogHeader>
+                  <AlertDialogTitle className="text-2xl font-black text-foreground">Thank You!</AlertDialogTitle>
+                  <AlertDialogDescription className="text-base font-medium mt-2 leading-relaxed text-muted-foreground">
+                      We will manually check about payment and 100 percent u will unlock ur plan plese wait untill 24 hours.
+                  </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="mt-8">
+                  <AlertDialogAction 
+                    onClick={() => router.push('/')}
+                    className="w-full h-12 rounded-xl font-bold bg-primary text-white shadow-lg shadow-primary/20"
+                  >
+                      Got it! 🚀
+                  </AlertDialogAction>
+              </AlertDialogFooter>
+          </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
