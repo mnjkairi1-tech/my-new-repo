@@ -290,6 +290,7 @@ function GalaxyAppMain() {
   const [mounted, setMounted] = useState(false);
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
   const [requiredPlan, setRequiredPlan] = useState<'standard' | 'pro'>('standard');
+  const [requestedFeature, setRequestedFeature] = useState<'max' | 'ultra'>('max');
 
   const userProfileRef = useMemoFirebase(() => firestore && user ? doc(firestore, 'user_profiles', user.uid) : null, [firestore, user]);
   const { data: userProfile } = useDoc(userProfileRef);
@@ -301,6 +302,7 @@ function GalaxyAppMain() {
 
   const handleRestrictedAccess = (e: React.MouseEvent, type: 'max' | 'ultra') => {
     e.preventDefault();
+    setRequestedFeature(type);
     if (type === 'max' && userPlan === 'basic') {
         setRequiredPlan('standard');
         setIsUpgradeModalOpen(true);
@@ -338,7 +340,6 @@ function GalaxyAppMain() {
                             isMidnight ? "bg-white/10 text-white border border-white/20" : "bg-secondary"
                         )}>
                             <Sparkles className="w-5 h-5" />
-                            {userPlan !== 'pro' && <Lock className="absolute -top-1 -right-1 w-3 h-3 text-yellow-500 fill-current" />}
                         </div>
                         <span className={cn("text-[9px] font-black uppercase tracking-tighter text-center leading-none", isMidnight ? "text-white/60" : "text-primary/80")}>Ultra</span>
                     </button>
@@ -348,7 +349,6 @@ function GalaxyAppMain() {
                             isMidnight ? "bg-white/10 text-white border border-white/20" : "bg-secondary"
                         )}>
                             <Gift className="w-5 h-5" />
-                            {userPlan === 'basic' && <Lock className="absolute -top-1 -right-1 w-3 h-3 text-yellow-500 fill-current" />}
                         </div>
                         <span className={cn("text-[9px] font-black uppercase tracking-tighter text-center leading-none", isMidnight ? "text-white/60" : "text-primary/80")}>Max</span>
                     </button>
@@ -427,15 +427,22 @@ function GalaxyAppMain() {
     </Tabs>
 
     <Dialog open={isUpgradeModalOpen} onOpenChange={setIsUpgradeModalOpen}>
-        <DialogContent className="max-w-sm rounded-[2rem] border-none shadow-2xl">
+        <DialogContent className="max-w-sm rounded-[2.5rem] border-none shadow-2xl">
             <div className="text-center py-6">
                 <div className="w-20 h-20 bg-yellow-400/10 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Crown className="w-10 h-10 text-yellow-500 fill-current" />
                 </div>
                 <DialogHeader>
-                    <DialogTitle className="text-2xl font-black text-center">Upgrade Your Plan</DialogTitle>
-                    <DialogDescription className="text-center text-base font-medium mt-2">
-                        To enjoy {requiredPlan === 'pro' ? 'Ultra Free' : 'Max Free'} features, please upgrade to the <strong>{requiredPlan.toUpperCase()}</strong> plan.
+                    <DialogTitle className="text-2xl font-black text-center">Upgrade to {requiredPlan.toUpperCase()}</DialogTitle>
+                    <DialogDescription className="text-center text-base font-medium mt-2 leading-relaxed">
+                        {requestedFeature === 'ultra' ? (
+                            "Unlock Ultra: top free AI tools that offer high usage limits and powerful features, but are still most people dont know about it."
+                        ) : (
+                            "Unlock Max: Get Top AI Tools with Maximum Usage and No Daily Limitations for Your Everyday Tasks."
+                        )}
+                        <span className="block mt-4 text-primary font-black text-xl">
+                            Price: {requiredPlan === 'pro' ? '₹49' : '₹29'} / Month
+                        </span>
                     </DialogDescription>
                 </DialogHeader>
                 <div className="mt-8 space-y-3">
