@@ -4,13 +4,41 @@
 
 @layer base {
   :root {
-    /* DEFAULT: SOFT LAVENDER LIGHT */
+    /* DEFAULT: CUTE MINT GLASS (Minty Marshmallow) */
+    --background: 160 60% 98%;
+    --foreground: 160 40% 20%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 160 40% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 40% 20%;
+    --primary: 160 100% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 160 50% 92%;
+    --secondary-foreground: 160 100% 40%;
+    --muted: 160 30% 95%;
+    --muted-foreground: 160 20% 45%;
+    --accent: 160 100% 90%;
+    --accent-foreground: 160 40% 20%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 160 100% 85%;
+    --input: 160 100% 85%;
+    --ring: 160 100% 40%;
+    --radius: 1.25rem;
+
+    /* Background Colors for Gradients - Set to Minty Shades */
+    --soft-blue: 160 100% 96%;
+    --lavender: 165 100% 96%;
+    --baby-pink: 155 100% 96%;
+    --mint: 160 100% 96%;
+    --cute-purple: 170 100% 96%;
+  }
+
+  [data-theme='default'] {
     --background: 255 75% 98%;
     --foreground: 255 20% 25%;
     --card: 255 100% 100%;
     --card-foreground: 255 20% 25%;
-    --popover: 255 100% 100%;
-    --popover-foreground: 255 20% 25%;
     --primary: 258 100% 70%;
     --primary-foreground: 255 100% 100%;
     --secondary: 255 100% 95%;
@@ -18,20 +46,10 @@
     --muted: 255 75% 95%;
     --muted-foreground: 255 20% 45%;
     --accent: 200 100% 95%;
-    --accent-foreground: 198 50% 45%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
     --border: 255 100% 90%;
-    --input: 255 100% 90%;
-    --ring: 258 100% 70%;
-    --radius: 1.25rem;
-
-    /* Background Colors for Gradients */
     --soft-blue: 210 100% 96%;
     --lavender: 260 100% 96%;
     --baby-pink: 340 100% 96%;
-    --mint: 160 100% 96%;
-    --cute-purple: 270 100% 96%;
   }
 
   [data-theme='dark'] {
@@ -79,7 +97,6 @@
     --ring: 0 0% 0%;
     --radius: 1.5rem;
 
-    /* Convert all colors to Greyscale for Panda Theme */
     --soft-blue: 0 0% 95%;
     --lavender: 0 0% 90%;
     --baby-pink: 0 0% 92%;

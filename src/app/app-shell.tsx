@@ -42,7 +42,8 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
         return '';
     }, [pathname, searchParams]);
 
-    if (!mounted) return <div className="min-h-screen bg-[#050810]" />;
+    // Use a light minty background for the unmounted state to match the default theme
+    if (!mounted) return <div className="min-h-screen bg-[#f5fdfa]" />;
 
     return (
         <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-7xl mx-auto overflow-x-hidden transition-all duration-500 ease-in-out">
@@ -77,7 +78,7 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
     return (
-        <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
+        <Suspense fallback={<div className="min-h-screen bg-[#f5fdfa] flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
             <AppShellContent>{children}</AppShellContent>
         </Suspense>
     );

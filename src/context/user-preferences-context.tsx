@@ -33,7 +33,8 @@ type UserPreferencesContextType = {
 const UserPreferencesContext = createContext<UserPreferencesContextType | undefined>(undefined);
 
 export const UserPreferencesProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState('default');
+  // Set default theme to Minty Marshmallow
+  const [theme, setTheme] = useState('cute-mint-glass');
   const [fontSize, setFontSize] = useState('font-size-medium');
   const [heartedTools, setHeartedTools] = useState<Tool[]>([]);
   const [starredTools, setStarredTools] = useState<Tool[]>([]);
@@ -54,7 +55,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
 
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') || 'default';
+    const storedTheme = localStorage.getItem('theme') || 'cute-mint-glass';
     const storedFontSize = localStorage.getItem('fontSize') || 'font-size-medium';
     const storedHeartedTools = localStorage.getItem('heartedTools');
     const storedStarredTools = localStorage.getItem('starredTools');

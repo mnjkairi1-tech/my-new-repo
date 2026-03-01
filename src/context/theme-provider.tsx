@@ -1,4 +1,3 @@
-
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useUserPreferences } from './user-preferences-context';
@@ -9,7 +8,7 @@ type ThemeProviderState = {
 }
 
 const ThemeProviderContext = createContext<ThemeProviderState>({
-  theme: 'default',
+  theme: 'cute-mint-glass',
   setTheme: () => null,
 });
 
@@ -43,5 +42,3 @@ export const useTheme = () => {
 
   return context
 }
-
-    
