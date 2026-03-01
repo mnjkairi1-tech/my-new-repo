@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
@@ -9,7 +8,7 @@ import { useLanguage } from '@/lib/language';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
-import { Share2, Star, Search, Filter, Scale, Check, Loader2, Info, SearchCode, StarHalf, UserPlus, ArrowRight, Sparkles, Wand2, Link2, Heart } from 'lucide-react';
+import { Share2, Star, Search, Filter, Scale, Check, Loader2, Info, SearchCode, StarHalf, UserPlus, ArrowRight, Link2, Heart } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
 import {
@@ -25,7 +24,6 @@ import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -190,7 +188,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     description: `${newTool.name} has been added to your favorites.`,
                 });
                 setCustomUrl('');
-                setSearchTerm(''); // Reset search to show the added tool in recents/favorites if applicable
+                setSearchTerm('');
             } else {
                 toast({
                     variant: 'destructive',
@@ -278,7 +276,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     ))}
                 </div>
 
-                {/* URL Input CTA when no local results */}
+                {/* Manual Link Input Prompt when no local results */}
                 {filteredTools.length === 0 && searchTerm.trim() !== "" && (
                     <div className="text-center py-16 px-4 animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-md mx-auto">
                         <div className="w-20 h-20 bg-primary/10 rounded-[2.5rem] flex items-center justify-center mx-auto mb-6">
