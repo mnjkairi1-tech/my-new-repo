@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useRef, Suspense, useState, useEffect } from 'react';
@@ -41,6 +40,7 @@ import {
 } from '@/lib/home-page-data';
 import type { Tool } from '@/lib/types';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { QuickAccessView } from '@/components/quick-access-view';
 
 const ToolsTabContent = dynamic(() => import('@/components/tools-tab-content'), {
     ssr: false,
@@ -64,9 +64,14 @@ const ToolsLoadingSkeleton = () => (
 function HomePageContent() {
   const [activeSavedTab, setActiveSavedTab] = useState('recent');
   const { t } = useLanguage();
-  const { theme, pinnedTools, handlePinToggle, addRecentTool, recentTools, heartedTools, starredTools, handleHeartToggle, handleStarToggle } = useUserPreferences();
+  const { theme, pinnedTools, handlePinToggle, addRecentTool, recentTools, heartedTools, starredTools, handleHeartToggle, handleStarToggle, isQuickAccessDefault } = useUserPreferences();
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   const isMidnight = theme === 'midnight-glass';
+
+  // If Quick Access is set as default, we render the Quick Access View instead of the full home
+  if (isQuickAccessDefault) {
+    return <QuickAccessView />;
+  }
 
   const carouselSlides = [
     { 

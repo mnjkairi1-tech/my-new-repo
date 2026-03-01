@@ -26,6 +26,8 @@ type UserPreferencesContextType = {
   pinnedGroups: Set<string>;
   handlePinGroupToggle: (groupId: string) => void;
   userPlan: string;
+  isQuickAccessDefault: boolean;
+  setIsQuickAccessDefault: (value: boolean) => void;
 };
 
 const UserPreferencesContext = createContext<UserPreferencesContextType | undefined>(undefined);
@@ -38,8 +40,9 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   const [pinnedTools, setPinnedTools] = useState<Set<string>>(new Set());
   const [recentTools, setRecentTools] = useState<Tool[]>([]);
   const [comparisonList, setComparisonList] = useState<Tool[]>([]);
-  const { toast } = useToast();
   const [pinnedGroups, setPinnedGroups] = useState<Set<string>>(new Set());
+  const [isQuickAccessDefault, setIsQuickAccessDefault] = useState(false);
+  const { toast } = useToast();
   const { user } = useUser();
   const firestore = useFirestore();
   const router = useRouter();
@@ -58,25 +61,17 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     const storedPinnedTools = localStorage.getItem('pinnedTools');
     const storedRecentTools = localStorage.getItem('recentTools');
     const storedPinnedGroups = localStorage.getItem('pinnedGroups');
+    const storedQuickAccessDefault = localStorage.getItem('isQuickAccessDefault');
 
     handleSetTheme(storedTheme);
     handleSetFontSize(storedFontSize);
 
-    if (storedHeartedTools) {
-      setHeartedTools(JSON.parse(storedHeartedTools));
-    }
-    if (storedStarredTools) {
-      setStarredTools(JSON.parse(storedStarredTools));
-    }
-    if (storedPinnedTools) {
-      setPinnedTools(new Set(JSON.parse(storedPinnedTools)));
-    }
-    if (storedRecentTools) {
-      setRecentTools(JSON.parse(storedRecentTools));
-    }
-    if (storedPinnedGroups) {
-      setPinnedGroups(new Set(JSON.parse(storedPinnedGroups)));
-    }
+    if (storedHeartedTools) setHeartedTools(JSON.parse(storedHeartedTools));
+    if (storedStarredTools) setStarredTools(JSON.parse(storedStarredTools));
+    if (storedPinnedTools) setPinnedTools(new Set(JSON.parse(storedPinnedTools)));
+    if (storedRecentTools) setRecentTools(JSON.parse(storedRecentTools));
+    if (storedPinnedGroups) setPinnedGroups(new Set(JSON.parse(storedPinnedGroups)));
+    if (storedQuickAccessDefault) setIsQuickAccessDefault(JSON.parse(storedQuickAccessDefault));
   }, []);
 
   const requireAuth = (action: string): boolean => {
@@ -98,15 +93,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     const root = document.documentElement;
     root.setAttribute('data-theme', newTheme);
     
-    // Manage Tailwind 'dark' class for automatic dark mode support
-    const darkThemes = [
-      'dark', 
-      'midnight-glass',
-      'emerald-night',
-      'cosmic-neon',
-      'neon-volt',
-      'velvet-sunset'
-    ];
+    const darkThemes = ['dark', 'midnight-glass', 'emerald-night', 'cosmic-neon', 'neon-volt', 'velvet-sunset'];
     if (darkThemes.includes(newTheme)) {
       root.classList.add('dark');
     } else {
@@ -124,37 +111,23 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
 
   const handleHeartToggle = (tool: Tool) => {
     if (!requireAuth('save tools')) return;
-
     const isAlreadyHearted = heartedTools.some(t => t.name === tool.name);
-    
     if (!isAlreadyHearted) {
-        // Enforce limits for adding new favorites
         const currentCount = heartedTools.length;
         if (userPlan === 'basic' && currentCount >= 10) {
-            toast({
-                variant: 'destructive',
-                title: 'Limit Reached',
-                description: 'Basic plan is limited to 10 favorites. Please upgrade to Standard or Pro!',
-            });
+            toast({ variant: 'destructive', title: 'Limit Reached', description: 'Basic plan is limited to 10 favorites.' });
             router.push('/subscription/plans');
             return;
         }
         if (userPlan === 'standard' && currentCount >= 50) {
-            toast({
-                variant: 'destructive',
-                title: 'Limit Reached',
-                description: 'Standard plan is limited to 50 favorites. Please upgrade to Pro for unlimited!',
-            });
+            toast({ variant: 'destructive', title: 'Limit Reached', description: 'Standard plan is limited to 50 favorites.' });
             router.push('/subscription/plans');
             return;
         }
     }
-
     setHeartedTools(prev => {
       const isHearted = prev.some(t => t.name === tool.name);
-      const newHeartedTools = isHearted
-        ? prev.filter(t => t.name !== tool.name)
-        : [tool, ...prev];
+      const newHeartedTools = isHearted ? prev.filter(t => t.name !== tool.name) : [tool, ...prev];
       localStorage.setItem('heartedTools', JSON.stringify(newHeartedTools));
       return newHeartedTools;
     });
@@ -164,9 +137,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     if (!requireAuth('star tools')) return;
     setStarredTools(prev => {
       const isStarred = prev.some(t => t.name === tool.name);
-      const newStarredTools = isStarred
-        ? prev.filter(t => t.name !== tool.name)
-        : [tool, ...prev];
+      const newStarredTools = isStarred ? prev.filter(t => t.name !== tool.name) : [tool, ...prev];
       localStorage.setItem('starredTools', JSON.stringify(newStarredTools));
       return newStarredTools;
     });
@@ -196,36 +167,32 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   const selectForCompare = (tool: Tool) => {
     setComparisonList(prev => {
       const isInList = prev.find(t => t.name === tool.name);
-      if (isInList) {
-        return prev.filter(t => t.name !== tool.name);
-      }
-      if (prev.length < 2) {
-        return [...prev, tool];
-      }
-      toast({
-        variant: 'destructive',
-        title: 'Comparison Full',
-        description: 'You can only compare two tools at a time. Please remove one first.',
-      });
+      if (isInList) return prev.filter(t => t.name !== tool.name);
+      if (prev.length < 2) return [...prev, tool];
+      toast({ variant: 'destructive', title: 'Comparison Full', description: 'You can only compare two tools.' });
       return prev;
     });
   };
 
-  const clearComparison = () => {
-    setComparisonList([]);
-  };
+  const clearComparison = () => setComparisonList([]);
 
   const handlePinGroupToggle = (groupId: string) => {
     if (!requireAuth('pin groups')) return;
     setPinnedGroups(prev => {
       const newPinned = new Set(prev);
-      if (newPinned.has(groupId)) {
-        newPinned.delete(groupId);
-      } else {
-        newPinned.add(groupId);
-      }
+      if (newPinned.has(groupId)) newPinned.delete(groupId);
+      else newPinned.add(groupId);
       localStorage.setItem('pinnedGroups', JSON.stringify(Array.from(newPinned)));
       return newPinned;
+    });
+  };
+
+  const handleSetQuickAccessDefault = (value: boolean) => {
+    setIsQuickAccessDefault(value);
+    localStorage.setItem('isQuickAccessDefault', JSON.stringify(value));
+    toast({
+        title: value ? "Default Enabled" : "Default Disabled",
+        description: value ? "Quick Access is now your start page." : "Standard Home page is now default."
     });
   };
 
@@ -248,7 +215,9 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
       clearComparison,
       pinnedGroups,
       handlePinGroupToggle,
-      userPlan
+      userPlan,
+      isQuickAccessDefault,
+      setIsQuickAccessDefault: handleSetQuickAccessDefault
     }}>
       {children}
     </UserPreferencesContext.Provider>
@@ -257,8 +226,6 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
 
 export const useUserPreferences = () => {
   const context = useContext(UserPreferencesContext);
-  if (context === undefined) {
-    throw new Error('useUserPreferences must be used within a UserPreferencesProvider');
-  }
+  if (context === undefined) throw new Error('useUserPreferences must be used within a UserPreferencesProvider');
   return context;
 };
