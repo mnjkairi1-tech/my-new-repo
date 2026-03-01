@@ -8,81 +8,63 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function isGlobalOwner() {
-      return isSignedIn() && exists(/databases/$(database)/documents/roles_owner/$(request.auth.uid));
-    }
-
     function isOwner(userId) {
       return isSignedIn() && request.auth.uid == userId;
     }
 
-    // --- Collection Rules ---
-
-    // 1. Global Owner: Allow full access to the designated owner
-    match /{allPaths=**} {
-      allow read, write: if isGlobalOwner();
+    function isGlobalOwner() {
+      return isSignedIn() && exists(/databases/$(database)/documents/roles_owner/$(request.auth.uid));
     }
 
-    // 2. Payment Requests
-    match /paymentRequests/{requestId} {
-      allow create: if isSignedIn();
-    }
-
-    // 3. Support & Bug Reports
-    match /supportRequests/{id} {
-      allow create: if isSignedIn();
-    }
-    
-    match /bugReports/{id} {
-      allow create: if isSignedIn();
-    }
-
-    // 4. User Profiles (Corrected for Blue Tick Feature)
-    // Allow any signed-in user to read profiles to see Blue Ticks/Names in community
-    match /userProfiles/{userId} {
-      allow read: if isSignedIn();
-      allow write: if isOwner(userId);
-    }
+    // --- User Profiles (CRITICAL FIX FOR BLUE TICK) ---
+    // We allow ANY signed-in user to read any profile so they can see Blue Ticks/Names.
+    // Writes are strictly restricted to the account owner or the app owner.
     
     match /user_profiles/{userId} {
       allow read: if isSignedIn();
-      allow write: if isOwner(userId);
+      allow write: if isOwner(userId) || isGlobalOwner();
+    }
+    
+    match /userProfiles/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(userId) || isGlobalOwner();
     }
 
-    match /users/{userId}/{allPaths=**} {
-      allow read, write: if isOwner(userId);
-    }
-
-    // 5. AI Catalog
+    // --- AI Catalog ---
     match /aiTools/{id} {
-      allow read: if resource.data.isActive == true || isGlobalOwner();
+      allow read: if true;
+      allow write: if isGlobalOwner();
     }
     
     match /ai_tools/{id} {
-      allow read: if resource.data.isActive == true || isGlobalOwner();
+      allow read: if true;
+      allow write: if isGlobalOwner();
     }
 
     match /aiCategories/{id} {
       allow read: if true;
+      allow write: if isGlobalOwner();
     }
     
     match /hidden_tools/{id} {
-      allow read: if isGlobalOwner();
+      allow read, write: if isGlobalOwner();
     }
 
-    // 6. Community Groups
+    // --- Community Groups ---
     match /groups/{groupId} {
       allow read: if true;
       allow create: if isSignedIn();
-      allow update, delete: if isSignedIn() && (resource.data.ownerId == request.auth.uid);
+      allow update, delete: if isGlobalOwner() || (isSignedIn() && resource.data.ownerId == request.auth.uid);
 
       match /members/{userId} {
         allow read: if true;
-        allow write: if isOwner(userId);
+        allow write: if isOwner(userId) || isGlobalOwner();
       }
 
       match /messages/{messageId} {
-        allow read, write: if isSignedIn();
+        allow read: if isSignedIn();
+        allow create: if isSignedIn();
+        allow update, delete: if isGlobalOwner();
       }
 
       match /tools/{toolId} {
@@ -91,9 +73,35 @@ service cloud.firestore {
       }
     }
 
-    // 7. Roles (Owner Tracking)
+    // --- Admin & Support ---
+    match /paymentRequests/{requestId} {
+      allow create: if isSignedIn();
+      allow read, write: if isGlobalOwner();
+    }
+
+    match /supportRequests/{id} {
+      allow create: if isSignedIn();
+      allow read, write: if isGlobalOwner();
+    }
+    
+    match /bugReports/{id} {
+      allow create: if isSignedIn();
+      allow read, write: if isGlobalOwner();
+    }
+
     match /roles_owner/{ownerUid} {
       allow read: if isSignedIn();
+      allow write: if isGlobalOwner();
+    }
+
+    // Private internal user data
+    match /users/{userId}/{allPaths=**} {
+      allow read, write: if isOwner(userId) || isGlobalOwner();
+    }
+
+    // --- Fallback Global Rule ---
+    match /{allPaths=**} {
+      allow read, write: if isGlobalOwner();
     }
   }
 }
