@@ -77,16 +77,17 @@ const ToolCard = ({ tool }: { tool: GroupTool }) => {
 };
 
 // Component to render user name with optional blue tick
-const UserNameWithTick = ({ userId, userName, className }: { userId: string, userName: string, className?: string }) => {
+const UserNameWithTick = ({ userId, userName, className, showName = true }: { userId: string, userName: string, className?: string, showName?: boolean }) => {
     const firestore = useFirestore();
     const userProfileRef = useMemoFirebase(() => firestore ? doc(firestore, 'user_profiles', userId) : null, [firestore, userId]);
     const { data: profile } = useDoc(userProfileRef);
-    const isPro = profile?.plan === 'pro';
+    // Subscribed users (standard or pro) get the tick
+    const hasSubscription = profile?.plan === 'standard' || profile?.plan === 'pro';
 
     return (
         <div className={cn("flex items-center gap-1", className)}>
-            <span className="font-bold truncate">{userName}</span>
-            {isPro && <BadgeCheck className="w-3.5 h-3.5 text-blue-400 fill-blue-400/20" />}
+            {showName && <span className="font-bold truncate">{userName}</span>}
+            {hasSubscription && <BadgeCheck className="w-3.5 h-3.5 text-blue-400 fill-blue-400/20" />}
         </div>
     );
 };
@@ -246,8 +247,10 @@ export default function ClubDetailsPageClient() {
                  messages?.map((msg) => (
                   <div key={msg.id} className={`flex items-end gap-2 mb-2 ${msg.userId === user?.uid ? 'justify-end' : 'justify-start'}`}>
                     <div className={`p-3 rounded-2xl max-w-[70%] shadow-sm ${msg.userId === user?.uid ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-card text-foreground rounded-bl-none'}`}>
-                        {msg.userId !== user?.uid && (
+                        {msg.userId !== user?.uid ? (
                             <UserNameWithTick userId={msg.userId} userName={msg.userName} className="text-xs mb-1 text-primary" />
+                        ) : (
+                            <UserNameWithTick userId={msg.userId} userName="You" className="text-xs mb-1 text-primary-foreground/80" showName={false} />
                         )}
                         
                         {msg.text && <p className="text-sm leading-relaxed">{msg.text}</p>}

@@ -43,11 +43,13 @@ service cloud.firestore {
 
     // 4. 用户资料
     match /userProfiles/{userId} {
+      // 允许所有登录用户读取基本信息以显示 Blue Tick
       allow read: if isSignedIn();
       allow write: if isOwner(userId);
     }
     
     match /user_profiles/{userId} {
+      // 允许所有登录用户读取基本信息以显示 Blue Tick
       allow read: if isSignedIn();
       allow write: if isOwner(userId);
     }
