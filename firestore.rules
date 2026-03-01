@@ -16,16 +16,10 @@ service cloud.firestore {
       return isSignedIn() && exists(/databases/$(database)/documents/roles_owner/$(request.auth.uid));
     }
 
-    // --- User Profiles (CRITICAL FIX FOR BLUE TICK) ---
-    // We allow ANY signed-in user to read any profile so they can see Blue Ticks/Names.
-    // Writes are strictly restricted to the account owner or the app owner.
-    
+    // --- User Profiles ---
+    // CRITICAL: We allow ANY signed-in user to read any profile so they can see Blue Ticks/Names in chat.
+    // Writes are strictly restricted to the account owner or the global app owner.
     match /user_profiles/{userId} {
-      allow read: if isSignedIn();
-      allow write: if isOwner(userId) || isGlobalOwner();
-    }
-    
-    match /userProfiles/{userId} {
       allow read: if isSignedIn();
       allow write: if isOwner(userId) || isGlobalOwner();
     }
@@ -94,7 +88,7 @@ service cloud.firestore {
       allow write: if isGlobalOwner();
     }
 
-    // Private internal user data
+    // Private internal user data history
     match /users/{userId}/{allPaths=**} {
       allow read, write: if isOwner(userId) || isGlobalOwner();
     }

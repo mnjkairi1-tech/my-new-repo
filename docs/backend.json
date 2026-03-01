@@ -4,7 +4,7 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "UserProfile",
       "type": "object",
-      "description": "Represents a user within the AI Atlas application, primarily for managing roles and permissions related to content submission and moderation. Authentication details (like passwords) are handled by an external system.",
+      "description": "Represents a user within the AI Atlas application, primarily for managing roles and permissions related to content submission and moderation.",
       "properties": {
         "id": {
           "type": "string",
@@ -12,16 +12,16 @@
         },
         "email": {
           "type": "string",
-          "description": "The email address of the user, used for identification. The owner (mnjkairi1@gmail.com) will be identified by this email.",
+          "description": "The email address of the user.",
           "format": "email"
         },
         "role": {
           "type": "string",
-          "description": "The role of the user, determining their permissions within the application (e.g., 'owner', 'user'). The 'owner' role grants privileges to add and delete AI tools."
+          "description": "The role of the user (e.g., 'owner', 'user')."
         },
         "plan": {
           "type": "string",
-          "description": "The current subscription plan of the user (e.g., 'basic', 'standard', 'pro').",
+          "description": "The current subscription plan of the user.",
           "enum": ["basic", "standard", "pro"]
         },
         "displayName": {
@@ -35,19 +35,16 @@
         },
         "createdAt": {
           "type": "string",
-          "description": "Timestamp indicating when the user profile was created.",
           "format": "date-time"
         },
         "updatedAt": {
           "type": "string",
-          "description": "Timestamp indicating when the user profile was last updated.",
           "format": "date-time"
         }
       },
       "required": [
         "id",
         "email",
-        "role",
         "createdAt",
         "updatedAt"
       ]
@@ -56,121 +53,35 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "AICategory",
       "type": "object",
-      "description": "Represents a category under which AI tools can be grouped (e.g., 'Image Generation', 'Video Editing'). Tools can be associated with one or more categories.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the AICategory entity."
-        },
-        "name": {
-          "type": "string",
-          "description": "The name of the category (e.g., 'Video', 'Text-to-Speech')."
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description of the types of AI tools that belong to this category."
-        },
-        "createdAt": {
-          "type": "string",
-          "description": "Timestamp indicating when the category was created.",
-          "format": "date-time"
-        },
-        "updatedAt": {
-          "type": "string",
-          "description": "Timestamp indicating when the category was last updated.",
-          "format": "date-time"
-        }
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
       },
-      "required": [
-        "id",
-        "name",
-        "description",
-        "createdAt",
-        "updatedAt"
-      ]
+      "required": ["id", "name", "description", "createdAt", "updatedAt"]
     },
     "AITool": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "AITool",
       "type": "object",
-      "description": "Represents an individual AI tool listed in the AI Atlas directory, including its details, display properties, and categorization.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the AITool entity."
-        },
-        "name": {
-          "type": "string",
-          "description": "The name of the AI tool (e.g., 'Runway', 'Pika')."
-        },
-        "description": {
-          "type": "string",
-          "description": "A concise description of the AI tool's primary functionality or purpose."
-        },
-        "websiteUrl": {
-          "type": "string",
-          "description": "The URL to the official website of the AI tool. This is the link that the owner would provide when adding a new tool.",
-          "format": "uri"
-        },
-        "imageUrl": {
-          "type": "string",
-          "description": "The URL for the primary image of the tool, typically used for larger cards like those in 'Quick Tools' or 'Featured Card'.",
-          "format": "uri"
-        },
-        "iconUrl": {
-          "type": "string",
-          "description": "The URL for a smaller icon representing the tool, often used in sections like 'Free popular tools'. Can be the same as 'imageUrl' or a distinct smaller icon.",
-          "format": "uri"
-        },
-        "isFeatured": {
-          "type": "boolean",
-          "description": "A flag indicating if this tool should be prominently displayed in the 'Featured Card' section."
-        },
-        "isPopular": {
-          "type": "boolean",
-          "description": "A flag indicating if this tool should be listed in the 'Free popular tools' section."
-        },
-        "isActive": {
-          "type": "boolean",
-          "description": "A flag indicating whether the tool is currently active and visible to all users. Setting this to 'false' effectively 'deletes' the tool from public view without removing it from the database (soft delete)."
-        },
-        "categoryIds": {
-          "type": "array",
-          "description": "An array of IDs referencing the AICategory entities this tool belongs to. (Relationship: AICategory N:N AITool)",
-          "items": {
-            "type": "string"
-          }
-        },
-        "ownerId": {
-          "type": "string",
-          "description": "Reference to the UserProfile ID of the user who submitted or 'owns' this tool. This will typically refer to the designated owner user (mnjkairi1@gmail.com). (Relationship: UserProfile 1:N AITool)"
-        },
-        "createdAt": {
-          "type": "string",
-          "description": "Timestamp indicating when the AI tool was added to the directory.",
-          "format": "date-time"
-        },
-        "updatedAt": {
-          "type": "string",
-          "description": "Timestamp indicating when the AI tool's information was last updated.",
-          "format": "date-time"
-        }
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "websiteUrl": { "type": "string", "format": "uri" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "iconUrl": { "type": "string", "format": "uri" },
+        "isFeatured": { "type": "boolean" },
+        "isPopular": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "categoryIds": { "type": "array", "items": { "type": "string" } },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
       },
-      "required": [
-        "id",
-        "name",
-        "description",
-        "websiteUrl",
-        "imageUrl",
-        "iconUrl",
-        "isFeatured",
-        "isPopular",
-        "isActive",
-        "categoryIds",
-        "ownerId",
-        "createdAt",
-        "updatedAt"
-      ]
+      "required": ["id", "name", "description", "websiteUrl", "isActive", "ownerId", "createdAt", "updatedAt"]
     }
   },
   "auth": {
@@ -180,48 +91,21 @@
     ]
   },
   "firestore": {
-    "structure": [
-      {
-        "path": "/user_profiles/{userId}",
-        "definition": {
-          "entityName": "UserProfile",
-          "schema": {
-            "$ref": "#/backend/entities/UserProfile"
-          },
-          "description": "Stores individual user profiles. Access is restricted to the user whose ID matches the document ID for writing, but readable by all signed-in users for social features like Blue Ticks. Includes 'id', 'email', 'role', 'plan', 'displayName', 'photoURL', 'createdAt', 'updatedAt'."
-        }
-      },
-      {
-        "path": "/aiCategories/{categoryId}",
-        "definition": {
-          "entityName": "AICategory",
-          "schema": {
-            "$ref": "#/backend/entities/AICategory"
-          },
-          "description": "Contains metadata for AI tool categories. These documents are publicly readable by all users. Only the designated 'owner' can create, update, or delete category documents. Includes 'id', 'name', 'description', 'createdAt', 'updatedAt'."
-        }
-      },
-      {
-        "path": "/aiTools/{toolId}",
-        "definition": {
-          "entityName": "AITool",
-          "schema": {
-            "$ref": "#/backend/entities/AITool"
-          },
-          "description": "Stores details for each AI tool. Documents are publicly readable if 'isActive' is true. Only the designated 'owner' can create or update tool documents. Includes 'id', 'name', 'description', 'websiteUrl', 'imageUrl', 'iconUrl', 'isFeatured', 'isPopular', 'isActive', 'categoryIds', 'ownerId', 'createdAt', 'updatedAt'."
-        }
-      },
-      {
-        "path": "/roles_owner/{ownerUid}",
-        "definition": {
-          "entityName": "UserProfile",
-          "schema": {
-            "$ref": "#/backend/entities/UserProfile"
-          },
-          "description": "A collection used to explicitly mark users who have the 'owner' global role. A document exists for the admin's UID. This enables single-level existence checks in security rules."
-        }
-      }
-    ],
-    "reasoning": "The Firestore structure uses snake_case for user_profiles to match the application code and provides a scalable way to handle global roles and per-user data while maintaining security."
+    "/user_profiles/{userId}": {
+      "schema": { "$ref": "#/backend/entities/UserProfile" },
+      "description": "Stores individual user profiles. Read-only for all signed-in users to support Blue Ticks."
+    },
+    "/groups/{groupId}": {
+      "schema": "object",
+      "description": "Community clubs and groups."
+    },
+    "/ai_tools/{toolId}": {
+      "schema": { "$ref": "#/backend/entities/AITool" },
+      "description": "AI tool directory."
+    },
+    "/roles_owner/{ownerUid}": {
+      "schema": { "$ref": "#/backend/entities/UserProfile" },
+      "description": "Explicit marks for app owners."
+    }
   }
 }
