@@ -123,8 +123,8 @@ function EmailAuth() {
         const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password!);
         await sendEmailVerification(userCredential.user);
         toast({
-          title: "Verification Email Sent!",
-          description: "Please check your inbox to verify your account.",
+          title: "Verification Sent!",
+          description: "A verification link has been sent to your email. Please verify to continue.",
         });
         setEmailForVerification(data.email);
         setSignUpState('pendingVerification');
@@ -158,13 +158,19 @@ function EmailAuth() {
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <MailCheck className="w-10 h-10 text-green-500" />
             </div>
-            <h2 className="text-2xl font-black mb-3 tracking-tight">Check Mail</h2>
+            <h2 className="text-2xl font-black mb-3 tracking-tight">Verify Email</h2>
             <p className="text-muted-foreground text-sm mb-8 leading-relaxed px-2">
-                We've sent a magic link to <br/><span className="font-bold text-foreground break-all">{emailForVerification}</span>
+                A verification link has been sent to your Gmail. Please check your <span className="font-bold text-foreground">Inbox or Spam folder</span> (from Firebase). Verify the link to access the app.
             </p>
-            <Button className="w-full h-14 rounded-full font-bold shadow-lg" onClick={() => { setAuthMode('signIn'); setSignUpState('form'); }}>
-                Back to Login
-            </Button>
+            <div className="space-y-3">
+                <p className="text-[10px] font-bold text-primary uppercase tracking-widest animate-pulse">Waiting for verification...</p>
+                <Button variant="outline" className="w-full h-12 rounded-full font-bold" onClick={() => window.location.reload()}>
+                    I've Verified My Email
+                </Button>
+                <Button variant="ghost" className="w-full text-xs font-bold text-muted-foreground" onClick={() => { setAuthMode('signIn'); setSignUpState('form'); signOut(auth); }}>
+                    Use Different Email
+                </Button>
+            </div>
         </div>
       );
   }
@@ -440,15 +446,17 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
   
+  // Real-time polling for email verification status
   useEffect(() => {
     if (user && !user.emailVerified && user.providerData.some(p => p.providerId === 'password')) {
         const intervalId = setInterval(async () => {
             await user.reload();
             if (auth.currentUser?.emailVerified) {
                 clearInterval(intervalId);
+                // Force a state update by refreshing the page or using a router refresh
                 window.location.reload(); 
             }
-        }, 3000);
+        }, 3000); // Check every 3 seconds
 
         return () => clearInterval(intervalId);
     }
@@ -459,6 +467,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   }
 
   if (user) {
+    // If signed in with email/password but NOT verified, show blocking screen
     const isPasswordProvider = user.providerData.some(p => p.providerId === 'password');
     if (isPasswordProvider && !user.emailVerified) {
       return (
@@ -468,18 +477,21 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
             </div>
             <h1 className="text-3xl font-black mb-4 tracking-tight">Verify Your Email</h1>
             <p className="text-sm text-muted-foreground mb-10 leading-relaxed max-w-xs mx-auto">
-                We've sent a secure link to <br/><strong>{user.email}</strong>. <br/>
-                Please check your inbox to continue.
+                A verification link has been sent to your email <br/><strong>{user.email}</strong>. <br/>
+                Please check your <span className="font-bold text-foreground">Inbox or Spam folder</span> (from Firebase). Verify the link to continue.
             </p>
-            <Button onClick={() => window.location.reload()} className="w-full max-w-xs h-14 rounded-full text-base font-black shadow-xl shadow-primary/20">
-                I've Verified My Email
-            </Button>
-            <Button variant="link" onClick={() => signOut(auth)} className="mt-6 font-bold text-xs text-muted-foreground uppercase tracking-widest">
-                Logout & Use Different Account
-            </Button>
+            <div className="w-full max-w-xs space-y-4">
+                <Button onClick={() => window.location.reload()} className="w-full h-14 rounded-full text-base font-black shadow-xl shadow-primary/20">
+                    I've Verified My Email
+                </Button>
+                <Button variant="link" onClick={() => signOut(auth)} className="w-full font-bold text-xs text-muted-foreground uppercase tracking-widest">
+                    Logout & Use Different Account
+                </Button>
+            </div>
         </div>
       );
     }
+    // If verified OR signed in with Google (Google users are pre-verified), allow access
     return <>{children}</>;
   }
 
