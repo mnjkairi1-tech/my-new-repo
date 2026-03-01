@@ -4,7 +4,7 @@ import React, { useMemo, useCallback, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-    ArrowLeft, ExternalLink, Star, Share2, Filter, Search, Scale, Check
+    ArrowLeft, ExternalLink, Star, Share2, Filter, Search, Scale, Check, ArrowRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle, CardContent } from '@/components/ui/card';
@@ -14,16 +14,18 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenu
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { allTools } from '@/lib/tools-data';
 import type { Tool } from '@/lib/types';
+import { useRouter } from 'next/navigation';
 
 
 export default function AllToolsPage() {
     const { toast } = useToast();
-    const { theme } = useUserPreferences();
+    const { theme, comparisonList } = useUserPreferences();
     const isMidnight = theme === 'midnight-glass';
     const [priceFilter, setPriceFilter] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
     const [open, setOpen] = useState(false);
     const [isClient, setIsClient] = React.useState(false);
+    const router = useRouter();
 
     React.useEffect(() => {
         setIsClient(true);
@@ -205,7 +207,7 @@ export default function AllToolsPage() {
       </div>
 
       <main className="relative z-10 w-full max-w-7xl flex-1 flex flex-col min-h-0 mt-2 px-4">
-        <div className="flex-grow overflow-y-auto no-scrollbar pb-24">
+        <div className="flex-grow overflow-y-auto no-scrollbar pb-32">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
                 {filteredTools.map((tool) => (
                     <ToolCard tool={tool} key={tool.name} />
@@ -213,6 +215,20 @@ export default function AllToolsPage() {
             </div>
         </div>
       </main>
+
+      {/* Floating Compare Button for Mobile/Global */}
+      {comparisonList.length === 2 && (
+          <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] w-full max-w-xs px-4 animate-in fade-in slide-in-from-bottom-10">
+              <Button 
+                  onClick={() => router.push('/compare-tools')}
+                  className="w-full h-14 rounded-full font-black text-lg bg-primary text-primary-foreground shadow-2xl border-4 border-background group"
+              >
+                  <Scale className="mr-2 h-6 w-6 group-hover:rotate-12 transition-transform" />
+                  Compare Tools
+                  <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+          </div>
+      )}
     </div>
   );
 }

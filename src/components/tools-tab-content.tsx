@@ -8,8 +8,9 @@ import { useLanguage } from '@/lib/language';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
-import { Share2, Star, Search, Filter, Scale, Check, Loader2, Info, SearchCode, StarHalf, UserPlus } from 'lucide-react';
+import { Share2, Star, Search, Filter, Scale, Check, Loader2, Info, SearchCode, StarHalf, UserPlus, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -101,8 +102,9 @@ ToolCard.displayName = 'ToolCard';
 
 export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void }) {
     const { t } = useLanguage();
-    const { theme } = useUserPreferences();
+    const { theme, comparisonList } = useUserPreferences();
     const isMidnight = theme === 'midnight-glass';
+    const router = useRouter();
     
     const [searchTerm, setSearchTerm] = useState('');
     const [priceFilter, setPriceFilter] = useState('All');
@@ -154,7 +156,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     }
 
     return (
-        <div className="flex flex-col h-full max-w-7xl mx-auto">
+        <div className="flex flex-col h-full max-w-7xl mx-auto relative">
             <div className="px-0 pb-4">
                 <div className="flex gap-4 items-center max-w-2xl mx-auto px-4">
                     <div className="relative flex-grow">
@@ -201,7 +203,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     {`10,000+ Tools Discovered`}
                 </div>
             </div>
-            <div className="flex-1 overflow-y-auto px-4 no-scrollbar pt-2 pb-20">
+            <div className="flex-1 overflow-y-auto px-4 no-scrollbar pt-2 pb-32">
                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                     {filteredTools.slice(0, visibleCount).map(tool => (
                         <ToolCard
@@ -222,6 +224,20 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     </div>
                 )}
             </div>
+
+            {/* Comparison Floating Action Button */}
+            {comparisonList.length === 2 && (
+                <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] w-full max-w-xs px-4 animate-in fade-in slide-in-from-bottom-10 duration-500">
+                    <Button 
+                        onClick={() => router.push('/compare-tools')}
+                        className="w-full h-14 rounded-full font-black text-lg bg-primary text-primary-foreground shadow-2xl border-4 border-background hover:scale-105 active:scale-95 transition-all group"
+                    >
+                        <Scale className="mr-2 h-6 w-6 group-hover:rotate-12 transition-transform" />
+                        Compare Now
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                </div>
+            )}
 
             <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
                 <AlertDialogContent className={cn(
