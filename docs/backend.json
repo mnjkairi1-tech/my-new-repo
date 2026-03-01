@@ -19,6 +19,20 @@
           "type": "string",
           "description": "The role of the user, determining their permissions within the application (e.g., 'owner', 'user'). The 'owner' role grants privileges to add and delete AI tools."
         },
+        "plan": {
+          "type": "string",
+          "description": "The current subscription plan of the user (e.g., 'basic', 'standard', 'pro').",
+          "enum": ["basic", "standard", "pro"]
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The public display name of the user."
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "The URL to the user's profile picture.",
+          "format": "uri"
+        },
         "createdAt": {
           "type": "string",
           "description": "Timestamp indicating when the user profile was created.",
@@ -168,13 +182,13 @@
   "firestore": {
     "structure": [
       {
-        "path": "/userProfiles/{userId}",
+        "path": "/user_profiles/{userId}",
         "definition": {
           "entityName": "UserProfile",
           "schema": {
             "$ref": "#/backend/entities/UserProfile"
           },
-          "description": "Stores individual user profiles. Access is restricted to the user whose ID matches the document ID. Primarily used for storing user-specific data and their role, though the 'owner' role for global permissions is primarily handled by the '/roles_owner' collection for Authorization Independence. Includes 'id', 'email', 'role', 'createdAt', 'updatedAt'."
+          "description": "Stores individual user profiles. Access is restricted to the user whose ID matches the document ID for writing, but readable by all signed-in users for social features like Blue Ticks. Includes 'id', 'email', 'role', 'plan', 'displayName', 'photoURL', 'createdAt', 'updatedAt'."
         }
       },
       {
@@ -184,13 +198,7 @@
           "schema": {
             "$ref": "#/backend/entities/AICategory"
           },
-          "description": "Contains metadata for AI tool categories. These documents are publicly readable by all users. Only the designated 'owner' (mnjkairi1@gmail.com, whose UID is present in '/roles_owner') can create, update, or delete category documents. Includes 'id', 'name', 'description', 'createdAt', 'updatedAt'.",
-          "params": [
-            {
-              "name": "categoryId",
-              "description": "The unique identifier for an AI category."
-            }
-          ]
+          "description": "Contains metadata for AI tool categories. These documents are publicly readable by all users. Only the designated 'owner' can create, update, or delete category documents. Includes 'id', 'name', 'description', 'createdAt', 'updatedAt'."
         }
       },
       {
@@ -200,13 +208,7 @@
           "schema": {
             "$ref": "#/backend/entities/AITool"
           },
-          "description": "Stores details for each AI tool. Documents are publicly readable if 'isActive' is true, enabling QAPs for list operations. The 'ownerId' field explicitly denormalizes ownership (referencing the UID of 'mnjkairi1@gmail.com'), ensuring Authorization Independence for write operations. Only the designated 'owner' (checked via '/roles_owner' collection) can create, update, or set the 'isActive' status. Includes 'id', 'name', 'description', 'websiteUrl', 'imageUrl', 'iconUrl', 'isFeatured', 'isPopular', 'isActive', 'categoryIds', 'ownerId', 'createdAt', 'updatedAt'.",
-          "params": [
-            {
-              "name": "toolId",
-              "description": "The unique identifier for an AI tool."
-            }
-          ]
+          "description": "Stores details for each AI tool. Documents are publicly readable if 'isActive' is true. Only the designated 'owner' can create or update tool documents. Includes 'id', 'name', 'description', 'websiteUrl', 'imageUrl', 'iconUrl', 'isFeatured', 'isPopular', 'isActive', 'categoryIds', 'ownerId', 'createdAt', 'updatedAt'."
         }
       },
       {
@@ -216,16 +218,10 @@
           "schema": {
             "$ref": "#/backend/entities/UserProfile"
           },
-          "description": "A collection used to explicitly mark users who have the 'owner' global role. A document exists for 'mnjkairi1@gmail.com''s UID. This collection enables Authorization Independence for global owner checks (e.g., for creating/managing tools/categories) by allowing security rules to perform a single, top-level existence check. Documents here typically contain minimal data, serving primarily as a presence indicator for the given UID.",
-          "params": [
-            {
-              "name": "ownerUid",
-              "description": "The unique identifier of a user who possesses the global 'owner' role."
-            }
-          ]
+          "description": "A collection used to explicitly mark users who have the 'owner' global role. A document exists for the admin's UID. This enables single-level existence checks in security rules."
         }
       }
     ],
-    "reasoning": "The recommended Firestore structure prioritizes Authorization Independence and Query-Accurate Permissions (QAPs) by employing structural segregation and denormalization. Authorization Independence: 1. Global Owner Role: A dedicated collection /roles_owner/{ownerUid} stores the UIDs of users with 'owner' privileges. This eliminates hierarchical authorization dependencies for global actions (like creating new tools or categories) by allowing security rules to perform a single get().exists() check on this top-level collection, completely independent of specific parent documents. This makes rules robust and easy to debug. The user identified as 'mnjkairi1@gmail.com' will have their UID stored here. 2. Tool Ownership Denormalization: Each /aiTools/{toolId} document explicitly includes an ownerId field, which will be the UID of the designated owner ('mnjkairi1@gmail.com'). This denormalization means that rules for modifying a specific tool do not need to get() any parent or user document to determine ownership. The ownership check is self-contained within the tool document, supporting atomic operations and preventing cascading rule failures. Query-Accurate Permissions (QAPs): 1. Structural Segregation for Tools: All AITool documents reside in a single /aiTools collection. Public readability is controlled by the isActive field within each tool document. Security rules will enforce that regular users can only list or get tools where isActive is true. This allows for efficient client-side queries (e.g., db.collection('aiTools').where('isActive', '==', true).get()) without requiring the rules to filter results, thus adhering to QAP principles. The 'owner' can bypass this isActive check. 2. Global Categories: /aiCategories are globally readable, ensuring that list operations for categories are always fully accurate and authorized. Write access is restricted to the owner via the /roles_owner collection. 3. User Profiles: /userProfiles/{userId} are segregated, with userId matching request.auth.uid, making individual profile management straightforward and secure through path-based authorization. Only the user themselves can read/write their own profile."
+    "reasoning": "The Firestore structure uses snake_case for user_profiles to match the application code and provides a scalable way to handle global roles and per-user data while maintaining security."
   }
 }
