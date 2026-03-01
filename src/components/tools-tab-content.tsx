@@ -9,7 +9,7 @@ import { useLanguage } from '@/lib/language';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
-import { Share2, Star, Search, Filter, Scale, Check, Loader2, Info, SearchCode, StarHalf, UserPlus, ArrowRight, Sparkles, Wand2 } from 'lucide-react';
+import { Share2, Star, Search, Filter, Scale, Check, Loader2, Info, SearchCode, StarHalf, UserPlus, ArrowRight, Sparkles, Wand2, Link2, Heart } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
 import {
@@ -31,8 +31,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { allToolsServer } from '@/lib/all-tools-server';
-import { findToolByName } from '@/ai/flows/find-tool-by-name';
 import { useToast } from '@/hooks/use-toast';
+import { validateAndGetToolInfo } from '@/ai/flows/validate-tool-url';
 
 const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void, t: (key: string) => string }) => {
     const { theme, starredTools, handleStarToggle, comparisonList, selectForCompare } = useUserPreferences();
@@ -106,7 +106,7 @@ ToolCard.displayName = 'ToolCard';
 export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void }) {
     const { t } = useLanguage();
     const { toast } = useToast();
-    const { theme, comparisonList } = useUserPreferences();
+    const { theme, comparisonList, handleHeartToggle } = useUserPreferences();
     const isMidnight = theme === 'midnight-glass';
     const router = useRouter();
     
@@ -118,9 +118,9 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     const [loadMoreClicks, setLoadMoreClicks] = useState(0);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-    // AI Search States
-    const [aiFoundTool, setAiFoundTool] = useState<Tool | null>(null);
-    const [isAiSearching, setIsAiSearching] = useState(false);
+    // Manual Tool Addition States
+    const [customUrl, setCustomUrl] = useState('');
+    const [isAddingManually, setIsAddingManually] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
@@ -155,27 +155,57 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
         }
     };
 
-    const handleAiSearch = async () => {
-        if (!searchTerm.trim()) return;
-        setIsAiSearching(true);
-        setAiFoundTool(null);
-        
+    const handleAddCustomTool = async () => {
+        let urlToValidate = customUrl.trim();
+        if (!urlToValidate) {
+            toast({ variant: 'destructive', title: 'Empty Link', description: 'Please enter a URL first.' });
+            return;
+        }
+
+        if (!urlToValidate.includes('://')) {
+            urlToValidate = 'https://' + urlToValidate;
+        }
+
+        setIsAddingManually(true);
         try {
-            const result = await findToolByName({ name: searchTerm });
-            if (result) {
-                setAiFoundTool({
-                    ...result,
-                    dataAiHint: result.name.toLowerCase()
+            const url = new URL(urlToValidate);
+            const validationResult = await validateAndGetToolInfo({ url: urlToValidate });
+
+            if (validationResult.isSafe) {
+                const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain=${url.hostname}`;
+                const newTool: Tool = {
+                    name: validationResult.toolName || url.hostname,
+                    url: urlToValidate,
+                    description: validationResult.toolDescription || 'User-added link.',
+                    image: faviconUrl,
+                    dataAiHint: (validationResult.toolName || url.hostname).toLowerCase().split(' ').slice(0, 2).join(' '),
+                    pricing: 'Freemium', 
+                    category: 'Custom',
+                };
+                
+                handleHeartToggle(newTool);
+                
+                toast({
+                    title: 'Link Added!',
+                    description: `${newTool.name} has been added to your favorites.`,
                 });
-                toast({ title: "Found it!", description: `Found details for ${result.name} using AI.` });
+                setCustomUrl('');
+                setSearchTerm(''); // Reset search to show the added tool in recents/favorites if applicable
             } else {
-                toast({ variant: 'destructive', title: "Not found", description: "AI couldn't find a tool with that name." });
+                toast({
+                    variant: 'destructive',
+                    title: 'Security Alert',
+                    description: validationResult.reason || 'This URL is potentially unsafe.',
+                });
             }
-        } catch (error) {
-            console.error(error);
-            toast({ variant: 'destructive', title: "AI Search Failed" });
+        } catch (error: any) {
+             toast({
+                variant: 'destructive',
+                title: 'Invalid URL',
+                description: 'Please enter a valid web address (e.g., example.com).',
+            });
         } finally {
-            setIsAiSearching(false);
+            setIsAddingManually(false);
         }
     };
 
@@ -203,7 +233,6 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                             onChange={(e) => {
                                 setSearchTerm(e.target.value);
                                 setVisibleCount(20);
-                                setAiFoundTool(null);
                             }}
                         />
                     </div>
@@ -247,40 +276,41 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                             t={t}
                         />
                     ))}
-                    {/* Render AI Found Tool */}
-                    {aiFoundTool && (
-                        <div className="animate-in zoom-in fade-in duration-500">
-                            <ToolCard 
-                                tool={aiFoundTool}
-                                onShare={onShare}
-                                onClick={onClick}
-                                t={t}
-                            />
-                        </div>
-                    )}
                 </div>
 
-                {/* AI Search CTA when no local results */}
-                {filteredTools.length === 0 && !aiFoundTool && searchTerm.trim() !== "" && (
-                    <div className="text-center py-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <div className="w-20 h-20 bg-primary/10 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
-                            <Wand2 className="w-10 h-10 text-primary animate-pulse" />
+                {/* URL Input CTA when no local results */}
+                {filteredTools.length === 0 && searchTerm.trim() !== "" && (
+                    <div className="text-center py-16 px-4 animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-md mx-auto">
+                        <div className="w-20 h-20 bg-primary/10 rounded-[2.5rem] flex items-center justify-center mx-auto mb-6">
+                            <Link2 className="w-10 h-10 text-primary" />
                         </div>
-                        <h3 className="text-xl font-black uppercase tracking-tight mb-2">Tool Not in Library?</h3>
-                        <p className="text-muted-foreground text-sm max-w-xs mx-auto mb-8 leading-relaxed">
-                            Ai Atlas can search the entire web using AI to find information about <strong>"{searchTerm}"</strong>.
+                        <h3 className="text-xl font-black uppercase tracking-tight mb-4">Tool Not Found</h3>
+                        <p className="text-muted-foreground text-sm mb-8 leading-relaxed">
+                            Put the website / tool link here to add in your device
                         </p>
-                        <Button 
-                            onClick={handleAiSearch} 
-                            disabled={isAiSearching}
-                            className="h-14 px-8 rounded-full font-black text-base shadow-xl shadow-primary/20 group transition-all"
-                        >
-                            {isAiSearching ? (
-                                <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Deep Searching...</>
-                            ) : (
-                                <><Sparkles className="mr-2 h-5 w-5 group-hover:scale-125 transition-transform" /> Search with AI</>
-                            )}
-                        </Button>
+                        
+                        <div className="space-y-4">
+                            <Input 
+                                placeholder="Paste tool link here..."
+                                value={customUrl}
+                                onChange={(e) => setCustomUrl(e.target.value)}
+                                className={cn(
+                                    "h-14 rounded-2xl text-center shadow-lg",
+                                    isMidnight ? "glass-input-effect" : "bg-card"
+                                )}
+                            />
+                            <Button 
+                                onClick={handleAddCustomTool} 
+                                disabled={isAddingManually || !customUrl.trim()}
+                                className="w-full h-14 rounded-full font-black text-base shadow-xl shadow-primary/20 group transition-all"
+                            >
+                                {isAddingManually ? (
+                                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...</>
+                                ) : (
+                                    <><Heart className="mr-2 h-5 w-5 fill-current" /> Add to Device</>
+                                )}
+                            </Button>
+                        </div>
                     </div>
                 )}
 
