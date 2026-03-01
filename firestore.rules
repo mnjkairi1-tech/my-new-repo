@@ -3,7 +3,6 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // --- Helper Functions ---
-    
     function isSignedIn() {
       return request.auth != null;
     }
@@ -17,19 +16,13 @@ service cloud.firestore {
     }
 
     // --- User Profiles ---
-    // CRITICAL: We allow ANY signed-in user to read any profile so they can see Blue Ticks/Names in chat.
-    // Writes are strictly restricted to the account owner or the global app owner.
+    // Allow any signed-in user to read basic profile info (needed for names/ticks fallback)
     match /user_profiles/{userId} {
       allow read: if isSignedIn();
       allow write: if isOwner(userId) || isGlobalOwner();
     }
 
     // --- AI Catalog ---
-    match /aiTools/{id} {
-      allow read: if true;
-      allow write: if isGlobalOwner();
-    }
-    
     match /ai_tools/{id} {
       allow read: if true;
       allow write: if isGlobalOwner();

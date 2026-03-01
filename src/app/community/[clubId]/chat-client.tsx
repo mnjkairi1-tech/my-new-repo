@@ -17,6 +17,7 @@ import { collection, doc, query, orderBy, limit, serverTimestamp, increment } fr
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking, setDocumentNonBlocking, updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { cn } from '@/lib/utils';
+import { useUserPreferences } from '@/context/user-preferences-context';
 
 interface Message {
   id: string;
@@ -24,6 +25,7 @@ interface Message {
   imageUrl?: string;
   userId: string;
   userName: string;
+  userPlan?: string; // Stored directly in the message for efficiency
   createdAt: any;
 }
 
@@ -40,6 +42,7 @@ interface GroupMember {
     userId: string;
     joinedAt: Date;
     role: 'member' | 'admin' | 'owner';
+    plan?: string;
 }
 
 interface GroupTool {
@@ -76,13 +79,10 @@ const ToolCard = ({ tool }: { tool: GroupTool }) => {
     );
 };
 
-// Component to render user name with optional blue tick
-const UserNameWithTick = ({ userId, userName, className, showName = true }: { userId: string, userName: string, className?: string, showName?: boolean }) => {
-    const firestore = useFirestore();
-    const userProfileRef = useMemoFirebase(() => firestore ? doc(firestore, 'user_profiles', userId) : null, [firestore, userId]);
-    const { data: profile } = useDoc(userProfileRef);
+// Optimized component: No more Firestore fetch inside!
+const UserNameWithTick = ({ userName, userPlan, className, showName = true }: { userName: string, userPlan?: string, className?: string, showName?: boolean }) => {
     // Subscribed users (standard or pro) get the tick
-    const hasSubscription = profile?.plan === 'standard' || profile?.plan === 'pro';
+    const hasSubscription = userPlan === 'standard' || userPlan === 'pro';
 
     return (
         <div className={cn("flex items-center gap-1", className)}>
@@ -97,6 +97,7 @@ export default function ClubDetailsPageClient() {
   const clubId = params.clubId as string;
   const router = useRouter();
   const { user, isUserLoading } = useUser();
+  const { userPlan } = useUserPreferences(); // Get current user's plan
   const firestore = useFirestore();
   const { toast } = useToast();
 
@@ -139,6 +140,7 @@ export default function ClubDetailsPageClient() {
       text: newMessage,
       userId: user.uid,
       userName: user.displayName || 'Anonymous',
+      userPlan: userPlan, // Save plan status in the message!
       createdAt: serverTimestamp(),
     };
 
@@ -185,6 +187,7 @@ export default function ClubDetailsPageClient() {
       role: 'member',
       displayName: user.displayName || 'Anonymous',
       photoURL: user.photoURL || '',
+      plan: userPlan, // Save plan in member info too
     };
 
     setDocumentNonBlocking(memberRef, memberData, { merge: false });
@@ -248,9 +251,9 @@ export default function ClubDetailsPageClient() {
                   <div key={msg.id} className={`flex items-end gap-2 mb-2 ${msg.userId === user?.uid ? 'justify-end' : 'justify-start'}`}>
                     <div className={`p-3 rounded-2xl max-w-[70%] shadow-sm ${msg.userId === user?.uid ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-card text-foreground rounded-bl-none'}`}>
                         {msg.userId !== user?.uid ? (
-                            <UserNameWithTick userId={msg.userId} userName={msg.userName} className="text-xs mb-1 text-primary" />
+                            <UserNameWithTick userName={msg.userName} userPlan={msg.userPlan} className="text-xs mb-1 text-primary" />
                         ) : (
-                            <UserNameWithTick userId={msg.userId} userName="You" className="text-xs mb-1 text-primary-foreground/80" showName={false} />
+                            <UserNameWithTick userName="You" userPlan={userPlan} className="text-xs mb-1 text-primary-foreground/80" showName={false} />
                         )}
                         
                         {msg.text && <p className="text-sm leading-relaxed">{msg.text}</p>}

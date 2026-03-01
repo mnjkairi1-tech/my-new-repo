@@ -39,6 +39,7 @@ interface GroupMember {
     role: 'member' | 'admin' | 'owner';
     displayName?: string;
     photoURL?: string;
+    plan?: string; // Stored in the member document
 }
 
 interface GroupTool {
@@ -100,6 +101,7 @@ function AddMemberDialog({ clubId, groupRef }: { clubId: string, groupRef: any }
             role: 'member',
             displayName: searchedUser.displayName,
             photoURL: searchedUser.photoURL,
+            plan: searchedUser.plan || 'basic', // Capture plan status
         };
 
         const userGroupMembershipRef = doc(firestore, 'users', searchedUid, 'groupMemberships', clubId);
@@ -170,12 +172,9 @@ function AddMemberDialog({ clubId, groupRef }: { clubId: string, groupRef: any }
     );
 }
 
-// Component to render member name with optional blue tick
-const MemberNameWithTick = ({ userId, displayName, role }: { userId: string, displayName: string, role: string }) => {
-    const firestore = useFirestore();
-    const userProfileRef = useMemoFirebase(() => firestore ? doc(firestore, 'user_profiles', userId) : null, [firestore, userId]);
-    const { data: profile } = useDoc<UserProfile>(userProfileRef);
-    const isPro = profile?.plan === 'pro';
+// Optimized component: No more Firestore fetch!
+const MemberNameWithTick = ({ displayName, role, plan }: { displayName: string, role: string, plan?: string }) => {
+    const isPro = plan === 'standard' || plan === 'pro';
 
     return (
         <div>
@@ -542,7 +541,11 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                                 <AvatarImage src={member.photoURL ?? undefined} />
                                                 <AvatarFallback>{member.displayName?.charAt(0) || 'U'}</AvatarFallback>
                                             </Avatar>
-                                            <MemberNameWithTick userId={member.userId} displayName={member.userId === user?.uid ? 'You' : member.displayName || 'Community Member'} role={member.role} />
+                                            <MemberNameWithTick 
+                                                displayName={member.userId === user?.uid ? 'You' : member.displayName || 'Community Member'} 
+                                                role={member.role} 
+                                                plan={member.plan} // Use captured plan
+                                            />
                                         </div>
                                         {member.role === 'owner' && <BadgeCheck className='text-green-500' />}
                                     </div>
