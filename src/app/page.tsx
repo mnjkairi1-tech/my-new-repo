@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useCallback, useRef, Suspense, useState, useEffect } from 'react';
@@ -41,6 +42,7 @@ import {
 import type { Tool } from '@/lib/types';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { QuickAccessView } from '@/components/quick-access-view';
+import { getImage, getHint } from './lib/placeholder-images';
 
 const ToolsTabContent = dynamic(() => import('@/components/tools-tab-content'), {
     ssr: false,
@@ -90,8 +92,8 @@ function HomePageContent() {
   const carouselSlides = [
     { 
       title: "Manga Reader",
-      image: "https://i.postimg.cc/DyfNCzpV/Screenshot_2025-12-16-12-47-43-00-965bbf4d18d205f782c6b8409c5773a4.jpg",
-      dataAiHint: "manga comic",
+      image: getImage('poster-new'),
+      dataAiHint: getHint('poster-new'),
       link: "https://filmm.me/pzcMMikJ"
     },
     { 
@@ -107,6 +109,10 @@ function HomePageContent() {
       link: "/productivity"
     },
   ];
+
+  const setActiveTab = (tab: string) => {
+      setActiveSavedTab(tab);
+  };
 
   return (
     <div className="space-y-8 pb-10 animate-fade-in-up max-w-7xl mx-auto w-full">
@@ -143,7 +149,7 @@ function HomePageContent() {
                                     "relative aspect-[16/9] w-full overflow-hidden shadow-xl hover:scale-[1.02] transition-transform rounded-[2.5rem]",
                                     isMidnight ? "glass-card-effect" : "border-none"
                                 )}>
-                                    <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.title} unoptimized />
+                                    <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.dataAiHint} unoptimized />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                                     <div className="absolute bottom-0 left-0 p-6 z-10">
                                         <h3 className="font-black text-2xl text-white tracking-tight">{slide.title}</h3>
@@ -439,7 +445,7 @@ function GalaxyAppMain() {
                 </div>
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-black text-center">Upgrade to {requiredPlan.toUpperCase()}</DialogTitle>
-                    <DialogDescription className="text-center text-base font-medium mt-2 leading-relaxed">
+                    <DialogTitle className="text-center text-base font-medium mt-2 leading-relaxed">
                         {requestedFeature === 'ultra' ? (
                             "Unlock Ultra: top free AI tools that offer high usage limits and powerful features, but are still most people dont know about it."
                         ) : (
@@ -448,7 +454,7 @@ function GalaxyAppMain() {
                         <span className="block mt-4 text-primary font-black text-xl">
                             Price: {requiredPlan === 'pro' ? '₹49' : '₹29'} / Month
                         </span>
-                    </DialogDescription>
+                    </DialogTitle>
                 </DialogHeader>
                 <div className="mt-8 space-y-3">
                     <Button 
