@@ -7,11 +7,11 @@ import { useFirestore, useDoc, useCollection, useUser, useMemoFirebase } from '@
 import { doc, collection, query, orderBy, Timestamp, addDoc, serverTimestamp, getDoc, setDoc, increment, updateDoc, deleteDoc } from 'firebase/firestore';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, BadgeCheck, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2, User as UserIcon, Trash2, Share2 } from 'lucide-react';
+import { ArrowLeft, Bell, Search, Users, Image as ImageIcon, Link2, FileText, Lock, Phone, MoreVertical, Video, Star, BellOff, Edit, UserPlus, Plus, ChevronRight, Loader2, Trash2, Share2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 
@@ -39,7 +39,6 @@ interface GroupMember {
     role: 'member' | 'admin' | 'owner';
     displayName?: string;
     photoURL?: string;
-    plan?: string; // Stored in the member document
 }
 
 interface GroupTool {
@@ -56,7 +55,6 @@ interface GroupTool {
 interface UserProfile {
     displayName: string;
     photoURL: string;
-    plan?: string;
 }
 
 function AddMemberDialog({ clubId, groupRef }: { clubId: string, groupRef: any }) {
@@ -101,7 +99,6 @@ function AddMemberDialog({ clubId, groupRef }: { clubId: string, groupRef: any }
             role: 'member',
             displayName: searchedUser.displayName,
             photoURL: searchedUser.photoURL,
-            plan: searchedUser.plan || 'basic', // Capture plan status
         };
 
         const userGroupMembershipRef = doc(firestore, 'users', searchedUid, 'groupMemberships', clubId);
@@ -172,21 +169,6 @@ function AddMemberDialog({ clubId, groupRef }: { clubId: string, groupRef: any }
     );
 }
 
-// Optimized component: No more Firestore fetch!
-const MemberNameWithTick = ({ displayName, role, plan }: { displayName: string, role: string, plan?: string }) => {
-    const isPro = plan === 'standard' || plan === 'pro';
-
-    return (
-        <div>
-            <div className="flex items-center gap-1">
-                <p className="font-semibold">{displayName}</p>
-                {isPro && <BadgeCheck className="w-4 h-4 text-blue-400 fill-blue-400/20" />}
-            </div>
-            {role === 'owner' && <p className='text-xs text-muted-foreground'>Group Creator</p>}
-        </div>
-    );
-};
-
 export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
     const router = useRouter();
     const firestore = useFirestore();
@@ -252,7 +234,6 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
 
         setIsDeleting(true);
         try {
-            // This needs to be a blocking operation as we navigate away on success.
             await deleteDoc(groupRef);
             toast({ title: 'Group Deleted', description: `"${clubData.name}" has been permanently deleted.` });
             
@@ -278,7 +259,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                 (tool.description && tool.description.toLowerCase().includes(lowerCaseSearchTerm)) ||
                 (tool.category && tool.category.toLowerCase().includes(lowerCaseSearchTerm))
             )
-            .slice(0, 50); // Limit results for performance
+            .slice(0, 50);
     }, [searchTerm]);
 
     const handleAddTool = async (tool: Pick<Tool, 'name'|'url'|'description'|'image'>) => {
@@ -299,7 +280,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
             title: "Tool Added!",
             description: `${tool.name} has been added to the club.`,
         });
-        setIsAddToolOpen(false); // Close dialog on success
+        setIsAddToolOpen(false);
     };
     
     const handleAddCustomTool = async () => {
@@ -309,17 +290,13 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
             return;
         }
 
-        // Auto-add protocol if missing
         if (!urlToValidate.includes('://')) {
             urlToValidate = 'https://' + urlToValidate;
         }
     
         setIsSubmittingUrl(true);
         try {
-            // Local parsing check
             const url = new URL(urlToValidate);
-    
-            // Remote safety check
             const validationResult = await validateAndGetToolInfo({ url: urlToValidate });
     
             if (validationResult.isSafe) {
@@ -330,7 +307,7 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                     description: validationResult.toolDescription || 'User-added link.',
                     image: faviconUrl,
                 });
-                setCustomToolUrl(''); // Clear on success
+                setCustomToolUrl('');
             } else {
                 toast({
                     variant: 'destructive',
@@ -541,13 +518,11 @@ export default function GroupInfoPageClient({ clubId }: { clubId: string }) {
                                                 <AvatarImage src={member.photoURL ?? undefined} />
                                                 <AvatarFallback>{member.displayName?.charAt(0) || 'U'}</AvatarFallback>
                                             </Avatar>
-                                            <MemberNameWithTick 
-                                                displayName={member.userId === user?.uid ? 'You' : member.displayName || 'Community Member'} 
-                                                role={member.role} 
-                                                plan={member.plan} // Use captured plan
-                                            />
+                                            <div>
+                                                <p className="font-semibold">{member.userId === user?.uid ? 'You' : member.displayName || 'Community Member'}</p>
+                                                {member.role === 'owner' && <p className='text-xs text-muted-foreground'>Group Creator</p>}
+                                            </div>
                                         </div>
-                                        {member.role === 'owner' && <BadgeCheck className='text-green-500' />}
                                     </div>
                                 ))}
                             </div>

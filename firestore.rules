@@ -16,10 +16,9 @@ service cloud.firestore {
     }
 
     // --- User Profiles ---
-    // Allow any signed-in user to read basic profile info (needed for names/ticks fallback)
+    // Strictly private: Users can only read/write their own profile.
     match /user_profiles/{userId} {
-      allow read: if isSignedIn();
-      allow write: if isOwner(userId) || isGlobalOwner();
+      allow read, write: if isOwner(userId) || isGlobalOwner();
     }
 
     // --- AI Catalog ---

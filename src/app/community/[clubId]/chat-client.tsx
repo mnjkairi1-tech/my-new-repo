@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Send, Users, ShieldCheck, ArrowDown, MoreVertical, Search, ArrowLeft, ExternalLink, Loader2, ChevronRight, MessageSquare, BadgeCheck } from 'lucide-react';
+import { Send, Users, ArrowDown, MoreVertical, Search, ArrowLeft, ExternalLink, Loader2, ChevronRight, MessageSquare } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useUser, useFirestore, useMemoFirebase, useCollection, useDoc } from '@/firebase';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -17,7 +17,6 @@ import { collection, doc, query, orderBy, limit, serverTimestamp, increment } fr
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking, setDocumentNonBlocking, updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { cn } from '@/lib/utils';
-import { useUserPreferences } from '@/context/user-preferences-context';
 
 interface Message {
   id: string;
@@ -25,7 +24,6 @@ interface Message {
   imageUrl?: string;
   userId: string;
   userName: string;
-  userPlan?: string; // Stored directly in the message for efficiency
   createdAt: any;
 }
 
@@ -42,7 +40,6 @@ interface GroupMember {
     userId: string;
     joinedAt: Date;
     role: 'member' | 'admin' | 'owner';
-    plan?: string;
 }
 
 interface GroupTool {
@@ -79,25 +76,11 @@ const ToolCard = ({ tool }: { tool: GroupTool }) => {
     );
 };
 
-// Optimized component: No more Firestore fetch inside!
-const UserNameWithTick = ({ userName, userPlan, className, showName = true }: { userName: string, userPlan?: string, className?: string, showName?: boolean }) => {
-    // Subscribed users (standard or pro) get the tick
-    const hasSubscription = userPlan === 'standard' || userPlan === 'pro';
-
-    return (
-        <div className={cn("flex items-center gap-1", className)}>
-            {showName && <span className="font-bold truncate">{userName}</span>}
-            {hasSubscription && <BadgeCheck className="w-3.5 h-3.5 text-blue-400 fill-blue-400/20" />}
-        </div>
-    );
-};
-
 export default function ClubDetailsPageClient() {
   const params = useParams();
   const clubId = params.clubId as string;
   const router = useRouter();
   const { user, isUserLoading } = useUser();
-  const { userPlan } = useUserPreferences(); // Get current user's plan
   const firestore = useFirestore();
   const { toast } = useToast();
 
@@ -106,11 +89,9 @@ export default function ClubDetailsPageClient() {
   const [showScrollToBottom, setShowScrollToBottom] = useState(false);
   const [isJoining, setIsJoining] = useState(false);
 
-  // Firestore references
   const groupRef = useMemoFirebase(() => firestore && clubId ? doc(firestore, 'groups', clubId) : null, [firestore, clubId]);
   const memberRef = useMemoFirebase(() => firestore && user && clubId ? doc(firestore, 'groups', clubId, 'members', user.uid) : null, [firestore, clubId, user]);
   
-  // Data fetching hooks
   const { data: clubData, isLoading: groupLoading } = useDoc<Group>(groupRef);
   const { data: memberData, isLoading: memberLoading } = useDoc<GroupMember>(memberRef);
   
@@ -140,7 +121,6 @@ export default function ClubDetailsPageClient() {
       text: newMessage,
       userId: user.uid,
       userName: user.displayName || 'Anonymous',
-      userPlan: userPlan, // Save plan status in the message!
       createdAt: serverTimestamp(),
     };
 
@@ -187,7 +167,6 @@ export default function ClubDetailsPageClient() {
       role: 'member',
       displayName: user.displayName || 'Anonymous',
       photoURL: user.photoURL || '',
-      plan: userPlan, // Save plan in member info too
     };
 
     setDocumentNonBlocking(memberRef, memberData, { merge: false });
@@ -250,11 +229,11 @@ export default function ClubDetailsPageClient() {
                  messages?.map((msg) => (
                   <div key={msg.id} className={`flex items-end gap-2 mb-2 ${msg.userId === user?.uid ? 'justify-end' : 'justify-start'}`}>
                     <div className={`p-3 rounded-2xl max-w-[70%] shadow-sm ${msg.userId === user?.uid ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-card text-foreground rounded-bl-none'}`}>
-                        {msg.userId !== user?.uid ? (
-                            <UserNameWithTick userName={msg.userName} userPlan={msg.userPlan} className="text-xs mb-1 text-primary" />
-                        ) : (
-                            <UserNameWithTick userName="You" userPlan={userPlan} className="text-xs mb-1 text-primary-foreground/80" showName={false} />
-                        )}
+                        <div className="flex items-center gap-1 mb-1">
+                            <span className={cn("text-xs font-bold truncate", msg.userId === user?.uid ? "text-primary-foreground/80" : "text-primary")}>
+                                {msg.userId === user?.uid ? "You" : msg.userName}
+                            </span>
+                        </div>
                         
                         {msg.text && <p className="text-sm leading-relaxed">{msg.text}</p>}
                         

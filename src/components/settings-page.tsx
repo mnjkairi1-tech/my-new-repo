@@ -1,4 +1,3 @@
-
 "use client"
 
 import React from "react"
@@ -299,11 +298,6 @@ export function SettingsPage() {
                         <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
                         <AvatarFallback>{user?.displayName?.charAt(0) || user?.email?.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    {isOwner && (
-                        <div className="absolute -top-2 -right-2 bg-yellow-400 text-white rounded-full p-1 shadow-md border-2 border-white">
-                            <Crown className="w-4 h-4 fill-current" />
-                        </div>
-                    )}
                 </div>
                 <div>
                     <div className="flex items-center gap-2">
@@ -319,7 +313,7 @@ export function SettingsPage() {
           <AccordionItem value={`item-${index}`} key={index} className="border-b-0 mb-3 bg-card/80 backdrop-blur-sm rounded-3xl px-4 soft-shadow">
             <AccordionTrigger className="py-4 hover:no-underline">
               <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-2xl ${isOwner && index === 0 ? 'bg-primary/10' : 'bg-gradient-to-br from-lavender to-soft-blue'} flex items-center justify-center`}>
+                <div className={`w-12 h-12 rounded-2xl ${isOwner && index === 0 ? 'bg-primary/10' : 'bg-gradient-to-br from-soft-blue via-lavender to-baby-pink'} flex items-center justify-center`}>
                     <category.icon className={`w-7 h-7 text-primary`} />
                 </div>
                 <span className="font-semibold text-lg text-foreground">{category.title}</span>
