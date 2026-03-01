@@ -90,10 +90,10 @@ function HomePageContent() {
 
   const carouselSlides = [
     { 
-      title: "Manga Reader",
-      image: getImage('featured-movie-app'),
-      dataAiHint: getHint('featured-movie-app'),
-      link: "https://filmm.me/pzcMMikJ"
+      title: "Content Creation",
+      image: getImage('content-creation-poster'),
+      dataAiHint: getHint('content-creation-poster'),
+      link: "/content-creation"
     },
     { 
       title: "Ai for Students",

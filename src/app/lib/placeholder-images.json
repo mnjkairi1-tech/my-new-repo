@@ -2,10 +2,16 @@
 {
   "placeholderImages": [
     {
+      "id": "content-creation-poster",
+      "description": "New Content creation tools poster",
+      "imageUrl": "https://i.ibb.co/JjGzsvFB/9a296060-49ef-4796-a04a-46be36a72ed4.png",
+      "imageHint": "content creation"
+    },
+    {
       "id": "featured-movie-app",
       "description": "Featured movie application background",
-      "imageUrl": "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      "imageHint": "movie poster"
+      "imageUrl": "https://images.unsplash.com/photo-1563305096-9af2877f57f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGRhcmt8ZW58MHx8fHwxNzY5NTg2MjE4fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract dark"
     },
     {
       "id": "runway",
@@ -21,13 +27,13 @@
     },
     {
       "id": "elevenlabs",
-      "imageUrl": "https://images.unsplash.com/photo-1765445773804-673b765aed52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHjaHw4fHxhdWRpbyUyMHdhdmVmb3JtfGVufDB8fHx8MTc2OTU4OTQ1M3ww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1765445773804-673b765aed52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhdWRpbyUyMHdhdmVmb3JtfGVufDB8fHx8MTc2OTU4OTQ1M3ww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "audio waveform",
       "description": "ElevenLabs AI tool"
     },
     {
       "id": "lensa",
-      "imageUrl": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHjaHw8fHxhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njk2NjM4NzB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw8fHxhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njk2NjM4NzB8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "avatar portrait",
       "description": "Lensa AI tool"
     },
@@ -63,7 +69,7 @@
     },
     {
       "id": "quick-tool-students",
-      "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmdfHxlbnwwfHx8DE3Njk1OTY0NTN8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmdfHxlbnwwfHx8fDE3Njk1OTY0NTN8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "student studying",
       "description": "A student studying with books and a laptop."
     },
@@ -123,13 +129,13 @@
     },
     {
       "id": "quick-tool-freelancer",
-      "imageUrl": "https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxmcmVlbGFuY2VyfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmcmVlbGFuY2VyfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "freelancer",
       "description": "A person working on a laptop in a cozy home office environment, updated."
     },
     {
       "id": "quick-tool-graphic-design",
-      "imageUrl": "https://images.unsplash.com/photo-1613909207039-6b173b755cc1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxncmFwaGljJTIwZGVzaWdufGVufDB8fHx8MTc2OTYyMDU5OHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1613909207039-6b173b755cc1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxncmFwaGljJTIwZGVzaWdufGVufDB8fHx8MTc2OTYyMDU5OHww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "graphic design",
       "description": "A colorful abstract design representing creativity in graphic design, updated."
     },
@@ -141,7 +147,7 @@
     },
     {
       "id": "quick-tool-education",
-      "imageUrl": "https://images.unsplash.com/photo-1613589092961-e917075faa73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxlZHVjYXRpb24lMjBib29rc3xlbnwwfHx8fDE3Njk1NjkyOTB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1613589092961-e917075faa73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxlZHVjYXRpb24lMjBib29rc3xlbnwwfHx8fDE3Njk1NjkyOTB8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "education books",
       "description": "A collection of books representing education and learning."
     },
@@ -159,7 +165,7 @@
     },
     {
       "id": "quick-tool-marketing-seo",
-      "imageUrl": "https://images.unsplash.com/photo-1639389016105-2fb11199fb6b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYXJrZXRpbmclMjBjaGFydHxlbnwwfHx8fDE3Njk2NDg4OTZ8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1639389016105-2fb11199fb6b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYXJrZXRpbmclMjBjaGFydHxlbnwwfHx8fDE3Njk2NDg4OTZ8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "marketing chart",
       "description": "Marketing & SEO tools quick access"
     },
@@ -225,7 +231,7 @@
     },
     {
       "id": "quick-tool-automation-workflow",
-      "imageUrl": "https://images.unsplash.com/photo-1764664281859-c5bd20adfbb6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhdXRvbWF0aW9uJTIwd29ya2Zsb3d8ZW58MHx8fHwxNzY5NTg3NTQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1764664281859-c5bd20adfbb6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhdXRvbWF0aW9uJTIwd29ya2Zsb3d8ZW58MHx8fHwxNzY5NTg3NTQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "automation workflow",
       "description": "Automation & Workflow Tools"
     },
