@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Users, Palette, X, PlusCircle, Scale, ShieldAlert } from 'lucide-react';
+import { Users, Palette, X, PlusCircle, Scale, ShieldAlert, Zap } from 'lucide-react';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { useUser } from '@/firebase';
 
@@ -15,12 +15,13 @@ export default function ModePage() {
     { href: '/community', icon: <Users className="h-10 w-10 text-primary" />, label: 'Community' },
     { href: '/ui-themes', icon: <Palette className="h-10 w-10 text-primary" />, label: 'UI Themes' },
     { href: '/?tab=tools', icon: <Scale className="h-10 w-10 text-primary" />, label: 'Compare', onClick: clearComparison },
+    { href: '/quick-access', icon: <Zap className="h-10 w-10 text-primary" />, label: 'Quick Access' },
   ];
 
   // Add Admin mode only for the specific owner
   if (isOwner) {
     modes.push({
-        href: '/?tab=settings', // For now, directing back to settings where the portal is
+        href: '/admin', 
         icon: <ShieldAlert className="h-10 w-10 text-destructive" />,
         label: 'Admin'
     });
