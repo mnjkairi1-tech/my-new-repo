@@ -68,6 +68,20 @@ function HomePageContent() {
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   const isMidnight = theme === 'midnight-glass';
 
+  const sortedQuickToolCategories = React.useMemo(() => {
+    return [...quickToolCategories].sort((a, b) => {
+      const aIsPinned = pinnedTools?.has(a.name);
+      const bIsPinned = pinnedTools?.has(b.name);
+      if (aIsPinned && !bIsPinned) return -1;
+      if (!aIsPinned && bIsPinned) return 1;
+      return 0;
+    });
+  }, [pinnedTools]);
+
+  const handleToolClick = useCallback((tool: Tool) => {
+    addRecentTool(tool);
+  }, [addRecentTool]);
+
   // If Quick Access is set as default, we render the Quick Access View instead of the full home
   if (isQuickAccessDefault) {
     return <QuickAccessView />;
@@ -93,20 +107,6 @@ function HomePageContent() {
       link: "/productivity"
     },
   ];
-
-  const sortedQuickToolCategories = React.useMemo(() => {
-    return [...quickToolCategories].sort((a, b) => {
-      const aIsPinned = pinnedTools?.has(a.name);
-      const bIsPinned = pinnedTools?.has(b.name);
-      if (aIsPinned && !bIsPinned) return -1;
-      if (!aIsPinned && bIsPinned) return 1;
-      return 0;
-    });
-  }, [pinnedTools]);
-
-  const handleToolClick = useCallback((tool: Tool) => {
-    addRecentTool(tool);
-  }, [addRecentTool]);
 
   return (
     <div className="space-y-8 pb-10 animate-fade-in-up max-w-7xl mx-auto w-full">
@@ -224,7 +224,7 @@ function HomePageContent() {
         <section className="mt-10 mb-16 max-w-4xl mx-auto px-0 w-full">
             <div className="flex justify-center items-center gap-8 my-6 px-4">
                 <div className="flex flex-col items-center gap-2">
-                    <button onClick={() => setActiveSavedTab('heart')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'heart' ? "scale-110" : "opacity-40")}>
+                    <button onClick={() => setActiveTab('heart')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'heart' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
                             "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all",
                             isMidnight ? "glass-card-effect" : "bg-pink-100/50 text-pink-500 soft-shadow"
@@ -233,7 +233,7 @@ function HomePageContent() {
                     </button>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <button onClick={() => setActiveSavedTab('recent')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'recent' ? "scale-110" : "opacity-40")}>
+                    <button onClick={() => setActiveTab('recent')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'recent' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
                             "w-24 h-20 md:w-28 md:h-24 flex items-center justify-center shadow-lg transition-all",
                             isMidnight ? "glass-card-effect" : "bg-blue-100/50 text-blue-500 soft-shadow"
@@ -242,7 +242,7 @@ function HomePageContent() {
                     </button>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <button onClick={() => setActiveSavedTab('star')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'star' ? "scale-110" : "opacity-40")}>
+                    <button onClick={() => setActiveTab('star')} className={cn("flex flex-col items-center gap-2 transition-all", activeSavedTab === 'star' ? "scale-110" : "opacity-40")}>
                         <div className={cn(
                             "w-20 h-16 md:w-24 md:h-20 flex items-center justify-center shadow-lg transition-all",
                             isMidnight ? "glass-card-effect" : "bg-yellow-100/50 text-yellow-500 soft-shadow"
