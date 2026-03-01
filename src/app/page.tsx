@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useRef, Suspense, useState, useEffect } from 'react';
@@ -42,7 +41,7 @@ import {
 import type { Tool } from '@/lib/types';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { QuickAccessView } from '@/components/quick-access-view';
-import { getImage, getHint } from './lib/placeholder-images';
+import { getImage, getHint } from '@/lib/placeholder-images';
 
 const ToolsTabContent = dynamic(() => import('@/components/tools-tab-content'), {
     ssr: false,
