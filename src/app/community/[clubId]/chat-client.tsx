@@ -16,6 +16,7 @@ import { allToolsServer } from '@/lib/all-tools-server';
 import { collection, doc, query, orderBy, limit, serverTimestamp, increment } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { addDocumentNonBlocking, setDocumentNonBlocking, updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { cn } from '@/lib/utils';
 
 interface Message {
   id: string;
@@ -372,8 +373,4 @@ export default function ClubDetailsPageClient() {
           </div>
     </div>
   );
-}
-
-function cn(...inputs: any[]) {
-    return inputs.filter(Boolean).join(' ');
 }
