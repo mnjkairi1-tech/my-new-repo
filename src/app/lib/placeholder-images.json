@@ -4,8 +4,8 @@
     {
       "id": "featured-movie-app",
       "description": "Featured movie application background",
-      "imageUrl": "https://images.unsplash.com/photo-1563305096-9af2877f57f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGRhcmt8ZW58MHx8fHwxNzY5NTg2MjE4fDA&ixlib.rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract dark"
+      "imageUrl": "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      "imageHint": "movie poster"
     },
     {
       "id": "runway",
@@ -21,7 +21,7 @@
     },
     {
       "id": "elevenlabs",
-      "imageUrl": "https://images.unsplash.com/photo-1765445773804-673b765aed52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHjaHw0fHxhdWRpbyUyMHdhdmVmb3JtfGVufDB8fHx8MTc2OTU4OTQ1M3ww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1765445773804-673b765aed52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHjaHw4fHxhdWRpbyUyMHdhdmVmb3JtfGVufDB8fHx8MTc2OTU4OTQ1M3ww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "audio waveform",
       "description": "ElevenLabs AI tool"
     },
@@ -141,7 +141,7 @@
     },
     {
       "id": "quick-tool-education",
-      "imageUrl": "https://images.unsplash.com/photo-1613589092961-e917075faa73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxlZHVjYXRpb24lMjBib29rc3xlbnwwfHx8fDE3Njk1NjkyOTB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1613589092961-e917075faa73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxlZHVjYXRpb24lMjBib29rc3xlbnwwfHx8fDE3Njk1NjkyOTB8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "education books",
       "description": "A collection of books representing education and learning."
     },
