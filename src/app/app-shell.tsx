@@ -12,6 +12,7 @@ import { PeachAnimation } from '@/components/themes/peach-animation';
 import { LemonAnimation } from '@/components/themes/lemon-animation';
 import { SakuraAnimation } from '@/components/themes/sakura-animation';
 import { GalaxyAnimation } from '@/components/themes/galaxy-animation';
+import { PandaAnimation } from '@/components/themes/panda-animation';
 import { cn } from '@/lib/utils';
 
 function AppShellContent({ children }: { children: React.ReactNode }) {
@@ -64,6 +65,7 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
             {theme === 'cute-lemon-glass' && <LemonAnimation />}
             {theme === 'cute-sakura-glass' && <SakuraAnimation />}
             {theme === 'cute-galaxy-glass' && <GalaxyAnimation />}
+            {theme === 'cute-panda-glass' && <PandaAnimation />}
             
             <main className="relative z-10 flex-grow pb-24 md:pb-0 h-full px-0 md:px-6 lg:px-12">
                 {children}

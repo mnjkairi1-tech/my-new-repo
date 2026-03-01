@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Palette, Sun, Moon, Compass, Mountain, 
-  Snowflake, Leaf, Sparkles, Zap, GlassWater, Sunset, Heart, Cloud, Flower, Waves, Star, Utensils, Zap as LemonIcon, Cherry, Rocket
+  Snowflake, Leaf, Sparkles, Zap, GlassWater, Sunset, Heart, Cloud, Flower, Waves, Star, Utensils, Zap as LemonIcon, Cherry, Rocket, PawPrint
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
@@ -22,6 +22,7 @@ export default function UiThemesPage() {
     { name: 'default', label: 'Default Light', icon: Sun, color: 'bg-orange-100 text-orange-600' },
     { name: 'dark', label: 'Classic Dark', icon: Moon, color: 'bg-slate-800 text-slate-100' },
     { name: 'midnight-glass', label: 'Midnight Glass', icon: GlassWater, color: 'bg-zinc-900 text-white border-white/20' },
+    { name: 'cute-panda-glass', label: 'Panda Bliss', icon: PawPrint, color: 'bg-zinc-100 text-black border-black/20' },
     { name: 'desert-sand', label: 'Desert Sand', icon: Compass, color: 'bg-orange-50 text-orange-800' },
     { name: 'emerald-night', label: 'Emerald Night', icon: Mountain, color: 'bg-green-950 text-emerald-400' },
     { name: 'cosmic-neon', label: 'Cosmic Neon', icon: Sparkles, color: 'bg-[#05050a] text-[#8E54E9] border-[#00F5FF]/20' },

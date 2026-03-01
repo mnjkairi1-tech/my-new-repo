@@ -55,6 +55,21 @@
     --border: 0 0% 100% / 0.18;
   }
 
+  [data-theme='cute-panda-glass'] {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+    --card: 0 0% 100% / 0.8;
+    --card-foreground: 0 0% 10%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 94%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 96%;
+    --border: 0 0% 88%;
+    --radius: 1.5rem;
+  }
+
   [data-theme='desert-sand'] {
     --background: 35 50% 95%;
     --foreground: 25 40% 20%;
