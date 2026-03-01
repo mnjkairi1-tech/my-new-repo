@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useCallback, useRef, Suspense, useState, useEffect } from 'react';
@@ -91,20 +92,20 @@ function HomePageContent() {
   const carouselSlides = [
     { 
       title: "Manga Reader",
-      image: getImage('poster-new'),
-      dataAiHint: getHint('poster-new'),
+      image: getImage('featured-movie-app'),
+      dataAiHint: getHint('featured-movie-app'),
       link: "https://filmm.me/pzcMMikJ"
     },
     { 
       title: "Ai for Students",
-      image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmcsZW58MHx8fHwxNzcwMzQwNTAwfDA&ixlib.rb-4.1.0&q=80&w=1080",
-      dataAiHint: "student studying",
+      image: getImage('student-poster'),
+      dataAiHint: getHint('student-poster'),
       link: "/student-tools"
     },
     { 
       title: "Boost Productivity",
-      image: "https://picsum.photos/seed/slide3/800/600",
-      dataAiHint: "data chart",
+      image: getImage('poster-new'),
+      dataAiHint: getHint('poster-new'),
       link: "/productivity"
     },
   ];

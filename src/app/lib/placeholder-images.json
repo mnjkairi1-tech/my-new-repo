@@ -9,25 +9,25 @@
     },
     {
       "id": "runway",
-      "imageUrl": "https://images.unsplash.com/photo-1490810194309-344b3661ba39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx2aWRlbyUyMGVkaXRpbmd8ZW58MHx8fHwxNzY5NTY4ODA1fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1490810194309-344b3661ba39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHjaHwzfHx2aWRlbyUyMGVkaXRpbmd8ZW58MHx8fHwxNzY5NTY4ODA1fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "video editing",
       "description": "Runway AI tool"
     },
     {
       "id": "pika",
-      "imageUrl": "https://images.unsplash.com/photo-1584224549374-995cbac1ab62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjcmVhdGl2ZSUyMHZpZGVvfGVufDB8fHx8MTc2OTY2Mzg3MHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1584224549374-995cbac1ab62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHjaHw2fHxjcmVhdGl2ZSUyMHZpZGVvfGVufDB8fHx8MTc2OTY2Mzg3MHww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "creative video",
       "description": "Pika AI tool"
     },
     {
       "id": "elevenlabs",
-      "imageUrl": "https://images.unsplash.com/photo-1765445773804-673b765aed52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhdWRpbyUyMHdhdmVmb3JtfGVufDB8fHx8MTc2OTU4OTQ1M3ww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1765445773804-673b765aed52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHjaHw0fHxhdWRpbyUyMHdhdmVmb3JtfGVufDB8fHx8MTc2OTU4OTQ1M3ww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "audio waveform",
       "description": "ElevenLabs AI tool"
     },
     {
       "id": "lensa",
-      "imageUrl": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw8fHxhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njk2NjM4NzB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHjaHw8fHxhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njk2NjM4NzB8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "avatar portrait",
       "description": "Lensa AI tool"
     },
@@ -63,7 +63,7 @@
     },
     {
       "id": "quick-tool-students",
-      "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmdfHxlbnwwfHx8fDE3Njk1OTY0NTN8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmdfHxlbnwwfHx8DE3Njk1OTY0NTN8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "student studying",
       "description": "A student studying with books and a laptop."
     },
@@ -123,7 +123,7 @@
     },
     {
       "id": "quick-tool-freelancer",
-      "imageUrl": "https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmcmVlbGFuY2VyfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxmcmVlbGFuY2VyfGVufDB8fHx8MTc2OTY2Mzg3MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "freelancer",
       "description": "A person working on a laptop in a cozy home office environment, updated."
     },
@@ -258,6 +258,12 @@
       "description": "High quality AI artwork for the hero section",
       "imageUrl": "https://i.ibb.co/390fqgC2/85be69a9-5f96-4a8a-bbac-d9ac2581dfd6.png",
       "imageHint": "ai poster"
+    },
+    {
+      "id": "student-poster",
+      "description": "New AI for students poster",
+      "imageUrl": "https://i.ibb.co/k2dGssTJ/unnamed.jpg",
+      "imageHint": "student poster"
     }
   ]
 }
