@@ -13,6 +13,7 @@ import { LemonAnimation } from '@/components/themes/lemon-animation';
 import { SakuraAnimation } from '@/components/themes/sakura-animation';
 import { GalaxyAnimation } from '@/components/themes/galaxy-animation';
 import { PandaAnimation } from '@/components/themes/panda-animation';
+import { CrystalBlurAnimation } from '@/components/themes/crystal-blur-animation';
 import { cn } from '@/lib/utils';
 
 function AppShellContent({ children }: { children: React.ReactNode }) {
@@ -26,6 +27,7 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
     }, []);
 
     const isMidnight = theme === 'midnight-glass';
+    const isCrystal = theme === 'crystal-blur';
 
     const activeTabId = useMemo(() => {
         const tab = searchParams.get('tab');
@@ -46,7 +48,10 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
     if (!mounted) return <div className="min-h-screen bg-[#f5fdfa]" />;
 
     return (
-        <div className="relative flex flex-col min-h-screen bg-background font-body w-full max-w-7xl mx-auto overflow-x-hidden transition-all duration-500 ease-in-out">
+        <div className={cn(
+            "relative flex flex-col min-h-screen font-body w-full max-w-7xl mx-auto overflow-x-hidden transition-all duration-500 ease-in-out",
+            isCrystal ? "bg-transparent" : "bg-background"
+        )}>
             {/* Ambient Lighting System for Midnight Glass */}
             {isMidnight && (
                 <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -56,6 +61,9 @@ function AppShellContent({ children }: { children: React.ReactNode }) {
                     <div className="absolute top-1/2 -right-[30%] w-[60%] h-[60%] rounded-full bg-[rgba(255,255,255,0.05)] blur-[80px]" />
                 </div>
             )}
+
+            {/* Crystal Blur Animation */}
+            {isCrystal && <CrystalBlurAnimation />}
 
             {/* Live Animations for Ultra Cute themes */}
             {theme === 'cute-mint-glass' && <MintyAnimation />}

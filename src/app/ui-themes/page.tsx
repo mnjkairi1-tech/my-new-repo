@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Palette, Sun, Moon, Compass, Mountain, 
-  Snowflake, Leaf, Sparkles, Zap, GlassWater, Sunset, Heart, Cloud, Flower, Waves, Star, Utensils, Zap as LemonIcon, Cherry, Rocket, PawPrint
+  Snowflake, Leaf, Sparkles, Zap, GlassWater, Sunset, Heart, Cloud, Flower, Waves, Star, Utensils, Zap as LemonIcon, Cherry, Rocket, PawPrint, Droplets
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/context/theme-provider';
@@ -19,10 +19,12 @@ export default function UiThemesPage() {
   }, []);
 
   const themes = [
-    { name: 'default', label: 'Default Light', icon: Sun, color: 'bg-orange-100 text-orange-600' },
-    { name: 'dark', label: 'Classic Dark', icon: Moon, color: 'bg-slate-800 text-slate-100' },
+    { name: 'cute-mint-glass', label: 'Minty Marshmallow', icon: Leaf, color: 'bg-emerald-50 text-emerald-500' },
+    { name: 'crystal-blur', label: 'Crystal Blur', icon: Droplets, color: 'bg-blue-100 text-blue-500 border-blue-200' },
     { name: 'midnight-glass', label: 'Midnight Glass', icon: GlassWater, color: 'bg-zinc-900 text-white border-white/20' },
     { name: 'cute-panda-glass', label: 'Panda Bliss', icon: PawPrint, color: 'bg-zinc-100 text-black border-black/20' },
+    { name: 'default', label: 'Default Light', icon: Sun, color: 'bg-orange-100 text-orange-600' },
+    { name: 'dark', label: 'Classic Dark', icon: Moon, color: 'bg-slate-800 text-slate-100' },
     { name: 'desert-sand', label: 'Desert Sand', icon: Compass, color: 'bg-orange-50 text-orange-800' },
     { name: 'emerald-night', label: 'Emerald Night', icon: Mountain, color: 'bg-green-950 text-emerald-400' },
     { name: 'cosmic-neon', label: 'Cosmic Neon', icon: Sparkles, color: 'bg-[#05050a] text-[#8E54E9] border-[#00F5FF]/20' },
@@ -30,7 +32,6 @@ export default function UiThemesPage() {
     { name: 'minimal-snow', label: 'Arctic Snow', icon: Snowflake, color: 'bg-zinc-100 text-black border-black/40' },
     { name: 'minimal-rose', label: 'Minimal Rose', icon: Flower, color: 'bg-rose-50 text-rose-600 border-rose-200' },
     { name: 'minimal-sky', label: 'Minimal Sky', icon: Waves, color: 'bg-sky-50 text-sky-600 border-sky-200' },
-    { name: 'cute-mint-glass', label: 'Minty Marshmallow', icon: Leaf, color: 'bg-emerald-50 text-emerald-500' },
     { name: 'cute-berry-glass', label: 'Berry Marshmallow', icon: Heart, color: 'bg-rose-50 text-rose-500' },
     { name: 'cute-cloud-glass', label: 'Cloud Marshmallow', icon: Cloud, color: 'bg-sky-50 text-sky-500' },
     { name: 'cute-lavender-glass', label: 'Lavender Haze', icon: Star, color: 'bg-purple-50 text-purple-500' },
