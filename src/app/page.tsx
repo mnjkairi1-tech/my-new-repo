@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useCallback, useRef, Suspense, useState, useEffect } from 'react';
@@ -17,7 +16,6 @@ import {
   Star,
   ExternalLink,
   Loader2,
-  Lock,
   Crown
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -29,7 +27,7 @@ import { GalaxyLogo } from '@/components/galaxy-logo';
 import Link from 'next/link';
 import { SettingsPage } from '@/components/settings-page';
 import { cn } from '@/lib/utils';
-import { AuthScreen } from '@/components/auth-gate';
+import { AuthGate } from '@/components/auth-gate';
 import { useLanguage } from '@/lib/language';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
@@ -149,7 +147,6 @@ function HomePageContent() {
                                     isMidnight ? "glass-card-effect" : "border-none"
                                 )}>
                                     <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.dataAiHint} unoptimized />
-                                    {/* Gradient overlay kept for depth, but text container removed as requested */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                                 </div>
                             </Link>
@@ -428,7 +425,9 @@ function GalaxyAppMain() {
             
             <TabsContent value="settings" className={cn("mt-0 min-h-full", isMidnight ? "bg-black" : "bg-secondary/30")}>
                 <div className="max-w-4xl mx-auto py-8">
-                    {user ? <SettingsPage /> : <AuthScreen onUser={() => {}} />}
+                    <AuthGate>
+                        <SettingsPage />
+                    </AuthGate>
                 </div>
             </TabsContent>
         </div>

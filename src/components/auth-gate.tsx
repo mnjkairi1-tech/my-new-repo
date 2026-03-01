@@ -25,7 +25,7 @@ import { Input } from './ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { AuthLoader } from './auth-loader';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
-import { MailCheck, Loader2, KeyRound, Mail, UserPlus, LogIn, Sparkles } from 'lucide-react';
+import { MailCheck, Loader2, KeyRound, Mail, UserPlus, LogIn, Sparkles, ShieldAlert } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 function GoogleSignInButton({
@@ -76,13 +76,11 @@ function GoogleSignInButton({
 
 const authSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
-  password: z.string().optional(),
+  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
 });
 
 function EmailAuth() {
   const [authMode, setAuthMode] = useState<'signIn' | 'signUp' | 'forgotPassword'>('signIn');
-  const [signUpState, setSignUpState] = useState<'form' | 'pendingVerification'>('form');
-  const [emailForVerification, setEmailForVerification] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const auth = useAuth();
   const { toast } = useToast();
@@ -107,11 +105,7 @@ function EmailAuth() {
             });
             setAuthMode('signIn');
         } catch (error: any) {
-            toast({
-                variant: 'destructive',
-                title: "Error",
-                description: error.message,
-            });
+            toast({ variant: 'destructive', title: "Error", description: error.message });
         } finally {
             setIsSubmitting(false);
         }
@@ -123,61 +117,28 @@ function EmailAuth() {
         const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password!);
         await sendEmailVerification(userCredential.user);
         toast({
-          title: "Verification Sent!",
-          description: "A verification link has been sent to your email. Please verify to continue.",
+          title: "Verify Your Email",
+          description: "A link has been sent to your Gmail. Please verify to activate your account.",
         });
-        setEmailForVerification(data.email);
-        setSignUpState('pendingVerification');
+        // We stay in this state, the AuthGate will handle the blocking UI
       } catch (error: any) {
-        toast({
-          variant: 'destructive',
-          title: `Sign Up Failed`,
-          description: error.message,
-        });
+        toast({ variant: 'destructive', title: `Sign Up Failed`, description: error.message });
       } finally {
         setIsSubmitting(false);
       }
-    } else { // Sign In logic
+    } else {
       try {
         await signInWithEmailAndPassword(auth, data.email, data.password!);
       } catch (error: any) {
-        toast({
-          variant: 'destructive',
-          title: `Sign In Failed`,
-          description: 'Invalid email or password.',
-        });
+        toast({ variant: 'destructive', title: `Sign In Failed`, description: 'Invalid email or password.' });
       } finally {
         setIsSubmitting(false);
       }
     }
   };
 
-  if (signUpState === 'pendingVerification' && authMode === 'signUp') {
-      return (
-        <div className="rounded-[2.5rem] bg-card/90 backdrop-blur-xl shadow-2xl p-10 text-center border border-white/20 animate-fade-in-up">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <MailCheck className="w-10 h-10 text-green-500" />
-            </div>
-            <h2 className="text-2xl font-black mb-3 tracking-tight">Verify Email</h2>
-            <p className="text-muted-foreground text-sm mb-8 leading-relaxed px-2">
-                A verification link has been sent to your Gmail. Please check your <span className="font-bold text-foreground">Inbox or Spam folder</span> (from Firebase). Verify the link to access the app.
-            </p>
-            <div className="space-y-3">
-                <p className="text-[10px] font-bold text-primary uppercase tracking-widest animate-pulse">Waiting for verification...</p>
-                <Button variant="outline" className="w-full h-12 rounded-full font-bold" onClick={() => window.location.reload()}>
-                    I've Verified My Email
-                </Button>
-                <Button variant="ghost" className="w-full text-xs font-bold text-muted-foreground" onClick={() => { setAuthMode('signIn'); setSignUpState('form'); signOut(auth); }}>
-                    Use Different Email
-                </Button>
-            </div>
-        </div>
-      );
-  }
-
   return (
     <div className="w-full bg-card/80 backdrop-blur-2xl shadow-2xl rounded-[2.5rem] border border-white/30 overflow-hidden animate-fade-in-up">
-        {/* Cute Mode Toggle */}
         {authMode !== 'forgotPassword' && (
             <div className="p-2 mt-4 mx-6 flex bg-secondary/50 rounded-full relative">
                 <div 
@@ -309,135 +270,66 @@ function EmailAuth() {
   );
 }
 
-
 export function AuthScreen({ onUser }: { onUser: (user: User) => void; }) {
   const auth = useAuth();
-  const { toast } = useToast();
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isCheckingRedirect, setIsCheckingRedirect] = useState(true);
   
   useEffect(() => {
     if (!auth) return;
-
     setPersistence(auth, browserLocalPersistence);
-
     getRedirectResult(auth).then((result) => {
-      if (result?.user) {
-        onUser(result.user);
-      }
+      if (result?.user) onUser(result.user);
       setIsCheckingRedirect(false);
     }).catch((error) => {
-      console.error("Redirect Result Error:", error);
+      console.error("Redirect Error:", error);
       setIsCheckingRedirect(false);
     });
   }, [auth, onUser]);
 
   const handleGoogleSignIn = async (e: React.MouseEvent) => {
     e.preventDefault();
-    e.stopPropagation();
-
     if (!auth) return;
     setIsSigningIn(true);
-    
     try {
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: 'select_account' });
-        
         if ((window as any).flutter_inappwebview) {
             (window as any).flutter_inappwebview.callHandler('requestGoogleSignIn');
             return;
         }
-        
         await signInWithRedirect(auth, provider);
     } catch (error: any) {
-        console.error("Google Sign-In Error:", error);
+        console.error("Google Error:", error);
         setIsSigningIn(false);
     }
   };
 
-  useEffect(() => {
-    if (!auth) return;
-  
-    (window as any).handleCustomTokenSignIn = async (token: string) => {
-      if (!token) return;
-      try {
-        setIsSigningIn(true);
-        const userCredential = await signInWithCustomToken(auth, token);
-        onUser(userCredential.user);
-      } catch (error) {
-        console.error("Custom Token Sign-In Error:", error);
-      } finally {
-        setIsSigningIn(false);
-      }
-    };
-  
-    return () => {
-      delete (window as any).handleCustomTokenSignIn;
-    };
-  }, [auth, onUser]);
-
-  if (isCheckingRedirect || isSigningIn) {
-      return <AuthLoader />;
-  }
+  if (isCheckingRedirect || isSigningIn) return <AuthLoader />;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background p-6 font-body overflow-x-hidden relative">
       <div className="absolute inset-0 z-0 opacity-30">
         <div className="absolute inset-0 bg-gradient-to-br from-soft-blue via-lavender to-baby-pink"></div>
       </div>
-
       <div className="flex flex-col items-center justify-center w-full max-w-sm z-10">
         <div className="flex flex-col items-center mb-8">
             <div className="w-24 h-24 bg-white rounded-[2.5rem] shadow-2xl flex items-center justify-center mb-6 border-4 border-secondary animate-bounce-subtle">
                 <GalaxyLogo className="w-14 h-14 text-primary" />
             </div>
-            <h1 className="text-4xl font-black text-foreground tracking-tighter">
-            Ai Atlas
-            </h1>
-            <p className="mt-2 text-[10px] text-muted-foreground font-black uppercase tracking-[0.3em] text-center opacity-60">
-            Gateway to Intelligence
-            </p>
+            <h1 className="text-4xl font-black text-foreground tracking-tighter">Ai Atlas</h1>
+            <p className="mt-2 text-[10px] text-muted-foreground font-black uppercase tracking-[0.3em] text-center opacity-60">Gateway to Intelligence</p>
         </div>
-
-        <div className="w-full">
-           <EmailAuth />
-        </div>
-        
+        <div className="w-full"><EmailAuth /></div>
         <div className="relative my-8 w-full">
-            <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-muted-foreground/10" />
-            </div>
+            <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-muted-foreground/10" /></div>
             <div className="relative flex justify-center text-[10px] font-black uppercase tracking-widest">
-                <span className="bg-background px-4 text-muted-foreground/40">
-                Quick Connect
-                </span>
+                <span className="bg-background px-4 text-muted-foreground/40">Quick Connect</span>
             </div>
         </div>
-
-        <div className="w-full">
-            <GoogleSignInButton
-            onClick={handleGoogleSignIn}
-            isSigningIn={isSigningIn}
-            />
-        </div>
-
-        <p className="text-[10px] font-black text-muted-foreground/40 max-w-sm mt-12 text-center uppercase tracking-widest">
-            AI Secured Protocol • v1.2
-        </p>
+        <div className="w-full"><GoogleSignInButton onClick={handleGoogleSignIn} isSigningIn={isSigningIn} /></div>
+        <p className="text-[10px] font-black text-muted-foreground/40 max-w-sm mt-12 text-center uppercase tracking-widest">AI Secured Protocol • v1.2</p>
       </div>
-
-      <style jsx global>{`
-        @keyframes bounce-subtle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-bounce-subtle {
-            animation: bounce-subtle 4s ease-in-out infinite;
-        }
-        .ease-spring {
-            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-      `}</style>
     </div>
   );
 }
@@ -450,54 +342,49 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (user && !user.emailVerified && user.providerData.some(p => p.providerId === 'password')) {
         const intervalId = setInterval(async () => {
-            await user.reload();
+            await auth.currentUser?.reload();
             if (auth.currentUser?.emailVerified) {
                 clearInterval(intervalId);
-                // Force a state update by refreshing the page or using a router refresh
                 window.location.reload(); 
             }
-        }, 3000); // Check every 3 seconds
-
+        }, 3000);
         return () => clearInterval(intervalId);
     }
   }, [user, auth]);
 
-  if (isUserLoading) {
-    return <AuthLoader />;
-  }
+  if (isUserLoading) return <AuthLoader />;
 
   if (user) {
-    // If signed in with email/password but NOT verified, show blocking screen
     const isPasswordProvider = user.providerData.some(p => p.providerId === 'password');
     if (isPasswordProvider && !user.emailVerified) {
       return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-background p-8 text-center animate-fade-in-up">
-            <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mb-8">
+            <div className="w-24 h-24 bg-primary/10 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-xl border-4 border-white">
                 <MailCheck className="w-12 h-12 text-primary" />
             </div>
-            <h1 className="text-3xl font-black mb-4 tracking-tight">Verify Your Email</h1>
-            <p className="text-sm text-muted-foreground mb-10 leading-relaxed max-w-xs mx-auto">
-                A verification link has been sent to your email <br/><strong>{user.email}</strong>. <br/>
-                Please check your <span className="font-bold text-foreground">Inbox or Spam folder</span> (from Firebase). Verify the link to continue.
-            </p>
+            <h1 className="text-3xl font-black mb-4 tracking-tight uppercase">Check Your Gmail</h1>
+            <div className="bg-card/50 backdrop-blur-xl p-6 rounded-3xl border border-white/20 mb-10 max-w-xs mx-auto">
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                    A verification link has been sent to:<br/><strong className="text-foreground">{user.email}</strong>
+                </p>
+                <div className="mt-4 p-3 bg-secondary/30 rounded-xl flex items-start gap-3 text-left">
+                    <ShieldAlert className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <p className="text-[11px] font-bold text-muted-foreground">Please check your <span className="text-primary">Inbox or Spam folder</span> (look for mail from Firebase). Click the link to activate your account.</p>
+                </div>
+            </div>
             <div className="w-full max-w-xs space-y-4">
                 <Button onClick={() => window.location.reload()} className="w-full h-14 rounded-full text-base font-black shadow-xl shadow-primary/20">
-                    I've Verified My Email
+                    I've Verified My Email ✅
                 </Button>
-                <Button variant="link" onClick={() => signOut(auth)} className="w-full font-bold text-xs text-muted-foreground uppercase tracking-widest">
+                <Button variant="ghost" onClick={() => signOut(auth)} className="w-full font-bold text-xs text-muted-foreground uppercase tracking-widest">
                     Logout & Use Different Account
                 </Button>
             </div>
         </div>
       );
     }
-    // If verified OR signed in with Google (Google users are pre-verified), allow access
     return <>{children}</>;
   }
 
-  return (
-    <AuthScreen
-      onUser={() => { }}
-    />
-  );
+  return <AuthScreen onUser={() => { }} />;
 }
