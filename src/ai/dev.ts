@@ -3,3 +3,4 @@
 import './flows/suggest-ai-tool';
 import './flows/validate-tool-url';
 import './flows/conversational-agent';
+import './flows/find-tool-by-name';

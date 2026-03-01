@@ -1,6 +1,7 @@
+
 'use client';
 
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,7 +9,7 @@ import { useLanguage } from '@/lib/language';
 import type { Tool } from '@/lib/types';
 import { useUserPreferences } from '@/context/user-preferences-context';
 import { cn } from '@/lib/utils';
-import { Share2, Star, Search, Filter, Scale, Check, Loader2, Info, SearchCode, StarHalf, UserPlus, ArrowRight } from 'lucide-react';
+import { Share2, Star, Search, Filter, Scale, Check, Loader2, Info, SearchCode, StarHalf, UserPlus, ArrowRight, Sparkles, Wand2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
 import {
@@ -30,6 +31,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { allToolsServer } from '@/lib/all-tools-server';
+import { findToolByName } from '@/ai/flows/find-tool-by-name';
+import { useToast } from '@/hooks/use-toast';
 
 const ToolCard = React.memo(({ tool, onShare, onClick, t }: { tool: Tool, onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void, t: (key: string) => string }) => {
     const { theme, starredTools, handleStarToggle, comparisonList, selectForCompare } = useUserPreferences();
@@ -102,6 +105,7 @@ ToolCard.displayName = 'ToolCard';
 
 export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: React.MouseEvent, tool: Tool) => void, onClick: (tool: Tool) => void }) {
     const { t } = useLanguage();
+    const { toast } = useToast();
     const { theme, comparisonList } = useUserPreferences();
     const isMidnight = theme === 'midnight-glass';
     const router = useRouter();
@@ -113,6 +117,10 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
     
     const [loadMoreClicks, setLoadMoreClicks] = useState(0);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
+
+    // AI Search States
+    const [aiFoundTool, setAiFoundTool] = useState<Tool | null>(null);
+    const [isAiSearching, setIsAiSearching] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
@@ -147,6 +155,30 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
         }
     };
 
+    const handleAiSearch = async () => {
+        if (!searchTerm.trim()) return;
+        setIsAiSearching(true);
+        setAiFoundTool(null);
+        
+        try {
+            const result = await findToolByName({ name: searchTerm });
+            if (result) {
+                setAiFoundTool({
+                    ...result,
+                    dataAiHint: result.name.toLowerCase()
+                });
+                toast({ title: "Found it!", description: `Found details for ${result.name} using AI.` });
+            } else {
+                toast({ variant: 'destructive', title: "Not found", description: "AI couldn't find a tool with that name." });
+            }
+        } catch (error) {
+            console.error(error);
+            toast({ variant: 'destructive', title: "AI Search Failed" });
+        } finally {
+            setIsAiSearching(false);
+        }
+    };
+
     if (!isMounted) {
         return (
             <div className="flex-grow flex items-center justify-center">
@@ -171,6 +203,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                             onChange={(e) => {
                                 setSearchTerm(e.target.value);
                                 setVisibleCount(20);
+                                setAiFoundTool(null);
                             }}
                         />
                     </div>
@@ -200,7 +233,7 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                     "text-center mt-4 text-[10px] font-black uppercase tracking-[0.2em]",
                     isMidnight ? "text-white/40" : "text-muted-foreground"
                 )}>
-                    {`10,000+ Tools Discovered`}
+                    {`1 Million + Tools Discovered`}
                 </div>
             </div>
             <div className="flex-1 overflow-y-auto px-4 no-scrollbar pt-2 pb-32">
@@ -214,7 +247,43 @@ export default function ToolsTabContent({ onShare, onClick }: { onShare: (e: Rea
                             t={t}
                         />
                     ))}
+                    {/* Render AI Found Tool */}
+                    {aiFoundTool && (
+                        <div className="animate-in zoom-in fade-in duration-500">
+                            <ToolCard 
+                                tool={aiFoundTool}
+                                onShare={onShare}
+                                onClick={onClick}
+                                t={t}
+                            />
+                        </div>
+                    )}
                 </div>
+
+                {/* AI Search CTA when no local results */}
+                {filteredTools.length === 0 && !aiFoundTool && searchTerm.trim() !== "" && (
+                    <div className="text-center py-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="w-20 h-20 bg-primary/10 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
+                            <Wand2 className="w-10 h-10 text-primary animate-pulse" />
+                        </div>
+                        <h3 className="text-xl font-black uppercase tracking-tight mb-2">Tool Not in Library?</h3>
+                        <p className="text-muted-foreground text-sm max-w-xs mx-auto mb-8 leading-relaxed">
+                            Ai Atlas can search the entire web using AI to find information about <strong>"{searchTerm}"</strong>.
+                        </p>
+                        <Button 
+                            onClick={handleAiSearch} 
+                            disabled={isAiSearching}
+                            className="h-14 px-8 rounded-full font-black text-base shadow-xl shadow-primary/20 group transition-all"
+                        >
+                            {isAiSearching ? (
+                                <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Deep Searching...</>
+                            ) : (
+                                <><Sparkles className="mr-2 h-5 w-5 group-hover:scale-125 transition-transform" /> Search with AI</>
+                            )}
+                        </Button>
+                    </div>
+                )}
+
                 {visibleCount < filteredTools.length && (
                     <div className="text-center mt-12 mb-8 px-4">
                         <Button onClick={handleLoadMore} size="lg" className={cn(
