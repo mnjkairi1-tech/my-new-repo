@@ -41,7 +41,8 @@ export default function SubscriptionPlansPage() {
     'ultra free tools',
     'get daily new tools add automatically',
     'get community premium blue ticks',
-    'get new features early'
+    'get new features early',
+    'Quick Access Hub'
   ];
 
   const plans = {
@@ -61,7 +62,7 @@ export default function SubscriptionPlansPage() {
         'Tools addition in groups',
         '10 Favourite Tools',
         'Free popular tools',
-        'Quick Tools access',
+        'Quick Access Hub',
         'Recent usage tool'
       ]
     },
@@ -82,8 +83,7 @@ export default function SubscriptionPlansPage() {
         'Tools addition in groups',
         '50 Favourite Tools',
         'Free popular tools',
-        'Quick Tools access',
-        'Recent usage tool',
+        'Quick Access Hub',
         'Max free tools',
         'Get tools which is free for some time'
       ]
@@ -104,8 +104,7 @@ export default function SubscriptionPlansPage() {
         'Tools addition in groups',
         'unlimited Favourite Tools',
         'Free popular tools',
-        'Quick Tools access',
-        'Recent usage tool',
+        'Quick Access Hub',
         'Max free tools',
         'Get tools which is free for some time',
         'ultra free tools',
