@@ -25,6 +25,13 @@
     --input: 255 100% 90%;
     --ring: 258 100% 70%;
     --radius: 1.25rem;
+
+    /* Background Colors for Gradients */
+    --soft-blue: 210 100% 96%;
+    --lavender: 260 100% 96%;
+    --baby-pink: 340 100% 96%;
+    --mint: 160 100% 96%;
+    --cute-purple: 270 100% 96%;
   }
 
   [data-theme='dark'] {
@@ -57,17 +64,27 @@
 
   [data-theme='cute-panda-glass'] {
     --background: 0 0% 98%;
-    --foreground: 0 0% 10%;
-    --card: 0 0% 100% / 0.8;
-    --card-foreground: 0 0% 10%;
+    --foreground: 0 0% 5%;
+    --card: 0 0% 100% / 0.9;
+    --card-foreground: 0 0% 5%;
     --primary: 0 0% 0%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 94%;
-    --muted: 0 0% 92%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 0 0% 96%;
-    --border: 0 0% 88%;
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 30%;
+    --accent: 0 0% 94%;
+    --accent-foreground: 0 0% 10%;
+    --border: 0 0% 85%;
+    --ring: 0 0% 0%;
     --radius: 1.5rem;
+
+    /* Convert all colors to Greyscale for Panda Theme */
+    --soft-blue: 0 0% 95%;
+    --lavender: 0 0% 90%;
+    --baby-pink: 0 0% 92%;
+    --mint: 0 0% 94%;
+    --cute-purple: 0 0% 91%;
   }
 
   [data-theme='desert-sand'] {
