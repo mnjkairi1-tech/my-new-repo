@@ -84,7 +84,6 @@ function HomePageContent() {
     addRecentTool(tool);
   }, [addRecentTool]);
 
-  // If Quick Access is set as default, we render the Quick Access View instead of the full home
   if (isQuickAccessDefault) {
     return <QuickAccessView />;
   }
@@ -150,10 +149,8 @@ function HomePageContent() {
                                     isMidnight ? "glass-card-effect" : "border-none"
                                 )}>
                                     <Image src={slide.image} alt={slide.title} fill className="object-cover" data-ai-hint={slide.dataAiHint} unoptimized />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                                    <div className="absolute bottom-0 left-0 p-6 z-10">
-                                        <h3 className="font-black text-2xl text-white tracking-tight">{slide.title}</h3>
-                                    </div>
+                                    {/* Gradient overlay kept for depth, but text container removed as requested */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                                 </div>
                             </Link>
                         </CarouselItem>
